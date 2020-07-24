@@ -194,7 +194,9 @@ class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXStudyReportContentCell", for: indexPath) as! YXStudyReportContentCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXStudyReportContentCell", for: indexPath) as? YXStudyReportContentCell else {
+            return UITableViewCell()
+        }
         guard let content = studyContent?[indexPath.row] else { return cell }
         
         cell.nameLabel.text = content.name

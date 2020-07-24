@@ -79,20 +79,21 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
             make.width.equalToSuperview()
             make.height.equalTo(0)
         })
-
-        self.subTitleLabel?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(0)
-        })
-
-        self.exampleLabel.snp.makeConstraints { (make) in
-            make.centerX.width.equalToSuperview()
-            make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(56))
-            make.height.equalTo(0)
+        if titleLabel != nil {
+            self.subTitleLabel?.snp.makeConstraints({ (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(titleLabel!.snp.bottom)
+                make.width.equalToSuperview()
+                make.height.equalTo(0)
+            })
         }
-
+        if subTitleLabel != nil {
+            self.exampleLabel.snp.makeConstraints { (make) in
+                make.centerX.width.equalToSuperview()
+                make.top.equalTo(subTitleLabel!.snp.bottom).offset(AdaptSize(56))
+                make.height.equalTo(0)
+            }
+        }
         self.chineseExampleLabel.snp.makeConstraints { (make) in
             make.centerX.width.equalToSuperview()
             make.top.equalTo(exampleLabel.snp.bottom).offset(AdaptSize(2))
@@ -140,15 +141,19 @@ class YXNewLearnPrimarySchoolWordGroupQuestionView: YXBaseQuestionView {
 
     func showWordView() {
         self.titleLabel?.isHidden = false
-        self.titleLabel?.sizeToFit()
-        self.titleLabel?.snp.updateConstraints({ (make) in
-            make.height.equalTo(titleLabel!.height)
-        })
+        if titleLabel != nil {
+            self.titleLabel?.sizeToFit()
+            self.titleLabel?.snp.updateConstraints({ (make) in
+                make.height.equalTo(titleLabel!.height)
+            })
+        }
         self.subTitleLabel?.isHidden = false
-        self.subTitleLabel?.sizeToFit()
-        self.subTitleLabel?.snp.updateConstraints({ (make) in
-            make.height.equalTo(subTitleLabel!.height)
-        })
+        if subTitleLabel != nil {
+            self.subTitleLabel?.sizeToFit()
+            self.subTitleLabel?.snp.updateConstraints({ (make) in
+                make.height.equalTo(subTitleLabel!.height)
+            })
+        }
     }
     
 }

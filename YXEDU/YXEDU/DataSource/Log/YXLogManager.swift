@@ -27,7 +27,8 @@ class YXLogManager: NSObject {
             MBProgressHUD.showAdded(to: kWindow, animated: true)
         }
         let request = YXLogRequest.report(file: fileData)
-        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: { (response) in
+        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: {[weak self] (response) in
+            guard let self = self else { return }
             if showToast {
                 MBProgressHUD.hide(for: kWindow, animated: true)
                 YXUtils.showHUD(kWindow, title: "上传完成")

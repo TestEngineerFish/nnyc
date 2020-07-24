@@ -16,7 +16,7 @@ class YXExerciseResultView: YXView {
     var showWordListEvent: (() -> ())?
     
 
-    var model: YXExerciseResultDisplayModel!
+    var model: YXExerciseResultDisplayModel = YXExerciseResultDisplayModel()
     
     var contentView   = UIView()
     var imageView     = UIImageView()

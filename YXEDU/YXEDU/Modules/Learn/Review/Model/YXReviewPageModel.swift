@@ -24,9 +24,8 @@ class YXReviewPageModel: Mappable {
     var forgetNum: Int   = 0
     
     var reviewPlans: [YXReviewPlanModel]?
-    
-    required init?(map: Map) {
-    }
+    init() {}
+    required init?(map: Map) {}
 
     func mapping(map: Map) {
         canMakeReviewPlans <- map["is_can_artificial_review"]

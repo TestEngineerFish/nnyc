@@ -12,23 +12,32 @@ class YXAddBookGuideViewController: YXViewController {
     private var dataSource: [YXGradeWordBookListModel] = []
     private var selectBook: YXWordBookModel?
     private var selectGrade: YXGradeWordBookListModel?
-    private var grades: [String] = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"]
-    private var versions: [String] = ["人教版", "沪教版", "冀教版", "北师大", "译林版", "粤教版"]
+    private var grades: [String]    = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"]
+    private var versions: [String]  = ["人教版", "沪教版", "冀教版", "北师大", "译林版", "粤教版"]
     private var bookNames: [String] = ["人教版七年级上册", "人教版七年级下册"]
     
     private let defaultHeight: CGFloat = 126
     private var gradeHeight: CGFloat {
-        return 70 + (self.selectGradeView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        guard let flowLayout = self.selectGradeView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return 70
+        }
+        return 70 + flowLayout.contentHeight
     }
     
     private var versionHeight: CGFloat {
         let descriptionHeight = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~".textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 88)
-        
-        return 50 + descriptionHeight + 26 + (self.selectVersionView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        let h = 50 + descriptionHeight + 26
+        guard let flowLayout = self.selectVersionView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return h
+        }
+        return h + flowLayout.contentHeight
     }
     
     private var bookNameHeight: CGFloat {
-        return 70 + (self.selectBookNameView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        guard let flowLayout = self.selectBookNameView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return 70
+        }
+        return 70 + flowLayout.contentHeight
     }
     
     @IBOutlet weak var selectGradeView: YXAddBookGuideView!
@@ -57,8 +66,8 @@ class YXAddBookGuideViewController: YXViewController {
             YXWordBookResourceManager.shared.addTask(model: taskModel)
             
             let request = YXHomeRequest.getBaseInfo(userId: uuid)
-            YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
-                guard let userInfomation = response.data else { return }
+            YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self, let userInfomation = response.data else { return }
 
                 YXUserModel.default.currentGrade   = userInfomation.bookGrade
                 YXUserModel.default.lastStoredDate = Date()
@@ -113,8 +122,8 @@ class YXAddBookGuideViewController: YXViewController {
         YXStepConfigManager.share.contrastStepConfig()
         
         let request = YXHomeRequest.getBookList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
-            guard let grades = response.dataArray else { return }
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let grades = response.dataArray else { return }
             self.dataSource = grades
             
             for grade in grades {
@@ -263,11 +272,11 @@ class YXAddBookGuideViewController: YXViewController {
             
             if self.selectBook != nil, self.selectGradeViewHeight.constant == self.defaultHeight, self.selectVersionViewHeight.constant == self.defaultHeight, self.selectBookNameViewHeight.constant == self.defaultHeight {
                 self.startButton.isHidden = false
-                self.homeButton.isHidden = false
+                self.homeButton.isHidden  = !YXUserModel.default.isFinishedNewUserStudy
                 
             } else {
                 self.startButton.isHidden = true
-                self.homeButton.isHidden = true
+                self.homeButton.isHidden  = true
             }
         }
         

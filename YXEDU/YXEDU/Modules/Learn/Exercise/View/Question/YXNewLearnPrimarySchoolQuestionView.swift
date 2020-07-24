@@ -89,14 +89,14 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             make.width.equalToSuperview()
             make.height.equalTo(0)
         })
-
-        self.subTitleLabel?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(0)
-        })
-
+        if titleLabel != nil {
+            self.subTitleLabel?.snp.makeConstraints({ (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(titleLabel!.snp.bottom)
+                make.width.equalToSuperview()
+                make.height.equalTo(0)
+            })
+        }
         self.exampleLabel.snp.makeConstraints { (make) in
             make.centerX.width.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptIconSize(69))
@@ -147,18 +147,21 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
             self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
             self.imageView?.transform          = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
         })
-        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.5, options: .curveEaseInOut, animations: { [weak self] in
+            guard let self = self else { return }
             self.titleLabel?.layer.opacity     = 1.0
             self.subTitleLabel?.layer.opacity  = 1.0
         }, completion: nil)
-        self.titleLabel?.sizeToFit()
-        self.titleLabel?.snp.updateConstraints({ (make) in
-            make.height.equalTo(titleLabel!.height)
-        })
-        self.subTitleLabel?.sizeToFit()
-        self.subTitleLabel?.snp.updateConstraints({ (make) in
-            make.height.equalTo(subTitleLabel!.height)
-        })
+        if self.titleLabel != nil {
+            self.titleLabel?.sizeToFit()
+            self.titleLabel?.snp.updateConstraints({ (make) in
+                make.height.equalTo(titleLabel!.height)
+            })
+            self.subTitleLabel?.sizeToFit()
+            self.subTitleLabel?.snp.updateConstraints({ (make) in
+                make.height.equalTo(subTitleLabel!.height)
+            })
+        }
     }
     
 }

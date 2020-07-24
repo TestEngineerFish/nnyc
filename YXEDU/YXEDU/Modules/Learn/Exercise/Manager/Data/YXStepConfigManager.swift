@@ -29,8 +29,8 @@ class YXStepConfigManager {
     // MARK ==== Request ====
     private func requestConfig() {
         let request = YXExerciseRequest.stepConfig
-        YYNetworkService.default.request(YYStructResponse<YXStepConfigModel>.self, request: request, success: { (response) in
-            guard let model = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXStepConfigModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else { return }
             if model.hash != self.hash {
                 YXLog("本地学习步骤混淆配置需要更新，本地Hash：", self.hash, "新Hash：", model.hash)
                 YXStepConfigDaoImpl.share.updateTable(model) { (success) in

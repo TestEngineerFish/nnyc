@@ -121,7 +121,9 @@ class YXSearchViewController: YXTableViewController, YXSearchHeaderViewProtocol 
 
 extension YXSearchViewController {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = dataSource[indexPath.row] as! YXSearchWordModel
+        guard let model = dataSource[indexPath.row] as? YXSearchWordModel else {
+            return .zero
+        }
         return YXSearchTableViewCell.viewHeight(model: model)
     }
 
@@ -143,10 +145,11 @@ extension YXSearchViewController {
         YXLog(result)
         
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-        wordDetialViewController.wordId = model.wordId ?? 0
-        wordDetialViewController.isComplexWord = model.isComplexWord ?? 0
-        self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        if let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew {
+            wordDetialViewController.wordId        = model.wordId ?? 0
+            wordDetialViewController.isComplexWord = model.isComplexWord ?? 0
+            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

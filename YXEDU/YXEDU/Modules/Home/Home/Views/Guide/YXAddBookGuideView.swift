@@ -161,7 +161,9 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXAddBookGuideItem", for: indexPath) as! YXAddBookGuideItem
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXAddBookGuideItem", for: indexPath) as? YXAddBookGuideItem else {
+            return UICollectionViewCell()
+        }
         cell.titleLabel.text = dataSource[indexPath.row]
         
         if let index = selectedIndex {

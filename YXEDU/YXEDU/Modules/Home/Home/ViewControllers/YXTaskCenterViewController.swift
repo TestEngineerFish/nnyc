@@ -11,7 +11,7 @@ import UIKit
 class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     var fromYXSquirrelCoinViewController = false
-    private var taskCenterData: YXTaskCenterDataModel!
+    private var taskCenterData: YXTaskCenterDataModel?
     private var dailyDatas: [YXTaskCenterDailyDataModel] = []
     private var taskLists: [YXTaskListModel] = []
 
@@ -26,11 +26,12 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
     
     @IBAction func punchIn(_ sender: Any) {
         let request = YXTaskCenterRequest.punchIn
-        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskCenterData = response.data
             self.reloadDailyData()
             
-            YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
+            YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData?.today ?? 1) - 1].integral ?? 0)
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -81,7 +82,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
     }
     
     private func reloadDailyData() {
-        var dailyDatas = self.taskCenterData.dailyData ?? []
+        var dailyDatas = self.taskCenterData?.dailyData ?? []
         
         var punchCount = 0
         var didFindWitchDayIsToday = false
@@ -124,7 +125,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
                 dailyDatas[index].dailyStatus = .yesterday
             }
             
-            if let today = self.taskCenterData.today, index == today - 1 {
+            if let today = self.taskCenterData?.today, index == today - 1 {
                 didFindWitchDayIsToday = true
                 dailyDatas[index].dailyStatus = .today
                 
@@ -140,7 +141,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
             }
         }
         
-        var exIntegral = self.taskCenterData.exIntegral ?? 0
+        var exIntegral = self.taskCenterData?.exIntegral ?? 0
         if dailyDatas[6].dailyStatus == .today, dailyDatas[6].didPunchIn == 1 {
             exIntegral = (punchCount - 1) * exIntegral
 
@@ -150,7 +151,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
         dailyDatas[6].integral = 10 + exIntegral
         self.dailyDatas = dailyDatas
         
-        let integral = self.taskCenterData.integral ?? 0
+        let integral = self.taskCenterData?.integral ?? 0
         if self.integralLabel.text == "--" {
             self.integralLabel.count(from: 0, to: Float(integral), duration: 1)
         } else {
@@ -174,7 +175,8 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
 
     private func completed(task id: Int, indexPath: IndexPath, didRepeat: Bool, integral: Int) {
         let request = YXTaskCenterRequest.getIntegral(taskId: id)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.requestTaskList()
             if didRepeat {
                 self.taskLists[indexPath.row].list?[indexPath.row].state = 2
@@ -195,7 +197,8 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
 
     private func requestPunchData() {
         let punchDataRequest = YXTaskCenterRequest.punchData
-        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskCenterData = response.data
             self.reloadDailyData()
         }) { error in
@@ -205,7 +208,8 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
 
     private func requestTaskList() {
         let taskListRequest = YXTaskCenterRequest.taskList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskLists = response.dataArray ?? []
             self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
             self.taskTableView.reloadData()
@@ -242,7 +246,9 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as? YXTaskCenterDateCell else {
+            return UICollectionViewCell()
+        }
         let dailyData = dailyDatas[indexPath.row]
 
         cell.weekLabel.text = dailyData.weekName

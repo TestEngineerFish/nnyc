@@ -11,9 +11,9 @@ import Foundation
 class YXNewLearnListExerciseView: YXBaseExerciseView {
 
     override func createSubview() {
-        questionView = YXPickWordsBySelfView(frame: .zero, exerciseModel: exerciseModel) { (_exerciseModel) in
+        questionView = YXPickWordsBySelfView(frame: .zero, exerciseModel: exerciseModel) { [weak self] (_exerciseModel) in
             YXLog("已选择，开始学习")
-            guard let model = self.questionView?.exerciseModel else { return }
+            guard let self = self, let model = self.questionView?.exerciseModel else { return }
             self.answerCompletion(exercise: model, right: true)
         }
         questionView?.layer.removeShadow()

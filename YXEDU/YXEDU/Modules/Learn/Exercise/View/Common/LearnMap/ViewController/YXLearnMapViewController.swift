@@ -140,7 +140,8 @@ class YXLearnMapViewController: YXViewController {
             return
         }
         let request = YXExerciseRequest.learnMap(bookId: _bookId)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in

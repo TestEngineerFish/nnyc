@@ -22,7 +22,7 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
 
-    private var wordListControllerView: BPSegmentControllerView!
+    private var wordListControllerView: BPSegmentControllerView?
     private var wordListHeaderViews: [UIView] = {
         var views: [UIView] = []
         
@@ -92,10 +92,10 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
         config.headerBackgroundColor  = UIColor.orange1
         config.contentBackgroundColor = UIColor.orange1
         wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight))
-        wordListControllerView.delegate = self
-        wordListControllerView.reloadData()
+        wordListControllerView?.delegate = self
+        wordListControllerView?.reloadData()
         
-        self.view.addSubview(wordListControllerView)
+        self.view.addSubview(wordListControllerView!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,10 +108,10 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
         if wordListType == .collected {
-            wordListControllerView.selectItem(with: IndexPath(item: 2, section: 0))
+            wordListControllerView?.selectItem(with: IndexPath(item: 2, section: 0))
             
         } else if wordListType == .wrongWords {
-            wordListControllerView.selectItem(with: IndexPath(item: 3, section: 0))
+            wordListControllerView?.selectItem(with: IndexPath(item: 3, section: 0))
             YXLog("刷新错词本")
             self.requestWrongWordsList()
         }
@@ -128,7 +128,9 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditWordList" {
-            let editWordListViewController = segue.destination as! YXEditWordListViewController
+            guard let editWordListViewController = segue.destination as? YXEditWordListViewController else {
+                return
+            }
             var words: [YXWordModel] = []
 
             switch wordListType {
@@ -164,8 +166,8 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
     /// 获取错词本单词列表
     private func requestWrongWordsList() {
         let request = YXWordListRequest.wrongWordList
-        YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
-            guard let wrongWordList = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let wrongWordList = response.data else { return }
 
             var wrongWordSectionData: [[String: [YXWordModel]]]?
             if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
@@ -245,13 +247,15 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
                     exerciseViewController.learnConfig = YXWrongLearnConfig()
                     self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
-//                self.requestWrongWordsList()
             default:
                 break
             }
         }
-        
-        return wordListViews[indexPath.row]!
+        if wordListViews.count > indexPath.row {
+            return wordListViews[indexPath.row] ?? UIView()
+        } else {
+            return UIView()
+        }
     }
     
     func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
@@ -271,16 +275,16 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
         }
         
         for index in 0..<wordListHeaderViews.count {
-            let label = wordListHeaderViews[index].viewWithTag(1) as! UILabel
-            let view = wordListHeaderViews[index].viewWithTag(2) as! YXDesignableView
+            let label = wordListHeaderViews[index].viewWithTag(1) as? UILabel
+            let view  = wordListHeaderViews[index].viewWithTag(2) as? YXDesignableView
 
             if index == indexPath.row {
-                label.textColor = .white
-                view.isHidden = false
+                label?.textColor = .white
+                view?.isHidden   = false
                 
             } else {
-                label.textColor = UIColor.hex(0xFFD99E)
-                view.isHidden = true
+                label?.textColor = UIColor.hex(0xFFD99E)
+                view?.isHidden   = true
             }
         }
     }

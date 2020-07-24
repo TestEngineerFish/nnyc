@@ -130,7 +130,8 @@ class YXReviewPlanShareDetailViewController: YXViewController {
     @objc private func downloadReviewPlanFinished() {
         let pid = self.reviewPlanModel?.planId ?? 0
         let request = YXReviewRequest.makeReviewPlan(name: self.reviewPlanName, code: pid, idsList: nil)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.toastView.hideView()
             NotificationCenter.default.post(name: YXNotification.kRefreshReviewTabPage, object: nil)
             UIView.toast("保存成功")

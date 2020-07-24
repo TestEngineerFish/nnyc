@@ -31,9 +31,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.addSubview(contentView)
         self.contentView.addSubview(leftContentView)
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && exerciseModel.word?.imageUrl != nil {
-            (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
-            (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
+        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && (exerciseModel.word?.imageUrl != nil), let _questionView = questionView as? YXNewLearnPrimarySchoolQuestionView {
+            _questionView.showImageView()
+            _questionView.showExample()
         }
         self.leftContentView.addSubview(questionView!)
         
@@ -60,12 +60,14 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.left.top.bottom.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.5)
         }
-        questionView?.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-44))
-            make.bottom.equalTo(answerView!.snp.top)
-        })
+        if answerView != nil {
+            questionView?.snp.makeConstraints({ (make) in
+                make.top.equalToSuperview()
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().offset(AdaptSize(-44))
+                make.bottom.equalTo(answerView!.snp.top)
+            })
+        }
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-65))
@@ -142,7 +144,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
     // MARK: ==== YXExerciseViewControllerProtocol ====
     override func backHomeEvent() {
         super.backHomeEvent()
-        (answerView as! YXNewLearnAnswerView).pauseView()
+        if let _answerView = answerView as? YXNewLearnAnswerView {
+            _answerView.pauseView()
+        }
     }
 
     override func showAlertEvnet() {

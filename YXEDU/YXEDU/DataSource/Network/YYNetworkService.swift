@@ -268,7 +268,7 @@ enum YXMiMeType: String {
                         }
                     } else {
                         YXLog("连续10002，退出登录吧")
-//                        YXUserModel.default.logout(force: false)
+                        YXUserModel.default.logout(force: false)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)

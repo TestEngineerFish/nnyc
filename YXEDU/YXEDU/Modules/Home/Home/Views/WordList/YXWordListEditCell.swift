@@ -54,15 +54,17 @@ class YXWordListEditCell: UITableViewCell {
             guard let americanPronunciationUrl = americanPronunciation, let englishPronunciationUrl = englishPronunciation else { return }
             playAuoidButton.layer.addFlickerAnimation()
             
-            var pronunciationUrl: URL!
+            var pronunciationUrl: URL?
             if YXUserModel.default.didUseAmericanPronunciation {
                 pronunciationUrl = URL(string: americanPronunciationUrl)
                 
             } else {
                 pronunciationUrl = URL(string: englishPronunciationUrl)
             }
-            
-            YXAVPlayerManager.share.playAudio(pronunciationUrl) { [weak self] in
+            guard let _pronunciationUrl = pronunciationUrl else {
+                return
+            }
+            YXAVPlayerManager.share.playAudio(_pronunciationUrl) { [weak self] in
                 guard let self = self else { return }
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }

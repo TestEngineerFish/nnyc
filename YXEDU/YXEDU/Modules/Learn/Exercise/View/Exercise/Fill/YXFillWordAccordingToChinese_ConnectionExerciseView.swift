@@ -49,12 +49,14 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         let answerViewConfit = YXConnectionLettersConfig()
         let answerViewW = CGFloat(extend.column) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.width) - answerViewConfit.itemMargin
         let answerViewH = CGFloat(extend.row) * (answerViewConfit.itemMargin + answerViewConfit.itemSize.height) - answerViewConfit.itemMargin
-        answerView?.snp.makeConstraints({ (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(questionView!.snp.bottom).offset(answerViewTop)
-            make.width.equalTo(answerViewW)
-            make.height.equalTo(answerViewH)
-        })
+        if questionView != nil {
+            answerView?.snp.makeConstraints({ (make) in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(questionView!.snp.bottom).offset(answerViewTop)
+                make.width.equalTo(answerViewW)
+                make.height.equalTo(answerViewH)
+            })
+        }
 
         let contentH = questionH + answerViewTop + answerViewH + answerViewBottom
         self.contentView.snp.makeConstraints { (make) in

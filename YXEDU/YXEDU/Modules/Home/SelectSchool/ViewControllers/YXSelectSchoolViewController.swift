@@ -88,7 +88,8 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     @objc private func submit(schoolId: Int, areaId: Int) {
         let request = YXSelectSchoolRequestManager.submit(schoolId: schoolId, areaId: areaId)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.toNextView()
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)

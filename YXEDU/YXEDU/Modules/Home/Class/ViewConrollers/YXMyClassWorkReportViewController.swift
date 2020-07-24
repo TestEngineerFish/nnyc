@@ -48,7 +48,8 @@ class YXMyClassWorkReportViewController: YXViewController, UITableViewDelegate, 
             return
         }
         let request = YXMyClassRequestManager.workReport(workId: _workId)
-        YYNetworkService.default.request(YYStructResponse<YXMyClassReportModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXMyClassReportModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.reportModel = response.data
             self.tableView.reloadData()
         }) { (error) in

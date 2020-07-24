@@ -15,8 +15,8 @@ enum YXEditWordListType {
 }
 
 struct CollectWord: Mappable {
-    var wordId: Int!
-    var isComplexWord: Int!
+    var wordId: Int?
+    var isComplexWord: Int?
     
     init() {}
     
@@ -25,14 +25,14 @@ struct CollectWord: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        wordId <- map["w"]
+        wordId        <- map["w"]
         isComplexWord <- map["is"]
     }
 }
 
 class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol, UITableViewDelegate, UITableViewDataSource {
 
-    var editWordListType: YXEditWordListType!
+    var editWordListType: YXEditWordListType?
     var words: [YXWordModel] = []
     
     @IBOutlet weak var headerLabel: UILabel!
@@ -46,7 +46,7 @@ class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol
     @IBAction func tapRedButton(_ sender: Any) {
         var collectWords: [CollectWord] = []
         
-        if editWordListType == .collected {
+        if editWordListType == .some(.collected) {
             for index in 0..<words.count {
                 let word = words[index]
                 
@@ -97,7 +97,7 @@ class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol
         
         tableView.register(UINib(nibName: "YXWordListEditCell", bundle: nil), forCellReuseIdentifier: "YXWordListEditCell")
 
-        if editWordListType == .collected {
+        if editWordListType == .some(.collected) {
             title = "收藏夹"
             headerLabel.text = "请选择想取消收藏的单词"
             redButton.setTitle("取消收藏", for: .normal)
@@ -119,7 +119,9 @@ class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEditCell", for: indexPath) as! YXWordListEditCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEditCell", for: indexPath) as? YXWordListEditCell else {
+            return UITableViewCell()
+        }
         let wordModel = words[indexPath.row]
         cell.delegate = self
         cell.setData(word: wordModel, indexPath: indexPath)

@@ -128,23 +128,16 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     // MARK: ==== Request ====
     private func requestClassList() {
         let request = YXMyClassRequestManager.classList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else { return }
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let modelList = response.dataArray else { return }
             
             if modelList.count == 1 {
                 self.customNavigationBar?.title = modelList[0].name
-
             } else if modelList.count > 1 {
                 self.customNavigationBar?.title = "\(modelList.count)个班级"
-
             }
             
             self.classModelList = modelList
-
-//            if self.classModelList.isEmpty {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-            
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -152,8 +145,8 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     private func requestWorkList() {
         let request = YXMyClassRequestManager.workList
-        YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { (response) in
-            guard let listModel = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let listModel = response.data else {
                 return
             }
             self.workListModel = listModel

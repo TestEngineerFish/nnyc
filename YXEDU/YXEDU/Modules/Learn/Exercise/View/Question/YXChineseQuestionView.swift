@@ -26,12 +26,13 @@ class YXChineseQuestionView: YXBaseQuestionView {
             make.left.right.equalToSuperview()
             make.height.equalTo(AdaptIconSize(28))
         })
-        
-        subTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptIconSize(20))
-        })
+        if titleLabel != nil {
+            subTitleLabel?.snp.makeConstraints({ (make) in
+                make.top.equalTo(titleLabel!.snp.bottom)
+                make.left.right.equalToSuperview()
+                make.height.equalTo(AdaptIconSize(20))
+            })
+        }
     }
     
     override func bindData() {

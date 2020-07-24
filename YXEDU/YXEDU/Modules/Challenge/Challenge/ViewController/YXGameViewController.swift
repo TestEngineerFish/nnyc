@@ -67,8 +67,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     @objc private func didEnterBackground() {
         let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let time = response.time else { return }
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let time = response.time else { return }
             self.lastTimestamp = time
             self.stopTimer()
         }, fail: nil)
@@ -77,8 +77,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
 
     @objc private func willEnterForeground() {
         let request = YXRegisterAndLoginRequest.userInfomation
-        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { (response) in
-            guard let time = response.time, self.lastTimestamp > 0 else { return }
+        YYNetworkService.default.request(YYStructResponse<YXUserInfomationModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let time = response.time, self.lastTimestamp > 0 else { return }
             let timeOffline = time - self.lastTimestamp
             self.updateTimer(offSet: timeOffline)
         }, fail: { (error) in
@@ -127,7 +127,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             return
         }
         let request = YXChallengeRequest.playGame(gameId: gameLineId)
-        YYNetworkService.default.request(YYStructResponse<YXGameModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXGameModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.gameModel = response.data
             self.bindData()
         }) { (error) in
@@ -138,7 +139,8 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
     private func requestReport(_ version: Int, total time: Int, question number: Int) {
         YXLog("游戏：上报 版本:\(version), 总时长:\(time)，答对问题数:\(number)")
         let request = YXChallengeRequest.report(version: version, totalTime: time, number: number)
-        YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXGameResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.gameResultMode                 = response.data
             self.gameResultMode?.consumeTime    = time
             self.gameResultMode?.questionNumber = number

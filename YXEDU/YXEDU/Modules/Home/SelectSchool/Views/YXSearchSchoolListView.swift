@@ -215,8 +215,8 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
             return
         }
         let request = YXSelectSchoolRequestManager.searchSchool(name: name, areaId: model.id)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXLocalModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else {
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXLocalModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let modelList = response.dataArray else {
                 return
             }
             self.schoolModelList = modelList

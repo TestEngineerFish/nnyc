@@ -246,8 +246,8 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
     private func requestActivity() {
         let request = YXHomeRequest.activityInfo
-        YYNetworkService.default.request(YYStructResponse<YXActivityModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXActivityModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
                 return
             }
             self.activityModel = model
@@ -596,7 +596,9 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeStudyDataCell", for: indexPath) as! YXHomeStudyDataCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeStudyDataCell", for: indexPath) as? YXHomeStudyDataCell else {
+                return UICollectionViewCell()
+            }
             
             switch indexPath.row {
             case 0:
@@ -622,11 +624,15 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             
         } else {
             if isPad() {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as! YXHomeSubItemiPadCell
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemiPadCell", for: indexPath) as? YXHomeSubItemiPadCell else {
+                    return UICollectionViewCell()
+                }
                 cell.setData(indexPath)
                 return cell
             } else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as! YXHomeSubItemCell
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXHomeSubItemCell", for: indexPath) as? YXHomeSubItemCell else {
+                    return UICollectionViewCell()
+                }
                 cell.setData(indexPath)
                 return cell
             }

@@ -37,20 +37,21 @@ class YXWordListCell: UITableViewCell {
         if YXAVPlayerManager.share.isPlaying {
             YXAVPlayerManager.share.pauseAudio()
             playAuoidButton.layer.removeFlickerAnimation()
-            
         } else {
             guard let americanPronunciationUrl = americanPronunciation, let englishPronunciationUrl = englishPronunciation else { return }
             playAuoidButton.layer.addFlickerAnimation()
             
-            var pronunciationUrl: URL!
+            var pronunciationUrl: URL?
             if YXUserModel.default.didUseAmericanPronunciation {
                 pronunciationUrl = URL(string: americanPronunciationUrl)
                 
             } else {
                 pronunciationUrl = URL(string: englishPronunciationUrl)
             }
-            
-            YXAVPlayerManager.share.playAudio(pronunciationUrl) { [weak self] in
+            guard let _pronunciationUrl = pronunciationUrl else {
+                return
+            }
+            YXAVPlayerManager.share.playAudio(_pronunciationUrl) { [weak self] in
                 guard let self = self else { return }
                 self.playAuoidButton.layer.removeFlickerAnimation()
             }
@@ -62,7 +63,9 @@ class YXWordListCell: UITableViewCell {
             return
         }
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
+        guard let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew else {
+            return
+        }
         wordDetialViewController.wordId        = wordModel.wordId ?? 0
         wordDetialViewController.isComplexWord = wordModel.isComplexWord ?? 0
         self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)

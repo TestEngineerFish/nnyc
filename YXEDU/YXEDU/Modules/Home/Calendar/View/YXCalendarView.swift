@@ -157,8 +157,8 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     // MARK: ==== Request ====
     internal func requestCalendarData(_ date: Date) {
         let request = YXCalendarRequest.getMonthly(time: Int(date.timeIntervalSince1970))
-        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
                 return
             }
             self.validDict.removeAll()

@@ -120,7 +120,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewSearchResultUnitListHederView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewSearchResultUnitListHederView)
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
-        self.pan!.delegate = self
+        self.pan?.delegate = self
         self.tableView.addGestureRecognizer(pan!)
         self.tableView.panGestureRecognizer.require(toFail: pan!)
         self.cancelButton.addTarget(self, action: #selector(cancelSearch), for: .touchUpInside)
@@ -300,10 +300,11 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wordModel = self.resultUnitListModel[indexPath.section].list[indexPath.row]
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-        wordDetialViewController.wordId        = wordModel.id
-        wordDetialViewController.isComplexWord = 0
-        self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        if let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew {
+            wordDetialViewController.wordId        = wordModel.id
+            wordDetialViewController.isComplexWord = 0
+            self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

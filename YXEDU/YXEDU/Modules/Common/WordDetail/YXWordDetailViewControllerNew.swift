@@ -19,7 +19,7 @@ class YXWordDetailViewControllerNew: YXViewController {
     @objc var wordId        = -1
     @objc var isComplexWord = 0
     var wordModel: YXWordModel?
-    private var wordDetailView: YXWordDetailCommonView!
+    private var wordDetailView: YXWordDetailCommonView?
 
     override func handleData(withQuery query: [AnyHashable : Any]!) {
         self.wordId        = query["word_id"] as? Int ?? -1
@@ -70,7 +70,7 @@ class YXWordDetailViewControllerNew: YXViewController {
             word.isComplexWord  = self.isComplexWord
             self.wordModel      = word
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight), word: word)
-            self.view.addSubview(self.wordDetailView)
+            self.view.addSubview(self.wordDetailView!)
         }) { error in
             YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
             YXUtils.showHUD(kWindow, title: error.message)

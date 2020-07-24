@@ -58,13 +58,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     // MARK: ==== Request ====
     private func requestChallengeData() {
         let request = YXChallengeRequest.challengeModel
-        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let _challengeModel = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let _challengeModel = response.data else {
                 return
             }
             self.updateChallengeData(model: _challengeModel)
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 
@@ -79,14 +79,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     private func requestUnlockGame() {
         let request = YXChallengeRequest.unlock
-        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             if let statusModel = response.data, statusModel.state == 1 {
                 self.requestChallengeData()
             } else {
                 self.showGoldLackAlert()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 
@@ -94,15 +95,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestReportShowPreviousResult(_ version: Int) {
         let request = YXChallengeRequest.showPrevious(version: version)
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: nil) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(kWindow, title: error.message)
         }
     }
 
     /// 展示上期结果弹框
     private func requestPreviousResult() {
         let request = YXChallengeRequest.rankedList
-        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0, let previousRankVersion = self.challengeModel?.userModel?.previousRankVersion else {
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0, let previousRankVersion = self.challengeModel?.userModel?.previousRankVersion else {
                 return
             }
 

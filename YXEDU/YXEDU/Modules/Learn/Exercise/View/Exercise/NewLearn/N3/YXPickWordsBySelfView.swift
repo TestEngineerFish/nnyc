@@ -10,7 +10,7 @@ import UIKit
 
 class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableViewDataSource {
 
-    private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)!
+    private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)?
 
     @IBOutlet weak var startButton: YXDesignableButton!
     @IBOutlet var contentView: UIView!
@@ -56,7 +56,9 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXPickWordsBySelfViewCell", for: indexPath) as! YXPickWordsBySelfViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXPickWordsBySelfViewCell", for: indexPath) as? YXPickWordsBySelfViewCell else {
+            return UITableViewCell()
+        }
         let exerciseModel = self.exerciseModel.n3List[indexPath.row]
         cell.wordLabel.text = exerciseModel.word?.word
         cell.isPicked = exerciseModel.word?.isSelected == .some(true)

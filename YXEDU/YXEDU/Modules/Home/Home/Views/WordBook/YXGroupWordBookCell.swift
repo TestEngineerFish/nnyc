@@ -54,7 +54,9 @@ class YXGroupWordBookCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXSingleGroupWordBookCell", for: indexPath) as! YXSingleGroupWordBookCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXSingleGroupWordBookCell", for: indexPath) as? YXSingleGroupWordBookCell else {
+            return UICollectionViewCell()
+        }
 
         if filterVersion == "所有版本" {
             let wordBookModel = self.gradeModel?.wordBooks?[indexPath.row]
@@ -78,7 +80,7 @@ class YXGroupWordBookCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var wordBook: YXWordBookModel!
+        var wordBook: YXWordBookModel?
 
         if filterVersion == "所有版本" {
             guard let wordBookMocel = self.gradeModel?.wordBooks?[indexPath.row] else { return }
@@ -95,14 +97,14 @@ class YXGroupWordBookCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             wordBook = wordBookModels[indexPath.row]
         }
 
-        guard let bookId = wordBook.bookId, let units = wordBook.units else { return }
-        let seleceUnitView = YXSeleceUnitView(units: units) { (unitId) in
-            guard let unitId = unitId else { return }
+        guard let bookId = wordBook?.bookId, let units = wordBook?.units else { return }
+        let seleceUnitView = YXSeleceUnitView(units: units) { [weak self] (unitId) in
+            guard let self = self, let unitId = unitId else { return }
 
             // ---- Growing ----
             let gradeId = self.gradeModel?.gradeId
             let bookGrade: String? = gradeId == nil ? nil : "\(gradeId ?? 0)"
-            YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: wordBook.bookVersionName)
+            YXGrowingManager.share.uploadChangeBook(grade: bookGrade, versionName: wordBook?.bookVersionName)
 
             let request = YXWordBookRequest.addWordBook(userId: YXUserModel.default.uuid ?? "", bookId: bookId, unitId: unitId)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in

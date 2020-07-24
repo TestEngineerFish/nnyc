@@ -27,18 +27,18 @@ class YXWordQuestionView: YXBaseQuestionView {
             make.centerX.equalToSuperview()
             make.size.equalTo(titleLabel?.size ?? CGSize.zero)
         })
-        
-        subTitleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptIconSize(20))
-        })
-        
-        audioPlayerView?.snp.makeConstraints({ (make) in
-            make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
-            make.width.height.equalTo(AdaptIconSize(22))
-        })
+        if titleLabel != nil {
+            subTitleLabel?.snp.makeConstraints({ (make) in
+                make.top.equalTo(titleLabel!.snp.bottom)
+                make.left.right.equalToSuperview()
+                make.height.equalTo(AdaptIconSize(20))
+            })
+            audioPlayerView?.snp.makeConstraints({ (make) in
+                make.centerY.equalTo(titleLabel!)
+                make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
+                make.width.height.equalTo(AdaptIconSize(22))
+            })
+        }
     }
     
     override func bindData() {

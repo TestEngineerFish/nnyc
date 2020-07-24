@@ -161,10 +161,10 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
     @objc
     private func goToEarnCoin() {
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let taskCenterViewController = home.instantiateViewController(withIdentifier: "YXTaskCenterViewController") as! YXTaskCenterViewController
-        taskCenterViewController.fromYXSquirrelCoinViewController = true
-        
-        self.navigationController?.pushViewController(taskCenterViewController, animated: true)
+        if let taskCenterViewController = home.instantiateViewController(withIdentifier: "YXTaskCenterViewController") as? YXTaskCenterViewController {
+            taskCenterViewController.fromYXSquirrelCoinViewController = true
+            self.navigationController?.pushViewController(taskCenterViewController, animated: true)
+        }
     }
 
     // MARK: ==== WKNavigationDelegate ====

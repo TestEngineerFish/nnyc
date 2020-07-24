@@ -66,9 +66,10 @@ class YXLearningResultViewController: YXViewController {
         self.view.addSubview(self.contentScrollView)
         
         // 结果视图
-        var newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
+        guard let _model = model else { return }
+        var newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: _model)
         newModel.type = learnConfig?.learnType ?? .base
-        headerView = YXExerciseResultView(model: newModel)
+        headerView    = YXExerciseResultView(model: newModel)
         self.contentScrollView.addSubview(headerView!)
         
         // 返回按钮
@@ -92,7 +93,7 @@ class YXLearningResultViewController: YXViewController {
         self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         //        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         self.contentScrollView.addSubview(unitMapView!)
-        unitMapView!.snp.makeConstraints { (make) in
+        unitMapView?.snp.makeConstraints { (make) in
             make.size.equalTo(mapSize)
             make.centerX.equalToSuperview()
             make.top.equalTo(resultView.snp.bottom).offset(AdaptIconSize(10))
@@ -112,7 +113,8 @@ class YXLearningResultViewController: YXViewController {
             make.size.equalTo(CGSize(width: AdaptIconSize(16), height: AdaptIconSize(41)))
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.contentScrollView.contentSize = CGSize(width:self.view.width, height:self.unitMapView!.frame.maxY + AdaptSize(15) + kSafeBottomMargin)
+            let mapMaxY = self.unitMapView?.frame.maxY ?? 0
+            self.contentScrollView.contentSize = CGSize(width:self.view.width, height: mapMaxY + AdaptSize(15) + kSafeBottomMargin)
         }
     }
     

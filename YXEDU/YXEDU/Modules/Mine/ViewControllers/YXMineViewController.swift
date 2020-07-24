@@ -93,7 +93,9 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Edit" {
-            let destinationViewController = segue.destination as! YXPersonalInformationVC
+            guard let destinationViewController = segue.destination as? YXPersonalInformationVC else {
+                return
+            }
             let userModel = YXUserModel_Old()
             userModel.avatar = temporaryUserModel?.avatar
             userModel.nick = temporaryUserModel?.nick
@@ -107,7 +109,9 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             destinationViewController.userModel = userModel
             
         } else if segue.identifier == "Coin" {
-            let squirrelCoinViewController = segue.destination as! YXSquirrelCoinViewController
+            guard let squirrelCoinViewController = segue.destination as? YXSquirrelCoinViewController else {
+                return
+            }
             squirrelCoinViewController.coinAmount = self.myIntegralLabel.text
         }
     }
@@ -117,8 +121,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     /// 请求个人信息
     private func loadData() {
         let request = YXMineRequest.getUserInfo
-        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
-            guard let loginModel = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let loginModel = response.data else { return }
             self.updateUserInfo(loginModel: loginModel)
         }, fail: nil)
     }
@@ -137,8 +141,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     /// 请求积分信息
     private func loadIntegralData() {
         let request = YXMineRequest.getCreditsInfo
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            guard let credits = response.data?.credits else { return }
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let credits = response.data?.credits else { return }
             let dict = ["userCredits": credits]
             self.updateIntegralData(dict: dict)
         }, fail: nil)
@@ -266,15 +270,15 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellOne") ?? UITableViewCell()
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
         case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
         case 3:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
         case 4:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
             let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
             badgeView.snp.makeConstraints { (make) in
@@ -285,7 +289,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             badgeView.isHidden = badgeNum <= 0
             return cell
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix") ?? UITableViewCell()
         }
     }
     
@@ -302,9 +306,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                     let action1 = UIAlertAction(title: "确定", style: .default) { action in
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "qq")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self, let data = response.data else { return }
+                            guard let self = self else { return }
                             self.loadData()
-
                         }) { error in
                             YXUtils.showHUD(kWindow, title: error.message)
                         }
@@ -327,9 +330,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                     let action1 = UIAlertAction(title: "确定", style: .default) { action in
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "wechat")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self, let data = response.data else { return }
+                            guard let self = self else { return }
                             self.loadData()
-
                         }) { error in
                             YXUtils.showHUD(kWindow, title: error.message)
                         }
@@ -413,15 +415,14 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BadgeCell", for: indexPath)
         let badge = badgeModelList[indexPath.row]
         
-        let imageView = cell.viewWithTag(1) as! UIImageView
-        
-        if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
-            imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
-            
-        } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {
-            imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+        if let imageView = cell.viewWithTag(1) as? UIImageView {
+            if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
+                imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
+
+            } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {
+                imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+            }
         }
-        
         return cell
     }
     
@@ -459,7 +460,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             self.loadData()
-
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }

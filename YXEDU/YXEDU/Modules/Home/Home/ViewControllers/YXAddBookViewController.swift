@@ -46,8 +46,8 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
     
     private func loadData() {
         let request = YXHomeRequest.getBookList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
-            guard let data = response.dataArray else { return }
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.dataArray else { return }
             self.grades       = data
             self.filterGrades = self.grades
             
@@ -103,7 +103,9 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXGroupWordBookCell", for: indexPath) as! YXGroupWordBookCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXGroupWordBookCell", for: indexPath) as? YXGroupWordBookCell else {
+            return UITableViewCell()
+        }
         let grade = filterGrades[indexPath.row]
         cell.bookCollectionView.tag = indexPath.row
         cell.setData(gradeModel: grade, gradeName: grade.gradeName, versionName: filterVersion, hideDivider: indexPath.row == 0)

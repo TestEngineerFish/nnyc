@@ -38,7 +38,9 @@ class YXTaskCenterCell: UITableViewCell, UICollectionViewDelegate, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterCardCell", for: indexPath) as! YXTaskCenterCardCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterCardCell", for: indexPath) as? YXTaskCenterCardCell else {
+            return UICollectionViewCell()
+        }
         let task = taskListModel?.list?[indexPath.row]
 
         cell.titleLabel.text = task?.name

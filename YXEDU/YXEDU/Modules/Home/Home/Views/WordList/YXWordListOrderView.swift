@@ -17,7 +17,7 @@ enum YXWordListOrderType: String {
 class YXWordListOrderView: UIView {
     var orderClosure: ((_ orderType: YXWordListOrderType) -> Void)?
     
-    private var orderViewLeftTopPoint: CGPoint!
+    private var orderViewLeftTopPoint: CGPoint?
     private var orderType: YXWordListOrderType = .default
     
     @IBOutlet var contentView: UIView!
@@ -44,8 +44,8 @@ class YXWordListOrderView: UIView {
         Bundle.main.loadNibNamed("YXWordListOrderView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
-        orderViewTopDistance.constant = orderViewLeftTopPoint.y
-        orderViewLeftDistance.constant = orderViewLeftTopPoint.x
+        orderViewTopDistance.constant  = orderViewLeftTopPoint?.y ?? 0
+        orderViewLeftDistance.constant = orderViewLeftTopPoint?.x ?? 0
         
         switch orderType {
         case .default:

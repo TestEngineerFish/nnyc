@@ -71,8 +71,9 @@ class YXHandWriteAnswerView: UIView {
         }
         
         if timer == nil {
-            let timer = Timer(fire: Date().addingTimeInterval(1), interval: 0, repeats: false, block: { (time) in
-                self.recognizeText(in: self.imageView.image!)
+            let timer = Timer(fire: Date().addingTimeInterval(1), interval: 0, repeats: false, block: { [weak self] (time) in
+                guard let self = self, let _image = self.imageView.image else { return }
+                self.recognizeText(in: _image)
             })
             
             RunLoop.current.add(timer, forMode: .common)
@@ -100,7 +101,8 @@ class YXHandWriteAnswerView: UIView {
             request.recognitionLanguages = ["eng"]
 
             DispatchQueue.global(qos: .userInitiated).async {
-                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+                guard let cgImage = image.cgImage else { return }
+                let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
                 try? handler.perform([request])
             }
 

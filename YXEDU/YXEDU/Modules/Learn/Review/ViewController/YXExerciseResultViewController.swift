@@ -62,8 +62,10 @@ class YXExerciseResultViewController: YXViewController {
     
     private func initResultView() {
         self.loadingView.removeFromSuperview()
-
-        self.resultView = YXExerciseResultView(model: model!)
+        guard let _model = model else {
+            return
+        }
+        self.resultView = YXExerciseResultView(model: _model)
         
         resultView?.processEvent = { [weak self] in
             self?.processEvent()

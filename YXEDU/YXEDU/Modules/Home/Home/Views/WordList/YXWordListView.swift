@@ -288,8 +288,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             
         } else {
             let request = YXWordListRequest.wordList(type: requestType)
-            YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { (response) in
-                guard let wordLists = response.dataArray else { return }
+            YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self, let wordLists = response.dataArray else { return }
                 
                 var wordSectionData: [[String: [YXWordModel]]] = []
                 wordLists.forEach { wordList in
@@ -413,8 +413,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         if (wrongWordSectionData?.count ?? 0) > 0 || words.count > 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
-            var word: YXWordModel!
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as? YXWordListCell else {
+                return UITableViewCell()
+            }
+            var word: YXWordModel?
 
             if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
                 if var wrongWords = wrongWordSectionData?[indexPath.section].values.first, wrongWords.count > 0 {
@@ -422,7 +424,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     
                     cell.removeMaskClosure = { [weak self] in
                         guard let self = self else { return }
-                        wrongWords[indexPath.row].hidePartOfSpeechAndMeanings = !word.hidePartOfSpeechAndMeanings
+                        wrongWords[indexPath.row].hidePartOfSpeechAndMeanings = !(word?.hidePartOfSpeechAndMeanings ?? false)
 
                         if let key = self.wrongWordSectionData?[indexPath.section].keys.first {
                             self.wrongWordSectionData?[indexPath.section] = [key: wrongWords]
@@ -439,11 +441,15 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     self.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
-            cell.setData(word)
+            if let _word = word {
+                cell.setData(_word)
+            }
             return cell
             
         } else {
-            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
+            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as? YXWordListEmptyCell else {
+                return UITableViewCell()
+            }
             return emptyCell
         }
     }

@@ -37,22 +37,22 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
             
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
             
         case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
             
         case 3:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
           
         case 4:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix") ?? UITableViewCell()
             
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSeven")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSeven") ?? UITableViewCell()
         }
     }
     
@@ -70,10 +70,8 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
             
         case 1:
             YXSettingDataManager().checkVersion { (version, error) in
-                if version?.state == .recommend || version?.state == .force {
-                    UIApplication.shared.open(URL(string: "https://apps.apple.com/cn/app/id1379948642")!, options: [:]) { (isSuccess) in
-                        
-                    }
+                if version?.state == .recommend || version?.state == .force, let url = URL(string: "https://apps.apple.com/cn/app/id1379948642") {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 } else {
                     YXUtils.showHUD(self.view, title: "当前已经是最新版本")
                 }

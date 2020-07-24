@@ -372,8 +372,8 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
                         do {
                             let responseObject = try JSONDecoder().decode(PhoneNumber.self, from: data)
                             let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "")
-                            YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
-                                guard let data = response.data else {
+                            YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] response in
+                                guard let self = self, let data = response.data else {
                                     CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                                     return
                                 }

@@ -22,7 +22,7 @@ class YXAboutUsViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.title = "关于我们"
-        versionLabel.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        versionLabel.text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let year = Calendar.current.component(.year, from: Date())
         copyrightLabel.text = "Copyright @2018-\(year) 念念有词"
         #if DEBUG

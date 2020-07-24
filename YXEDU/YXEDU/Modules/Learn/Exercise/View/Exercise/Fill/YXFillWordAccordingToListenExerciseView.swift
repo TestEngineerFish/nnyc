@@ -45,7 +45,10 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
     }
     
     override func showAlertEvnet() {
-        (self.answerView as! YXAnswerSelectLettersView).textField.resignFirstResponder()
+        guard let _answerView = self.answerView as? YXAnswerSelectLettersView else {
+            return
+        }
+        _answerView.textField.resignFirstResponder()
     }
     
     override func hideAlertEvent() {
@@ -54,6 +57,9 @@ class YXFillWordAccordingToListenExerciseView: YXBaseExerciseView {
     
     // MAKR: --- Event ----
     @objc private func showKeyboard() {
-        (self.answerView as! YXAnswerSelectLettersView).textField.becomeFirstResponder()
+        guard let _answerView = self.answerView as? YXAnswerSelectLettersView else {
+            return
+        }
+        _answerView.textField.becomeFirstResponder()
     }
 }

@@ -134,7 +134,7 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         if var text = textField.text, text.isEmpty == false {
             if text.count >= 20  {
                 textField.text = text.substring(maxIndex: 20)
-                text = textField.text!
+                text = textField.text ?? ""
             }
             clearButton.isHidden = false
             textCountLabel.text = "\(text.count)"

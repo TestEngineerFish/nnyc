@@ -61,7 +61,7 @@ enum AnswerStatus: Int {
 
     mutating func forward() {
         if self.rawValue < 13 {
-            self = AnswerStatus(rawValue: self.rawValue + 1)!
+            self = AnswerStatus(rawValue: self.rawValue + 1) ?? .alreadLearn
         } else {
             self = .alreadLearn
         }

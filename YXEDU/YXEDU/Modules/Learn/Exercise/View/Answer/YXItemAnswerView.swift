@@ -12,14 +12,14 @@ import UIKit
 class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     enum Config {
-        static var itemHeight: CGFloat = AdaptSize(isPad() ? 60 : 45)
-        static var itemWidth: CGFloat = AdaptSize(isPad() ? 540 : 280)
+        static var itemHeight: CGFloat   = AdaptSize(isPad() ? 60 : 45)
+        static var itemWidth: CGFloat    = AdaptSize(isPad() ? 540 : 280)
         static var itemInterval: CGFloat = AdaptSize(isPad() ? 26 : 13)
     }
     
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
-    private var collectionViewCell: UICollectionViewCell!
+    private var collectionView: UICollectionView?
+    private var collectionViewCell: UICollectionViewCell?
     
     var titleFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
     var titleLabel: UILabel {
@@ -39,36 +39,31 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: AdaptSize(35), bottom: 0, right: AdaptSize(35))
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = UIColor.white
-        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        self.addSubview(collectionView)
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.decelerationRate = UIScrollView.DecelerationRate.fast
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.isScrollEnabled = false
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        self.addSubview(collectionView!)
 
-        collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
+        collectionView?.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
         
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         let itemNum = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0)
         let h = (Config.itemHeight + Config.itemInterval) * itemNum - Config.itemInterval
-        collectionView.snp.makeConstraints { (make) in
+        collectionView?.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalToSuperview()
             make.height.equalTo(h)
         }
     }
-    
-    override func bindData() {
-//        self.collectionView.reloadData()
-    }
-    
         
     //MARK:- delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -140,8 +135,6 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         // 设置选中效果
         if let itemModelList = exerciseModel.option?.firstItems {
-//            collectionView.reloadSections(IndexSet(integer: 0))
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {
                     weakSelf.exerciseModel.option?.firstItems?[index].isWrong = false

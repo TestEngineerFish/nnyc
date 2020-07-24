@@ -17,12 +17,12 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         case antonym     = "反义词"
     }
     
-    private var word: YXWordModel!
+    private var word: YXWordModel?
     private var sections: [[String: Any]]      = []
     private var sectionExpandStatus: [Bool]    = []
     private var mostDeformationLength: CGFloat = 30
     private var featuredViewheight: CGFloat    = 0
-    private var featuredView: YXWordDetailFeaturedView!
+    private var featuredView: YXWordDetailFeaturedView?
     private var recordView = YXRecordView()
     var exampleCell: YXWordDetailExampleCell?
     var isAutoPlay = false
@@ -41,14 +41,14 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func collectWord(_ sender: UIButton) {
         if self.collectionButton.currentImage == #imageLiteral(resourceName: "unCollectWord") {
-            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word.wordId ?? 0),\"is\":\(word.isComplexWord ?? 0)}]")
+            let request = YXWordListRequest.cancleCollectWord(wordIds: "[{\"w\":\(word?.wordId ?? 0),\"is\":\(word?.isComplexWord ?? 0)}]")
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
             }
         } else {
-            let request = YXWordListRequest.collectWord(wordId: word.wordId ?? 0, isComplexWord: word.isComplexWord ?? 0)
+            let request = YXWordListRequest.collectWord(wordId: word?.wordId ?? 0, isComplexWord: word?.isComplexWord ?? 0)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             }) { error in
@@ -59,7 +59,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func feedbackWord(_ sender: UIButton) {
         YXLog("单词详情View中点击反馈按钮")
-        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: word.wordId ?? 0), withWord: word.word ?? "")
+        YXReportErrorView.show(to: kWindow, withWordId: NSNumber(integerLiteral: word?.wordId ?? 0), withWord: word?.word ?? "")
     }
     
     @IBAction func playAudio(_ sender: UIButton) {
@@ -100,8 +100,8 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         tableView.register(UINib(nibName: "YXWordDeformationsCell", bundle: nil), forCellReuseIdentifier: "YXWordDeformationsCell")
         tableView.register(UINib(nibName: "YXWordDetailClassicCell", bundle: nil), forCellReuseIdentifier: "YXWordDetailClassicCell")
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-        
-        featuredView = YXWordDetailFeaturedView(word: word, heightChangeClosure: { [weak self] height in
+        guard let _word = word else { return }
+        featuredView = YXWordDetailFeaturedView(word: _word, heightChangeClosure: { [weak self] height in
             guard let self = self else { return }
             self.featuredViewheight = height
 
@@ -110,9 +110,9 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
                 self.tableView.reloadData()
             }
         })
-        featuredView.tableViewBottomLineHeight.constant = 0
+        featuredView?.tableViewBottomLineHeight.constant = 0
         
-        let request = YXWordListRequest.didCollectWord(wordId: word.wordId ?? 0)
+        let request = YXWordListRequest.didCollectWord(wordId: _word.wordId ?? 0)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             if response.data?.didCollectWord == 1 {
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
@@ -123,15 +123,15 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             YXUtils.showHUD(kWindow, title: error.message)
         }
         
-        wordLabel.text = word.word
-        if let pronunciation = word.soundmark, pronunciation.isEmpty == false {
+        wordLabel.text = _word.word
+        if let pronunciation = _word.soundmark, pronunciation.isEmpty == false {
             phoneticSymbolLabel.text = "\(YXUserModel.default.didUseAmericanPronunciation ? "美" : "英")" + pronunciation
             
         } else {
             phoneticSymbolLabel.text = ""
         }
 
-        if let partOfSpeechAndMeanings = word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
+        if let partOfSpeechAndMeanings = _word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
             if partOfSpeechAndMeanings[0].partOfSpeech == "phrase" {
                 playButtonLeftOffset.constant = 0
                 partOfSpeechAndSenseLabel.text = partOfSpeechAndMeanings[0].meaning
@@ -153,7 +153,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             }
         }
                 
-        if let deformations = word.deformations, deformations.count > 0 {
+        if let deformations = _word.deformations, deformations.count > 0 {
             sections.append([SectionType.deformation.rawValue: deformations])
             sectionExpandStatus.append(true)
             
@@ -171,25 +171,25 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             mostDeformationLength = mostDeformationLength + mostWidth
         }
         
-        if let examples = word.examples, examples.count > 0 {
+        if let examples = _word.examples, examples.count > 0 {
             sections.append([SectionType.examples.rawValue: examples])
             sectionExpandStatus.append(true)
         }
         
-        if (word.fixedMatchs?.count ?? 0) > 0 || (word.commonPhrases?.count ?? 0) > 0 || (word.wordAnalysis?.count ?? 0) > 0 || (word.detailedSyntaxs?.count ?? 0) > 0 {
+        if (_word.fixedMatchs?.count ?? 0) > 0 || (_word.commonPhrases?.count ?? 0) > 0 || (_word.wordAnalysis?.count ?? 0) > 0 || (_word.detailedSyntaxs?.count ?? 0) > 0 {
             sections.append([SectionType.featured.rawValue: []])
             sectionExpandStatus.append(true)
         }
         
-        if let synonyms = word.synonyms, synonyms.count > 0 {
-            featuredView.tableViewBottomLineHeight.constant = 10
+        if let synonyms = _word.synonyms, synonyms.count > 0 {
+            featuredView?.tableViewBottomLineHeight.constant = 10
 
             sections.append([SectionType.synonym.rawValue: synonyms])
             sectionExpandStatus.append(true)
         }
         
-        if let antonyms = word.antonyms, antonyms.count > 0 {
-            featuredView.tableViewBottomLineHeight.constant = 10
+        if let antonyms = _word.antonyms, antonyms.count > 0 {
+            featuredView?.tableViewBottomLineHeight.constant = 10
 
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
@@ -213,13 +213,13 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     /// 不应该调用的。。。，这里仅仅是为了获取这个单词的跟读最好得分，之后有时间将之前的跟读得分写入数据库即可
     /// 查询单词详情
     private func requestWordDetail() {
-        guard let wordId = word.wordId else {
+        guard let wordId = word?.wordId else {
             return
         }
         let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: 0)
         YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
             guard let self = self, let wordModel = response.data else { return }
-            self.word.listenScore      = wordModel.listenScore
+            self.word?.listenScore      = wordModel.listenScore
             self.recordView.updateState(listenScore: wordModel.listenScore)
         }) { error in
             YXLog("查询单词:\(wordId)详情失败， error:\(error)")
@@ -242,8 +242,8 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
 
     /// 播放单词
     private func playWord() {
-        guard let _voice = word.voice, let pronunciationUrl = URL(string: _voice) else {
-            YXLog("无效的音频地址: \(String(describing: word.voice))")
+        guard let _voice = self.word?.voice, let pronunciationUrl = URL(string: _voice) else {
+            YXLog("无效的音频地址: ", word?.voice ?? "")
             YXUtils.showHUD(kWindow, title: "无效音频")
             return
         }
@@ -282,7 +282,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         guard let userInfo = notification.userInfo as? [String:Int], let newScore: Int = userInfo["maxScore"] else {
             return
         }
-        word.listenScore = newScore
+        word?.listenScore = newScore
         self.recordView.updateState(listenScore: newScore)
     }
     
@@ -362,7 +362,9 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
 
         switch section.keys.first {
         case SectionType.deformation.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDeformationsCell", for: indexPath) as! YXWordDeformationsCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDeformationsCell", for: indexPath) as? YXWordDeformationsCell else {
+                return UITableViewCell()
+            }
             let deformations              = section.values.first as? [YXWordDeformationModel]
             let deformation               = deformations?[indexPath.row]
             cell.titleLabel.text          = deformation?.deformation
@@ -371,7 +373,9 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             return cell
             
         case SectionType.examples.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as! YXWordDetailExampleCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailExampleCell", for: indexPath) as? YXWordDetailExampleCell else {
+                return UITableViewCell()
+            }
             let examples = section.values.first as? [YXWordExampleModel]
             let example  = examples?[indexPath.row]
             cell.exampleImageView.sd_setImage(with: URL(string: example?.imageUrl ?? ""))
@@ -400,14 +404,18 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             
         case SectionType.featured.rawValue:
             let cell = UITableViewCell()
-            cell.addSubview(featuredView)
-            featuredView.snp.makeConstraints { (make) in
-                make.edges.equalToSuperview()
+            if featuredView != nil {
+                cell.addSubview(featuredView!)
+                featuredView?.snp.makeConstraints { (make) in
+                    make.edges.equalToSuperview()
+                }
             }
             return cell
             
         case SectionType.synonym.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as? YXWordDetailClassicCell else {
+                return UITableViewCell()
+            }
             let synonyms = section.values.first as? [String]
 
             var text = ""
@@ -424,7 +432,9 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             return cell
             
         case SectionType.antonym.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as! YXWordDetailClassicCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailClassicCell", for: indexPath) as? YXWordDetailClassicCell else {
+                return UITableViewCell()
+            }
             let antonyms = section.values.first as? [String]
 
             var text = ""

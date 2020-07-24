@@ -41,8 +41,8 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
     
     var guideView = YXNewLearnGuideView()
     
-    var answerView: YXNewLearnAnswerView!
-    var wordModel: YXWordModel!
+    var answerView: YXNewLearnAnswerView?
+    var wordModel: YXWordModel?
     
     init(wordModel: YXWordModel) {
         self.wordModel = wordModel
@@ -66,7 +66,7 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
         self.addSubview(closeButton)
         self.addSubview(titleLabel)
         self.addSubview(subtitleLabel)
-        self.addSubview(answerView)
+        self.addSubview(answerView!)
         
         closeButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptIconSize(15))
@@ -85,7 +85,7 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
             make.height.equalTo(AdaptSize(20))
             make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(2))
         }
-        answerView.snp.makeConstraints({ (make) in
+        answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-148))
             make.height.equalTo(AdaptIconSize(111))
@@ -95,16 +95,16 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
     
     override func bindProperty() {
         self.backgroundColor    = UIColor.white.withAlphaComponent(0.95)
-        self.titleLabel.text    = wordModel.word
-        self.subtitleLabel.text = (wordModel.partOfSpeech ?? "") + " " + (wordModel.meaning ?? "")
-        self.answerView.newLearnDelegate = self
+        self.titleLabel.text    = wordModel?.word
+        self.subtitleLabel.text = (wordModel?.partOfSpeech ?? "") + " " + (wordModel?.meaning ?? "")
+        self.answerView?.newLearnDelegate = self
         self.closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(closedView(_:)), name: YXNotification.kRecordScore, object: nil)
     }
     
     // MARK: ---- Event ----
     @objc private func closeAction() {
-        self.answerView.pauseView()
+        self.answerView?.pauseView()
         UIView.animate(withDuration: 0.25, animations: {
             self.layer.opacity = 0.0
         }) { (finished) in
@@ -133,7 +133,7 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
     
     private func showGuideView() {
         let roundSize  = CGSize(width: AdaptSize(115), height: AdaptSize(115))
-        let audioView  = self.answerView.recordAudioButton
+        let audioView  = self.answerView?.recordAudioButton ?? UIView()
         let audioFrame = audioView.convert(audioView.frame, to: kWindow)
         let guideFrame: CGRect = {
             if isPad() {
@@ -150,17 +150,17 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
     
     @objc private func hideGuideView() {
         self.guideView.removeFromSuperview()
-        self.answerView.status.forward()
+        self.answerView?.status.forward()
      }
     
     // MARK: ---- YXNewLearnProtocol ----
     /// 单词和单词播放结束
     func playWordAndWordFinished() {
-        self.answerView.status = .showGuideView
+        self.answerView?.status = .showGuideView
         if !(YYCache.object(forKey: YXLocalKey.alreadShowNewLearnGuideView.rawValue) as? Bool ?? false)  {
             self.showGuideView()
         } else {
-            self.answerView.status.forward()
+            self.answerView?.status.forward()
         }
     }
     

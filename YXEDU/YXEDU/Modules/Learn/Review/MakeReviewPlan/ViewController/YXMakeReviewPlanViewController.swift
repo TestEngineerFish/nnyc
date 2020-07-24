@@ -129,7 +129,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         guard let jsonData = try? JSONSerialization.data(withJSONObject: idsList, options: []) else {
             return
         }
-        let idsStr = String(data: jsonData, encoding: String.Encoding.utf8)!
+        let idsStr = String(data: jsonData, encoding: String.Encoding.utf8) ?? ""
         let request = YXReviewRequest.makeReviewPlan(name: name, code: nil, idsList: idsStr)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
@@ -293,7 +293,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         self.selectedIndex = indexPath.row
         model.list[preIndexPath.row].isSelected = false
         model.list[indexPath.row].isSelected    = true
-        self.segmentControllerView.headerScrollView.reloadData()
+        self.segmentControllerView.headerScrollView?.reloadData()
     }
 
     // MARK: ==== YXReviewSelectedArrowProtocol ====

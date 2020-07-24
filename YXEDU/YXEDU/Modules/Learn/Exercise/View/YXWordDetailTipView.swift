@@ -12,8 +12,8 @@ class YXWordDetailTipView: UIView {
 
     var dismissClosure: (() -> Void)?
     
-    private var word: YXWordModel!
-    private var wordDetailView: YXWordDetailView!
+    private var word: YXWordModel?
+    private var wordDetailView: YXWordDetailView?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet var backgroundView: UIView!
@@ -38,42 +38,42 @@ class YXWordDetailTipView: UIView {
         Bundle.main.loadNibNamed("YXWordDetailTipView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
-        
-        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 40), word: word!)
-        wordDetailView.layer.cornerRadius = 6
-        wordDetailView.layer.masksToBounds = true
-        wordDetailView.dismissClosure = { [weak self] in
+        guard let _word = word else { return }
+        wordDetailView = YXWordDetailView(frame: CGRect(x: 0, y: 40, width: screenWidth, height: screenHeight - 40), word: _word)
+        wordDetailView?.layer.cornerRadius  = 6
+        wordDetailView?.layer.masksToBounds = true
+        wordDetailView?.dismissClosure = { [weak self] in
             guard let self = self else { return }
             self.dismissClosure?()
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                guard let self = self else { return }
                 self.backgroundView.alpha = 0
-                self.wordDetailView.transform = CGAffineTransform(translationX: 0, y: screenHeight - 44)
-            }) { (isCompleted) in
+                self.wordDetailView?.transform = CGAffineTransform(translationX: 0, y: screenHeight - 44)
+            }) { [weak self] (isCompleted) in
+                guard let self = self else { return }
                 self.removeFromSuperview()
             }
         }
         
-        let maskPath = UIBezierPath(roundedRect: wordDetailView.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 6, height: 6))
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = wordDetailView.bounds
-        maskLayer.path = maskPath.cgPath
-        wordDetailView.layer.mask = maskLayer
+        let maskPath = UIBezierPath(roundedRect: wordDetailView!.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 6, height: 6))
+        let maskLayer   = CAShapeLayer()
+        maskLayer.frame = wordDetailView!.bounds
+        maskLayer.path  = maskPath.cgPath
+        wordDetailView!.layer.mask = maskLayer
         
-        self.addSubview(wordDetailView)
+        self.addSubview(wordDetailView!)
     }
     
     func showWithAnimation() {
         UIApplication.shared.keyWindow?.addSubview(self)
         
         backgroundView.alpha = 0
-        wordDetailView.transform = CGAffineTransform(translationX: 0, y: screenHeight - 40)
+        wordDetailView?.transform = CGAffineTransform(translationX: 0, y: screenHeight - 40)
 
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-            self.backgroundView.alpha = 0.7
-            self.wordDetailView.transform = .identity
-            
-        }) { (isCompleted) in
-            
-        }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+            guard let self = self else { return }
+            self.backgroundView.alpha      = 0.7
+            self.wordDetailView?.transform = .identity
+            }, completion: nil)
     }
 }

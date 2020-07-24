@@ -218,7 +218,8 @@ class YXUserModel: NSObject {
     @objc func logout(force:Bool = true, finished block: (()->Void)? = nil) {
         if force {
             let request = YXRegisterAndLoginRequest.logout
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
                 self.logoutAfterEvent()
                 block?()
             }) { (error) in

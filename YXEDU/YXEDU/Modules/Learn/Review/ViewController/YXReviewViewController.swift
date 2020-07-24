@@ -10,7 +10,7 @@ import UIKit
 
 class YXReviewViewController: YXTableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         
-    private var headerView: YXReviewHeaderView!
+    private var headerView: YXReviewHeaderView?
     private var footerView = YXReviewPlanEmptyView()
     private var reviewPageModel: YXReviewPageModel?
     private var collectionView: UICollectionView = {
@@ -94,11 +94,11 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     }
     
     func configHeaderView() {
-        self.headerView.startReviewEvent = { [weak self] in
+        self.headerView?.startReviewEvent = { [weak self] in
             guard let self = self else { return }
             self.startReviewEvent()
         }
-        self.headerView.createReviewPlanEvent = { [weak self] in
+        self.headerView?.createReviewPlanEvent = { [weak self] in
             guard let self = self else { return }
             self.createReviewEvent()
         }
@@ -144,7 +144,7 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         let otherHeight  = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
         let headerHeight = (isPad() ? AdaptSize(550) : AdaptFontSize(360)) + otherHeight
         self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
-        self.headerView.reviewModel = reviewPageModel
+        self.headerView?.reviewModel = reviewPageModel
         if self.dataSource.count == 0 {
             self.tableView.tableFooterView = self.footerView
         } else {
@@ -203,7 +203,9 @@ extension YXReviewViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if isPad() { return AdaptSize(270) }
-        let model = dataSource[indexPath.row] as! YXReviewPlanModel
+        guard let model = dataSource[indexPath.row] as? YXReviewPlanModel else {
+            return .zero
+        }
         return YXReviewPlanTableViewCell.viewHeight(model: model)
     }
     
@@ -243,11 +245,11 @@ extension YXReviewViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isPad() { return }
-        let model = dataSource[indexPath.row] as! YXReviewPlanModel
-        
-        let vc = YXReviewPlanDetailViewController()
-        vc.planId = model.planId
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let model = dataSource[indexPath.row] as? YXReviewPlanModel {
+            let vc = YXReviewPlanDetailViewController()
+            vc.planId = model.planId
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
@@ -257,7 +259,7 @@ extension YXReviewViewController {
     /// 智能复习
     func startReviewEvent() {
 //        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
-        if headerView.reviewModel.canMakeReviewPlans > 0 {
+        if (headerView?.reviewModel.canMakeReviewPlans ?? 0) > 0 {
             let taskModel = YXWordBookResourceModel(type: .all) {
                 YXWordBookResourceManager.shared.contrastBookData()
             }

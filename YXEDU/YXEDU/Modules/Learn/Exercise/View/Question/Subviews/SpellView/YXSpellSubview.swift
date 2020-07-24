@@ -114,7 +114,7 @@ class YXSpellSubview: UIView {
         self.wordViewList.forEach { (view) in
             var _width = CGFloat(AdaptIconSize(14))
             if !view.text.isEmpty {
-                let w = view.text.textWidth(font: view.textField.font!, height: charH)
+                let w = view.text.textWidth(font: view.textField.font ?? UIFont.pfSCRegularFont(withSize: AdaptFontSize(17)), height: charH)
                 _width = w > _width ? w : _width
             }
             view.snp.remakeConstraints { (make) in

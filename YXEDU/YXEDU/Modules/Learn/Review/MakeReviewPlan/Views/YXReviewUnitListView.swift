@@ -80,7 +80,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewUnitListHeaderView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewUnitListHeaderView)
         pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
-        pan!.delegate = self
+        pan?.delegate = self
         self.tableView.addGestureRecognizer(pan!)
         self.tableView.panGestureRecognizer.require(toFail: pan!)
         self.tableView.snp.makeConstraints { (make) in
@@ -275,10 +275,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return self.unitModelList[indexPath.section].list[indexPath.row]
         }()
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-        wordDetialViewController.wordId        = wordModel.id
-        wordDetialViewController.isComplexWord = 0
-        self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        if let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew {
+            wordDetialViewController.wordId        = wordModel.id
+            wordDetialViewController.isComplexWord = 0
+            self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
     }
     
     // MARK: ==== YXReviewUnitListHeaderProtocol ====
