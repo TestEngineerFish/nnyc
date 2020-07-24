@@ -71,6 +71,7 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     
     deinit {
         YXLog("练习view 释放")
+        YXAVPlayerManager.share.pauseAudio()
     }
 
     init(exerciseModel: YXExerciseModel) {
