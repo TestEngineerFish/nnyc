@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXOCLog.shared()?.launch()
 //        #if DEBUG
 //        ECOClient.shared()?.start()
-//        YXCatonMonitor().start()
+//        XXPerformanceMonitor.sharedInstance.mainThreadThreshold = 0.05
 //        XXPerformanceMonitor.sharedInstance.startMonitorMain()
 //        #endif
         

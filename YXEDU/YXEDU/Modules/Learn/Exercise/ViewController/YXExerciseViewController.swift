@@ -49,11 +49,6 @@
     /// 是否不允许退出学习
     var isFocusStudy: Bool = false
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.loadingView = nil
@@ -76,7 +71,6 @@
         YYCache.remove(forKey: .learningState)
         YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self)
     }
     
