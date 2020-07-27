@@ -29,7 +29,15 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
             }
         }
         // 特殊VC，不支持侧滑返回
-        if self.topViewController?.classForCoder == YXExerciseViewController.classForCoder() {
+        let specialVCList = [YXExerciseViewController.classForCoder(),
+                             YXExerciseResultViewController.classForCoder(),
+                             YXLearningResultViewController.classForCoder(),
+                             YXBindPhoneViewController.classForCoder(),
+                             YXSelectSchoolViewController.classForCoder(),
+                             YXAddBookGuideViewController.classForCoder()]
+        if specialVCList.contains(where: { (classType) -> Bool in
+            self.topViewController?.classForCoder == .some(classType)
+        }) {
             return false
         }
         return true
