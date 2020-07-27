@@ -122,16 +122,14 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customNavigationBar?.title = "选择词书2"
+        self.customNavigationBar?.title = "选择词书"
         self.bookListTopConstraint.constant = kNavBarHeight
         bookCollectionView.register(UINib(nibName: "YXWordBookCell", bundle: nil), forCellWithReuseIdentifier: "YXWordBookCell")
+        self.view.backgroundColor = UIColor.hex(0xF5F5F5)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xF5F5F5)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
         fetchWordBooks()
     }
     

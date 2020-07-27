@@ -81,11 +81,6 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         
         self.taskButton.addTarget(self, action: #selector(goToEarnCoin), for: .touchUpInside)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
 
     private func bindProperty() {
         self.coinAmountlabel.text              = coinAmount

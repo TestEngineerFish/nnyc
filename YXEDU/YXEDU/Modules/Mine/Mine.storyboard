@@ -1252,6 +1252,7 @@
                         <outlet property="avatarImageView" destination="ZxI-93-Dkk" id="kwZ-qI-Ehg"/>
                         <outlet property="badgeNumberView" destination="B48-5w-Ixj" id="HxZ-3l-7fh"/>
                         <outlet property="calendarLabel" destination="jLf-FL-uxB" id="j0A-1X-p8w"/>
+                        <outlet property="collectionHeightConstraint" destination="Ova-FD-Rhi" id="CMQ-ZI-4hx"/>
                         <outlet property="collectionLeftConsraint" destination="w9E-HF-G3M" id="i6Z-lC-gYH"/>
                         <outlet property="collectionRightConsraint" destination="w9E-HF-G3M" id="7FE-gT-7Xp"/>
                         <outlet property="collectionView" destination="lAT-aI-CFm" id="U3Z-ON-FZO"/>

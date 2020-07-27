@@ -30,6 +30,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var myIntegralViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
     @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
 
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
@@ -50,7 +51,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
-        
         if isPad() {
             myIntegralViewHeight.constant = 112
             myIntegralViewTopOffset.constant = 44
@@ -58,8 +58,9 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func bindProperty() {
-        self.collectionLeftConsraint.constant  = AdaptSize(22)
-        self.customNavigationBar?.isHidden     = true
+        self.collectionLeftConsraint.constant    = AdaptSize(22)
+        self.collectionHeightConstraint.constant = AdaptSize(73)
+        self.customNavigationBar?.isHidden       = true
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
           self.badgeNumberView.addGestureRecognizer(tapAction)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -73,7 +74,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.navigationBar.tintColor = UIColor.black
@@ -281,7 +281,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
             let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
-            badgeView.snp.makeConstraints { (make) in
+            badgeView.snp.remakeConstraints { (make) in
                 make.centerY.equalToSuperview()
                 make.right.equalToSuperview().offset(-AdaptSize(30))
                 make.size.equalTo(badgeView.size)

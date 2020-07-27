@@ -38,11 +38,6 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
         loadData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     private func loadData() {
         let request = YXHomeRequest.getBookList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { [weak self] (response) in

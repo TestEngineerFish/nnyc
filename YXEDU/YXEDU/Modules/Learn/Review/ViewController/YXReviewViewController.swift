@@ -43,16 +43,9 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         self.fetchData()
 //        YXTest.default.test()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewWillLayoutSubviews() {

@@ -15,6 +15,7 @@ import GrowingAutoTrackKit
 
 //#if DEBUG
 //import EchoSDK
+//import XXPerformanceMonitor
 //#endif
 
 @UIApplicationMain
@@ -43,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXOCLog.shared()?.launch()
 //        #if DEBUG
 //        ECOClient.shared()?.start()
+//        YXCatonMonitor().start()
+//        XXPerformanceMonitor.sharedInstance.startMonitorMain()
 //        #endif
         
         #if !DEBUG  // 正式环境才开启统计

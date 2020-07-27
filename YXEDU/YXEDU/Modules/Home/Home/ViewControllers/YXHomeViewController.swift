@@ -96,55 +96,24 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             self.study(focus: false)
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.customNavigationBar?.isHidden = true
-        let lineView = UIView(frame: CGRect(x: 0, y: -0.5, width: screenWidth, height: 0.5))
-        lineView.backgroundColor = UIColor.hex(0xDCDCDC)
-        self.tabBarController?.tabBar.addSubview(lineView)
 
-        progressBar.layer.cornerRadius        = 5
-        progressBar.clipsToBounds             = true
-        progressBar.subviews[1].clipsToBounds = true
-        if (progressBar.layer.sublayers?.count ?? 0) > 1 {
-            progressBar.layer.sublayers![1].cornerRadius = 5
-        }
-
-        studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
-        subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
-        subItemCollectionView.register(UINib(nibName: "YXHomeSubItemiPadCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemiPadCell")
-
-        if isPad() {
-            homeViewAspect.isActive = false
-            homeViewiPadAspect.isActive = true
-            
-            countOfWaitForStudyWords.font = UIFont.DINAlternateBold(ofSize: 70)
-            startStudyView.cornerRadius = 36
-            startStudyButton.cornerRadius = 36
-            startStudyButton.titleLabel?.font = UIFont.systemFont(ofSize: 26, weight: .medium)
-            startStudyButtonHeight.constant = 72
-            startStudyButtonTopOffset.constant = 24
-            startStudyButtonBottomOffset.constant = 44
-            studyDataCollectionViewBottomOffset.constant = 36
-        }
-
-        self.checkUserState()
-        self.setSquirrelAnimation()
-        self.registerNotification()
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.createSubviews()
+        self.registerNotification()
+        self.bindProperty()
+        self.bindData()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.startStudyButton.isEnabled   = true
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        loadData()
+        self.requestBaseInfo()
         self.requestActivity()
+        self.checkComment()
         YXStepConfigManager.share.contrastStepConfig()
         YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
         YXRedDotManager.share.updateTaskCenterBadge()
@@ -161,20 +130,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
         if !self.animationPlayFinished {
             self.setSquirrelAnimation()
-        }
-
-        YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \((YYCache.object(forKey: YXLocalKey.punchCount) as? Int) ?? 0)，是否弹过评分弹窗： \((YYCache.object(forKey: YXLocalKey.didShowRate) as? Bool) ?? false)")
-        if YYCache.object(forKey: YXLocalKey.didShowRate) as? Bool == nil, let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int, count >= 4 {
-            YYCache.set(true, forKey: YXLocalKey.didShowRate)
-            YXLog("用户 \(YXUserModel.default.uuid ?? "") 弹出评分弹窗")
-
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController.requestReview()
-                
-            } else {
-                guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1379948642?action=write-review") else { return }
-                UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
-            }
         }
     }
 
@@ -197,7 +152,9 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     }
     
     // MARK: ---- Request ----
-    private func loadData(finished block: (()->Void)? = nil) {
+    /// 更新用户基本信息
+    /// - Parameter block: 闭包事件
+    private func requestBaseInfo(finished block: (()->Void)? = nil) {
         let request = YXHomeRequest.getBaseInfo(userId: YXUserModel.default.uuid ?? "")
         YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let userInfomation = response.data else { return }
@@ -205,23 +162,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             YXLog("==== 当前用户User ID", self.homeModel?.userId ?? 0)
             
             self.initService()
-            self.adjustStartStudyButtonState()
-            self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
-            self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
-            self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
-            let countData = self.getUnlearnWordCount(home: userInfomation)
-            self.countOfWaitForStudyWords.text = "\(countData.0 + countData.1)"
-            if countData.0 == 0 {
-                self.unlearnedTitleLabel.text = "待复习"
-            } else {
-                self.unlearnedTitleLabel.text = "待学习"
-            }
-            
-            self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
-            self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
-            self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
-            self.studyDataCollectionView.reloadData()
-
             YXUserModel.default.userId        = self.homeModel?.userId
             YXUserModel.default.currentUnitId = self.homeModel?.unitId
             YXUserModel.default.currentBookId = self.homeModel?.bookId
@@ -229,108 +169,32 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             YXUserModel.default.isJoinClass   = self.homeModel?.isJoinClass ?? false
             YXUserModel.default.hasNewWork    = self.homeModel?.hasHomework ?? false
 
-            self.handleTabData()
-            self.initDataManager()
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.updateWordCountRemind()
+                self.adjustStartStudyButtonState()
+                self.bookNameButton.setTitle(self.homeModel?.bookName, for: .normal)
+                self.unitNameButton.setTitle(self.homeModel?.unitName, for: .normal)
+                self.progressBar.setProgress(Float(self.homeModel?.unitProgress ?? 0), animated: true)
+                self.learnedWordsCount   = "\(self.homeModel?.learnedWords ?? 0)"
+                self.collectedWordsCount = "\(self.homeModel?.collectedWords ?? 0)"
+                self.wrongWordsCount     = "\(self.homeModel?.wrongWords ?? 0)"
+                self.studyDataCollectionView.reloadData()
+                self.subItemCollectionView.reloadData()
+            }
+
+            self.checkDownloadBook()
             self.uploadGrowing()
-            self.subItemCollectionView.reloadData()
             block?()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
     }
 
-    private func requestActivity() {
-        let request = YXHomeRequest.activityInfo
-        YYNetworkService.default.request(YYStructResponse<YXActivityModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else {
-                return
-            }
-            self.activityModel = model
-            self.setActivityView()
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
-        }
-    }
-
-    /// 上传剪切板和设备信息
-    private func uploadAppInfo() {
-        guard var clipboard = UIPasteboard.general.string else {
-            return
-        }
-        let platform  = "0"
-        let systemVer = UIDevice().sysVersion() ?? ""
-        let screen    = UIDevice().screenResolution() ?? ""
-        if clipboard.count != 26 {
-            clipboard = ""
-        }
-        let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-
-        }) { (error) in
-            YXLog("上报设备信息失败")
-        }
-    }
-
-    private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
-        let service = YXExerciseServiceImpl()
-        let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
-        if let studyModel = service.studyDao.selectStudyRecordModel(learn: config) {
-            let newCount = service.studyDao.getUnlearnedNewWordCount(study: studyModel.studyId)
-            let reviewCount = service.studyDao.getUnlearnedReviewWordCount(study: studyModel.studyId)
-            return (newCount, reviewCount)
-        } else {
-            return (model.newWords ?? 0, model.reviewWords ?? 0)
-        }
-    }
-    
-    private func initService() {
-        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
-        let bookId = self.homeModel?.bookId ?? 0
-        let unitId = self.homeModel?.unitId ?? 0
-        let config = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-        service.learnConfig = config
-        service.initService()
-    }
-
-    /// 处理基础信息请求
-    private func handleTabData() {
-        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel?.bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel?.bookId)
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
-    }
-
-    private func uploadGrowing() {
-        guard let model = self.homeModel, let grade = model.bookGrade else {
-            return
-        }
-        YXGrowingManager.share.uploadChangeBook(grade: "\(grade)", versionName: model.bookVersionName)
-    }
-
-    private func checkGuide() {
-        if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(true) {
-            let vc = YXSelectSchoolViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
-            self.performSegue(withIdentifier: "AddBookGuide", sender: self)
-        } else if !YXUserModel.default.isFinishedNewUserStudy {
-            // 如果还未加载词书数据，则先加载
-            if YXUserModel.default.currentBookId != nil && YXUserModel.default.currentUnitId != nil {
-                self.newUserStudy()
-            } else {
-                self.loadData { [weak self] in
-                    guard let self = self else { return }
-                    self.newUserStudy()
-                }
-            }
-        } else {
-            self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        }
-    }
-    
-    private func checkUserState() {
-        YXUserDataManager.share.updateUserInfomation { (userInfomation) in
-            guard let _userInfomation = userInfomation else {
+    /// 更新用户配置信息
+    private func requestUserConfig() {
+        YXUserDataManager.share.updateUserInfomation { [weak self] (userInfomation) in
+            guard let self = self, let _userInfomation = userInfomation else {
                 return
             }
 
@@ -352,10 +216,204 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                 YYCache.set(nil, forKey: .reminder)
             }
             Growing.setPeopleVariableWithKey("cidan", andStringValue: "0")
-            self.checkGuide()
+            DispatchQueue.main.async { [weak self] in
+                self?.processRegisterEvent()
+            }
         }
     }
-    
+
+    /// 活动
+    private func requestActivity() {
+        let request = YXHomeRequest.activityInfo
+        YYNetworkService.default.request(YYStructResponse<YXActivityModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
+                return
+            }
+            self.activityModel = model
+            DispatchQueue.main.async { [weak self] in
+                self?.setActivityView()
+            }
+        }) { (error) in
+            YXUtils.showHUD(kWindow, title: error.message)
+        }
+    }
+
+    /// 上传剪切板和设备信息
+    private func uploadAppInfo() {
+        guard var clipboard = UIPasteboard.general.string else {
+            return
+        }
+        let platform  = "0"
+        let systemVer = UIDevice().sysVersion() ?? ""
+        let screen    = UIDevice().screenResolution() ?? ""
+        if clipboard.count != 26 {
+            clipboard = ""
+        }
+        let request = YXRegisterAndLoginRequest.uploadAppInfo(clipboard: clipboard, platform: platform, systomVersion: systemVer, screen: screen)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YXLog("上报设备信息成功")
+        }) { (error) in
+            YXLog("上报设备信息失败")
+        }
+    }
+
+    // MARK: ---- Event ----
+
+    private func createSubviews() {
+        self.customNavigationBar?.isHidden         = true
+        self.progressBar.layer.cornerRadius        = 5
+        self.progressBar.clipsToBounds             = true
+        self.progressBar.subviews[1].clipsToBounds = true
+        if (progressBar.layer.sublayers?.count ?? 0) > 1 {
+            progressBar.layer.sublayers![1].cornerRadius = 5
+        }
+        if isPad() {
+            self.homeViewAspect.isActive                      = false
+            self.homeViewiPadAspect.isActive                  = true
+            self.countOfWaitForStudyWords.font                = UIFont.DINAlternateBold(ofSize: 70)
+            self.startStudyView.cornerRadius                  = 36
+            self.startStudyButton.cornerRadius                = 36
+            self.startStudyButton.titleLabel?.font            = UIFont.systemFont(ofSize: 26, weight: .medium)
+            self.startStudyButtonHeight.constant              = 72
+            self.startStudyButtonTopOffset.constant           = 24
+            self.startStudyButtonBottomOffset.constant        = 44
+            self.studyDataCollectionViewBottomOffset.constant = 36
+        }
+    }
+
+    private func bindProperty() {
+        self.studyDataCollectionView.register(UINib(nibName: "YXHomeStudyDataCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeStudyDataCell")
+        self.subItemCollectionView.register(UINib(nibName: "YXHomeSubItemCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemCell")
+        self.subItemCollectionView.register(UINib(nibName: "YXHomeSubItemiPadCell", bundle: nil), forCellWithReuseIdentifier: "YXHomeSubItemiPadCell")
+    }
+
+    private func bindData() {
+        self.requestUserConfig()
+        self.setSquirrelAnimation()
+    }
+
+    @objc private func updateTaskCenterStatus() {
+        self.subItemCollectionView.reloadData()
+    }
+
+    @objc private func playSquirrelAnimation() {
+        YYCache.set(true, forKey: YXLocalKey.firstShowHome)
+        self.setSquirrelAnimation()
+    }
+
+    @objc private func updateMyClassStatus() {
+        self.requestBaseInfo()
+    }
+
+    @objc private func newUserStudy() {
+        self.study(focus: true)
+    }
+
+    @IBAction func showLearnMap(_ sender: UIButton) {
+        let vc = YXLearnMapViewController()
+        vc.bookId = self.homeModel?.bookId
+        vc.unitId = self.homeModel?.unitId
+        self.navigationController?.pushViewController(vc, animated: true)
+        YXLog("进入单元地图")
+    }
+
+    private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
+        let service = YXExerciseServiceImpl()
+        let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
+        if let studyModel = service.studyDao.selectStudyRecordModel(learn: config) {
+            let newCount = service.studyDao.getUnlearnedNewWordCount(study: studyModel.studyId)
+            let reviewCount = service.studyDao.getUnlearnedReviewWordCount(study: studyModel.studyId)
+            return (newCount, reviewCount)
+        } else {
+            return (model.newWords ?? 0, model.reviewWords ?? 0)
+        }
+    }
+
+    private func initService() {
+        // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
+        let bookId = self.homeModel?.bookId ?? 0
+        let unitId = self.homeModel?.unitId ?? 0
+        let config = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+        self.service.learnConfig = config
+        self.service.initService()
+    }
+
+
+    private func toMyClass() {
+        if YXUserModel.default.isJoinClass {
+            let vc = YXMyClassViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
+            alertView.titleLabel.text = "请输入班级号或作业提取码"
+            alertView.shouldOnlyShowOneButton = false
+            alertView.shouldClose = false
+            alertView.doneClosure = {(classNumber: String?) in
+                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
+                    alertView.removeFromSuperview()
+                    let vc = YXMyClassViewController()
+                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                }
+                YXLog("班级号：\(classNumber ?? "")")
+            }
+            alertView.clearButton.isHidden    = true
+            alertView.textCountLabel.isHidden = true
+            alertView.textMaxLabel.isHidden   = true
+            alertView.alertHeight.constant    = 222
+            alertView.show()
+        }
+    }
+
+    /// 检测当前词书是否需要更新
+    private func checkDownloadBook() {
+        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel?.bookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel?.bookId)
+        }
+        YXWordBookResourceManager.shared.addTask(model: taskModel)
+    }
+
+    /// Growing上传用户选择词书
+    private func uploadGrowing() {
+        guard let model = self.homeModel, let grade = model.bookGrade else {
+            return
+        }
+        YXGrowingManager.share.uploadChangeBook(grade: "\(grade)", versionName: model.bookVersionName)
+    }
+
+    @objc private func toActivity() {
+        guard let model = self.activityModel else {
+            return
+        }
+        if !model.hadReward && model.hadNewFriend {
+            self.bubbleImageView?.isHidden = true
+        }
+        let vc = YXWebViewController()
+        vc.requestUrlStr = model.urlStr
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    /// 根据用户状态，继续注册流程（哎……）
+    private func processRegisterEvent() {
+        if (YYCache.object(forKey: .isShowSelectSchool) as? Bool) == .some(true) {
+            let vc = YXSelectSchoolViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
+            self.performSegue(withIdentifier: "AddBookGuide", sender: self)
+        } else if !YXUserModel.default.isFinishedNewUserStudy {
+            // 如果还未加载词书数据，则先加载
+            if YXUserModel.default.currentBookId != nil && YXUserModel.default.currentUnitId != nil {
+                self.newUserStudy()
+            } else {
+                self.requestBaseInfo { [weak self] in
+                    guard let self = self else { return }
+                    self.newUserStudy()
+                }
+            }
+        } else {
+            self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        }
+    }
+
     // MARK: ---- Tools ----
     private func setActivityView() {
         guard let model = self.activityModel else {
@@ -440,7 +498,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         if isFirstShowHome {
             if isPad() {
                 squirrelAnimationView = AnimationView(name: "homeFirstiPad")
-
             } else {
                 squirrelAnimationView = AnimationView(name: "homeFirst")
             }
@@ -456,7 +513,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         } else {
             if isPad() {
                 squirrelAnimationView = AnimationView(name: "homeNormaliPad")
-
             } else {
                 squirrelAnimationView = AnimationView(name: "homeNormal")
             }
@@ -468,16 +524,18 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         squirrelAnimationView?.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        squirrelAnimationView?.play(completion: { (isFinished) in
-            if isFinished {
-                self.animationPlayFinished = true
-                YXLog("动画播放完成")
-            } else {
-                self.animationPlayFinished = false
-                YXLog("动画未播放完")
-            }
-        })
-
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.squirrelAnimationView?.play(completion: { [weak self] (isFinished) in
+                if isFinished {
+                    self?.animationPlayFinished = true
+                    YXLog("动画播放完成")
+                } else {
+                    self?.animationPlayFinished = false
+                    YXLog("动画未播放完")
+                }
+            })
+        }
     }
     
     private func adjustStartStudyButtonState() {
@@ -496,18 +554,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         }
     }
 
-    private func initDataManager() {
-        if (self.homeModel?.newWords ?? 0) == 0 && (self.homeModel?.reviewWords ?? 0) == 0 {
-            if service.progress == .learning {
-                let wordAmount = self.service.getAllWordAmount()
-                countOfWaitForStudyWords.text = "\(wordAmount)"
-            }
-        }
-        
-        // 保持当前选中的词书
-        YYCache.set(self.homeModel?.bookId, forKey: .currentChooseBookId)
-    }
-
     private func study(focus: Bool) {
         guard let homeData = self.homeModel else {
             return
@@ -520,72 +566,38 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    // MARK: ---- Event ----
-    @objc private func updateTaskCenterStatus() {
-        self.subItemCollectionView.reloadData()
-    }
-    
-    @objc private func playSquirrelAnimation() {
-        YYCache.set(true, forKey: YXLocalKey.firstShowHome)
-        self.setSquirrelAnimation()
-    }
 
-    @objc private func updateMyClassStatus() {
-        self.loadData()
-    }
+    /// 检查是否需要弹出评分弹框
+    private func checkComment() {
+        let didShownAlert  = YYCache.object(forKey: YXLocalKey.didShowRate) as? Bool ?? false
+        let punchCount = YYCache.object(forKey: YXLocalKey.punchCount) as? Int ?? 0
+        YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(punchCount)，是否弹过评分弹窗： \(didShownAlert)")
+        if !didShownAlert, punchCount >= 4 {
+            YYCache.set(true, forKey: YXLocalKey.didShowRate)
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 弹出评分弹窗")
 
-    @objc private func newUserStudy() {
-        self.study(focus: true)
-    }
-    
-    @IBAction func showLearnMap(_ sender: UIButton) {
-        let vc = YXLearnMapViewController()
-        vc.bookId = self.homeModel?.bookId
-        vc.unitId = self.homeModel?.unitId
-        self.navigationController?.pushViewController(vc, animated: true)
-        YXLog("进入单元地图")
-    }
-
-    private func toMyClass() {
-        if YXUserModel.default.isJoinClass {
-            let vc = YXMyClassViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
-            alertView.titleLabel.text = "请输入班级号或作业提取码"
-            alertView.shouldOnlyShowOneButton = false
-            alertView.shouldClose = false
-            alertView.doneClosure = {(classNumber: String?) in
-                YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    alertView.removeFromSuperview()
-                    let vc = YXMyClassViewController()
-                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                }
-                YXLog("班级号：\(classNumber ?? "")")
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.requestReview()
+            } else {
+                guard let writeReviewURL = URL(string: "https://apps.apple.com/app/id1379948642?action=write-review") else { return }
+                UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
             }
-            alertView.clearButton.isHidden    = true
-            alertView.textCountLabel.isHidden = true
-            alertView.textMaxLabel.isHidden   = true
-            alertView.alertHeight.constant    = 222
-            alertView.show()
         }
     }
 
-    @objc private func toActivity() {
-        guard let model = self.activityModel else {
+    private func updateWordCountRemind() {
+        guard let model = self.homeModel else {
             return
         }
-        if !model.hadReward && model.hadNewFriend {
-            self.bubbleImageView?.isHidden = true
+        let countData = self.getUnlearnWordCount(home: model)
+        self.countOfWaitForStudyWords.text = "\(countData.0 + countData.1)"
+        if countData.0 == 0 {
+            self.unlearnedTitleLabel.text = "待复习"
+        } else {
+            self.unlearnedTitleLabel.text = "待学习"
         }
-        let vc = YXWebViewController()
-        //        vc.customTitle   = "全国单词达人挑战赛"
-        //        vc.requestUrlStr = "http://10.173.4.150:8080"
-//        vc.requestUrlStr = "http://nnyc-api-test.xstudyedu.com/api/activity/activity.html"
-        vc.requestUrlStr = model.urlStr
-        self.navigationController?.pushViewController(vc, animated: true)
     }
+
     
     // MARK: ---- UICollection Delegate & DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
