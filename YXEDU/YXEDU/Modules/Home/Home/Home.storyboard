@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--添加词书-->
+        <!--Add Book View Controller-->
         <scene sceneID="Dii-4T-NLR">
             <objects>
                 <viewController storyboardIdentifier="YXAddBookViewController" hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -87,17 +87,12 @@
                         <viewLayoutGuide key="safeArea" id="GUA-GI-m9Q"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="添加词书" id="sSb-fv-dhd">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="3vm-bB-RUn">
-                            <connections>
-                                <action selector="back:" destination="KRx-zx-laN" id="sQ1-Nf-Occ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="filterButton" destination="xuM-da-ekt" id="5Qk-Dw-388"/>
                         <outlet property="seleteGradeViewStateImageView" destination="7a7-r9-LZL" id="G6R-2E-93L"/>
                         <outlet property="tableView" destination="uVU-qD-ytE" id="IoR-Oj-sRw"/>
+                        <outlet property="tableViewTopConstraint" destination="VVO-tc-nJS" id="BPL-YR-qng"/>
+                        <outlet property="viewTopConstraint" destination="tW8-rW-shT" id="W2j-Z2-oOs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoQ-9B-QBW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

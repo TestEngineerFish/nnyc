@@ -18,15 +18,12 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var seleteGradeViewStateImageView: UIImageView!
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     
     @IBAction func showOrHideSelectGradeView(_ sender: Any) {
         if selectGradeView?.isHidden == true {
             selectGradeView?.isHidden = false
-            
         } else {
             selectGradeView?.isHidden = true
         }
@@ -34,7 +31,9 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customNavigationBar?.isHidden = true
+        self.viewTopConstraint.constant      = kNavHeight
+        self.tableViewTopConstraint.constant = kNavBarHeight + 44.5
+        self.customNavigationBar?.title      = "添加词书"
         tableView.register(UINib(nibName: "YXGroupWordBookCell", bundle: nil), forCellReuseIdentifier: "YXGroupWordBookCell")
         loadData()
     }
@@ -60,7 +59,7 @@ class YXAddBookViewController: YXViewController, UITableViewDelegate, UITableVie
     }
         
     private func createGradeSelectView() {
-        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: 44, width: screenWidth, height: screenHeight), grades: grades, selectClosure: { [weak self] gradeName, versionName in
+        selectGradeView = YXSelectGradeView(frame: CGRect(x: 0, y: (kNavHeight + 44), width: screenWidth, height: screenHeight), grades: grades, selectClosure: { [weak self] gradeName, versionName in
             guard let self = self else { return }
             self.filterButton.setTitle("  " + gradeName + " " + (versionName ?? "所有版本") + "  ", for: .normal)
             self.filterButton.setTitleColor(.orange1, for: .normal)
