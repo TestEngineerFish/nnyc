@@ -176,7 +176,9 @@ class YXReviewPlanHeaderView: UIView {
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXReviewPlanHeaderView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.bounds
+        contentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         
         listenProgressView.progressImage = listenProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
         reviewProgressView.progressImage = reviewProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))

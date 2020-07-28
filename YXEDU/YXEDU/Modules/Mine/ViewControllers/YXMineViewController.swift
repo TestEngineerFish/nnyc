@@ -300,49 +300,43 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         case 0:
             let accountInfoView = YXAccountInfoView()
             accountInfoView.bindInfo = bindInfo
-            accountInfoView.bindQQClosure = {
+            accountInfoView.bindQQClosure = { [weak self] in
+                guard let self = self else { return }
                 if self.bindInfo[1] == "1" {
-                    let alert = UIAlertController(title: "解绑后将无法使用QQ进行登录", message: "", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                    let alertView = YXAlertView()
+                    alertView.titleLabel.text = "提示"
+                    alertView.descriptionLabel.text = "解绑后将无法使用QQ进行登录"
+                    alertView.doneClosure = { [weak self] (text: String?) in
+                        guard let self = self else { return }
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "qq")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self else { return }
-                            self.loadData()
+                            self?.loadData()
                         }) { error in
                             YXUtils.showHUD(kWindow, title: error.message)
                         }
                     }
-                    alert.addAction(action1)
-
-                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                    alert.addAction(action2)
-                    
-                    self.present(alert, animated: true)
-                    
+                    alertView.show()
                 } else {
                     QQApiManager.shared().qqLogin()
                 }
             }
             
-            accountInfoView.bindWechatClosure = {
+            accountInfoView.bindWechatClosure = { [weak self] in
+                guard let self = self else { return }
                 if self.bindInfo[2] == "2" {
-                    let alert = UIAlertController(title: "解绑后将无法使用微信进行登录", message: "", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                    let alertView = YXAlertView()
+                    alertView.titleLabel.text = "提示"
+                    alertView.descriptionLabel.text = "解绑后将无法使用微信进行登录"
+                    alertView.doneClosure = { [weak self] (text: String?) in
+                        guard let self = self else { return }
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "wechat")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self else { return }
-                            self.loadData()
+                            self?.loadData()
                         }) { error in
                             YXUtils.showHUD(kWindow, title: error.message)
                         }
                     }
-                    alert.addAction(action1)
-
-                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                    alert.addAction(action2)
-                    
-                    self.present(alert, animated: true)
-                    
+                    alertView.show()
                 } else {
                     WXApiManager.shared().wxLogin()
                 }
