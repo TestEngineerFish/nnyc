@@ -22,7 +22,6 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        tableView.estimatedRowHeight = AdaptSize(125)
         return tableView
     }()
 
@@ -169,33 +168,22 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyWorkTableViewHeaderView()
-//        headerView.setDate(class: self.classModelList)
         return headerView
-//
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 44))
-//
-//        let label = UILabel(frame: CGRect(x: 20, y: 0, width: screenWidth - 40, height: 44))
-//        label.text = "班级作业"
-//
-//        view.addSubview(label)
-//
-//        return view
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell, let listModel = self.workListModel else {
             return UITableViewCell()
         }
-        let model = listModel.workModelList[indexPath.row]
+        var model = listModel.workModelList[indexPath.row]
+        if indexPath.row == 1 {
+            model.workName = "开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧"
+        }
         cell.setData(work: model, hashDic: listModel.bookHash)
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
-//        let amount = CGFloat(96 + count * 50)
-//        return AdaptSize(amount)
-        
         return 44
     }
     
