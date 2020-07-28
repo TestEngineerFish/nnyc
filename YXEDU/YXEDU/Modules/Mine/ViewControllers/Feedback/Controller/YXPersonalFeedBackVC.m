@@ -209,21 +209,18 @@
     }];
 
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(16);
-        make.left.greaterThanOrEqualTo(self.view).offset(16);
-        make.right.lessThanOrEqualTo(self.view).offset(-16);
-        make.width.mas_equalTo(600).priorityLow;
+        make.top.equalTo(self.view).offset(AdaptSize(16));
+        make.left.equalTo(self.view).offset(AdaptSize(16));
+        make.right.equalTo(self.view).offset(AdaptSize(-16));
         make.height.mas_equalTo(364);
         make.centerX.equalTo(self.view);
     }];
     
     [self.submitButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.containerView.mas_bottom).offset(24);
-        make.left.greaterThanOrEqualTo(self.view).offset(86);
-        make.right.lessThanOrEqualTo(self.view).offset(-86);
-        make.width.mas_equalTo(560).priorityLow;
+        make.top.equalTo(self.containerView.mas_bottom).offset(AdaptSize(24));
+        make.left.equalTo(self.view).offset(86);
+        make.right.equalTo(self.view).offset(-86);
         make.height.mas_equalTo(44);
-        make.centerX.equalTo(self.view);
     }];
 }
 

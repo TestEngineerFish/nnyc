@@ -60,10 +60,6 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
         tableView.deselectRow(at: indexPath, animated: false)
     
         switch indexPath.row {
-//        case 0:
-//            self.performSegue(withIdentifier: "ManageMaterial", sender: self)
-//            break
-            
         case 0:
             performSegue(withIdentifier: "AboutUs", sender: self)
             break

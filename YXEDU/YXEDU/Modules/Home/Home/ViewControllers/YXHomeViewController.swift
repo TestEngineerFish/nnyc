@@ -60,7 +60,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         }
         YXLog(String(format: "当前学习词书名：%@, 词书ID：%ld,当前学习单元：%@，单元ID：%ld", homeData.bookName ?? "--", homeData.bookId ?? -1, homeData.unitName ?? "--", homeData.unitId ?? -1))
         
-        if self.countOfWaitForStudyWords.text == "0" {
+        if self.countOfWaitForStudyWords.text == "0" && self.service.progress != .unreport {
             let alertView = YXAlertView(type: .normal)
             if homeData.isLastUnit == 1 {
                 YXLog("当前词书\(homeData.bookName ?? "")已背完啦")
@@ -320,6 +320,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     private func getUnlearnWordCount(home model: YXHomeModel) -> (Int, Int) {
         let service = YXExerciseServiceImpl()
         let config  = YXBaseLearnConfig(bookId: model.bookId ?? 0, unitId: model.unitId ?? 0, learnType: .base, homeworkId: 0)
+
         if let studyModel = service.studyDao.selectStudyRecordModel(learn: config) {
             let newCount = service.studyDao.getUnlearnedNewWordCount(study: studyModel.studyId)
             let reviewCount = service.studyDao.getUnlearnedReviewWordCount(study: studyModel.studyId)

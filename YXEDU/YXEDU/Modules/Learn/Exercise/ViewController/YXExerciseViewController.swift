@@ -491,6 +491,9 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
     }
 
     func animationComplete() {
+        guard self.navigationController?.topViewController?.classForCoder == YXExerciseViewController.classForCoder(), self.service.progress != .unreport else {
+            return
+        }
         self.switchExerciseView()
     }
  }
