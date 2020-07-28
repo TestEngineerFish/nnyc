@@ -156,7 +156,8 @@ class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITabl
     @IBAction func changeDate(_ sender: Any) {
         let currentSelectDate = selectDate == 0 ? Date() : Date(timeIntervalSince1970: self.selectDate)
         let calendarView = YXCalendarView(frame: .zero, selected: currentSelectDate)
-        calendarView.selectedBlock = { date in
+        calendarView.selectedBlock = { [weak self] date in
+            guard let self = self else { return }
             self.selectDate = date.timeIntervalSince1970
             
             if self.selectDate > Date().timeIntervalSince1970 {

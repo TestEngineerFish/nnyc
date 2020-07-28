@@ -12,6 +12,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
 
     var validDict = [String:YXCalendarStudyModel]()
     var selectedBlock: ((Date)->Void)?
+    var originDate: Date
     var selectedDate: Date
     var selectedDateStr: String {
         get {
@@ -85,10 +86,12 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
         let button = YXButton(.theme, frame: .zero)
         button.setTitle("确定", for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
+        button.setStatus(.disable)
         return button
     }()
 
     init(frame: CGRect, selected: Date) {
+        self.originDate   = selected
         self.selectedDate = selected
         super.init(frame: frame)
         self.requestCalendarData(self.selectedDate)
@@ -252,6 +255,11 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     }
 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        if date == self.originDate {
+            self.downButton.setStatus(.disable)
+        } else {
+            self.downButton.setStatus(.normal)
+        }
         self.selectedDate = date
     }
 
