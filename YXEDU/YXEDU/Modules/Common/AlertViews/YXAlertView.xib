@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -185,7 +185,6 @@
                         <constraint firstAttribute="trailing" secondItem="sHv-1g-9Wg" secondAttribute="trailing" constant="20" id="Kbc-KN-646"/>
                         <constraint firstItem="bwl-R0-as1" firstAttribute="top" secondItem="ct3-cU-vXD" secondAttribute="top" constant="24" id="Ona-g3-sXi"/>
                         <constraint firstItem="4Vh-iI-Pge" firstAttribute="top" secondItem="ct3-cU-vXD" secondAttribute="top" constant="6" id="P39-Rq-hJa"/>
-                        <constraint firstItem="bwl-R0-as1" firstAttribute="centerX" secondItem="ct3-cU-vXD" secondAttribute="centerX" id="Sic-xD-cos"/>
                         <constraint firstAttribute="height" constant="184" id="StY-Oe-Efb"/>
                         <constraint firstItem="o0l-c1-Doe" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="XQY-qa-pQ9"/>
                         <constraint firstItem="sHv-1g-9Wg" firstAttribute="leading" secondItem="ct3-cU-vXD" secondAttribute="leading" constant="20" id="bcl-pB-sa9"/>

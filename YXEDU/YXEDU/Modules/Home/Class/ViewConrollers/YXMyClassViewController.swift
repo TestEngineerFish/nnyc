@@ -175,10 +175,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "kYXWorkWithMyClassCell", for: indexPath) as? YXWorkWithMyClassCell, let listModel = self.workListModel else {
             return UITableViewCell()
         }
-        var model = listModel.workModelList[indexPath.row]
-        if indexPath.row == 1 {
-            model.workName = "开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧开始学习吧"
-        }
+        let model = listModel.workModelList[indexPath.row]
         cell.setData(work: model, hashDic: listModel.bookHash)
         return cell
     }

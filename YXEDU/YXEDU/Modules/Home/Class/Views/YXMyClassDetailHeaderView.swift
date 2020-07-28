@@ -84,11 +84,9 @@ class YXMyClassDetailHeaderView: YXView {
         self.addSubview(copyButton)
         self.addSubview(lineView)
         self.addSubview(subtitleLabel)
-        let nameLabelHeight = nameLabel.text?.textHeight(font: nameLabel.font, width: screenWidth - AdaptSize(40)) ?? 0
         self.nameLabel.snp.remakeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
-            make.height.equalTo(nameLabelHeight)
             make.top.equalToSuperview().offset(AdaptSize(17))
         }
         self.numberTitleLabel.sizeToFit()
