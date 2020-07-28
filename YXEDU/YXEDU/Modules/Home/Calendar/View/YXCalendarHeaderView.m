@@ -50,8 +50,8 @@
 
         [self.separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.contentView);
-            make.right.equalTo(self.contentView).with.offset(AdaptSize(-25));
-            make.left.equalTo(self.contentView).with.offset(AdaptSize(25));
+            make.left.equalTo(self.icon).offset(AdaptSize(9));
+            make.right.equalTo(self.openIndicator).offset(-9);
             make.height.mas_equalTo(0.6f);
         }];
     }
