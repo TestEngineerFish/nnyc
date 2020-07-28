@@ -31,13 +31,6 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         label.textAlignment = .left
         return label
     }()
-    var statisticsLabel: UILabel = {
-        let label = UILabel()
-        label.textColor     = UIColor.black2
-        label.font          = UIFont.pfSCRegularFont(withSize: AdaptFontSize(12))
-        label.textAlignment = .left
-        return label
-    }()
     var checkAllButton: UIButton = {
         let button = UIButton()
         button.setTitle("全选", for: .normal)
@@ -67,14 +60,23 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bindData(_ model: YXReviewUnitModel) {
-        self.model              = model
-        self.unitNameLabel.text = model.name
+    func bindData(_ model: YXReviewUnitModel? = nil) {
+        // 支持无数据刷新操作
+        if let _model = model {
+            self.model = _model
+        }
+        guard let model = self.model else {
+            return
+        }
 
         if model.isOpenUp {
-            self.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                self?.arrowImageView.transform = CGAffineTransform(rotationAngle: .pi)
+            }
         } else {
-            self.arrowImageView.transform = .identity
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                self?.arrowImageView.transform = .identity
+            }
         }
         var selectedNum = 0
         model.list.forEach { (wordModel) in
@@ -82,26 +84,22 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
                 selectedNum += 1
             }
         }
-        let numberColor = selectedNum > 0 ? UIColor.orange1 : UIColor.black6
-        let statisticsText = String(format: "(%d/%d词)", selectedNum, model.wordsNumber)
-        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
-        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: 1, length: "\(selectedNum)".count))
-        self.statisticsLabel.attributedText = attrStr
-        let checkAllText = model.isSelectedAll ? "取消全选" : "全选"
-        self.checkAllButton.setTitle(checkAllText, for: .normal)
-        self.checkAllButton.isHidden = !model.isOpenUp
+        let checkAllText   = model.isSelectedAll ? "取消全选" : "全选"
+        let numberColor    = selectedNum > 0 ? UIColor.orange1 : UIColor.black6
+        let statisticsText = String(format: "%@(%d/%d词)", model.name, selectedNum, model.wordsNumber)
 
-        self.unitNameLabel.sizeToFit()
-        self.unitNameLabel.snp.updateConstraints { (make) in
-            make.width.equalTo(self.unitNameLabel.width)
-        }
+        let attrStr = NSMutableAttributedString(string: statisticsText, attributes: [NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(12)), NSAttributedString.Key.foregroundColor : UIColor.black2])
+        attrStr.addAttributes([NSAttributedString.Key.foregroundColor : numberColor], range: NSRange(location: model.name.count + 1, length: "\(selectedNum)".count))
+
+        self.unitNameLabel.attributedText = attrStr
+        self.checkAllButton.isHidden      = !model.isOpenUp
+        self.checkAllButton.setTitle(checkAllText, for: .normal)
     }
 
     private func setSubviews() {
-        self.addSubview(cusContentView)
-        self.addSubview(bottomView)
+        self.contentView.addSubview(cusContentView)
+        self.contentView.addSubview(bottomView)
         cusContentView.addSubview(unitNameLabel)
-        cusContentView.addSubview(statisticsLabel)
         cusContentView.addSubview(checkAllButton)
         cusContentView.addSubview(arrowImageView)
 
@@ -115,13 +113,9 @@ class YXReviewUnitListHeaderView: UITableViewHeaderFooterView {
         }
         self.unitNameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(22))
-            make.centerY.height.equalToSuperview()
-            make.width.equalTo(0)
-        }
-        self.statisticsLabel.snp.makeConstraints { (make) in
-            make.centerY.height.equalToSuperview()
-            make.left.equalTo(self.unitNameLabel.snp.right)
-            make.right.equalTo(self.checkAllButton.snp.left).offset(AdaptSize(-5))
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview()
+            make.right.lessThanOrEqualTo(self.checkAllButton.snp.left).offset(AdaptSize(-5)).priorityLow()
         }
         self.arrowImageView.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(AdaptIconSize(-18))
