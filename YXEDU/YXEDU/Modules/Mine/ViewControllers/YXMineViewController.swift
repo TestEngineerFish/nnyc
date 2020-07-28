@@ -63,7 +63,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.customNavigationBar?.isHidden       = true
         let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
           self.badgeNumberView.addGestureRecognizer(tapAction)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 
     override func addNotification() {

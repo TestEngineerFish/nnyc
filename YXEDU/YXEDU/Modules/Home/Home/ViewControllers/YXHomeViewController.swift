@@ -410,8 +410,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                     self.newUserStudy()
                 }
             }
-        } else {
-            self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         }
     }
 
