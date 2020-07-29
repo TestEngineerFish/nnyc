@@ -487,6 +487,7 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
 
  extension YXExerciseViewController: YXExerciseAnimationCompleteDelegate, YXExerciseDownloadCompleteDelegate {
     func downloadComplete() {
+        YXLog("当前词书下载完成，开始主流程的学习")
         self.startStudy()
     }
 

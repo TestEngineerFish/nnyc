@@ -258,7 +258,6 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 }
             }
             if singleDownloadFinished {
-                YXLog("当前词书下载完成，开始主流程的学习")
                 self.downloadCompleteDelegate?.downloadComplete()
                 self.downloadCompleteDelegate = nil
                 self.speed  = .highSpeed

@@ -34,7 +34,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil) {
-//        if bookId == .some(0) { return }
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
             guard let self = self else { return }
