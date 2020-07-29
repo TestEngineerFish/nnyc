@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,8 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YXPickWordsBySelfView" customModule="YXEDU" customModuleProvider="target">
             <connections>
+                <outlet property="bottomShadowView" destination="klT-rX-YDy" id="cpo-h6-He4"/>
                 <outlet property="bottomView" destination="sCc-Mv-niR" id="C1k-cP-Eta"/>
-                <outlet property="bottomViewHeight" destination="YFm-Y6-Lh7" id="6KM-rw-EZi"/>
+                <outlet property="bottomViewHeight" destination="GaS-Qx-0m3" id="7Cb-XE-SkE"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="peM-Lo-owq"/>
                 <outlet property="startButton" destination="Aa0-su-Obj" id="6pc-Tm-c1G"/>
                 <outlet property="startCenterY" destination="yjS-Y7-pF4" id="LRF-E5-Q94"/>
@@ -40,53 +41,66 @@
                         <constraint firstAttribute="height" constant="0.59999999999999998" id="lcC-Gj-QeA"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sCc-Mv-niR" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="828" width="414" height="68"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klT-rX-YDy">
+                    <rect key="frame" x="0.0" y="816" width="414" height="80"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aa0-su-Obj" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
-                            <rect key="frame" x="50" y="12" width="314" height="44"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sCc-Mv-niR" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="12" width="414" height="68"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aa0-su-Obj" customClass="YXDesignableButton" customModule="YXEDU" customModuleProvider="target">
+                                    <rect key="frame" x="50" y="12" width="314" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="yKZ-bX-R5n"/>
+                                    </constraints>
+                                    <state key="normal" title="开始学习"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="22"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="startLearn:" destination="-1" eventType="touchUpInside" id="DHA-k3-2AW"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="44" id="yKZ-bX-R5n"/>
+                                <constraint firstAttribute="trailing" secondItem="Aa0-su-Obj" secondAttribute="trailing" priority="750" constant="50" id="AjP-Cl-wb6"/>
+                                <constraint firstItem="Aa0-su-Obj" firstAttribute="leading" secondItem="sCc-Mv-niR" secondAttribute="leading" priority="750" constant="50" id="R0H-He-MWx"/>
+                                <constraint firstAttribute="height" priority="750" constant="68" id="YFm-Y6-Lh7"/>
+                                <constraint firstItem="Aa0-su-Obj" firstAttribute="centerY" secondItem="sCc-Mv-niR" secondAttribute="centerY" id="yjS-Y7-pF4"/>
                             </constraints>
-                            <state key="normal" title="开始学习"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="22"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableGradientBackground" value="YES"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
                             </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="startLearn:" destination="-1" eventType="touchUpInside" id="DHA-k3-2AW"/>
-                            </connections>
-                        </button>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="Aa0-su-Obj" secondAttribute="trailing" constant="50" id="AjP-Cl-wb6"/>
-                        <constraint firstItem="Aa0-su-Obj" firstAttribute="leading" secondItem="sCc-Mv-niR" secondAttribute="leading" constant="50" id="R0H-He-MWx"/>
-                        <constraint firstAttribute="height" constant="68" id="YFm-Y6-Lh7"/>
-                        <constraint firstItem="Aa0-su-Obj" firstAttribute="centerY" secondItem="sCc-Mv-niR" secondAttribute="centerY" id="yjS-Y7-pF4"/>
+                        <constraint firstItem="sCc-Mv-niR" firstAttribute="top" secondItem="klT-rX-YDy" secondAttribute="top" constant="12" id="2ym-d3-9gi"/>
+                        <constraint firstItem="sCc-Mv-niR" firstAttribute="leading" secondItem="klT-rX-YDy" secondAttribute="leading" id="92W-v5-bMP"/>
+                        <constraint firstAttribute="bottom" secondItem="sCc-Mv-niR" secondAttribute="bottom" id="BJY-kz-7Nv"/>
+                        <constraint firstAttribute="height" constant="80" id="GaS-Qx-0m3"/>
+                        <constraint firstAttribute="trailing" secondItem="sCc-Mv-niR" secondAttribute="trailing" id="VyK-1d-Tph"/>
                     </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="ayv-z8-tCX" firstAttribute="top" secondItem="Wv5-Yq-YtN" secondAttribute="bottom" constant="24" id="32S-PL-cFD"/>
+                <constraint firstItem="ayv-z8-tCX" firstAttribute="top" secondItem="Wv5-Yq-YtN" secondAttribute="bottom" priority="750" constant="24" id="32S-PL-cFD"/>
                 <constraint firstItem="Wv5-Yq-YtN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="73c-yw-eqv"/>
-                <constraint firstAttribute="trailing" secondItem="Wv5-Yq-YtN" secondAttribute="trailing" constant="20" id="AZV-mf-HlD"/>
-                <constraint firstAttribute="trailing" secondItem="wKr-i5-XGh" secondAttribute="trailing" constant="20" id="P6V-YK-ZQ4"/>
-                <constraint firstItem="sCc-Mv-niR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="UNn-AZ-gaQ"/>
-                <constraint firstAttribute="bottom" secondItem="sCc-Mv-niR" secondAttribute="bottom" id="WXC-wp-70h"/>
+                <constraint firstAttribute="trailing" secondItem="Wv5-Yq-YtN" secondAttribute="trailing" priority="750" constant="20" id="AZV-mf-HlD"/>
+                <constraint firstAttribute="bottom" secondItem="klT-rX-YDy" secondAttribute="bottom" id="DBu-GB-n6v"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="klT-rX-YDy" secondAttribute="trailing" id="HPI-yl-yFO"/>
+                <constraint firstAttribute="trailing" secondItem="wKr-i5-XGh" secondAttribute="trailing" priority="750" constant="20" id="P6V-YK-ZQ4"/>
+                <constraint firstItem="klT-rX-YDy" firstAttribute="top" secondItem="ayv-z8-tCX" secondAttribute="bottom" constant="-12" id="axf-j1-5cX"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ayv-z8-tCX" secondAttribute="trailing" id="b2h-f3-cGk"/>
-                <constraint firstItem="Wv5-Yq-YtN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="cHJ-0n-T6f"/>
+                <constraint firstItem="Wv5-Yq-YtN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="750" constant="20" id="cHJ-0n-T6f"/>
                 <constraint firstItem="ayv-z8-tCX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fvD-06-kiA"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sCc-Mv-niR" secondAttribute="trailing" id="oFU-pw-PQP"/>
                 <constraint firstItem="wKr-i5-XGh" firstAttribute="top" secondItem="Wv5-Yq-YtN" secondAttribute="bottom" constant="23" id="pW8-Lc-WCc"/>
-                <constraint firstItem="sCc-Mv-niR" firstAttribute="top" secondItem="ayv-z8-tCX" secondAttribute="bottom" id="rq5-Hj-QyP"/>
-                <constraint firstItem="wKr-i5-XGh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="uNy-Xp-Npf"/>
+                <constraint firstItem="wKr-i5-XGh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="20" id="uNy-Xp-Npf"/>
+                <constraint firstItem="klT-rX-YDy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vMl-uu-zc0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="130.58035714285714"/>
