@@ -64,9 +64,9 @@ class YXRecordView: YXView {
 
         lineView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-40))
             make.height.equalTo(AdaptSize(1))
+            make.left.equalToSuperview().offset(AdaptSize(20))
+            make.right.equalToSuperview().offset(AdaptSize(-20)).priorityLow()
         }
         recordImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(18))

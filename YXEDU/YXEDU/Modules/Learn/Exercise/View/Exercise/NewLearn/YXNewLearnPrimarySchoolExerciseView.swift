@@ -75,7 +75,8 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
         })
         detailView?.snp.makeConstraints({ (make) in
-            make.left.bottom.right.equalToSuperview()
+            make.bottom.equalToSuperview().priorityLow()
+            make.left.right.equalToSuperview()
             make.top.equalToSuperview().offset(5)
         })
         if rightContentView.superview != nil {

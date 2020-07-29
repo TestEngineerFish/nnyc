@@ -78,6 +78,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         self.word = word
         initializationFromNib()
         requestWordDetail()
+        self.createSubviews()
         self.bindProperty()
     }
     
@@ -194,20 +195,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             sections.append([SectionType.antonym.rawValue: antonyms])
             sectionExpandStatus.append(true)
         }
-        
-        // 设置录音视图
-        self.dividingTopConstraint.constant = AdaptSize(40 + 20)
-        self.addSubview(recordView)
-        recordView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.dividingView.snp.top)
-            make.height.equalTo(AdaptSize(40))
-        }
-        let tapRecordView = UITapGestureRecognizer(target: self, action: #selector(recordAction))
-        recordView.addGestureRecognizer(tapRecordView)
     }
-
-
     
     // ---- Request ----
     /// 不应该调用的。。。，这里仅仅是为了获取这个单词的跟读最好得分，之后有时间将之前的跟读得分写入数据库即可
@@ -233,6 +221,20 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         guard let wordModel = self.word else { return }
         self.isAutoPlay     = false
         YXNewLearnView(wordModel: wordModel).show()
+    }
+
+    override func createSubviews() {
+        super.createSubviews()
+        // 设置录音视图
+        self.dividingTopConstraint.constant = AdaptSize(40 + 20)
+        self.addSubview(recordView)
+        recordView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.dividingView.snp.top)
+            make.height.equalTo(AdaptSize(40))
+        }
+        let tapRecordView = UITapGestureRecognizer(target: self, action: #selector(recordAction))
+        recordView.addGestureRecognizer(tapRecordView)
     }
     
     override func bindProperty() {
