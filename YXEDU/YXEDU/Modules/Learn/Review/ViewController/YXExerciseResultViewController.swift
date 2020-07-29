@@ -27,8 +27,8 @@ class YXExerciseResultViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.fetchData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.fetchData()
         }
     }
     

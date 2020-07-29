@@ -84,7 +84,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             
         } else {
             let classListViewController = YXMyClassListViewController()
-            classListViewController.classList = self.classModelList
+            classListViewController.classModelList = self.classModelList
             
             navigationController?.pushViewController(classListViewController, animated: true)
         }

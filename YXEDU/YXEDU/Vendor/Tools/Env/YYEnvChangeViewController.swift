@@ -230,15 +230,11 @@ extension YYEnvChangeViewController {
     @objc private func buttonDidClick() {
 
         YYCache.set(currentSelected, forKey: YYEVC.envKey)
-
-        let exitBlock = {
-            YXUtils.showHUD(self.view, title: "正在关闭App")
+        YXUserModel.default.logout {
+            YXUtils.showHUD(kWindow, title: "正在关闭App")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 exit(0)
             }
-        }
-        YXUserModel.default.logout {
-            exitBlock()
         }
     }
     

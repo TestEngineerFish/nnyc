@@ -202,13 +202,13 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     ///   - newHash: 新词书的哈希值
     ///   - msg: 错误原因
     func downloadError(with bookId: Int?, newHash: String?, error msg: String?) {
-        let _bookId  = bookId ?? 0
-        let _newHash = newHash ?? ""
-        if let _msg = msg {
-            YXLog(_msg)
-            YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
-        }
+//        let _bookId  = bookId ?? 0
+//        let _newHash = newHash ?? ""
         YXWordBookResourceManager.shared.group.leave()
+//        if let _msg = msg {
+//            YXLog(_msg)
+//            YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
+//        }
     }
 
     // TODO: ---- Tools ----

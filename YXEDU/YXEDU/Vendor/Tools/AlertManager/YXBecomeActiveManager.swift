@@ -31,12 +31,13 @@ class YXBecomeActiveManager: NSObject {
             return
         }
         if let command = UIPasteboard.general.string, command.isNotEmpty {
-            YXSettingDataManager().checkCommand(command: command) { (model, error) in
+            YXSettingDataManager().checkCommand(command: command) { [weak self] (model, error) in
+                guard let self = self else { return }
                 if let commandModel = model {
                     let commandView = YXReviewPlanCommandView(model: commandModel)
                     commandView.tag = YXAlertWeightType.scanCommand
-                    commandView.detailEvent = {
-                        self.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
+                    commandView.detailEvent = { [weak self] in
+                        self?.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()
                     }
                     

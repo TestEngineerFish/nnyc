@@ -94,6 +94,8 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
             break
         }
     }
+
+    // MARK: ==== Event ====
     
     private func resetCache() {
         let alertView = YXAlertView()
