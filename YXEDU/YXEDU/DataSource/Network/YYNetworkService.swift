@@ -320,15 +320,116 @@ enum YXMiMeType: String {
                 }
 
             case .failure(let error):
+                self.clearCountAction(requestStr)
                 let msg = (error as NSError).message
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
-                fail(error as NSError)
-                self.clearCountAction(requestStr)
+                guard let urlError = error as? URLError, self.processErrorCode(error: urlError) else {
+                    if (error as NSError).code == 2 {
+                        YXUtils.showHUD(kWindow, title: "连接服务器失败，请稍后重试")
+                    } else {
+                        fail(error as NSError)
+                    }
+                    return
+                }
+
             }
         }
         
         let taskRequest: YYTaskRequest = YYTaskRequestModel(request: task)
         return taskRequest
+    }
+
+    // MARK: ==== Tools ====
+    /// 处理非正常错误请求
+    /// - Parameter error: 错误对象
+    /// - Returns: 是否处理
+    private func processErrorCode(error: URLError) -> Bool {
+        let serviceErrorList: [URLError.Code] = [.badURL,
+                                                 .unsupportedURL,
+                                                 .cannotFindHost,
+                                                 .cannotConnectToHost,
+                                                 .dnsLookupFailed,
+                                                 .redirectToNonExistentLocation,
+                                                 .badServerResponse]
+        if serviceErrorList.contains(error.code) {
+            YXUtils.showHUD(kWindow, title: "连接服务器失败，请稍后重试")
+        }
+        //数据错误
+        var errorMsg: String?
+        switch error.code {
+            // 超时
+        case .timedOut:
+            errorMsg = "网络连接超时，请稍后重试"
+            // 弱网
+        case .networkConnectionLost:
+            errorMsg = "当前网络信号较弱，请稍后重试"
+            // 无网络
+        case .notConnectedToInternet,
+             .dataNotAllowed,
+             .callIsActive:
+            errorMsg = "无法连接到网络，请连接后重试"
+            // 数据解析失败
+        case .dataLengthExceedsMaximum,
+             .badServerResponse,
+             .zeroByteResource,
+             .cannotDecodeRawData,
+             .cannotDecodeContentData,
+             .cannotParseResponse,
+             .cannotLoadFromNetwork,
+             .downloadDecodingFailedMidStream,
+             .downloadDecodingFailedToComplete:
+            errorMsg = "数据无法解析，请稍后重试"
+            // 连接地址错误
+        case .badURL, .unsupportedURL:
+            errorMsg = "连接地址错误，请稍后重试"
+            // 连接服务器失败
+        case .cannotFindHost,
+             .cannotConnectToHost,
+             .networkConnectionLost,
+             .dnsLookupFailed,
+             .httpTooManyRedirects,
+             .resourceUnavailable,
+             .notConnectedToInternet,
+             .redirectToNonExistentLocation,
+             .appTransportSecurityRequiresSecureConnection,
+             .secureConnectionFailed,
+             .serverCertificateHasBadDate,
+             .serverCertificateUntrusted,
+             .serverCertificateHasUnknownRoot,
+             .serverCertificateNotYetValid,
+             .clientCertificateRejected,
+             .clientCertificateRequired,
+             .requestBodyStreamExhausted,
+             .backgroundSessionRequiresSharedContainer,
+             .backgroundSessionInUseByAnotherProcess,
+             .backgroundSessionWasDisconnected:
+            errorMsg = "连接服务器失败，请稍后重试"
+        case .userCancelledAuthentication,
+             .userAuthenticationRequired:
+            errorMsg = "身份认证失败，请稍后重试"
+            // FTP
+        case .fileDoesNotExist,
+             .fileIsDirectory:
+            errorMsg = "文件路径错误，请稍后重试"
+        case .noPermissionsToReadFile:
+            errorMsg = "权限不足，无法获取资源"
+        case .cannotCreateFile,
+             .cannotOpenFile,
+             .cannotCloseFile,
+             .cannotWriteToFile,
+             .cannotRemoveFile,
+             .cannotMoveFile:
+            errorMsg = "磁盘忙，请释放后重试"
+        case .internationalRoamingOff:
+            errorMsg = "当前请求需要开启数据漫游，请开启后重试"
+        default:
+            break
+        }
+        guard let msg = errorMsg else {
+            return false
+        }
+        YXUtils.showHUD(kWindow, title: msg)
+        return true
     }
 
 

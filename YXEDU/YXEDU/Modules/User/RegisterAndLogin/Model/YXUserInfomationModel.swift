@@ -29,7 +29,7 @@ struct YXUserInfomationModel: Mappable {
     var didBindPhone: Bool  = true // 是否已绑定手机号
     var didSelectBook: Bool = true // 是否已选择词书
     var isJoinSchool: Bool  = true // 是否已加入学校
-    var isNewUser:Bool      = true // 是否是新用户
+    var isNewUser:Bool      = false// 是否是新用户
     var reminder: YXReminderModel?
 
     init?(map: Map) {
