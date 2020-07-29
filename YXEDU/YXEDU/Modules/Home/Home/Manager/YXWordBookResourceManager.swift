@@ -215,6 +215,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
                 YXWordBookResourceManager.errorDownloadDict[_newHash] = downloadCount + 1
             } else {
+                NotificationCenter.default.post(name: YXNotification.kDownloadWordError, object: nil)
                 YXWordBookResourceManager.downloadDataList.removeAll()
                 YXWordBookResourceManager.errorDownloadDict.removeAll()
             }

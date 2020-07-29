@@ -182,8 +182,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                 self.studyDataCollectionView.reloadData()
                 self.subItemCollectionView.reloadData()
             }
-
-            self.checkDownloadBook()
             self.uploadGrowing()
             block?()
         }) { error in
@@ -557,7 +555,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         guard let homeData = self.homeModel else {
             return
         }
-
+        self.checkDownloadBook()
         YXUserModel.default.lastStoredDate = Date()
         YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
         let vc = YXExerciseViewController()
