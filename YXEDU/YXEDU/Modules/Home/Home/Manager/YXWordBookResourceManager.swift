@@ -23,8 +23,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
         }
     }
-    static var downloadDataList = [(Int, String)]()
-
+    /// 下载队列
+    static var downloadDataList  = [(Int, String)]()
+    /// 失败的任务
+    static var errorDownloadDict = [String:Int]()
     /// 下载对象列表，存储所以需要下载的任务式对象
     static var taskList = [YXWordBookResourceModel]()
 
@@ -159,13 +161,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     func processorTask() {
         guard let taskModel = YXWordBookResourceManager.taskList.first else {
             YXLog("✅所有下载词书队列任务处理完成✅")
+            YXWordBookResourceManager.errorDownloadDict.removeAll()
             return
         }
         taskModel.status = .downloading
         taskModel.eventBlock()
     }
 
-    /// 单词任务完成事件
+    /// 单次任务完成事件
     private func downloadFinished() {
         YXLog("==== 当前任务处理完成✅ ====")
         //用于发送完成通知
@@ -201,13 +204,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     ///   - newHash: 新词书的哈希值
     ///   - msg: 错误原因
     func downloadError(with bookId: Int?, newHash: String?, error msg: String?) {
-//        let _bookId  = bookId ?? 0
-//        let _newHash = newHash ?? ""
+
         YXWordBookResourceManager.shared.group.leave()
-//        if let _msg = msg {
-//            YXLog(_msg)
-//            YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
-//        }
+        if let _msg = msg {
+            YXLog(_msg)
+            let _bookId  = bookId ?? 0
+            let _newHash = newHash ?? ""
+            let downloadCount: Int = YXWordBookResourceManager.errorDownloadDict[_newHash] ?? 0
+            if downloadCount < 1 {
+                YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
+                YXWordBookResourceManager.errorDownloadDict[_newHash] = downloadCount + 1
+            } else {
+                YXWordBookResourceManager.downloadDataList.removeAll()
+                YXWordBookResourceManager.errorDownloadDict.removeAll()
+            }
+        }
     }
 
     // TODO: ---- Tools ----

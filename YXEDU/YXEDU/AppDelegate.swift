@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX(wechatId)
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
+
 //        #if DEBUG
 //        ECOClient.shared()?.start()
 //        XXPerformanceMonitor.sharedInstance.mainThreadThreshold = 0.05
