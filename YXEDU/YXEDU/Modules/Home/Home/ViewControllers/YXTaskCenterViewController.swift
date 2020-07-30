@@ -177,18 +177,13 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
         let request = YXTaskCenterRequest.getIntegral(taskId: id)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            self.requestTaskList()
-            if didRepeat {
-                self.taskLists[indexPath.row].list?[indexPath.row].state = 2
-                self.taskTableView.reloadData()
-            } else {
+            self.requestTaskList { [weak self] in
+                guard let self = self else { return }
                 YXRedDotManager.share.updateTaskCenterBadge()
-                self.taskLists[indexPath.section].list?.remove(at: indexPath.row)
-                self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-            }
-            if let currentIntegral = Int(self.integralLabel.text ?? "0") {
-                self.integralLabel.countFromCurrent(to: Float(currentIntegral + integral), duration: 1)
-                YXToastView().showCoinView(integral)
+                if let currentIntegral = Int(self.integralLabel.text ?? "0") {
+                    self.integralLabel.countFromCurrent(to: Float(currentIntegral + integral), duration: 1)
+                    YXToastView().showCoinView(integral)
+                }
             }
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
@@ -206,13 +201,14 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
         }
     }
 
-    private func requestTaskList() {
+    private func requestTaskList(finished block: (()->Void)? = nil) {
         let taskListRequest = YXTaskCenterRequest.taskList
         YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { [weak self] (response) in
             guard let self = self else { return }
             self.taskLists = response.dataArray ?? []
             self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
             self.taskTableView.reloadData()
+            block?()
         }) { error in
             YXUtils.showHUD(kWindow, title: error.message)
         }
