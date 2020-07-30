@@ -189,7 +189,6 @@ class YXReviewHeaderView: YXView {
         reviewPlanLabel.textColor = UIColor.black1
         reviewPlanLabel.text      = "词单"
         
-        createReviewPlanButton.layer.masksToBounds = true
         createReviewPlanButton.layer.cornerRadius = AS(isPad() ? 35 : 25)/2
         createReviewPlanButton.setImage(UIImage(named: "review_add_icon"), for: .normal)
         createReviewPlanButton.setTitle("新建词单", for: .normal)

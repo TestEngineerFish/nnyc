@@ -313,6 +313,9 @@ enum YXMiMeType: String {
                         self.tokenRenewal {
                             _ = self.httpRequest(type, request: request, success: success, fail: fail)
                         }
+                    } else {
+                        YXLog("连续10002，退出登录吧")
+                        YXUserModel.default.logout(force: false)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)

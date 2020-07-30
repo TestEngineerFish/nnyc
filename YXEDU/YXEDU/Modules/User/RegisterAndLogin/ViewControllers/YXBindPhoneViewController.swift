@@ -51,13 +51,13 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
     
     @IBAction func login(_ sender: UIButton) {
         let request = YXRegisterAndLoginRequest.bind(platfrom: platform ?? "", phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
-        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
+        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] response in
             guard let data = response.data else { return }
 
             YXUserModel.default.uuid           = data.info?.uuid
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            
+            YXUserModel.default.mobile         = self?.phoneNumberTextField.text
             YXUserModel.default.didLogin = true
             Growing.setUserId(YXUserModel.default.uuid ?? "")
             YXUserModel.default.login()
