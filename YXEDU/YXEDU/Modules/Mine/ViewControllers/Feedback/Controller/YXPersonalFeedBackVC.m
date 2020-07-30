@@ -258,9 +258,13 @@
     sendModel.env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
     
     [self.feedViewModel submitFeedBack:sendModel finish:^(id obj, BOOL result) {
-        [YXUtils hideHUD:weakSelf.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [YXUtils hideHUD:kWindow];
+        });
         if (result) {
-            [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [YXUtils showHUD:kWindow title:@"提交成功"];
+            });
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
 //            [YXUtils showHUD:self.view title:@"网络错误!"];
