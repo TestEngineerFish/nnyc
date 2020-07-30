@@ -622,7 +622,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 return
             }
             #if DEBUG
-            YXUtils.showHUD(self, title: "当前得分: \(score)")
+            YXUtils.showHUD(nil, title: "当前得分: \(score)")
             #endif
             YXLog("============录音得分: \(score)")
             self.lastScore = Int(score)

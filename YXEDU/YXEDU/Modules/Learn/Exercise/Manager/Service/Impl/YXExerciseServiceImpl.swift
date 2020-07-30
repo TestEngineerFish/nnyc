@@ -63,7 +63,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 completion?(true, nil, isGenerate)
             }
         }) { (msg) in
-            YXUtils.showHUD(kWindow, title: msg)
+            YXUtils.showHUD(nil, title: msg)
             completion?(false, msg, isGenerate)
         }
     }
@@ -195,7 +195,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 self.cleanStudyRecord()
             }
             self.studyDao.updateProgress(study: self._studyId, progress: .unreport)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, [:])
         }
     }

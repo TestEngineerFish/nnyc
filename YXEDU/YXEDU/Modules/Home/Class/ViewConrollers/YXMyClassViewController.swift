@@ -138,7 +138,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             
             self.classModelList = modelList
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -151,7 +151,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             self.workListModel = listModel
             self.workTableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

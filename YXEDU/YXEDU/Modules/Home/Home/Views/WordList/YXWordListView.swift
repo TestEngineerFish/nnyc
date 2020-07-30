@@ -283,7 +283,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
                 
             }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             
         } else {
@@ -299,7 +299,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.wrongWordSectionData = wordSectionData
                 
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }
@@ -506,7 +506,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             self.tableView.reloadData()
             UIView().toast("已清除")
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

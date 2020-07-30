@@ -328,7 +328,7 @@ enum YXMiMeType: String {
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
                 guard let urlError = error as? URLError, self.processErrorCode(error: urlError) else {
                     if (error as NSError).code == 2 {
-                        YXUtils.showHUD(kWindow, title: "连接服务器失败，请稍后重试")
+                        YXUtils.showHUD(nil, title: "连接服务器失败，请稍后重试")
                     } else {
                         fail(error as NSError)
                     }
@@ -354,7 +354,7 @@ enum YXMiMeType: String {
                                                  .redirectToNonExistentLocation,
                                                  .badServerResponse]
         if serviceErrorList.contains(error.code) {
-            YXUtils.showHUD(kWindow, title: "连接服务器失败，请稍后重试")
+            YXUtils.showHUD(nil, title: "连接服务器失败，请稍后重试")
         }
         //数据错误
         var errorMsg: String?
@@ -430,7 +430,7 @@ enum YXMiMeType: String {
         guard let msg = errorMsg else {
             return false
         }
-        YXUtils.showHUD(kWindow, title: msg)
+        YXUtils.showHUD(nil, title: msg)
         return true
     }
 

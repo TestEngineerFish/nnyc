@@ -45,14 +45,14 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         } else {
             let request = YXWordListRequest.collectWord(wordId: word?.wordId ?? 0, isComplexWord: word?.isComplexWord ?? 0)
             YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "unCollectWord"), for: .normal)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }
@@ -121,7 +121,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
                 self?.collectionButton.setImage(#imageLiteral(resourceName: "collectWord"), for: .normal)
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
         
         wordLabel.text = _word.word
@@ -211,7 +211,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
             self.recordView.updateState(listenScore: wordModel.listenScore)
         }) { error in
             YXLog("查询单词:\(wordId)详情失败， error:\(error)")
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -246,7 +246,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     private func playWord() {
         guard let _voice = self.word?.voice, let pronunciationUrl = URL(string: _voice) else {
             YXLog("无效的音频地址: ", word?.voice ?? "")
-            YXUtils.showHUD(kWindow, title: "无效音频")
+            YXUtils.showHUD(nil, title: "无效音频")
             return
         }
         playAuoidButton.layer.addFlickerAnimation()

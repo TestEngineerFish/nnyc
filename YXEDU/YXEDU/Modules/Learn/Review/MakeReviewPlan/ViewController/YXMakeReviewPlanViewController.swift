@@ -116,7 +116,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             self.model = _model
             self.segmentControllerView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -142,7 +142,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                 alertView.shouldOnlyShowOneButton = true
                 alertView.show()
             } else {
-                YXUtils.showHUD(self.view, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }
@@ -150,7 +150,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     // MARK: ==== Event ====
     @objc private func makeReivewPlan() {
         if self.selectedWordsListView.wordsModelList.count < 4 {
-            YXUtils.showHUD(self.view, title: "请至少选择4个单词")
+            YXUtils.showHUD(nil, title: "请至少选择4个单词")
         } else {
             // 显示弹框
             let name = YXReviewDataManager.makePlanName(defailt: self.getPlanName())
@@ -198,7 +198,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                 self.searchView.layer.opacity = 1.0
             }
         } else {
-            YXUtils.showHUD(self.view, title: "当前书未加载完成，请稍后再试～")
+            YXUtils.showHUD(nil, title: "当前书未加载完成，请稍后再试～")
         }
 
     }

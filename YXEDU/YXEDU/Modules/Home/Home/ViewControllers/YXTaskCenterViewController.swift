@@ -33,7 +33,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
             
             YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData?.today ?? 1) - 1].integral ?? 0)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -186,7 +186,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
                 }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -197,7 +197,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
             self.taskCenterData = response.data
             self.reloadDailyData()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -210,7 +210,7 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
             self.taskTableView.reloadData()
             block?()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

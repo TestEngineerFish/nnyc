@@ -54,7 +54,7 @@ class YXAudioPlayerView: UIView {
     func play() {
         guard let _urlStr = self.urlStr, let url = URL(string: _urlStr) else {
             YXLog("无效的音频地址: \(String(describing: self.urlStr))")
-            YXUtils.showHUD(kWindow, title: "无效音频")
+            YXUtils.showHUD(nil, title: "无效音频")
             return
         }
         self.audioButton.layer.addFlickerAnimation()

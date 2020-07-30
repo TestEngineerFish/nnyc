@@ -69,7 +69,7 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
                 if version?.state == .recommend || version?.state == .force, let url = URL(string: "https://apps.apple.com/cn/app/id1379948642") {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 } else {
-                    YXUtils.showHUD(self.view, title: "当前已经是最新版本")
+                    YXUtils.showHUD(nil, title: "当前已经是最新版本")
                 }
             }
             break

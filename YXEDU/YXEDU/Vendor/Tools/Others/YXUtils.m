@@ -143,21 +143,24 @@
 }
 
 + (void)showHUD:(UIView *)view title:(NSString *)text {
-    if (!view) {
-        view = [UIApplication sharedApplication].keyWindow;
-    }
-    if (view == nil) { return; }
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    // Configure for text only and offset down
-    hud.mode = MBProgressHUDModeText;
-    hud.detailsLabel.text         = text;
-    hud.detailsLabel.font         = [UIFont systemFontOfSize:14.0f];
-    hud.detailsLabel.textColor    = [UIColor whiteColor];
-    hud.bezelView.style           = MBProgressHUDBackgroundStyleSolidColor;
-    hud.bezelView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    hud.margin                    = 10.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:1];
+    __block UIView *targetView = view;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!targetView) {
+            targetView = [UIApplication sharedApplication].keyWindow;
+        }
+        if (targetView == nil) { return; }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:targetView animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.detailsLabel.text         = text;
+        hud.detailsLabel.font         = [UIFont systemFontOfSize:14.0f];
+        hud.detailsLabel.textColor    = [UIColor whiteColor];
+        hud.bezelView.style           = MBProgressHUDBackgroundStyleSolidColor;
+        hud.bezelView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        hud.margin                    = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hideAnimated:YES afterDelay:1];
+    });
 }
 
 + (BOOL)currentHUDForView:(UIView *)view {

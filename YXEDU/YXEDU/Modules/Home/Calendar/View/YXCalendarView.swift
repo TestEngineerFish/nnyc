@@ -181,7 +181,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
             }
             self.calendarView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             self.hide()
         }
     }

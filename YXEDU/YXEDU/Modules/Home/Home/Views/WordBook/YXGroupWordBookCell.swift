@@ -116,7 +116,7 @@ class YXGroupWordBookCell: UITableViewCell, UICollectionViewDelegate, UICollecti
                 }
                 YXWordBookResourceManager.shared.addTask(model: taskModel)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
 

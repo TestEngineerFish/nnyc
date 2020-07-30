@@ -223,7 +223,7 @@ class YXUserModel: NSObject {
                 self.logoutAfterEvent()
                 block?()
             }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         } else {
             self.logoutAfterEvent()

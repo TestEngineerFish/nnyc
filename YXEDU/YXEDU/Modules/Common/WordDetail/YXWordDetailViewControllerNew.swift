@@ -73,7 +73,7 @@ class YXWordDetailViewControllerNew: YXViewController {
             self.view.addSubview(self.wordDetailView!)
         }) { error in
             YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

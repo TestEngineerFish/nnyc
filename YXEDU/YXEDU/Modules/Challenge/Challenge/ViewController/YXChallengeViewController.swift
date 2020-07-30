@@ -64,7 +64,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
             self.updateChallengeData(model: _challengeModel)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -87,7 +87,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 self.showGoldLackAlert()
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -95,7 +95,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestReportShowPreviousResult(_ version: Int) {
         let request = YXChallengeRequest.showPrevious(version: version)
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: nil) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -115,7 +115,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
             self.requestReportShowPreviousResult(previousRankVersion)
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

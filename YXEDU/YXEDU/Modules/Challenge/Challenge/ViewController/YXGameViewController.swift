@@ -132,7 +132,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             self.gameModel = response.data
             self.bindData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -168,7 +168,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                 }
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

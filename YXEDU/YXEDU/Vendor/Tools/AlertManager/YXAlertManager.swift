@@ -40,7 +40,7 @@ struct YXAlertManager {
                 YXLog("打卡分享失败")
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

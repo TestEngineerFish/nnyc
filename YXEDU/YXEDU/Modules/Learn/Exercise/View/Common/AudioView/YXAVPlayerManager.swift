@@ -85,7 +85,7 @@ class YXAVPlayerManager: NSObject {
             self.isPlaying = true
         } else {
             YXLog("无效音频,地址：" + url.absoluteString)
-            YXUtils.showHUD(kWindow, title: "无效音频")
+            YXUtils.showHUD(nil, title: "无效音频")
             YYMediaCache.default.deleteCache(url)
             self.playFinished()
         }

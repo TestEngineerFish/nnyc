@@ -31,14 +31,14 @@ class YXLogManager: NSObject {
             guard let self = self else { return }
             if showToast {
                 MBProgressHUD.hide(for: kWindow, animated: true)
-                YXUtils.showHUD(kWindow, title: "上传完成")
+                YXUtils.showHUD(nil, title: "上传完成")
             }
             self.deleteZip()
             self.deleteFile()
         }) { (error) in
             if showToast {
                 MBProgressHUD.hide(for: kWindow, animated: true)
-                YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
+                YXUtils.showHUD(nil, title: "上传失败，请稍后再试")
             }
         }
     }

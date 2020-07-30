@@ -283,7 +283,7 @@
     @objc private func downloadWordError() {
         self.loadingView?.stopAnimation()
         self.navigationController?.popViewController(animated: false)
-//        YXUtils.showHUD(kWindow, title: "下载词书失败，请稍后重试")
+//        YXUtils.showHUD(nil, title: "下载词书失败，请稍后重试")
     }
 
     // TODO: ---- Event ----

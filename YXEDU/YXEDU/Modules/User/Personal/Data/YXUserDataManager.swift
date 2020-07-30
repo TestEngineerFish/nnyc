@@ -24,7 +24,9 @@ struct YXUserDataManager {
             finishBlock?(userInfomation)
         }) { error in
             finishBlock?(nil)
-            YXUtils.showHUD(kWindow, title: error.message)
+            DispatchQueue.main.async {
+                YXUtils.showHUD(nil, title: error.message)
+            }
         }
     }
 
@@ -46,7 +48,7 @@ struct YXUserDataManager {
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
             complate?(nil)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

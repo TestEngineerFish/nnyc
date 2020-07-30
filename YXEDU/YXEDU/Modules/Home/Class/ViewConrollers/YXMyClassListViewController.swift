@@ -86,7 +86,7 @@ class YXMyClassListViewController: YXViewController, UITableViewDelegate, UITabl
             self.classModelList = modelList
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

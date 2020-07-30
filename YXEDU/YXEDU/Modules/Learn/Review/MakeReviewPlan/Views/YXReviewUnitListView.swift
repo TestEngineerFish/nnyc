@@ -137,7 +137,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.model.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

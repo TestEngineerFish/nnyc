@@ -166,7 +166,7 @@ class YXLearningResultViewController: YXViewController {
             if response.data?.countStatus == .some(.ing) {
                 // 如果请求次数超过五次,则退出
                 if self.requestCount >= 5 {
-                    YXUtils.showHUD(self.view, title: "后台繁忙,请稍后重试")
+                    YXUtils.showHUD(nil, title: "后台繁忙,请稍后重试")
                 } else {
                     self.requestCount += 1
                     self.bindData()
@@ -185,7 +185,7 @@ class YXLearningResultViewController: YXViewController {
                 self.loadSubViews()
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -198,7 +198,7 @@ class YXLearningResultViewController: YXViewController {
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             YXLog("学习新单元成功")
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -215,7 +215,7 @@ class YXLearningResultViewController: YXViewController {
     
     @objc private func punchEvent() {
         guard let model = self.model, let config = learnConfig else {
-            YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
+            YXUtils.showHUD(nil, title: "数据请求失败，请稍后再试～")
             return
         }
         let shareVC = YXShareViewController()

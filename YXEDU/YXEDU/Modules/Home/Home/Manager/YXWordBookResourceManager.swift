@@ -63,7 +63,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         }) { error in
             YXLog("检测词书接口请求失败:\(error.message)")
             self.downloadFinished()
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             self.popRootVC()
         }
     }
@@ -194,7 +194,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
         }) { (error) in
             self.downloadError(with: bookId, newHash: newHash, error: error.message)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

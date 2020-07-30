@@ -60,7 +60,7 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     @objc private func clickSchool() {
         guard let model = self.selectLocalModel else {
-            YXUtils.showHUD(kWindow, title: "请先选择学校地址")
+            YXUtils.showHUD(nil, title: "请先选择学校地址")
             return
         }
         self.searchView.show(selectLocal: model)
@@ -92,7 +92,7 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
             guard let self = self else { return }
             self.toNextView()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

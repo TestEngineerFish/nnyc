@@ -122,7 +122,7 @@ class YXAlertCheckManager {
             }
             completion?()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?()
         }
     }
@@ -152,7 +152,7 @@ class YXAlertCheckManager {
             YXAlertQueueManager.default.addAlert(alertView: alertView)
             completion?()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?()
         }
     }

@@ -73,7 +73,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
             YXLog("当前用户Token=====", YXUserModel.default.token ?? "")
             self.checkUserInfomation()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -233,7 +233,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
                 }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -304,14 +304,14 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
             YXUserModel.default.userAvatarPath = data.info?.avatar
             self.checkUserInfomation()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     private func appleLogin() {
         guard let model = self.appleModel, let token = model.identityToken, let tokenStr = String(data: token, encoding: .utf8) else {
             YXLog("苹果登录失败，请重试")
-            YXUtils.showHUD(kWindow, title: "Apple登录失败，请重试")
+            YXUtils.showHUD(nil, title: "Apple登录失败，请重试")
             return
         }
         let request = YXRegisterAndLoginRequest.appleLogin(userId: model.user, token: tokenStr, fullName: model.name)
@@ -324,7 +324,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
             self.platform = "apple"
             self.checkUserInfomation()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -383,7 +383,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
                                 self.checkUserInfomation()
                             }) { error in
-                                YXUtils.showHUD(kWindow, title: error.message)
+                                YXUtils.showHUD(nil, title: error.message)
                                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                             }
                             
@@ -612,10 +612,10 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
                     self.appleLogin()
                     break
                 case .revoked:
-                    YXUtils.showHUD(kWindow, title: "Apple账户失效，请重试，或更换其他登录方式")
+                    YXUtils.showHUD(nil, title: "Apple账户失效，请重试，或更换其他登录方式")
                     break
                 case .notFound:
-                    YXUtils.showHUD(kWindow, title: "Apple账户尚未绑定，请重试，或更换其他登录方式")
+                    YXUtils.showHUD(nil, title: "Apple账户尚未绑定，请重试，或更换其他登录方式")
                     break
                 default:
                     break

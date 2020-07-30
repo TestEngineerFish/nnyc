@@ -133,7 +133,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             guard let self = self, let modelList = response.dataArray else { return }
             self.updateBadgeData(modelList: modelList)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -311,7 +311,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                             self?.loadData()
                         }) { error in
-                            YXUtils.showHUD(kWindow, title: error.message)
+                            YXUtils.showHUD(nil, title: error.message)
                         }
                     }
                     alertView.show()
@@ -332,7 +332,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
                             self?.loadData()
                         }) { error in
-                            YXUtils.showHUD(kWindow, title: error.message)
+                            YXUtils.showHUD(nil, title: error.message)
                         }
                     }
                     alertView.show()
@@ -454,7 +454,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             guard let self = self else { return }
             self.loadData()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

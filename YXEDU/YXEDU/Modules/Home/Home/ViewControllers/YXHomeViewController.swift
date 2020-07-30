@@ -232,7 +232,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                 self?.setActivityView()
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

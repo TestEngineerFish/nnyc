@@ -63,7 +63,7 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
             YXUserModel.default.login()
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -169,7 +169,7 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
                 }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

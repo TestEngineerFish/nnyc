@@ -54,7 +54,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             self.tableView.reloadData()
             self.reportReply()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -76,7 +76,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
                 YXRedDotManager.share.updateFeedbackReplyBadge()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     

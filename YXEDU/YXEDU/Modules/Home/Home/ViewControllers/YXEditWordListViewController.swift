@@ -64,7 +64,7 @@ class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol
                 guard let self = self else { return }
                 self.navigationController?.popViewController(animated: true)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             
         } else {
@@ -84,7 +84,7 @@ class YXEditWordListViewController: YXViewController, YXWordListEditCellProtocol
                 guard let self = self else { return }
                 self.navigationController?.popViewController(animated: true)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }

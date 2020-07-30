@@ -43,7 +43,7 @@ class YXWordDetailExampleCell: UITableViewCell {
         } else {
             guard let _pronunciation = pronunciation, let pronunciationUrl = URL(string: _pronunciation) else {
                 YXLog("无效的音频地址: \(String(describing: pronunciation))")
-                YXUtils.showHUD(kWindow, title: "无效音频")
+                YXUtils.showHUD(nil, title: "无效音频")
                 return
             }
             playAuoidButton.layer.addFlickerAnimation()

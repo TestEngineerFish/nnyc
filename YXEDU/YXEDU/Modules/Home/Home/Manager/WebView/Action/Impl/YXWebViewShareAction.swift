@@ -17,12 +17,12 @@ class YXWebViewShareAction: YRWebViewJSAction {
             // 是否安装判断
             if actionModel.type.getShareChannel() == .wechat || actionModel.type.getShareChannel() == .timeLine {
                 if WXApiManager.shared()?.wxIsInstalled() == .some(false) {
-                    YXUtils.showHUD(kWindow, title: "你未安装微信，暂时无法分享")
+                    YXUtils.showHUD(nil, title: "你未安装微信，暂时无法分享")
                     return
                 }
             } else if actionModel.type.getShareChannel() == .qq || actionModel.type.getShareChannel() == .qzone {
                 if !TencentOAuth.iphoneQQInstalled() && !TencentOAuth.iphoneTIMInstalled() {
-                    YXUtils.showHUD(kWindow, title: "你未安装QQ，暂时无法分享")
+                    YXUtils.showHUD(nil, title: "你未安装QQ，暂时无法分享")
                     return
                 }
             }
@@ -60,7 +60,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
             })
         }) { (error) in
             YXUtils.hideHUD(kWindow)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

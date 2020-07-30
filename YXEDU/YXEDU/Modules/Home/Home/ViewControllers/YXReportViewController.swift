@@ -137,7 +137,7 @@ class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITabl
             }
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     

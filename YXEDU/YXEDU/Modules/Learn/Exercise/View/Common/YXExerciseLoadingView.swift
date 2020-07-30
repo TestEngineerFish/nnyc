@@ -225,7 +225,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 weakself.stopAnimation()
                 DispatchQueue.main.async {
                     UIView().currentViewController?.navigationController?.popToRootViewController(animated: true)
-                    YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+                    YXUtils.showHUD(nil, title: "当前网速较慢，建议稍后重试")
                 }
             }
             weakself.updateValue()

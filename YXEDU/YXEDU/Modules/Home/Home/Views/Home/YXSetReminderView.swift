@@ -95,7 +95,7 @@ class YXSetReminderView: YXTopWindowView {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
 
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

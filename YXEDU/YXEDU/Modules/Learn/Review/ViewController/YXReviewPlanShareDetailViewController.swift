@@ -144,7 +144,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 alertView.shouldOnlyShowOneButton = true
                 alertView.show()
             } else {
-                YXUtils.showHUD(self.view, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }

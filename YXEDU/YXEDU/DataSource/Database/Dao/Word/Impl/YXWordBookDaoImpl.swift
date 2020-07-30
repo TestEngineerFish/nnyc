@@ -130,7 +130,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             db.executeUpdate(deleteBooksSQL, withArgumentsIn: [])
             db.executeUpdate(deleteWordsSQL, withArgumentsIn: [])
             DispatchQueue.main.async {
-                YXUtils.showHUD(kWindow, title: "删除成功")
+                YXUtils.showHUD(nil, title: "删除成功")
             }
         }
     }

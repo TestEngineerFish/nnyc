@@ -87,7 +87,7 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         self.contentWebView.navigationDelegate = self
         guard let urlStr = YXUserModel.default.coinExplainUrl, let url = URL(string: urlStr) else {
             self.indicatorView.stopAnimating()
-            YXUtils.showHUD(self.view, title: "加载失败，请稍后再试")
+            YXUtils.showHUD(nil, title: "加载失败，请稍后再试")
             return
         }
         self.contentWebView.load(URLRequest(url: url))

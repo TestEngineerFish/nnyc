@@ -251,7 +251,7 @@ class YXShareViewController: YXViewController {
                 }
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -284,7 +284,7 @@ class YXShareViewController: YXViewController {
             NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
             
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -354,7 +354,7 @@ class YXShareViewController: YXViewController {
                 block?()
             })
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     

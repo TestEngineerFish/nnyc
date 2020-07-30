@@ -78,12 +78,12 @@ class YXAddBookGuideViewController: YXViewController {
                 vc.learnConfig  = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 self.navigationController?.pushViewController(vc, animated: true)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             self.updateGIO()
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -100,7 +100,7 @@ class YXAddBookGuideViewController: YXViewController {
             self.navigationController?.popToRootViewController(animated: true)
             NotificationCenter.default.post(name: YXNotification.kSquirrelAnimation, object: nil)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
         self.updateGIO()
     }

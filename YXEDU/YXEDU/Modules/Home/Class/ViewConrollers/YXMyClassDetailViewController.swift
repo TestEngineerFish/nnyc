@@ -131,7 +131,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             self.classDetailModel = response.data
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -144,7 +144,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             // 刷新列表
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

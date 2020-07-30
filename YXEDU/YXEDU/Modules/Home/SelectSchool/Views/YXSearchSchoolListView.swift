@@ -222,7 +222,7 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
             self.schoolModelList = modelList
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

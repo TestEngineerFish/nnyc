@@ -43,7 +43,7 @@ class YXStepConfigManager {
                 YXLog("本地学习步骤混淆配置不需要更新")
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

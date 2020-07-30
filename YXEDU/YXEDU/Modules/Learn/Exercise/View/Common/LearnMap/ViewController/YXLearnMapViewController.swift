@@ -145,7 +145,7 @@ class YXLearnMapViewController: YXViewController {
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -163,7 +163,7 @@ class YXLearnMapViewController: YXViewController {
             YXLog("==== 从地图页选择单元学习 ====")
             YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

@@ -197,7 +197,7 @@ class YXReviewPlanEditView: YXTopWindowView {
                     self.removeFromSuperview()
                 } else {
                     YXLog("重置词单\(planId)，失败")
-                    YXUtils.showHUD(kWindow, title: "重置失败，请重试")
+                    YXUtils.showHUD(nil, title: "重置失败，请重试")
                 }
             }
         }

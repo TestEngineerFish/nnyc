@@ -63,7 +63,7 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
                     
                     YXWordBookDaoImpl().deleteBook(bookId: selectedBookId)
                 }) { error in
-                    YXUtils.showHUD(kWindow, title: error.message)
+                    YXUtils.showHUD(nil, title: error.message)
                 }
                 
                 break
@@ -114,7 +114,7 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
                 YXWordBookResourceManager.shared.addTask(model: taskModel)
                 self.navigationController?.popViewController(animated: true)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             break
         }
@@ -157,7 +157,7 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
             self.bookCollectionView.reloadData()
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -196,7 +196,7 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
             attributedText2.addAttribute(.foregroundColor, value: UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), range: NSRange(location: 0, length: index2))
             self.countOfWordsForStudyLabel.attributedText = attributedText2
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     

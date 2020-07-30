@@ -231,7 +231,7 @@ extension YYEnvChangeViewController {
 
         YYCache.set(currentSelected, forKey: YYEVC.envKey)
         YXUserModel.default.logout {
-            YXUtils.showHUD(kWindow, title: "正在关闭App")
+            YXUtils.showHUD(nil, title: "正在关闭App")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 exit(0)
             }

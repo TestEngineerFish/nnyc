@@ -44,7 +44,7 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
             self.customNavigationBar?.title = "上期排行"
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

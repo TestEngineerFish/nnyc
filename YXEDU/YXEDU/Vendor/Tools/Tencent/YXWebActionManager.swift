@@ -77,11 +77,11 @@ class YXWebActionManager: NSObject {
                     }
                     
                 } else {
-                    YXUtils.showHUD(kWindow, title: "作业码已过期")
+                    YXUtils.showHUD(nil, title: "作业码已过期")
                 }
 
             }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             
             break
@@ -122,7 +122,7 @@ class YXWebActionManager: NSObject {
             YXLog("添加好友成功")
             block?()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
