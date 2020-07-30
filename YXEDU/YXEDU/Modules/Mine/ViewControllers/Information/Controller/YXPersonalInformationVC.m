@@ -60,10 +60,15 @@
             YXPersonalInformationModel *model = [[YXPersonalInformationModel alloc] init];
                 
             model.title = titlesOfOneSection[j];
-            model.rightDetail = rightDetailsOfOneSection[j];
-            model.isShowAccessory = [isShowAccessoriesOfOneSection[j] boolValue];
-            model.isShowBottomLine = [isShowBottomLinesOfOneSection[j] boolValue];
-
+            if (j < rightDetailsOfOneSection.count) {
+                model.rightDetail = rightDetailsOfOneSection[j];
+            }
+            if (j < isShowAccessoriesOfOneSection.count) {
+                model.isShowAccessory = [isShowAccessoriesOfOneSection[j] boolValue];
+            }
+            if (j < isShowBottomLinesOfOneSection.count) {
+                model.isShowBottomLine = [isShowBottomLinesOfOneSection[j] boolValue];
+            }
             [itemsOfOneSection addObject:model];
         }
             
