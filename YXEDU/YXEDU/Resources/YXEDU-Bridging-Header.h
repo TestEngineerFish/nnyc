@@ -66,5 +66,6 @@
 #import "FMResultSet.h"
 #import "SGQRCode.h"
 #import <AuthenticationServices/AuthenticationServices.h>
-#import "YXPersonalInformationModel.h"
+#import "YXPersonChangeNameVC.h"
+#import "YXBasePickverView.h"
 #import "LEEAlert.h"

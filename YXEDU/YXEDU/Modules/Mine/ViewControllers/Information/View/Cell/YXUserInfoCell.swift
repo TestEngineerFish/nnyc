@@ -72,6 +72,8 @@ class YXUserInfoCell: UITableViewCell {
             make.size.equalTo(CGSize(width: AdaptSize(70), height: AdaptSize(70)))
             make.right.equalTo(detailLabel)
         }
+        avatarImageView.layer.cornerRadius  = AdaptSize(35)
+        avatarImageView.layer.masksToBounds = true
         self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(15), bottom: 0, right: AdaptSize(-15))
     }
 
@@ -84,11 +86,14 @@ class YXUserInfoCell: UITableViewCell {
         self.detailLabel.text = detail
         self.avatarImageView.isHidden = hideAvatar
         if !hideAvatar {
-            if detail.isNotEmpty {
-                self.avatarImageView.sd_setImage(with: URL(string: detail), completed: nil)
+            if let image = YXUserModel.default.userAvatarImage {
+                self.avatarImageView.image = image
+            } else if let imageUrlStr = YXUserModel.default.userAvatarPath, imageUrlStr.isNotEmpty {
+                self.avatarImageView.sd_setImage(with: URL(string: imageUrlStr), completed: nil)
             } else {
                 self.avatarImageView.image = UIImage(named: "challengeAvatar")
             }
+
         }
     }
 }

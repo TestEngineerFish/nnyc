@@ -117,6 +117,9 @@
 }
 
 + (void)showLoadingInfo:(NSString *)info toView:(UIView *)view {
+    if (!view) {
+        view = [UIApplication sharedApplication].keyWindow;
+    }
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     //    hud.delegate = self;
     hud.mode = MBProgressHUDModeIndeterminate;
