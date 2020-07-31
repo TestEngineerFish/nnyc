@@ -508,9 +508,6 @@
                                                         <real key="value" value="2"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="70J-wn-gbf" appends="YES" id="qxj-yk-zXZ"/>
-                                                </connections>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="teA-Xd-wb3" customClass="YXDesignableView" customModule="YXEDU" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="128.66666666666666" width="177" height="54"/>
@@ -1110,7 +1107,6 @@
                         <segue destination="Vjr-94-3PN" kind="show" identifier="FeedBack" id="Ixt-dM-4Z1"/>
                         <segue destination="YOc-1B-OIP" kind="show" identifier="Calendar" id="anM-kP-Y8f"/>
                         <segue destination="xaY-84-PMC" kind="show" identifier="Settings" id="h0c-mI-FYI"/>
-                        <segue destination="4eU-3G-WP4" kind="show" identifier="Edit" id="Pms-tX-mq7"/>
                         <segue destination="enh-X1-O86" kind="show" identifier="Coin" id="VCd-xe-ffb"/>
                     </connections>
                 </viewController>
@@ -1132,24 +1128,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-3775.1999999999998" y="1561.169415292354"/>
-        </scene>
-        <!--个人资料-->
-        <scene sceneID="TRJ-8b-hal">
-            <objects>
-                <viewController title="个人资料" hidesBottomBarWhenPushed="YES" id="4eU-3G-WP4" customClass="YXPersonalInformationVC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0nj-II-Bp4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="ci1-Fn-VTr"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="个人资料" id="JWV-LU-xMj">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="back" id="9bn-aw-oVm"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Eu5-7V-ZU6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2959" y="789"/>
         </scene>
         <!--Calendar View Controller-->
         <scene sceneID="vNR-Ev-c18">

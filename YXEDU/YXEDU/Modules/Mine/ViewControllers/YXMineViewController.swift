@@ -61,8 +61,10 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.collectionLeftConsraint.constant    = AdaptSize(22)
         self.collectionHeightConstraint.constant = AdaptSize(73)
         self.customNavigationBar?.isHidden       = true
-        let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
-          self.badgeNumberView.addGestureRecognizer(tapAction)
+        let tapBadge  = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
+        let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(pushUserInfoVC))
+        self.badgeNumberView.addGestureRecognizer(tapBadge)
+        self.avatarImageView.addGestureRecognizer(tapAvatar)
     }
 
     override func addNotification() {
@@ -91,23 +93,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Edit" {
-            guard let destinationViewController = segue.destination as? YXPersonalInformationVC else {
-                return
-            }
-            let userModel = YXUserModel_Old()
-            userModel.avatar = temporaryUserModel?.avatar
-            userModel.nick = temporaryUserModel?.nick
-            userModel.sex = "\(temporaryUserModel?.sex ?? 0)"
-            userModel.area = temporaryUserModel?.area
-            userModel.mobile = temporaryUserModel?.mobile
-            userModel.birthday = temporaryUserModel?.birthday
-            userModel.speech = temporaryUserModel?.speech
-            userModel.grade = temporaryUserModel?.grade
-
-            destinationViewController.userModel = userModel
-            
-        } else if segue.identifier == "Coin" {
+        if segue.identifier == "Coin" {
             guard let squirrelCoinViewController = segue.destination as? YXSquirrelCoinViewController else {
                 return
             }
@@ -258,6 +244,66 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
         vc.badgeModelList   = self.badgeModelList
         vc.earnedBadgeCount = self.earnedBadgeCount
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc private func pushUserInfoVC() {
+        let vc = YXUserInfoViewController()
+        vc.nick = {
+            guard let _nick = temporaryUserModel?.nick, _nick.isNotEmpty else {
+                return "未设置"
+            }
+            return _nick
+        }()
+        vc.birthday = {
+            guard let _birthday = temporaryUserModel?.birthday, _birthday.isNotEmpty else {
+                return "未设置"
+            }
+            return _birthday
+        }()
+        vc.area = {
+            guard let _area = temporaryUserModel?.area, _area.isNotEmpty else {
+                return "未设置"
+            }
+            return _area
+        }()
+        vc.grade = {
+            var gradeStr = "未设置"
+            switch temporaryUserModel?.grade {
+            case .some("1"):
+                gradeStr = "一年级"
+            case .some("2"):
+                gradeStr = "二年级"
+            case .some("3"):
+                gradeStr = "三年级"
+            case .some("4"):
+                gradeStr = "四年级"
+            case .some("5"):
+                gradeStr = "五年级"
+            case .some("6"):
+                gradeStr = "六年级"
+            case .some("7"):
+                gradeStr = "七年级"
+            case .some("8"):
+                gradeStr = "八年级"
+            case .some("9"):
+                gradeStr = "九年级"
+            case .some("10"), .some("11"), .some("12"):
+                gradeStr = "高中"
+            default:
+                break
+            }
+            return gradeStr
+        }()
+        vc.sex = {
+            if temporaryUserModel?.sex == .some(1) {
+                return "男"
+            } else if temporaryUserModel?.sex == .some(2) {
+                return "女"
+            } else {
+                return "未设置"
+            }
+        }()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

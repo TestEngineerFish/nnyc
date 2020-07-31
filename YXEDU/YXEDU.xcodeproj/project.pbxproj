@@ -139,6 +139,9 @@
 		2296F775239B9DE600C50660 /* YXReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F774239B9DE600C50660 /* YXReviewRequest.swift */; };
 		2296F777239BBC3600C50660 /* YXReviewUnitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */; };
 		2297D98523AE37EA00DAF3B0 /* YXShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */; };
+		2298678324D2AE67000D20E0 /* YXUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */; };
+		2298678524D2B07D000D20E0 /* YXUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */; };
+		2298678724D2B808000D20E0 /* YXUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678624D2B808000D20E0 /* YXUserInfoModel.swift */; };
 		22991059248F842800F1C198 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22991058248F842800F1C198 /* WebKit.framework */; };
 		22991060248F853500F1C198 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2299105D248F853500F1C198 /* README.txt */; };
 		22991061248F853500F1C198 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299105F248F853500F1C198 /* libWeChatSDK.a */; };
@@ -756,6 +759,9 @@
 		2296F774239B9DE600C50660 /* YXReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewRequest.swift; sourceTree = "<group>"; };
 		2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewUnitListView.swift; sourceTree = "<group>"; };
 		2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareViewController.swift; sourceTree = "<group>"; };
+		2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoViewController.swift; sourceTree = "<group>"; };
+		2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoCell.swift; sourceTree = "<group>"; };
+		2298678624D2B808000D20E0 /* YXUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoModel.swift; sourceTree = "<group>"; };
 		22991058248F842800F1C198 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2299105B248F853500F1C198 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		2299105C248F853500F1C198 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -3510,6 +3516,7 @@
 				EE5EFFA323274FEA00655654 /* YXPersonalInformationVC.h */,
 				EE5EFF9F23274FEA00655654 /* YXPersonalInformationVC.m */,
 				EE5EFFA023274FEA00655654 /* ChangeNameController */,
+				2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3528,6 +3535,7 @@
 			children = (
 				EE5EFFA523274FEA00655654 /* YXPersonalInformationModel.m */,
 				EE5EFFA623274FEA00655654 /* YXPersonalInformationModel.h */,
+				2298678624D2B808000D20E0 /* YXUserInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3555,6 +3563,7 @@
 			children = (
 				EE5EFFAC23274FEA00655654 /* YXPersonalInformationCell.m */,
 				EE5EFFAD23274FEA00655654 /* YXPersonalInformationCell.h */,
+				2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -4306,6 +4315,7 @@
 				22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */,
 				EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */,
 				22FCA29A2474D92400A63847 /* YXNetworkModel.swift in Sources */,
+				2298678524D2B07D000D20E0 /* YXUserInfoCell.swift in Sources */,
 				221E779D24349A1E000377DB /* YXComNaviView.m in Sources */,
 				2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */,
 				EE4201D0248A310400231704 /* YXWordStepDao.swift in Sources */,
@@ -4525,6 +4535,7 @@
 				228105DE2487E21F0025F03F /* YXStudyRecordDao.swift in Sources */,
 				EE5EF20223273BAE00655654 /* YRHttpDownloadTask.m in Sources */,
 				2290EAC6236FCB72000BCA47 /* YXNewLearnPrimarySchoolQuestionView.swift in Sources */,
+				2298678324D2AE67000D20E0 /* YXUserInfoViewController.swift in Sources */,
 				2290EAC1236DB036000BCA47 /* YXRemindView.swift in Sources */,
 				EE1E4A90236943C8007D248F /* YXLookImageChooseWordExerciseView.swift in Sources */,
 				22ED54A92367076B00011B82 /* YXAnswerConnectionLettersView.swift in Sources */,
@@ -4567,6 +4578,7 @@
 				EEACEB8823A9FE530036B3A2 /* YXSearchRequest.swift in Sources */,
 				EE5EF21023273BAE00655654 /* UIAlertView+Blocks.m in Sources */,
 				77626C0B239E439200B9407A /* YXWordListOrderView.swift in Sources */,
+				2298678724D2B808000D20E0 /* YXUserInfoModel.swift in Sources */,
 				77B7C70923AA484A00149ACE /* YXSlidingVerificationCodeModel.swift in Sources */,
 				EE54F7E12362AA3100EC605A /* YXWordQuestionView.swift in Sources */,
 				22D6FA0023BDCAC900B05BC8 /* YXMakeReviewGuideView.swift in Sources */,
@@ -4829,7 +4841,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -4876,7 +4891,10 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
