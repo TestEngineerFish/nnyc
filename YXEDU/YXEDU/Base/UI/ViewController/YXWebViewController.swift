@@ -16,6 +16,7 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
     var customTitle: String?
     let jsBridge = YRWebViewJSBridge()
     var callBackDic = [String:String]()
+    var reloadCount = 0
 
     let loadingView = UIActivityIndicatorView()
     var rightButton: UIButton = {
@@ -148,7 +149,10 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
 
     // MARK: ==== WKNavigationDelegate ====
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        webView.reload()
+        if self.reloadCount < 3 {
+            webView.reload()
+            self.reloadCount += 1
+        }
         YXLog("WebView Load Error:", (error as NSError).message)
     }
 
