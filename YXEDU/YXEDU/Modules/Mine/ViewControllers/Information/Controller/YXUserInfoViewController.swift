@@ -15,6 +15,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     var birthday: String = ""
     var area: String     = ""
     var grade: String    = ""
+    var selectedIndexPath: IndexPath?
 
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -34,7 +35,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     var basePicker: YXBasePickverView?
 
     deinit {
-        backgroundView.removeFromSuperview()
+        self.backgroundView.removeFromSuperview()
     }
 
     override func viewDidLoad() {
@@ -47,9 +48,6 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     private func createSubviews() {
         self.view.addSubview(tableView)
         kWindow.addSubview(backgroundView)
-        backgroundView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
         tableView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(kNavHeight)
@@ -142,12 +140,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
 
     private func showChangeSexAlert() {
         self.basePicker = YXBasePickverView.showSexPickerView(on: self.sex, with: self)
-//        self.basePicker?.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(272))
-        kWindow.addSubview(self.basePicker!)
-        self.basePicker?.snp.makeConstraints({ (make) in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(AdaptSize(272))
-        })
+        self.basePicker?.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(272))
         self.showBaseAlert()
     }
 
@@ -167,13 +160,15 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     }
 
     private func showBaseAlert() {
-        if let picker = self.basePicker {
-            kWindow.addSubview(picker)
+        if self.basePicker != nil {
+            self.basePicker?.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(272))
+            self.basePicker?.backgroundColor = .clear
+            kWindow.addSubview(basePicker!)
         }
         UIView.animate(withDuration: 0.25, animations: { [weak self] in
             guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
-            self.basePicker?.transform = CGAffineTransform(scaleX: 0, y: AdaptSize(-272))
+            self.basePicker?.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-272))
         }) { (result) in
             if result {
                 self.backgroundView.isUserInteractionEnabled = true
@@ -289,6 +284,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
                 break
             }
         }
+        self.selectedIndexPath = indexPath
     }
 
     // MARK: ==== UIImagePickerControllerDelegate ====
@@ -302,6 +298,29 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
 
     // MARK: ==== YXBasePickverViewDelegate ====
     func basePickverView(_ pickverView: YXBasePickverView, withSelectedTitle title: String) {
+        guard let indexPath = self.selectedIndexPath else {
+            return
+        }
+        switch indexPath.section {
+        case 0:
+            if indexPath.row == 2 {
+                self.sex = title
+            }
+        case 1:
+            switch indexPath.row {
+            case 0:
+                self.birthday = title
+            case 1:
+                self.area = title
+            case 2:
+                self.grade = title
+            default:
+                break
+            }
+        default:
+            return
+        }
+        self.tableView.reloadData()
         YXLog(title)
     }
 }
