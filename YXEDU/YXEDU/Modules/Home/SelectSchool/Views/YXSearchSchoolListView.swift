@@ -167,10 +167,12 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
     // MARK: ==== Event ====
     func show(selectLocal model: YXLocalModel) {
         self.selectLocalModel = model
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
             self.transform = CGAffineTransform(translationX: 0, y: -self.height)
-        }) { (finished) in
+        }) { [weak self] (finished) in
+            guard let self = self else { return }
             if finished {
                 self.textField.becomeFirstResponder()
             }
@@ -179,10 +181,12 @@ class YXSearchSchoolListView: YXView, UITableViewDelegate, UITableViewDataSource
 
     @objc func hide() {
         self.textField.resignFirstResponder()
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 0.0
             self.transform = .identity
-        }) { (finished) in
+        }) { [weak self] (finished) in
+            guard let self = self else { return }
             if finished {
                 self.textField.text = nil
                 self.schoolModelList.removeAll()

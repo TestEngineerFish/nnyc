@@ -84,7 +84,7 @@ public extension String {
         if index >= self.count {
             index = self.count - 1
         }
-        return substring(fromIndex: 0, toIndex: max)
+        return substring(fromIndex: 0, toIndex: index)
     }
 
     /// 获取Bool值

@@ -38,6 +38,6 @@ struct YXResultModel: Mappable {
         credits        <- map["userCredits"]
         hasNextGroup   <- map["is_next_group"]
         imageUrlStr    <- map["image_url"]
-        didExpired    <- map["work_code_expire"]
+        didExpired     <- map["work_code_expire"]
     }
 }

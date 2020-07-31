@@ -21,9 +21,21 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
         tableView.tableFooterView = UIView()
         return tableView
     }()
+    var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+        view.layer.opacity = 0
+        view.isUserInteractionEnabled = false
+        return view
+    }()
     let cameraPicker = UIImagePickerController()
     let imagePicker  = UIImagePickerController()
     var basePicker: YXBasePickverView?
+
+    deinit {
+        backgroundView.removeFromSuperview()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +46,10 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
 
     private func createSubviews() {
         self.view.addSubview(tableView)
+        kWindow.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         tableView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(kNavHeight)
@@ -45,7 +61,8 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.register(YXUserInfoCell.classForCoder(), forCellReuseIdentifier: "kYXUserInfoCell")
-
+        let tapBackgroundView = UITapGestureRecognizer(target: self, action: #selector(hideBaseAlert))
+        self.backgroundView.addGestureRecognizer(tapBackgroundView)
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().barStyle      = .default
         cameraPicker.sourceType    = .camera;
@@ -113,35 +130,69 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     }
 
     private func toChangeNameVC() {
-        let vc = YXPersonChangeNameVC()
-        vc.returnNameStringBlock = { [weak self] (name: String) in
+        let vc = YXEditNameViewController()
+        vc.name = self.nick
+        vc.blackAction = { [weak self] (name: String) in
             guard let self = self else { return }
             self.nick = name
             self.tableView.reloadData()
         }
-        var name = self.nick
-        if name.count > 10 {
-            name = name.subString(location: 0, length: 10)
-        }
-        vc.userName = name
-        vc.userNameLength = String(format: "%lu/10", name.count)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func showChangeSexAlert() {
         self.basePicker = YXBasePickverView.showSexPickerView(on: self.sex, with: self)
+//        self.basePicker?.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: AdaptSize(272))
+        kWindow.addSubview(self.basePicker!)
+        self.basePicker?.snp.makeConstraints({ (make) in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(AdaptSize(272))
+        })
+        self.showBaseAlert()
     }
 
     private func showChangeBirthdayAlert() {
-        self.basePicker = YXBasePickverView.showSexPickerView(on: self.birthday, with: self)
+        self.basePicker = YXBasePickverView.showBirthdayPickerView(on: self.birthday, with: self)
+        self.showBaseAlert()
     }
 
     private func showChangeAreaAlert() {
-        self.basePicker = YXBasePickverView.showSexPickerView(on: self.area, with: self)
+        self.basePicker = YXBasePickverView.showLocationPickerView(on: self.area, with: self)
+        self.showBaseAlert()
     }
 
     private func showChangeGradeAlert() {
-        self.basePicker = YXBasePickverView.showSexPickerView(on: self.grade, with: self)
+        self.basePicker = YXBasePickverView.showGradePickerView(on: self.grade, with: self)
+        self.showBaseAlert()
+    }
+
+    private func showBaseAlert() {
+        if let picker = self.basePicker {
+            kWindow.addSubview(picker)
+        }
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
+            self.backgroundView.layer.opacity = 1.0
+            self.basePicker?.transform = CGAffineTransform(scaleX: 0, y: AdaptSize(-272))
+        }) { (result) in
+            if result {
+                self.backgroundView.isUserInteractionEnabled = true
+            }
+        }
+    }
+
+    @objc
+    private func hideBaseAlert() {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
+            self.backgroundView.layer.opacity = 0
+            self.basePicker?.transform = .identity
+        }) { [weak self] (result) in
+            guard let self = self else { return }
+            if result {
+                self.basePicker?.removeFromSuperview()
+            }
+        }
     }
 
     // MARK: ==== Tools ====

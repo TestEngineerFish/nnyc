@@ -142,6 +142,7 @@
 		2298678324D2AE67000D20E0 /* YXUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */; };
 		2298678524D2B07D000D20E0 /* YXUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */; };
 		2298678724D2B808000D20E0 /* YXUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678624D2B808000D20E0 /* YXUserInfoModel.swift */; };
+		2298678B24D3FD18000D20E0 /* YXEditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678A24D3FD18000D20E0 /* YXEditNameViewController.swift */; };
 		22991059248F842800F1C198 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22991058248F842800F1C198 /* WebKit.framework */; };
 		22991060248F853500F1C198 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2299105D248F853500F1C198 /* README.txt */; };
 		22991061248F853500F1C198 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299105F248F853500F1C198 /* libWeChatSDK.a */; };
@@ -762,6 +763,7 @@
 		2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoViewController.swift; sourceTree = "<group>"; };
 		2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoCell.swift; sourceTree = "<group>"; };
 		2298678624D2B808000D20E0 /* YXUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXUserInfoModel.swift; sourceTree = "<group>"; };
+		2298678A24D3FD18000D20E0 /* YXEditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXEditNameViewController.swift; sourceTree = "<group>"; };
 		22991058248F842800F1C198 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2299105B248F853500F1C198 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		2299105C248F853500F1C198 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -3517,6 +3519,7 @@
 				EE5EFF9F23274FEA00655654 /* YXPersonalInformationVC.m */,
 				EE5EFFA023274FEA00655654 /* ChangeNameController */,
 				2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */,
+				2298678A24D3FD18000D20E0 /* YXEditNameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4590,6 +4593,7 @@
 				CF18D1B5240FDF9200C10237 /* YXTabBarController.swift in Sources */,
 				22ED54A42366DD6B00011B82 /* NSObject+YXModel.m in Sources */,
 				EE5E0174232754FA00655654 /* SJCall.mm in Sources */,
+				2298678B24D3FD18000D20E0 /* YXEditNameViewController.swift in Sources */,
 				779D73DE24050ABC00E461E2 /* YXAddBookGuideItem.swift in Sources */,
 				EE5EF21123273BAE00655654 /* NSString+YR.m in Sources */,
 				22B47C6C2499E3AF0089B9D0 /* YXMyClassDetailViewController.swift in Sources */,

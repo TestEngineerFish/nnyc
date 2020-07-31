@@ -56,6 +56,7 @@ class YXUserInfoCell: UITableViewCell {
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.height.centerY.equalToSuperview()
+            make.width.equalTo(AdaptSize(60))
             make.right.equalTo(detailLabel.snp.left).offset(AdaptSize(-15)).priorityMedium()
         }
         detailLabel.snp.makeConstraints { (make) in
