@@ -41,6 +41,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     }
 
     private func bindProperty() {
+        self.customNavigationBar?.title = "个人资料"
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.register(YXUserInfoCell.classForCoder(), forCellReuseIdentifier: "kYXUserInfoCell")
@@ -250,6 +251,6 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
 
     // MARK: ==== YXBasePickverViewDelegate ====
     func basePickverView(_ pickverView: YXBasePickverView, withSelectedTitle title: String) {
-        <#code#>
+        YXLog(title)
     }
 }
