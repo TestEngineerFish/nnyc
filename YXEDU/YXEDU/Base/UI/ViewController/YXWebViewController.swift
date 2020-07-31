@@ -163,7 +163,8 @@ class YXWebViewController: YXViewController, WKNavigationDelegate, WKUIDelegate,
                      WebViewActionType.selectSchool.rawValue : YXWebViewSelectSchool.self,
                      WebViewActionType.selectAddress.rawValue : YXWebViewSelectAddress.self,
                      WebViewActionType.appInfo.rawValue : YXWebViewAppInfoAction.self,
-                     WebViewActionType.addMenu.rawValue : YXWebViewMenuAction.self]
+                     WebViewActionType.addMenu.rawValue : YXWebViewMenuAction.self,
+                     WebViewActionType.addLog.rawValue : YXWebViewAddLogAction.self]
         return list
     }
 

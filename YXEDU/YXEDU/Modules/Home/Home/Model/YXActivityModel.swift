@@ -9,16 +9,17 @@
 import ObjectMapper
 
 struct YXActivityModel: Mappable {
-    var isShow: Bool       = false
-    var isAction: Bool     = false
-    var taskFinished: Bool = false
-    var isJoin: Bool       = false
-    var title: String      = ""
-    var hadNewFriend: Bool = false
-    var hadReward: Bool    = false
-    var punchAmount: Int   = 0
-    var punchToday: Int    = 0
-    var urlStr: String     = ""
+    var isShow: Bool        = false
+    var isAction: Bool      = false
+    var taskFinished: Bool  = false
+    var isJoin: Bool        = false
+    var title: String       = ""
+    var hadNewFriend: Bool  = false
+    var hadReward: Bool     = false
+    var punchAmount: Int    = 0
+    var punchToday: Int     = 0
+    var urlStr: String      = ""
+    var imageUrlStr: String = ""
 
     init?(map: Map) {}
     mutating func mapping(map: Map) {
@@ -32,6 +33,7 @@ struct YXActivityModel: Mappable {
         punchToday   <- map["today_clock_num"]
         urlStr       <- map["activity_url"]
         isJoin       <- map["join_status"]
+        imageUrlStr  <- map["banner_image_url"]
     }
 
 

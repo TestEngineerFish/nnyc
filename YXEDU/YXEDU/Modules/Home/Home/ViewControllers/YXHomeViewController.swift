@@ -243,7 +243,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 return
             }
             self.activityModel = model
-            self.setActivityView()
+            self.setActivityView(image: model.imageUrlStr)
         }) { (error) in
             YXUtils.showHUD(kWindow, title: error.message)
         }
@@ -346,7 +346,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     // MARK: ---- Tools ----
-    private func setActivityView() {
+    private func setActivityView(image urlStr: String) {
         guard let model = self.activityModel else {
             return
         }
@@ -355,12 +355,10 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             let bannerH = (screenWidth - 40)/335*80
             self.activityViewHeight.constant = bannerH
             self.collectionViewTop.constant = 25
-            let bannerImageView: UIImageView = {
-                let imageView = UIImageView()
-                imageView.image = UIImage(named: "activityBanner")
-                return imageView
-            }()
+            let bannerImageView: YXKVOImageView = YXKVOImageView()
+            self.activityView.removeAllSubviews()
             self.activityView.addSubview(bannerImageView)
+            bannerImageView.sd_setImage(with: URL(string: urlStr), placeholderImage: UIImage(named: "activityBanner"))
             bannerImageView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }

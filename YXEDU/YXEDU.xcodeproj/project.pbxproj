@@ -139,6 +139,7 @@
 		2296F775239B9DE600C50660 /* YXReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F774239B9DE600C50660 /* YXReviewRequest.swift */; };
 		2296F777239BBC3600C50660 /* YXReviewUnitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */; };
 		2297D98523AE37EA00DAF3B0 /* YXShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */; };
+		2298678924D3B4A1000D20E0 /* YXWebViewAddLogAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2298678824D3B4A1000D20E0 /* YXWebViewAddLogAction.swift */; };
 		22991059248F842800F1C198 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22991058248F842800F1C198 /* WebKit.framework */; };
 		22991060248F853500F1C198 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2299105D248F853500F1C198 /* README.txt */; };
 		22991061248F853500F1C198 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299105F248F853500F1C198 /* libWeChatSDK.a */; };
@@ -757,6 +758,7 @@
 		2296F774239B9DE600C50660 /* YXReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewRequest.swift; sourceTree = "<group>"; };
 		2296F776239BBC3600C50660 /* YXReviewUnitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewUnitListView.swift; sourceTree = "<group>"; };
 		2297D98423AE37EA00DAF3B0 /* YXShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareViewController.swift; sourceTree = "<group>"; };
+		2298678824D3B4A1000D20E0 /* YXWebViewAddLogAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWebViewAddLogAction.swift; sourceTree = "<group>"; };
 		22991058248F842800F1C198 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		2299105B248F853500F1C198 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		2299105C248F853500F1C198 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -2349,6 +2351,7 @@
 				222AFBBE24B47CDE001C894C /* YXWebViewSelectAddress.swift */,
 				22EA9CE224B4AC340045923F /* YXWebViewAppInfoAction.swift */,
 				22EA5DCF24B601A50062E412 /* YXWebViewMenuAction.swift */,
+				2298678824D3B4A1000D20E0 /* YXWebViewAddLogAction.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -4537,6 +4540,7 @@
 				EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */,
 				2205A92E23619F7500C6E674 /* YXAnswerSelectLettersView.swift in Sources */,
 				229B0D562456AD5800942C78 /* Date+Extension.swift in Sources */,
+				2298678924D3B4A1000D20E0 /* YXWebViewAddLogAction.swift in Sources */,
 				EE5EF258232740B800655654 /* UIFont+IconFont.m in Sources */,
 				EE772110237D3EF700CD632E /* YXWordAndImage_FillQuestionView.swift in Sources */,
 				EE88DF4C23AF4ED0004DFF10 /* YXAlertCheckManager.swift in Sources */,
@@ -4819,7 +4823,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -4866,7 +4873,10 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
