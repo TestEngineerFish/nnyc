@@ -29,6 +29,7 @@ struct YXUserInfomationModel: Mappable {
     }
     var didBindPhone: Int?
     var didSelectBook: Int?
+    var isNewUser:Bool      = false// 是否是新用户
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  // 松果币H5文件
     var gameExplainUrl: String? // 游戏挑战H5文件
@@ -47,5 +48,6 @@ struct YXUserInfomationModel: Mappable {
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reminder             <- map["learn_remind"]
+        isNewUser            <- map["is_new_study"]
     }
 }

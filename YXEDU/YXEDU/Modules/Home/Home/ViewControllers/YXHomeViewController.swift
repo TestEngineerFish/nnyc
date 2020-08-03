@@ -196,7 +196,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     // MARK: ---- Request ----
-    private func loadData() {
+    private func loadData(finished block: (()->Void)? = nil) {
         let request = YXHomeRequest.getBaseInfo(userId: YXUserModel.default.uuid ?? "")
         YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
             guard let userInfomation = response.data else { return }
@@ -231,6 +231,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.initDataManager()
             self.uploadGrowing()
             self.subItemCollectionView.reloadData()
+            block?()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)
         }
@@ -279,6 +280,23 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             return (model.newWords ?? 0, model.reviewWords ?? 0)
         }
     }
+
+    @objc private func newUserStudy() {
+        self.study(focus: true)
+    }
+
+    private func study(focus: Bool) {
+        guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
+            return
+        }
+        self.handleTabData()
+        YXUserModel.default.lastStoredDate = Date()
+        YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
+        let vc = YXExerciseViewController()
+        vc.isFocusStudy = focus
+        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     private func initService() {
         // 只有基础学习的bookId才是真实bookId，复习的bookId是后端虚构的ID
@@ -291,8 +309,8 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     /// 处理基础信息请求
     private func handleTabData() {
-        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel.bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel.bookId)
+        let taskModel = YXWordBookResourceModel(type: .single, book: YXUserModel.default.currentBookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: YXUserModel.default.currentBookId)
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
     }
@@ -310,6 +328,16 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             self.navigationController?.pushViewController(vc, animated: true)
         } else if (YYCache.object(forKey: .isShowSelectBool) as? Bool) == .some(true) {
             self.performSegue(withIdentifier: "AddBookGuide", sender: self)
+        } else if !YXUserModel.default.isFinishedNewUserStudy {
+            // 如果还未加载词书数据，则先加载
+            if YXUserModel.default.currentBookId != nil && YXUserModel.default.currentUnitId != nil {
+                self.newUserStudy()
+            } else {
+                self.loadData { [weak self] in
+                    guard let self = self else { return }
+                    self.newUserStudy()
+                }
+            }
         } else {
             self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         }
@@ -331,7 +359,7 @@ class YXHomeViewController: UIViewController, UICollectionViewDelegate, UICollec
             } else {
                 YYCache.set(false, forKey: .isShowSelectBool)
             }
-
+            YXUserModel.default.isFinishedNewUserStudy = !_userInfomation.isNewUser
             if _userInfomation.reminder?.didOpen == 1, let time = _userInfomation.reminder?.timeStamp {
                 YYCache.set(Date(timeIntervalSince1970: time), forKey: .didShowSetupReminderAlert)
                 YYCache.set(Date(timeIntervalSince1970: time), forKey: .reminder)

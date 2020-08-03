@@ -46,6 +46,8 @@
     /// 是否在请求接口中，用于Loading页面的状态更新
     static var requesting: Bool?
     static var selectWord: Bool?
+    /// 是否不允许退出学习
+    var isFocusStudy: Bool = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -94,6 +96,10 @@
             make.left.right.equalToSuperview()
             make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalToSuperview()
+        }
+        // 学习中不允许返回
+        if isFocusStudy {
+            self.headerView.focusStudy()
         }
     }
     

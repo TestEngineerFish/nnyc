@@ -65,7 +65,8 @@ class YXAddBookGuideViewController: UIViewController {
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
                 let vc = YXExerciseViewController()
-                vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+                vc.isFocusStudy = !YXUserModel.default.isFinishedNewUserStudy
+                vc.learnConfig  = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 self.navigationController?.pushViewController(vc, animated: true)
             }) { error in
                 YXUtils.showHUD(kWindow, title: error.message)
@@ -256,11 +257,10 @@ class YXAddBookGuideViewController: UIViewController {
             
             if self.selectBook != nil, self.selectGradeViewHeight.constant == self.defaultHeight, self.selectVersionViewHeight.constant == self.defaultHeight, self.selectBookNameViewHeight.constant == self.defaultHeight {
                 self.startButton.isHidden = false
-                self.homeButton.isHidden = false
-                
+                self.homeButton.isHidden  = !YXUserModel.default.isFinishedNewUserStudy
             } else {
                 self.startButton.isHidden = true
-                self.homeButton.isHidden = true
+                self.homeButton.isHidden  = true
             }
         }
         

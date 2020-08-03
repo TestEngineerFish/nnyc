@@ -152,6 +152,15 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.currentUnitId) as? Int
         }
     }
+    /// 新用户练习是否完成
+    var isFinishedNewUserStudy: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.isFinishedNewUserStudy)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.isFinishedNewUserStudy) as? Bool ?? true
+        }
+    }
     /// 是否已加入班级
     var isJoinClass: Bool {
         set {
