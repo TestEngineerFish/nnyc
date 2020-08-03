@@ -36,12 +36,14 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
 
     deinit {
         self.backgroundView.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
         self.bindProperty()
+        self.registerNotification()
         self.tableView.reloadData()
     }
 
@@ -74,6 +76,10 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
         imagePicker.navigationBar.tintColor     = .black1
     }
 
+    private func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(hideBaseAlert), name: NSNotification.Name(rawValue: "RemovePickerView"), object: nil)
+    }
+
     // MARK: ==== Request ====
     private func uploadAvatar(image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
@@ -100,7 +106,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
     private func showChangeAvatarPickerView() {
         let leeAlert = LEEAlert.actionsheet()
         _ = leeAlert.config.leeAddAction({ [weak self] (action: LEEAction) in
-            action.type = .default
+            action.type  = .default
             action.title = "拍照"
             action.titleColor = .black1
             action.font = UIFont.regularFont(ofSize: AdaptFontSize(18))
@@ -189,9 +195,6 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
             }
         }
     }
-
-    // MARK: ==== Tools ====
-
 
     // MARK: ==== UITableViewDelegate && UITableViewDataSource ====
     func numberOfSections(in tableView: UITableView) -> Int {
