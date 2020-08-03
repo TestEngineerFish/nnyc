@@ -469,11 +469,7 @@
 		EE5E008F23274FEB00655654 /* YXCalendarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC023274FE900655654 /* YXCalendarChartView.m */; };
 		EE5E009123274FEB00655654 /* YXCalendarBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */; };
 		EE5E009323274FEB00655654 /* YXCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */; };
-		EE5E00EE23274FEC00655654 /* YXPersonalInformationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFF9F23274FEA00655654 /* YXPersonalInformationVC.m */; };
-		EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFA123274FEA00655654 /* YXPersonChangeNameVC.m */; };
-		EE5E00F023274FEC00655654 /* YXPersonalInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFA523274FEA00655654 /* YXPersonalInformationModel.m */; };
 		EE5E00F123274FEC00655654 /* YXBasePickverView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFAA23274FEA00655654 /* YXBasePickverView.m */; };
-		EE5E00F223274FEC00655654 /* YXPersonalInformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFAC23274FEA00655654 /* YXPersonalInformationCell.m */; };
 		EE5E00F823274FEC00655654 /* YXPersonalReminderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFC023274FEA00655654 /* YXPersonalReminderVC.m */; };
 		EE5E00F923274FEC00655654 /* YXFeedBackViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFC623274FEA00655654 /* YXFeedBackViewModel.m */; };
 		EE5E00FA23274FEC00655654 /* YXPersonalFeedBackVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5EFFC723274FEA00655654 /* YXPersonalFeedBackVC.m */; };
@@ -1243,16 +1239,8 @@
 		EE5EFEC223274FE900655654 /* YXCalendarBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarBookCell.m; sourceTree = "<group>"; };
 		EE5EFEC423274FE900655654 /* YXCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXCalendarHeaderView.m; sourceTree = "<group>"; };
 		EE5EFF9C23274FEA00655654 /* PersonCenterURLs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCenterURLs.h; sourceTree = "<group>"; };
-		EE5EFF9F23274FEA00655654 /* YXPersonalInformationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalInformationVC.m; sourceTree = "<group>"; };
-		EE5EFFA123274FEA00655654 /* YXPersonChangeNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonChangeNameVC.m; sourceTree = "<group>"; };
-		EE5EFFA223274FEA00655654 /* YXPersonChangeNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonChangeNameVC.h; sourceTree = "<group>"; };
-		EE5EFFA323274FEA00655654 /* YXPersonalInformationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalInformationVC.h; sourceTree = "<group>"; };
-		EE5EFFA523274FEA00655654 /* YXPersonalInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalInformationModel.m; sourceTree = "<group>"; };
-		EE5EFFA623274FEA00655654 /* YXPersonalInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalInformationModel.h; sourceTree = "<group>"; };
 		EE5EFFA923274FEA00655654 /* YXBasePickverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXBasePickverView.h; sourceTree = "<group>"; };
 		EE5EFFAA23274FEA00655654 /* YXBasePickverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXBasePickverView.m; sourceTree = "<group>"; };
-		EE5EFFAC23274FEA00655654 /* YXPersonalInformationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalInformationCell.m; sourceTree = "<group>"; };
-		EE5EFFAD23274FEA00655654 /* YXPersonalInformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalInformationCell.h; sourceTree = "<group>"; };
 		EE5EFFC023274FEA00655654 /* YXPersonalReminderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YXPersonalReminderVC.m; sourceTree = "<group>"; };
 		EE5EFFC123274FEA00655654 /* YXPersonalReminderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalReminderVC.h; sourceTree = "<group>"; };
 		EE5EFFC323274FEA00655654 /* YXPersonalFeedBackVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YXPersonalFeedBackVC.h; sourceTree = "<group>"; };
@@ -3515,29 +3503,15 @@
 		EE5EFF9E23274FEA00655654 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EFFA323274FEA00655654 /* YXPersonalInformationVC.h */,
-				EE5EFF9F23274FEA00655654 /* YXPersonalInformationVC.m */,
-				EE5EFFA023274FEA00655654 /* ChangeNameController */,
 				2298678224D2AE67000D20E0 /* YXUserInfoViewController.swift */,
 				2298678A24D3FD18000D20E0 /* YXEditNameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		EE5EFFA023274FEA00655654 /* ChangeNameController */ = {
-			isa = PBXGroup;
-			children = (
-				EE5EFFA123274FEA00655654 /* YXPersonChangeNameVC.m */,
-				EE5EFFA223274FEA00655654 /* YXPersonChangeNameVC.h */,
-			);
-			path = ChangeNameController;
-			sourceTree = "<group>";
-		};
 		EE5EFFA423274FEA00655654 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EFFA523274FEA00655654 /* YXPersonalInformationModel.m */,
-				EE5EFFA623274FEA00655654 /* YXPersonalInformationModel.h */,
 				2298678624D2B808000D20E0 /* YXUserInfoModel.swift */,
 			);
 			path = Model;
@@ -3564,8 +3538,6 @@
 		EE5EFFAB23274FEA00655654 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				EE5EFFAC23274FEA00655654 /* YXPersonalInformationCell.m */,
-				EE5EFFAD23274FEA00655654 /* YXPersonalInformationCell.h */,
 				2298678424D2B07D000D20E0 /* YXUserInfoCell.swift */,
 			);
 			path = Cell;
@@ -4301,7 +4273,6 @@
 				EE5EF20123273BAE00655654 /* YRNetworkManager.m in Sources */,
 				776F747D238BC5FE0027D166 /* YXMineRequest.swift in Sources */,
 				224352D923A4B78D00F278E6 /* YXGameViewController.swift in Sources */,
-				EE5E00EF23274FEC00655654 /* YXPersonChangeNameVC.m in Sources */,
 				CF53B4902406717C00625892 /* UITabBarItem+BadgeValue.m in Sources */,
 				EE5EF20F23273BAE00655654 /* NSObject+YR.m in Sources */,
 				2218AE3B23D0A0F800EF2E42 /* YXLogRequest.swift in Sources */,
@@ -4322,7 +4293,6 @@
 				221E779D24349A1E000377DB /* YXComNaviView.m in Sources */,
 				2290EAC4236FC63D000BCA47 /* YXNewLearnPrimarySchoolExerciseView.swift in Sources */,
 				EE4201D0248A310400231704 /* YXWordStepDao.swift in Sources */,
-				EE5E00EE23274FEC00655654 /* YXPersonalInformationVC.m in Sources */,
 				224529042327A82500510507 /* YYDatabase.swift in Sources */,
 				7720182C237CEB9B00535732 /* YXWordDetailTipView.swift in Sources */,
 				EE5EF25B232740B800655654 /* NSString+YX.m in Sources */,
@@ -4461,7 +4431,6 @@
 				EEE8E99C23D0594F00729463 /* YXReviewResultStarView.swift in Sources */,
 				2204145C238671FB002A44DA /* YXAuthorizationManager.swift in Sources */,
 				224352E323A4D26100F278E6 /* YXGameModel.swift in Sources */,
-				EE5E00F223274FEC00655654 /* YXPersonalInformationCell.m in Sources */,
 				EE5EF253232740B800655654 /* UITextView+Placeholder.m in Sources */,
 				EE1B6960246E40E1000EADB2 /* YXExerciseServiceImpl.swift in Sources */,
 				7786B6CA2361A58E0027D0E3 /* YXWordBookCell.swift in Sources */,
@@ -4497,7 +4466,6 @@
 				EE772108237A8BF400CD632E /* YXAudioPlayerView.swift in Sources */,
 				2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */,
 				2205A9342361AD5B00C6E674 /* YXMacros.swift in Sources */,
-				EE5E00F023274FEC00655654 /* YXPersonalInformationModel.m in Sources */,
 				EEA50FE923BF48BE00518BE8 /* BiggerClickAreaButton.m in Sources */,
 				EE88DF5723AF7BCA004DFF10 /* YXBecomeActiveManager.swift in Sources */,
 				CFFB700A23EBDEB50088DAAA /* YXShareDefaultView.swift in Sources */,

@@ -81,8 +81,8 @@ public extension String {
     /// - parameter maxIndex: 指定的索引位置
     func substring(maxIndex max: Int) -> String {
         var index = max
-        if index >= self.count {
-            index = self.count - 1
+        if index > self.count {
+            index = self.count
         }
         return substring(fromIndex: 0, toIndex: index)
     }
