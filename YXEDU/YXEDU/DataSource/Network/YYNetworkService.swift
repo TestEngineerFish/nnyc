@@ -298,7 +298,8 @@ enum YXMiMeType: String {
         YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, requestStr, params?.toJson() ?? ""))
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
 
-        task.responseObject { (response: DataResponse <T>) in
+        task.responseObject { [weak self] (response: DataResponse <T>) in
+            guard let self = self else { return }
             let requestStr = request.url.absoluteString
             YXRequestLog("unique_id:", response.response?.allHeaderFields["unique_id"] as? String ?? "")
             switch response.result {
