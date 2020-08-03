@@ -83,7 +83,6 @@ extension YXExerciseViewController {
     func processReviewResult() {
         let vc = YXExerciseResultViewController()
         vc.config = learnConfig
-//        self.navigationController?.popViewController(animated: false)
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }
