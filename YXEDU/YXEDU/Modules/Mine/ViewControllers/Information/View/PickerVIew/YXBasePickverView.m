@@ -673,8 +673,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     else if (self.type == ClassType) {
@@ -699,8 +701,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     else if (self.type == BookEditionType) {
@@ -725,8 +729,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     
@@ -759,7 +765,7 @@
         }
         
     } fail:^(NSError* error) {
-     
+        YXLog(@"更改年级失败");
     }];
 }
 

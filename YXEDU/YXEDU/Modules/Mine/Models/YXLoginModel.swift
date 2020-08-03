@@ -19,10 +19,10 @@ struct YXNewLoginModel: Mappable {
     }
     
     mutating func mapping(map: Map) {
-        user                       <- map["user"]
-        learningBook                  <- map["learning"]
-        bookList                     <- map["booklist"]
-        notify              <- map["notify"]
+        user         <- map["user"]
+        learningBook <- map["learning"]
+        bookList     <- map["booklist"]
+        notify       <- map["notify"]
     }
 }
 
