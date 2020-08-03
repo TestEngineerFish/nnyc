@@ -113,6 +113,7 @@
         service.learnConfig = self.learnConfig
         service.initService()
         YXExerciseViewController.requesting = true
+        YXGrowingManager.share.uploadNewStudy()
         YYCache.set(false, forKey: .newLearnReportGIO)
         let log = String(format: "==== 开始%@学习, 配置信息：%@ ====", self.learnConfig.learnType.desc, self.learnConfig.desc)
         YXLog(log)

@@ -266,7 +266,8 @@ class YXAddBookGuideViewController: YXViewController {
                 }
             }
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectBookNameViewHeight.constant = self.defaultHeight
                 self.view.layoutIfNeeded()
             }

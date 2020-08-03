@@ -229,7 +229,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             }
             self.activityModel = model
             DispatchQueue.main.async { [weak self] in
-                self?.setActivityView()
+                self?.setActivityView(image: model.imageUrlStr)
             }
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
@@ -412,7 +412,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     }
 
     // MARK: ---- Tools ----
-    private func setActivityView() {
+    private func setActivityView(image urlStr: String) {
         guard let model = self.activityModel else {
             return
         }
@@ -421,12 +421,10 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             let bannerH = (screenWidth - 40)/335*80
             self.activityViewHeight.constant = bannerH
             self.collectionViewTop.constant = 25
-            let bannerImageView: UIImageView = {
-                let imageView = UIImageView()
-                imageView.image = UIImage(named: "activityBanner")
-                return imageView
-            }()
+            let bannerImageView: YXKVOImageView = YXKVOImageView()
+            self.activityView.removeAllSubviews()
             self.activityView.addSubview(bannerImageView)
+            bannerImageView.sd_setImage(with: URL(string: urlStr), placeholderImage: UIImage(named: "activityBanner"))
             bannerImageView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
@@ -552,15 +550,15 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     }
 
     private func study(focus: Bool) {
-        guard let homeData = self.homeModel else {
+        guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
             return
         }
         self.checkDownloadBook()
         YXUserModel.default.lastStoredDate = Date()
-        YXLog(String(format: "开始学习书(%ld),第(%ld)单元", homeData.bookId ?? 0, homeData.unitId ?? 0))
+        YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
         let vc = YXExerciseViewController()
         vc.isFocusStudy = focus
-        vc.learnConfig = YXBaseLearnConfig(bookId: homeData.bookId ?? 0, unitId: homeData.unitId ?? 0)
+        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
