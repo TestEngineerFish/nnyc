@@ -28,14 +28,14 @@ class YXWebViewShareAction: YRWebViewJSAction {
             }
             let shareView = YXShareDefaultView()
             // 分享完成后的回调
-            shareView.completeBlock = { (channel: YXShareChannel, result: Bool) in
-                guard let callBackStr = self.callback else {
+            shareView.completeBlock = { [weak self] (channel: YXShareChannel, result: Bool) in
+                guard let self = self, let callBackStr = self.callback else {
                     return
                 }
                 let resultDic = ["result":result]
                 let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
-                DispatchQueue.main.async {
-                    self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+                DispatchQueue.main.async { [weak self] in
+                    self?.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
                 }
             }
             self.getShareImage { (shareImage) in

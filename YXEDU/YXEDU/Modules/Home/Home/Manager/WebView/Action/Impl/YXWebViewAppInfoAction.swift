@@ -31,8 +31,8 @@ class YXWebViewAppInfoAction: YRWebViewJSAction {
                           "uid"           : userId,
                           "current_grade" : grade] as [String : Any]
         let funcStr    = String(format: "%@('%@')", callBackStr, resultDic.toJson())
-        DispatchQueue.main.async {
-            self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
         }
     }
 
