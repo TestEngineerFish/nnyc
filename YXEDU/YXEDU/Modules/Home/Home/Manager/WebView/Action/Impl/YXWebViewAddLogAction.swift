@@ -26,7 +26,7 @@ class YXWebViewAddLogAction: YRWebViewJSAction {
             let resultDic = ["result":true]
             let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
             DispatchQueue.main.async { [weak self] in
-                self?.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+                self?.jsBridge?.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
             }
         }
     }

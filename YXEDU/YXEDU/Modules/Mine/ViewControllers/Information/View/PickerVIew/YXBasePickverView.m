@@ -252,8 +252,12 @@
                         
                     case GradeType:
                     {
-                        NSInteger index = [self.gradeArray indexOfObject:string];
-                        [self.customPicker selectRow:index inComponent:0 animated:YES];
+                        if ([self.gradeArray containsObject:string]) {
+                            NSInteger index = [self.gradeArray indexOfObject:string];
+                            [self.customPicker selectRow:index inComponent:0 animated:YES];
+                        } else {
+                            [self.customPicker selectRow:0 inComponent:0 animated:YES];
+                        }
                     }
                         break;
                         

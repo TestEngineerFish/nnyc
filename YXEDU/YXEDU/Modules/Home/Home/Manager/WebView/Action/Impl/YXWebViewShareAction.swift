@@ -35,7 +35,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
                 let resultDic = ["result":result]
                 let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
                 DispatchQueue.main.async { [weak self] in
-                    self?.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+                    self?.jsBridge?.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
                 }
             }
             self.getShareImage { (shareImage) in
