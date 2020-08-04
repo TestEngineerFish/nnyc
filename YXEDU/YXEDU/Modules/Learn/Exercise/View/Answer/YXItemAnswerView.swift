@@ -9,15 +9,14 @@
 import UIKit
 
 /// 中文或单词答案
-class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
+class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     enum Config {
         static var itemHeight: CGFloat   = AdaptSize(isPad() ? 60 : 45)
         static var itemWidth: CGFloat    = AdaptSize(isPad() ? 540 : 280)
         static var itemInterval: CGFloat = AdaptSize(isPad() ? 26 : 13)
     }
-    
-    private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+
     private var collectionView: UICollectionView?
     private var collectionViewCell: UICollectionViewCell?
     
@@ -31,9 +30,9 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
     
     override func createSubviews() {
         super.createSubviews()
-        flowLayout = UICollectionViewFlowLayout()
+        let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
+//        flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
         flowLayout.minimumLineSpacing = Config.itemInterval
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: AdaptSize(35), bottom: 0, right: AdaptSize(35))
@@ -92,7 +91,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         let label = self.titleLabel
         label.text = exerciseModel.option?.firstItems?[indexPath.row].content
-        
+
         cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(isPad() ? 45 : 21))
@@ -144,9 +143,15 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Config.itemWidth, height: Config.itemHeight)
+    }
     
     private func itemSize() -> CGSize {
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
     }
-    
 }

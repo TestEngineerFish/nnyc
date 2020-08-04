@@ -200,21 +200,6 @@
     [MBProgressHUD hideHUDForView:_view animated:YES];
 }
 
-+ (NSString *)currentWifiSSID {
-    // Does not work on the simulator.
-    NSString *ssid = nil;
-    NSArray *ifs = (id)CFBridgingRelease(CNCopySupportedInterfaces());
-    YXLog(@"ifs:%@",ifs);
-    for (NSString *ifnam in ifs) {
-        NSDictionary *info = (id)CFBridgingRelease(CNCopyCurrentNetworkInfo((CFStringRef)ifnam));
-        YXLog(@"dici：%@",[info  allKeys]);
-        if (info[@"SSID"]) {
-            ssid = info[@"SSID"];
-        }
-    }
-    return ssid;
-}
-
 #pragma mark -MBProgressHUDDelegate-
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 }
