@@ -241,6 +241,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         Bundle.main.loadNibNamed("YXWordListView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        orderButton.layer.masksToBounds = false
         
         tableView.register(UINib(nibName: "YXWordListCell", bundle: nil), forCellReuseIdentifier: "YXWordListCell")
         tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")

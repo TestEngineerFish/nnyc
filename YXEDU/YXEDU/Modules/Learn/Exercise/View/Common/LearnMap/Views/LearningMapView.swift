@@ -160,7 +160,8 @@ class LearningMapView: UIScrollView, YXSexangleViewClickProcotol {
     private func movePinView(to unitView: YXSexangleView, animation: Bool = true) {
         let targetFrame = CGRect(x: unitView.frame.midX - AdaptIconSize(15), y: unitView.frame.minY - AdaptIconSize(5), width: AdaptIconSize(30), height: AdaptIconSize(30))
         if animation {
-            UIView.animate(withDuration: 1) {
+            UIView.animate(withDuration: 1) { [weak self] in
+                guard let self = self else { return }
                 self.avatarPinView?.frame = targetFrame
                 // 隐藏进度条
                 self.currentUnitView?.hideProgressAnimtion()

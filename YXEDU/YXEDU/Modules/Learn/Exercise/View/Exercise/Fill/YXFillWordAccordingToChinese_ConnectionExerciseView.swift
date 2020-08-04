@@ -81,11 +81,14 @@ class YXFillWordAccordingToChinese_ConnectionExerciseView: YXBaseExerciseView {
         let remindViewH = self.height - self.contentView.frame.maxY
         let lackH = height - remindViewH
         if lackH > 0 {
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self = self else { return }
                 self.transform = CGAffineTransform(translationX: 0, y: -lackH)
             }
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
-                UIView.animate(withDuration: 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {  [weak self] in
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.5) { [weak self] in
+                    guard let self = self else { return }
                     self.transform = .identity
                 }
                 self.remindView?.hideSubviews()

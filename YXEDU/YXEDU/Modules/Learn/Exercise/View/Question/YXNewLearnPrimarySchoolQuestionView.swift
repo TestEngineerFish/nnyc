@@ -142,7 +142,8 @@ class YXNewLearnPrimarySchoolQuestionView: YXBaseQuestionView {
     }
 
     func showWordView() {
-        UIView.animate(withDuration: 0.8, animations: {
+        UIView.animate(withDuration: 0.8, animations: { [weak self] in
+            guard let self = self else { return }
             self.exampleLabel.transform        = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
             self.chineseExampleLabel.transform = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))
             self.imageView?.transform          = CGAffineTransform(translationX: 0, y: AdaptIconSize(78))

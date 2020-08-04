@@ -194,19 +194,21 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     }
 
     @objc private func hide() {
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
             self.contentView.transform          = .identity
-        }) { (finished) in
+        }) { [weak self] (finished) in
             if finished {
-                self.removeFromSuperview()
+                self?.removeFromSuperview()
             }
         }
     }
 
     override func show() {
         super.show()
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
             self.contentView.transform          = CGAffineTransform(translationX: 0, y: AdaptSize(-451))
         }

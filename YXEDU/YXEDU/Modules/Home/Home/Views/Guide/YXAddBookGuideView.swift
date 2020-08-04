@@ -74,7 +74,8 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
     private func enterSelectMode() {
         isSelecting = true
         
-        UIView.animate(withDuration: hideTimeInterval) {
+        UIView.animate(withDuration: hideTimeInterval) { [weak self] in
+            guard let self = self else { return }
             self.animationView.alpha = 1
             self.imageView.alpha = 1
         }
@@ -82,7 +83,8 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         if let index = selectedIndex {
             isUserInteractionEnabled = false
             
-            UIView.animate(withDuration: alphaTimeInterval, animations: {
+            UIView.animate(withDuration: alphaTimeInterval, animations: { [weak self] in
+                guard let self = self else { return }
                 if self.descriptionLabel.isHidden == false, let description = self.descriptionLabel.text, description.isEmpty == false {
                     self.descriptionLabel.alpha = 1
                     let descriptionHeight = description.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 88)
@@ -129,13 +131,13 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
         guard let index = selectedIndex else { return }
         isUserInteractionEnabled = false
 
-        UIView.animate(withDuration: alphaTimeInterval, animations: {
+        UIView.animate(withDuration: alphaTimeInterval, animations: { [weak self] in
+            guard let self = self else { return }
             self.descriptionLabel.alpha = 0
             self.collectionViewTopOffSet.constant = 20
             self.layoutIfNeeded()
-            
-        }) { _ in
-            self.isUserInteractionEnabled = true
+        }) { [weak self] _ in
+            self?.isUserInteractionEnabled = true
         }
         
         collectionView.reloadData()
@@ -146,9 +148,10 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
             self.dataSource.insert(date, at: 0)
             self.collectionView.moveItem(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             
-            UIView.animate(withDuration: self.hideTimeInterval, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: self.hideTimeInterval, delay: 0, options: .curveEaseOut, animations: {  [weak self] in
+                guard let self = self else { return }
                 self.animationView.alpha = 0
-                self.imageView.alpha = 0
+                self.imageView.alpha     = 0
             }, completion: nil)
         }
     }
@@ -202,12 +205,10 @@ class YXAddBookGuideView: UIView, UICollectionViewDelegate, UICollectionViewData
                     
                     UIView.animate(withDuration: alphaTimeInterval, animations: {
                         cell.colorView.alpha = 0
-
-                    }) { _ in
-                        guard indexPath.row == (index == 0 ? 1 : 0) else { return }
-                        UIView.animate(withDuration: self.hideTimeInterval, animations: {
-
-                        })
+                    }) { [weak self] _ in
+                        guard let self = self, indexPath.row == (index == 0 ? 1 : 0) else { return }
+                        UIView.animate(withDuration: self.hideTimeInterval) {
+                        }
                     }
                 }
             }

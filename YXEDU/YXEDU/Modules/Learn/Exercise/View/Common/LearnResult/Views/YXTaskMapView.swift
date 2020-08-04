@@ -153,7 +153,8 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
     private func movePinView(to unitView: UIView, animation: Bool = true) {
         let targetFrame = CGRect(x: unitView.frame.midX - AdaptSize(15), y: unitView.frame.minY - AdaptSize(5), width: AdaptSize(30), height: AdaptSize(30))
         if animation {
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self = self else { return }
                 self.avatarPinView?.frame = targetFrame
             }
         } else {

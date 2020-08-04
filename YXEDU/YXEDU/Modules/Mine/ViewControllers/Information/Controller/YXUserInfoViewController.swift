@@ -175,9 +175,9 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
             guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
             self.basePicker?.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-272))
-        }) { (result) in
+        }) { [weak self] (result) in
             if result {
-                self.backgroundView.isUserInteractionEnabled = true
+                self?.backgroundView.isUserInteractionEnabled = true
             }
         }
     }

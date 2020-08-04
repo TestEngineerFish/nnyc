@@ -174,7 +174,8 @@ class YXAddBookGuideViewController: YXViewController {
             self.selectVersionViewTopOffSet.constant = 88
             self.selectVersionViewHeight.constant = self.versionHeight
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectGradeViewHeight.constant = self.defaultHeight
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionView.alpha = 1
@@ -224,7 +225,8 @@ class YXAddBookGuideViewController: YXViewController {
             self.selectBookNameView.collectionView.collectionViewLayout.prepare()
             self.selectBookNameViewHeight.constant = self.bookNameHeight
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectVersionViewHeight.constant = self.defaultHeight
                 self.selectBookNameViewTopOffSet.constant = 0
                 self.selectBookNameView.alpha = 1
@@ -313,9 +315,9 @@ class YXAddBookGuideViewController: YXViewController {
         
         if withoutAnimation {
             self.view.layoutIfNeeded()
-
         } else {
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.view.layoutIfNeeded()
             }
         }

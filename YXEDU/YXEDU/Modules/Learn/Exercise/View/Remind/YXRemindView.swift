@@ -306,7 +306,8 @@ class YXRemindView: UIView, YXAudioPlayerViewDelegate {
         titleLabel.isHidden      = !hasText()
         imageView.isHidden       = !hasImage()
         audioPlayerView.isHidden = !hasAudio()
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
             self.remindLabel.transform = CGAffineTransform(translationX: 0, y: -self.height)
             if self.hasText() {
                 self.titleLabel.transform = CGAffineTransform(translationX: 0, y: -self.height)

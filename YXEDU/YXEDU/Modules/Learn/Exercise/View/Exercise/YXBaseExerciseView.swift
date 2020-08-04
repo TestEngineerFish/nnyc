@@ -139,7 +139,8 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     func animateAdmission(_ first: Bool = false, _ completion: (() -> Void)?) {
         
         self.origin.x = screenWidth
-        UIView.animate(withDuration: 0.4, delay: first ? 0.4 : 0.2, options: [], animations: {
+        UIView.animate(withDuration: 0.4, delay: first ? 0.4 : 0.2, options: [], animations: { [weak self] in
+            guard let self = self else { return }
             self.origin.x = 0
         }) { (finish) in
             if finish {
@@ -150,11 +151,12 @@ class YXBaseExerciseView: UIView, YXAnswerViewDelegate, YXRemindViewProtocol, YX
     
     /// 动画出场
     func animateRemove() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
             self.origin.x = -screenWidth
-        }) { (finish) in
+        }) { [weak self] (finish) in
             if finish {
-                self.removeFromSuperview()
+                self?.removeFromSuperview()
             }
         }
     }

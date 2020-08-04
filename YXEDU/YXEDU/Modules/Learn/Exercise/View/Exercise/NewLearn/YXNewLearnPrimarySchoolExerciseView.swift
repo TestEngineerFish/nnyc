@@ -127,10 +127,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             _answerView.learnResultView.isHidden = true
         }
         self.isLearned = true
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else { return }
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
-        }) { (finished) in
-            if finished, let _answerView = self.answerView as? YXNewLearnAnswerView {
+        }) { [weak self] (finished) in
+            if finished, let _answerView = self?.answerView as? YXNewLearnAnswerView {
                 _answerView.status = .alreadLearn
             }
         }

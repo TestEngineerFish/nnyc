@@ -33,7 +33,6 @@ class YXRecordView: YXView {
         button.setTitleColor(UIColor.orange1, for: .normal)
         button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptSize(14))
         button.layer.cornerRadius  = AdaptSize(13.5)
-        button.layer.masksToBounds = true
         button.backgroundColor     = UIColor.hex(0xFFF4E9)
         button.isEnabled           = false
         return button

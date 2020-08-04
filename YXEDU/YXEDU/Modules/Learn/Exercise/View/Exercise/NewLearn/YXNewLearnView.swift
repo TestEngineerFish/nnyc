@@ -105,10 +105,11 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
     // MARK: ---- Event ----
     @objc private func closeAction() {
         self.answerView?.pauseView()
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.layer.opacity = 0.0
-        }) { (finished) in
-            self.removeFromSuperview()
+        }) { [weak self] (finished) in
+            self?.removeFromSuperview()
         }
     }
     
@@ -126,7 +127,8 @@ class YXNewLearnView: YXView, YXNewLearnProtocol {
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.layer.opacity = 1.0
         }
     }

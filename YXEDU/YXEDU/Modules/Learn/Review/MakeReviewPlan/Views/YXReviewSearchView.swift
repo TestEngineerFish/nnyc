@@ -203,7 +203,8 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     
     @objc private func cancelSearch() {
         self.endEditing(true)
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.layer.opacity = 0
         }
     }

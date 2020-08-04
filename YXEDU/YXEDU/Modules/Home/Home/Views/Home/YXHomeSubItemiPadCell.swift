@@ -20,6 +20,7 @@ class YXHomeSubItemiPadCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(dotView)
+        self.colorView.layer.masksToBounds = false
         dotView.snp.makeConstraints { (make) in
             make.centerY.equalTo(titleLabel)
             make.left.equalTo(titleLabel.snp.right).offset(AdaptSize(5))

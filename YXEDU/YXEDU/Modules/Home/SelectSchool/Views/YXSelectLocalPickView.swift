@@ -146,14 +146,16 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     // MARK: ==== Event ====
     func show() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
             self.transform = CGAffineTransform(translationX: 0, y: -self.height)
         }
     }
 
     @objc func hide() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 0.0
             self.transform = .identity
         }
