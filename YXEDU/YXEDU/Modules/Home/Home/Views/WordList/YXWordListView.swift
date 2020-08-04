@@ -503,7 +503,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         let request = YXWordListRequest.deleteWrongWord(wordIds: string)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            self.wrongWordSectionData?.remove(at: 0)
+            self.wrongWordSectionData?.removeFirst()
             self.tableView.reloadData()
             UIView().toast("已清除")
         }) { error in

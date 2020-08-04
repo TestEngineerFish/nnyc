@@ -93,7 +93,8 @@ class YXLackWordView: UIView {
     }
 
     func clearValue() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3.0) { [weak self] in
+            guard let self = self else { return }
             if self.type == .blank {
                 self.textField.text = ""
                 self.status         = .normal

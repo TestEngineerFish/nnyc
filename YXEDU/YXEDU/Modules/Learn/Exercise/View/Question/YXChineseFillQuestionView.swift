@@ -33,13 +33,13 @@ class YXChineseFillQuestionView: YXBaseQuestionView {
         super.layoutSubviews()
         if let _spellView = spellView {
             let w = _spellView.maxX - _spellView.margin
-            _spellView.snp.makeConstraints { (make) in
+            _spellView.snp.remakeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalToSuperview().offset(topPadding)
                 make.width.equalTo(w)
                 make.height.equalTo(AdaptIconSize(30))
             }
-            subTitleLabel?.snp.makeConstraints({ (make) in
+            subTitleLabel?.snp.remakeConstraints({ (make) in
                 make.top.equalTo(_spellView.snp.bottom).offset(AdaptIconSize(10))
                 make.centerX.equalToSuperview()
                 make.width.equalToSuperview()
