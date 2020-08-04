@@ -19,9 +19,7 @@ class YXStudentLearnCell: UICollectionViewCell {
 
     var avatarImageView: YXKVOImageView = {
         let imageView = YXKVOImageView()
-        imageView.image = UIImage(named: "challengeAvatar")
         imageView.layer.cornerRadius  = AdaptIconSize(25)
-        imageView.layer.masksToBounds = true
         return imageView
     }()
     var nameLabel: UILabel = {
@@ -93,9 +91,10 @@ class YXStudentLearnCell: UICollectionViewCell {
             make.left.top.equalToSuperview().offset(AdaptIconSize(5))
             make.bottom.right.equalToSuperview().offset(AdaptIconSize(-5))
         }
+        avatarImageView.size = CGSize(width: AdaptIconSize(50), height: AdaptIconSize(50))
         avatarImageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: AdaptIconSize(50), height: AdaptIconSize(50)))
+            make.size.equalTo(avatarImageView.size)
             make.top.equalTo(AdaptIconSize(19))
         }
         nameLabel.snp.makeConstraints { (make) in
@@ -150,8 +149,14 @@ class YXStudentLearnCell: UICollectionViewCell {
             return
         }
         self.nameLabel.text = userInfo.name
-        if let urlStr = userInfo.avatarUrl {
-            self.avatarImageView.showImage(with: urlStr)
+        let defaultImage = UIImage(named: "challengeAvatar")
+        if let urlStr = userInfo.avatarUrl, urlStr.isNotEmpty {
+            YXKVOImageView().showImage(with: urlStr, placeholder: defaultImage, progress: nil) { [weak self] (image: UIImage?, error: NSError?, url: NSURL?) in
+                guard let self = self else { return }
+                self.avatarImageView.image = image?.corner(radius: AdaptIconSize(25), with: self.avatarImageView.size)
+            }
+        } else {
+            self.avatarImageView.image = defaultImage
         }
         guard let learnInfo = model.learnInfo else {
             return

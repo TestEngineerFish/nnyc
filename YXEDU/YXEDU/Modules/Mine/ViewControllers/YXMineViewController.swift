@@ -140,7 +140,16 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.temporaryUserModel            = loginModel.user
         YXUserModel.default.userAvatarPath = loginModel.user?.avatar
         YXUserModel.default.userName       = loginModel.user?.nick
-        self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
+
+
+        if let avatarStr = YXUserModel.default.userAvatarPath, avatarStr.isNotEmpty {
+            YXKVOImageView().showImage(with: avatarStr, placeholder: #imageLiteral(resourceName: "challengeAvatar"), progress: nil) { [weak self] (image: UIImage?, error: NSError?, url: NSURL?) in
+                guard let self = self else { return }
+                self.avatarImageView.image = image?.corner(radius: AdaptIconSize(25), with: self.avatarImageView.size)
+            }
+        } else {
+            self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
+        }
         self.nameLabel.text     = YXUserModel.default.userName
         if let garde = loginModel.user?.grade, !garde.isEmpty {
             let gradeStr: String = {

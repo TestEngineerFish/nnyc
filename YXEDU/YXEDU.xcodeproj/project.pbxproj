@@ -113,6 +113,7 @@
 		2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2269DD862398F9E3001F116A /* RegisterSliderView.swift */; };
 		22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2275081F239F747700A53B9B /* YXReviewBottomView.swift */; };
 		22761BF623B1BC6800A49811 /* YXChallengeFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22761BF523B1BC6800A49811 /* YXChallengeFooterView.swift */; };
+		22767D1124D94646004895A0 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22767D1024D94646004895A0 /* UIImageView+Extension.swift */; };
 		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
 		2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F256236D544F0080A0B2 /* YXWordButton.swift */; };
 		227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 227C6EEB228A5AA800282EA1 /* iconfont.ttf */; };
@@ -733,6 +734,7 @@
 		2269DD862398F9E3001F116A /* RegisterSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSliderView.swift; sourceTree = "<group>"; };
 		2275081F239F747700A53B9B /* YXReviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewBottomView.swift; sourceTree = "<group>"; };
 		22761BF523B1BC6800A49811 /* YXChallengeFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeFooterView.swift; sourceTree = "<group>"; };
+		22767D1024D94646004895A0 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
 		2279F256236D544F0080A0B2 /* YXWordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordButton.swift; sourceTree = "<group>"; };
 		227C6EEB228A5AA800282EA1 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iconfont.ttf; sourceTree = "<group>"; };
@@ -3115,6 +3117,7 @@
 				2218AE4023D1A2A300EF2E42 /* Dictionary+Extension.swift */,
 				CF1CA66E240915490003A8E8 /* Array+Extension.swift */,
 				229B0D552456AD5800942C78 /* Date+Extension.swift */,
+				22767D1024D94646004895A0 /* UIImageView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -4382,6 +4385,7 @@
 				2205A9362361B06100C6E674 /* CALayer+Extension.swift in Sources */,
 				779D73DA2404ED5D00E461E2 /* YXAgreementVC.m in Sources */,
 				22991069249210FD00F1C198 /* YXDatabaseConfig+Book.swift in Sources */,
+				22767D1124D94646004895A0 /* UIImageView+Extension.swift in Sources */,
 				2205A93A2361C88900C6E674 /* Iconfont.swift in Sources */,
 				22EA5DD024B601A50062E412 /* YXWebViewMenuAction.swift in Sources */,
 				224DF54A23840E6B00D2B0BF /* YXLearnResultModel.swift in Sources */,
