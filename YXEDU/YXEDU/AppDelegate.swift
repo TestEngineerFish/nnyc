@@ -11,11 +11,10 @@ import UserNotifications
 import Bugly
 import GrowingCoreKit
 import GrowingAutoTrackKit
-//import AdSupport
+import AdSupport
 
 //#if DEBUG
 //import EchoSDK
-//import XXPerformanceMonitor
 //#endif
 
 @UIApplicationMain
@@ -44,9 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         YXOCLog.shared()?.launch()
 
 //        #if DEBUG
-//        ECOClient.shared()?.start()
-//        XXPerformanceMonitor.sharedInstance.mainThreadThreshold = 0.05
-//        XXPerformanceMonitor.sharedInstance.startMonitorMain()
+//        ECOClient.shared()?.stop()
 //        #endif
         
         #if !DEBUG  // 正式环境才开启统计
