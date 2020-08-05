@@ -195,7 +195,8 @@ class YXAddBookGuideViewController: YXViewController {
                 self.selectBookNameView.alpha = 0
                 self.view.layoutIfNeeded()
             }
-                            
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
         
@@ -246,7 +247,8 @@ class YXAddBookGuideViewController: YXViewController {
                 self.selectBookNameView.alpha = 0
                 self.view.layoutIfNeeded()
             }
-            
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
         
@@ -277,7 +279,7 @@ class YXAddBookGuideViewController: YXViewController {
             if self.selectBook != nil, self.selectGradeViewHeight.constant == self.defaultHeight, self.selectVersionViewHeight.constant == self.defaultHeight, self.selectBookNameViewHeight.constant == self.defaultHeight {
                 self.startButton.isHidden = false
                 self.homeButton.isHidden  = !YXUserModel.default.isFinishedNewUserStudy
-                
+
             } else {
                 self.startButton.isHidden = true
                 self.homeButton.isHidden  = true
@@ -291,7 +293,8 @@ class YXAddBookGuideViewController: YXViewController {
                 self.selectBookNameViewHeight.constant = self.bookNameHeight
                 self.view.layoutIfNeeded()
             }
-
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
     }
