@@ -51,7 +51,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
     /// 获取分享图片
     private func getShareImage(complete block: ((UIImage?)->Void)?) {
         let request = YXShareRequest.getActivityShareImage
-        YXUtils.showLoadingInfo("加载中", to: kWindow)
+        YXUtils.showLoadingInfo("加载中…", to: kWindow)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
             guard let model = response.data else { return }
             SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in

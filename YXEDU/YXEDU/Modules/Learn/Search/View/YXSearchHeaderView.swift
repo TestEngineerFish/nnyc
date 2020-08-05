@@ -54,6 +54,7 @@ class YXSearchHeaderView: YXView {
         searchTextFeild.clearButtonMode     = .always
         searchTextFeild.leftView            = UIView(frame: CGRect(x: 0, y: 0, width: AS(20), height: 0))
         searchTextFeild.leftViewMode        = .always
+        searchTextFeild.keyboardType        = .asciiCapable
         searchTextFeild.addTarget(self, action: #selector(didSearchTextFeildChanged), for: .editingChanged)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in

@@ -269,10 +269,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         // 错词本不在此请求
         if requestType < 0 { return }
-        
+        YXUtils.showLoadingInfo("加载中…", to: self)
         if requestType == 0 {
             let request = YXWordListRequest.collectionWordList(type: requestType, page: page)
             YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                YXUtils.hideHUD(self)
                 guard let self = self, let model = response.data else { return }
                 self.currentPage         = model.page
                 self.haveMore            = model.haveMore
@@ -284,12 +285,13 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
                 
             }) { (error) in
+                YXUtils.hideHUD(self)
                 YXUtils.showHUD(nil, title: error.message)
             }
-            
         } else {
             let request = YXWordListRequest.wordList(type: requestType)
             YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                YXUtils.hideHUD(self)
                 guard let self = self, let wordLists = response.dataArray else { return }
                 
                 var wordSectionData: [[String: [YXWordModel]]] = []
@@ -298,8 +300,8 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                  
                 self.wrongWordSectionData = wordSectionData
-                
             }) { error in
+                YXUtils.hideHUD(self)
                 YXUtils.showHUD(nil, title: error.message)
             }
         }

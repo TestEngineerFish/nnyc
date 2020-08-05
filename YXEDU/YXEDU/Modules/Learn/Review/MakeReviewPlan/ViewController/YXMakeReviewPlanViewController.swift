@@ -102,11 +102,13 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     /// 请求书列表
     private func requestBooksList() {
+        YXUtils.showLoadingInfo("加载中…", to: self.view)
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let _model = response.data else {
                 return
             }
+            YXUtils.hideHUD(self.view)
             for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
@@ -115,7 +117,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             self.model = _model
             self.segmentControllerView.reloadData()
-        }) { (error) in
+        }) { [weak self] (error) in
+            YXUtils.hideHUD(self?.view)
             YXUtils.showHUD(nil, title: error.message)
         }
     }

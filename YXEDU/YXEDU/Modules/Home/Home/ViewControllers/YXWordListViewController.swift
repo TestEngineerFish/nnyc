@@ -164,10 +164,11 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
     // MARK: ---- Request ----
     /// 获取错词本单词列表
     private func requestWrongWordsList() {
+        YXUtils.showLoadingInfo("加载中…", to: self.view)
         let request = YXWordListRequest.wrongWordList
         YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let wrongWordList = response.data else { return }
-
+            YXUtils.hideHUD(self.view)
             var wrongWordSectionData: [[String: [YXWordModel]]]?
             if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
                 if wrongWordSectionData == nil {
@@ -191,7 +192,8 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
             }
 
             self.wordListViews[YXWordListType.wrongWords.rawValue]?.wrongWordSectionData = wrongWordSectionData
-        }) { error in
+        }) { [weak self] error in
+            YXUtils.hideHUD(self?.view)
             YXUtils.showHUD(nil, title: error.message)
         }
     }

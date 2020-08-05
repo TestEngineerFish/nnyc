@@ -18,6 +18,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
         textField.leftViewMode        = .always
         textField.leftView            = UIView(frame: CGRect(x: 0, y: 0, width: AdaptSize(22), height: 0))
         textField.backgroundColor     = UIColor.hex(0xF2f2f2)
+        textField.keyboardType        = .asciiCapable
         return textField
     }()
     
@@ -142,11 +143,9 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
             make.right.equalTo(self.cancelButton.snp.left).offset(AdaptIconSize(-20))
             make.height.equalTo(AdaptIconSize(34))
         }
-        self.cancelButton.sizeToFit()
         self.cancelButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(self.searchBar)
             make.right.equalToSuperview().offset(AdaptIconSize(-23))
-            make.size.equalTo(self.cancelButton.size)
         }
         self.tipsBookImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptIconSize(22))
