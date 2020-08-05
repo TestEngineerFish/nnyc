@@ -466,13 +466,11 @@ static CGFloat const kPickViewHeight = 272.f;
 
 #pragma mark - datas
 - (void)getMonthlyData:(NSDate *)date {
-    [YXUtils showLoadingInfo:kHUDTipsWait toView:kWindow];
+    [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
     __weak typeof(self) weakSelf = self;
     
     [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeGetMonthlyInfo params:@{@"time": @(date.timeIntervalSince1970)} isUpload:NO success:^(YXOCModel* model) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [YXUtils hideHUD:kWindow];
-        });
+        [YXUtils hideHUD:self.view];
         if (model != nil) {
 //            YXCalendarStudyMonthData *monthdata = [YXCalendarStudyMonthData mj_objectWithKeyValues:model];
             weakSelf.monthData.summary.study_days = model.summary.days;
@@ -515,7 +513,7 @@ static CGFloat const kPickViewHeight = 272.f;
         }
         
     } fail:^(NSError* error) {
-        
+        [YXUtils hideHUD:self.view];
     }];
 }
 
@@ -523,10 +521,7 @@ static CGFloat const kPickViewHeight = 272.f;
     [YXUtils showLoadingInfo:kHUDTipsWait toView:self.view];
     
     [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeGetDayInfo params:@{@"time": @(date.timeIntervalSince1970)} isUpload:NO success:^(YXOCModel* model) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [YXUtils hideHUD:kWindow];
-        });
-        
+        [YXUtils hideHUD:self.view];
         if (model != nil) {
             YXCalendarStudyDayData *dailyData = [YXCalendarStudyDayData mj_objectWithKeyValues:model];
             dailyData.date = [NSNumber numberWithDouble:model.date];
@@ -594,7 +589,7 @@ static CGFloat const kPickViewHeight = 272.f;
         [self.tableView reloadData];
         
     } fail:^(NSError* error) {
-        
+        [YXUtils hideHUD:self.view];
     }];
 }
 
