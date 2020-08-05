@@ -43,11 +43,11 @@ class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.hex(0xFFA83E)
-        self.customNavigationBar?.title = "学习报告"
+        self.view.backgroundColor            = UIColor.hex(0xFFA83E)
+        self.customNavigationBar?.title      = "学习报告"
         self.customNavigationBar?.titleColor = .white
         self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
-        self.viewTopConstraint.constant = kNavHeight
+        self.viewTopConstraint.constant = kStatusBarHeight
         studyContentTableView.register(UINib(nibName: "YXStudyReportContentCell", bundle: nil), forCellReuseIdentifier: "YXStudyReportContentCell")
         fetchStudyReport(withDate: selectDate)
     }

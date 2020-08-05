@@ -75,10 +75,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        navigationController?.navigationBar.tintColor = UIColor.black
-        
         // 个人信息
         self.loadData()
         // 徽章
