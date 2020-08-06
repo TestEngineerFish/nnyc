@@ -24,6 +24,8 @@ class YXAlertWebView: YXTopWindowView, WKNavigationDelegate {
         webView.backgroundColor     = UIColor.white
         webView.layer.cornerRadius  = AdaptIconSize(14)
         webView.layer.masksToBounds = true
+        webView.scrollView.showsVerticalScrollIndicator   = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
         return webView
     }()
 
@@ -37,6 +39,7 @@ class YXAlertWebView: YXTopWindowView, WKNavigationDelegate {
     var indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
+        indicatorView.style            = .gray
         indicatorView.startAnimating()
         return indicatorView
     }()
