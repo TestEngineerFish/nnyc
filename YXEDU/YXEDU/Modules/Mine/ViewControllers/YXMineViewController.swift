@@ -14,7 +14,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     private var earnedBadgeCount = 0
     private var badgeModelList   = [YXBadgeModel]()
     private var bindInfo         = ["", "", ""]
-    
+
+    let badgeView = YXRedDotView()
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var myIntegralLabel: UILabel!
@@ -24,8 +25,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var badgeNumberView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
-    let badgeView = YXRedDotView()
-    
     @IBOutlet weak var myIntegralViewHeight: NSLayoutConstraint!
     @IBOutlet weak var myIntegralViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
@@ -65,6 +64,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(pushUserInfoVC))
         self.badgeNumberView.addGestureRecognizer(tapBadge)
         self.avatarImageView.addGestureRecognizer(tapAvatar)
+        self.avatarImageView.layer.masksToBounds = false
     }
 
     override func addNotification() {
@@ -146,7 +146,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         } else {
             self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
         }
-        self.nameLabel.text     = YXUserModel.default.userName
+        self.nameLabel.text = YXUserModel.default.userName
         if let garde = loginModel.user?.grade, !garde.isEmpty {
             let gradeStr: String = {
                 guard let gardeInt = Int(garde), gardeInt > 9 else {
