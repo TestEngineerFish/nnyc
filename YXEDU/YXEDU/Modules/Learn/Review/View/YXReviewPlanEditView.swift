@@ -209,7 +209,7 @@ class YXReviewPlanEditView: YXTopWindowView {
     @objc private func clickRemoveButton() {
         let removeView = YXReviewPlanRemoveView()
         removeView.planId = self.reviewPlanModel?.planId ?? 0
-        removeView.show()
+        YXAlertQueueManager.default.addAlert(alertView: removeView)
         
         self.removeFromSuperview()
     }

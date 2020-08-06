@@ -263,7 +263,7 @@ extension YXReviewViewController {
             YXLog("==== 开始智能复习 ====")
         } else {
             let nrView = YXNotReviewWordView()
-            nrView.show()
+            YXAlertQueueManager.default.addAlert(alertView: nrView)
         }
     }
     

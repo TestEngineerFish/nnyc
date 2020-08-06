@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 /// 弹窗队列管理
 class YXAlertQueueManager: NSObject {
         

@@ -323,22 +323,6 @@ extension UIView {
     public var currentViewController: UIViewController? {
         return YRRouter.sharedInstance().currentViewController()
     }
-
-    /** 把当前 View 显示到顶层窗口上 */
-    public func showTopWindow() {
-        UIView.cleanTopWindow(anyClass: YXTopWindowView.classForCoder())
-        UIApplication.shared.keyWindow?.addSubview(self)
-    }
-    
-    public class func cleanTopWindow(anyClass: AnyClass) {
-        if let tviews = UIApplication.shared.keyWindow?.subviews {
-            for tview in tviews {
-                if tview.isKind(of: anyClass) {
-                    tview.removeFromSuperview()
-                }
-            }
-        }
-    }
     
     /**
      * 显示Toast提示，基于当前的View，不影响其他页面的操作

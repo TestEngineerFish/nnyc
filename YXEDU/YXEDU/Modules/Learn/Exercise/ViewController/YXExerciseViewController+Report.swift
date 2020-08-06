@@ -20,22 +20,19 @@ extension YXExerciseViewController {
             submitResult()
         }
     }
-    
         
     func processEmptyData() {
         service.cleanStudyRecord(hasNextGroup: false)
-
         if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()
             nrView.doneEvent = {
                 YRRouter.popViewController(true)
             }
-            nrView.show()
+            YXAlertQueueManager.default.addAlert(alertView: nrView)
         } else {
             YRRouter.popViewController(true)
         }
     }
-    
     
     //MARK: submit report
     /// 上报数据

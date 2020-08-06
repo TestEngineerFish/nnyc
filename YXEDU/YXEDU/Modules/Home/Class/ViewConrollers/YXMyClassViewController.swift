@@ -79,9 +79,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
                 alertView.alertHeight.constant    = 222
                 YXAlertQueueManager.default.addAlert(alertView: alertView)
             }
-            
-            editView.show()
-            
+            YXAlertQueueManager.default.addAlert(alertView: editView)
         } else {
             let classListViewController = YXMyClassListViewController()
             classListViewController.classModelList = self.classModelList

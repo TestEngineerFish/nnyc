@@ -49,7 +49,7 @@ class YXSearchViewController: YXTableViewController, YXSearchHeaderViewProtocol 
                 let _ = self?.dao.deleteAllWord()
                 self?.loadHistoryData()
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
         
         self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")

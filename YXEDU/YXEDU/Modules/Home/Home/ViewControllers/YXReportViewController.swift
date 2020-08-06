@@ -166,8 +166,7 @@ class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITabl
             
             self.fetchStudyReport(withDate: self.selectDate)
         }
-        
-        calendarView.show()
+        YXAlertQueueManager.default.addAlert(alertView: calendarView)
     }
     
     @IBAction func showBetterWords(_ sender: Any) {

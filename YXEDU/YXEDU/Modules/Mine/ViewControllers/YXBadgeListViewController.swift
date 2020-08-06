@@ -169,6 +169,8 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
             badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: false)
         }
         
-        badgeDetailView?.show()
+        if let alertView = badgeDetailView {
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
+        }
     }
 }

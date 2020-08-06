@@ -41,12 +41,8 @@ class YXBecomeActiveManager: NSObject {
                         commandView.removeFromSuperview()
                     }
                     
-                    if completion == nil {
-                        commandView.show()
-                    } else {
-                        YXAlertQueueManager.default.addAlert(alertView: commandView)
-                        completion?()
-                    }
+                    YXAlertQueueManager.default.addAlert(alertView: commandView)
+                    completion?()
                     UIPasteboard.general.string = ""
                 } else {
                     completion?()
