@@ -194,7 +194,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
             YXLog("游戏：返回首页")
             self.navigationController?.popViewController(animated: true)
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     /// - Parameter isRecord: 上题是否回答正确,正确数是否增加1

@@ -98,7 +98,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
             self.toastView.showLoadView("数据保存中，请稍等片刻...")
             self.downLoadBookData()
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     /// 下载词书
@@ -142,7 +142,7 @@ class YXReviewPlanShareDetailViewController: YXViewController {
                 let alertView = YXAlertView(type: .normal)
                 alertView.descriptionLabel.text   = error.message
                 alertView.shouldOnlyShowOneButton = true
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             } else {
                 YXUtils.showHUD(nil, title: error.message)
             }

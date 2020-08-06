@@ -81,7 +81,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.loadBadgeData()
         // 积分
         self.loadIntegralData()
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
     }
     
     deinit {
@@ -365,7 +365,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                             YXUtils.showHUD(nil, title: error.message)
                         }
                     }
-                    alertView.show()
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                 } else {
                     QQApiManager.shared().qqLogin()
                 }
@@ -386,7 +386,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
                             YXUtils.showHUD(nil, title: error.message)
                         }
                     }
-                    alertView.show()
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                 } else {
                     WXApiManager.shared().wxLogin()
                 }

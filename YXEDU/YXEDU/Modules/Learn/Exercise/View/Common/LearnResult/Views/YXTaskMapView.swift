@@ -184,7 +184,7 @@ class YXTaskMapView: UIView, YXSexangleViewClickProcotol {
                 self.movePinView(to: view)
             }
             
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         
         } else {
             self.movePinView(to: view)

@@ -90,12 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // 仅刚启动时调用一次
-        YXAlertQueueManager.default.start()
-    }
-
     /// 通用链接跳转
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         YXMediator.shared()?.handleOpenUnivrsalLinkURL(userActivity)
@@ -114,6 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
         YXWordBookResourceManager.stop = false
+        // 检测各种弹框
+        YXAlertQueueManager.default.processQueue()
     }
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

@@ -235,6 +235,7 @@ public extension String {
                 word = "____"
             }
             newExample = newExample.pregReplace(pattern: htmlStr, with: word)
+            newExample = newExample.pregReplace(pattern: "@", with: "")
             newRangeList.append(NSRange(location: range.location - offset, length: word.count))
         }
         return (newRangeList, newExample)

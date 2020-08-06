@@ -208,8 +208,7 @@ extension YXAuthorizationManager {
         alertView.doneClosure = { _ in
             YXAuthorizationManager.jumpToAppSetting()
         }
-        
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: 跳转到APP内设置界面

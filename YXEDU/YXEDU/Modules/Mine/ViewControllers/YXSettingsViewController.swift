@@ -20,7 +20,7 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
         alertView.doneClosure = { _ in
             YXUserModel.default.logout()
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     override func viewDidLoad() {
@@ -105,6 +105,6 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
             service.cleanAllStudyRecord()
             self.view.makeToast("清除成功")
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 }

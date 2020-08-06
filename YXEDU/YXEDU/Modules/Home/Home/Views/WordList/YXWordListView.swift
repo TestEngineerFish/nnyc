@@ -340,7 +340,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                     self.deleteAllWrongWords(wrongWords: wrongWords)
                 }
 
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             }
             
             wordListHeaderView.expandButton.isHidden = false

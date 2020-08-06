@@ -143,7 +143,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                 let alertView = YXAlertView(type: .normal)
                 alertView.descriptionLabel.text   = error.message
                 alertView.shouldOnlyShowOneButton = true
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             } else {
                 YXUtils.showHUD(nil, title: error.message)
             }
@@ -165,12 +165,12 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     let alertView = YXAlertView(type: .normal)
                     alertView.descriptionLabel.text   = "词单名称不能为空"
                     alertView.shouldOnlyShowOneButton = true
-                    alertView.show()
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                     return
                 }
                 self.requestMakeReviewPlan(_text)
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
     }
 

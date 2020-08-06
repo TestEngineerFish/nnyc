@@ -19,7 +19,7 @@ struct YXAlertManager {
             self.skipPunchLearn(book: model.bookId ?? 0)
         }
         alertView.adjustAlertHeight()
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: ==== Tools ====

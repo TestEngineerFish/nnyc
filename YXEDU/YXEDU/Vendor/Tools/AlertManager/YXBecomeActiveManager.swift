@@ -35,7 +35,7 @@ class YXBecomeActiveManager: NSObject {
                 guard let self = self else { return }
                 if let commandModel = model {
                     let commandView = YXReviewPlanCommandView(model: commandModel)
-                    commandView.tag = YXAlertWeightType.scanCommand
+                    commandView.priority    = .E
                     commandView.detailEvent = { [weak self] in
                         self?.goToReviewPlanDetail(planId: commandModel.planId, fromUser: commandModel.nickname)
                         commandView.removeFromSuperview()

@@ -202,7 +202,7 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             self.leaveClass()
             YXLog("退出班级")
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     @objc private func cancelAction() {

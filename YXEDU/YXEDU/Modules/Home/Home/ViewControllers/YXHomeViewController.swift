@@ -90,7 +90,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             }
             
             alertView.adjustAlertHeight()
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
             
         } else {
             self.study(focus: false)
@@ -115,7 +115,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         self.requestActivity()
         self.checkComment()
         YXStepConfigManager.share.contrastStepConfig()
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
         YXRedDotManager.share.updateTaskCenterBadge()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
@@ -123,7 +123,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                 // 如果学完一次主流程，并且没有设置过提醒，则弹出弹窗
                 if YYCache.object(forKey: "DidFinishMainStudyProgress") as? Bool == true, YYCache.object(forKey: .didShowSetupReminderAlert) == nil {
                     let setReminderView = YXSetReminderView()
-                    setReminderView.show()
+                    YXAlertQueueManager.default.addAlert(alertView: setReminderView)
                 }
             }
         }
@@ -359,7 +359,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             alertView.textCountLabel.isHidden = true
             alertView.textMaxLabel.isHidden   = true
             alertView.alertHeight.constant    = 222
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
     }
 

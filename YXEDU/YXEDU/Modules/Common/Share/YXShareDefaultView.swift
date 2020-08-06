@@ -158,6 +158,10 @@ class YXShareDefaultView: UIView {
     
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
+        if QQApiManager.shared()?.qqIsInstalled() != .some(true) {
+            YXUtils.showHUD(nil, title: "你未安装QQ，无法进行分享，请下载安装最新版QQ")
+            return
+        }
         switch self.shareType {
         case .image:
             guard let image = self.shareImage else {

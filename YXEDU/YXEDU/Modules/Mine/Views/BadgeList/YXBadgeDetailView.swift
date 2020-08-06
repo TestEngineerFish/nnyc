@@ -117,10 +117,11 @@ class YXBadgeDetailView: YXTopWindowView {
     }
     
     override func show() {
+        YXLog("开始弹框！！")
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        containerView.alpha     = 0
-        backgroundView.alpha    = 0
+        containerView.alpha  = 0
+        backgroundView.alpha = 0
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
             guard let self = self else { return }

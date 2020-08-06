@@ -29,7 +29,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.requestChallengeData()
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -151,7 +151,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                     self.showGoldLackAlert()
                 }
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         case .task:
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "背完今天的单词可以获得一次免费挑战机会！"
@@ -169,7 +169,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
                 guard let self = self else { return }
                 self.tabBarController?.selectedIndex = 0
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         case .free:
             self.playGame()
         case .again:
@@ -198,7 +198,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
         alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
         alertView.shouldOnlyShowOneButton = true
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -157,7 +157,7 @@ class YXReviewPlanEditView: YXTopWindowView {
             }
             
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
         
         self.removeFromSuperview()
     }
@@ -203,7 +203,7 @@ class YXReviewPlanEditView: YXTopWindowView {
         }
         alertView.leftButton.setTitle("取消", for: .normal)
         alertView.rightOrCenterButton.setTitle("重置", for: .normal)
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     @objc private func clickRemoveButton() {

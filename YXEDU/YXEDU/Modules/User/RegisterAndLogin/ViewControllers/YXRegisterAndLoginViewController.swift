@@ -248,7 +248,7 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
                 return
             }
             YXUserModel.default.mobile = weakSelf.phoneNumberTextField.text
-            YXAlertQueueManager.default.restart()
+            YXAlertQueueManager.default.processQueue()
             YXUserModel.default.login()
         }
     }

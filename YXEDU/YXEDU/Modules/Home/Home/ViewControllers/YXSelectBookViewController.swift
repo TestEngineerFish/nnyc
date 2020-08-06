@@ -71,7 +71,7 @@ class YXSelectBookViewController: YXViewController, UICollectionViewDelegate, UI
         }
         
         alertView.adjustAlertHeight()
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     @IBAction func downloadWordBook(_ sender: UIButton) {

@@ -454,7 +454,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             self.delegate?.hideAlertEvent()
         }
         
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     func clickSwitchBtnEvent() {

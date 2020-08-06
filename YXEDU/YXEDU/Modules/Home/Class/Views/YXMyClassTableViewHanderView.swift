@@ -79,6 +79,6 @@ class YXMyClassTableViewHanderView: YXView {
         alertView.textCountLabel.isHidden = true
         alertView.textMaxLabel.isHidden   = true
         alertView.alertHeight.constant    = 222
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 }

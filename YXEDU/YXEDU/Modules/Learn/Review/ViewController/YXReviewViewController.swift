@@ -43,7 +43,7 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
         self.fetchData()
 //        YXTest.default.test()
     }

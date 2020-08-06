@@ -76,6 +76,10 @@
     
 }
 
+- (BOOL)qqIsInstalled {
+    return [QQApiInterface isQQInstalled];
+}
+
 // qq 分享
 - (void)qqShare:(QQShareType)shareType {
     if (![QQApiInterface isQQInstalled]) {

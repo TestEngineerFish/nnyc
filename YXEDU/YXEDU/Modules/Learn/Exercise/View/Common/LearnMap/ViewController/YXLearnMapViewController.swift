@@ -111,7 +111,7 @@ class YXLearnMapViewController: YXViewController {
             alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
             alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
             alertView.shouldOnlyShowOneButton = true
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         } else {
             if let currentModel = self.learningPath?.currentUnitView?.model, currentModel.status != .uniteIng {
                 let currentUnitName = currentModel.unitName ?? ""
@@ -125,7 +125,7 @@ class YXLearnMapViewController: YXViewController {
                     button.isEnabled = false
                     YXLog("切换到" + currentUnitName + "单元学习")
                 }
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             } else {
                 self.learnUnit(button.tag)
                 button.isEnabled = false

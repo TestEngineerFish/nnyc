@@ -134,7 +134,7 @@ class YXWebActionManager: NSObject {
         alertView.doneClosure = { _ in
             finished?()
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: ==== Tools ====
