@@ -151,10 +151,12 @@ class YXChallengeHeaderTopView: UIView {
 
     // MARK: ==== Event ====
     @objc private func showRuleView() {
-        guard let url = YXUserModel.default.gameExplainUrl else {
+        guard let urlStr = YXUserModel.default.gameExplainUrl else {
             return
         }
-        YXAlertWebView.share.show(url)
+        let alertView = YXAlertWebView()
+        alertView.url = URL(string: urlStr)
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: ==== Animation ====

@@ -59,7 +59,12 @@ class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UI
         self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
         self.customNavigationBar?.rightButton.setImage(#imageLiteral(resourceName: "questionIcon"), for: .normal)
         self.customNavigationBar?.rightButtonAction = {
-            YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
+            guard let urlStr = YXUserModel.default.coinExplainUrl, let url = URL(string: urlStr) else {
+                return
+            }
+            let alertView = YXAlertWebView()
+            alertView.url = url
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
         self.viewTopConstraint.constant = kNavHeight
         dailyDataCollectionView.register(UINib(nibName: "YXTaskCenterDateCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterDateCell")

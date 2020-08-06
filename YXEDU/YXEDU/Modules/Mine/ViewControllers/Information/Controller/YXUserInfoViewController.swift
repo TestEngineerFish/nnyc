@@ -65,7 +65,9 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
         self.backgroundView.addGestureRecognizer(tapBackgroundView)
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().barStyle      = .default
-        cameraPicker.sourceType    = .camera;
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+            cameraPicker.sourceType    = .camera;
+        }
         cameraPicker.delegate      = self
         cameraPicker.allowsEditing = true
 

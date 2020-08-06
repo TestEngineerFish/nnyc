@@ -40,7 +40,7 @@ class YXTopWindowView: YXView {
         self.addSubview(mainView)
         mainView.backgroundColor = UIColor.white
         mainView.layer.masksToBounds = true
-        mainView.layer.cornerRadius = 6
+        mainView.layer.cornerRadius  = 6
     }
     
     required init?(coder: NSCoder) {
