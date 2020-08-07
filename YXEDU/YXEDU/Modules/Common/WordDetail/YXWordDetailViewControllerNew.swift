@@ -10,12 +10,6 @@ import UIKit
 
 class YXWordDetailViewControllerNew: YXViewController {
     
-    var rightBarView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.clear
-        return view
-    }()
-    
     @objc var wordId        = -1
     @objc var isComplexWord = 0
     var wordModel: YXWordModel?
@@ -28,23 +22,12 @@ class YXWordDetailViewControllerNew: YXViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.createSubviews()
         self.bindProperty()
         self.requestWordDetail()
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self, name: YXNotification.kRecordScore, object: nil)
-    }
-    
-    private func createSubviews() {
-        self.customNavigationBar?.addSubview(rightBarView)
-        rightBarView.snp.makeConstraints { (make) in
-            make.centerY.equalToSuperview()
-            make.width.equalTo(AdaptSize(104))
-            make.height.equalTo(AdaptSize(30))
-            make.right.equalToSuperview().offset(AdaptSize(-2))
-        }
     }
     
     // MARK: ---- Event ----
@@ -64,14 +47,18 @@ class YXWordDetailViewControllerNew: YXViewController {
     // MARK: ---- Request ----
     /// 查询单词详情
     private func requestWordDetail() {
+        YXUtils.showHUD(self.view)
         let wordDetailRequest = YXWordBookRequest.wordDetail(wordId: wordId, isComplexWord: isComplexWord)
         YYNetworkService.default.request(YYStructResponse<YXWordModel>.self, request: wordDetailRequest, success: { [weak self] (response) in
             guard let self = self, var word = response.data else { return }
+            YXUtils.hideHUD(self.view)
             word.isComplexWord  = self.isComplexWord
             self.wordModel      = word
             self.wordDetailView = YXWordDetailCommonView(frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight), word: word)
             self.view.addSubview(self.wordDetailView!)
-        }) { error in
+        }) { [weak self] error in
+            guard let self = self else { return }
+            YXUtils.hideHUD(self.view)
             YXLog("查询单词:\(self.wordId)详情失败， error:\(error)")
             YXUtils.showHUD(nil, title: error.message)
         }

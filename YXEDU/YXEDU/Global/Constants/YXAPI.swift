@@ -103,7 +103,7 @@ struct YXAPI {
     struct Word {
         // 下載词书
         static let downloadWordBook = "/api/v1/book/getstudybooklist"
-        // 下載词书
+        // 单词详情
         static let wordDetail       = "/api/v1/word/info"
         /// 用户添加词书
         static let addUserBook      = "/api/v1/book/adduserbook"

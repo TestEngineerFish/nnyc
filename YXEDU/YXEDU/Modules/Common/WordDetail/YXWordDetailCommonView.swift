@@ -89,7 +89,6 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
     
     deinit {
         YXLog("释放\(self.classForCoder)")
-//        playAuoidButton.layer.removeFlickerAnimation()
     }
     
     private func initializationFromNib() {
