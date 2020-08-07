@@ -9,12 +9,6 @@
 import Foundation
 
 class YXNavigationController: UINavigationController, UIGestureRecognizerDelegate {
-    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        if self.children.count == 1 {
-            viewController.hidesBottomBarWhenPushed = true
-        }
-        super.pushViewController(viewController, animated: animated)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +18,14 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
 
     private func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(screenshotAction), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+    }
+
+    // MARK: ==== Override ====
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        if self.children.count == 1 {
+            viewController.hidesBottomBarWhenPushed = true
+        }
+        super.pushViewController(viewController, animated: animated)
     }
 
     // MARK: ==== Event ====

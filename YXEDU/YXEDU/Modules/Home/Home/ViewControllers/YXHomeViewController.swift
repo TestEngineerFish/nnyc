@@ -349,9 +349,11 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             alertView.shouldClose = false
             alertView.doneClosure = {(classNumber: String?) in
                 YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    alertView.removeFromSuperview()
-                    let vc = YXMyClassViewController()
-                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                    if result != nil {
+                        alertView.removeFromSuperview()
+                        let vc = YXMyClassViewController()
+                        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                    }
                 }
                 YXLog("班级号：\(classNumber ?? "")")
             }

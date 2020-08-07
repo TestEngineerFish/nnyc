@@ -29,8 +29,6 @@ class YXButton: UIButton {
     var status: YXButtonStatusEnum = .normal
     var type: YXButtonType
 
-    let sizeKeyPath = "frame"
-
     // MARK: ---- Init ----
 
     init(_ type: YXButtonType = .normal, frame: CGRect = .zero) {
