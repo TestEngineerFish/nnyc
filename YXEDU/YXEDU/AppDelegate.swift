@@ -122,6 +122,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        YXLog("Kill：手动关掉App")
+    }
 }
 
 

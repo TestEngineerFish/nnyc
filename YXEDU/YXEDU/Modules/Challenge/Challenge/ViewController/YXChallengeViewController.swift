@@ -43,8 +43,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             make.edges.equalToSuperview()
         }
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(-kStatusBarHeight + AdaptSize(15))
-            make.left.right.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         self.tableView.delegate        = self
         self.tableView.dataSource      = self

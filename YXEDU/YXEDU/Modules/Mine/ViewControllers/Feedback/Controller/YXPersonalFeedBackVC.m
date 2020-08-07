@@ -258,16 +258,16 @@
     sendModel.env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
     
     [self.feedViewModel submitFeedBack:sendModel finish:^(id obj, BOOL result) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [YXUtils hideHUD:kWindow];
-        });
+        [YXUtils hideHUD:self.view];
         if (result) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [YXUtils showHUD:kWindow title:@"提交成功"];
-            });
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [YXUtils showHUD:self.view title:@"提交成功"];
+            if (weakSelf.navigationController) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            } else {
+                [weakSelf dismissViewControllerAnimated:true completion:nil];
+            }
         } else {
-//            [YXUtils showHUD:self.view title:@"网络错误!"];
+            [YXUtils showHUD:self.view title:@"网络错误!"];
         }
     }];
     [YXLogManager.share report:NO];

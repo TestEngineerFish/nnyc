@@ -21,10 +21,10 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         didSet {
             if shouldOnlyShowOneButton {
                 cancelButtonRightDistance.constant = 20
-                doneButtonLeftDistance.constant = 20
+                doneButtonLeftDistance.constant    = 20
             } else {
                 cancelButtonRightDistance.constant = ((screenWidth - 88) / 2) + 10
-                doneButtonLeftDistance.constant = ((screenWidth - 88) / 2) + 10
+                doneButtonLeftDistance.constant    = ((screenWidth - 88) / 2) + 10
             }
         }
     }

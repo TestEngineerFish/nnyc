@@ -130,10 +130,8 @@ typealias YYEVC = YYEnvChangeViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        self.navigationController?.navigationBar.isHidden = false
-//        self.navigationController?.title = "选择环境"
         self.customNavigationBar?.title = "选择环境"
+        self.customNavigationBar?.leftButton.isHidden = true
 
         self.view.addSubview(self.tableView)
         self.view.backgroundColor = white1
@@ -239,6 +237,6 @@ extension YYEnvChangeViewController {
     }
     
     @objc private func backButtonDidClick() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }

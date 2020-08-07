@@ -18,7 +18,44 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.registerNotification()
         self.interactivePopGestureRecognizer?.delegate = self
+    }
+
+    private func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(screenshotAction), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+    }
+
+    // MARK: ==== Event ====
+    @objc private func screenshotAction() {
+        YXLog("检测到截屏")
+        let image = self.getScreenshotImage()
+        let alertView = YXAlertView()
+        alertView.titleLabel.text = "提示"
+        alertView.descriptionLabel.text = "是否提交反馈"
+        alertView.doneClosure = { [weak self] (text:String?) in
+            self?.toFeedbackVC(image: image)
+        }
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
+    }
+
+    private func toFeedbackVC(image: UIImage?) {
+        let vc = YXPersonalFeedBackVC()
+        vc.screenShotImage = image
+
+        YRRouter.sharedInstance().currentNavigationController()?.present(vc, animated: true, completion: nil)
+    }
+
+    // MARK: ==== Tools ====
+    private func getScreenshotImage() -> UIImage? {
+        guard let layer = UIApplication.shared.keyWindow?.layer else {
+            return nil
+        }
+        let renderer = UIGraphicsImageRenderer(size: layer.frame.size)
+        let image = renderer.image { (context: UIGraphicsImageRendererContext) in
+            layer.render(in: context.cgContext)
+        }
+        return image
     }
 
     // MARK: ==== UIGestureRecognizerDelegate ====

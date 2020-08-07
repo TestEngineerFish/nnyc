@@ -28,9 +28,8 @@
 - (void)submitFeedBack:(YXFeedSendModel *)sendModel finish:(finishBlock)block {
     [[YYNetworkService default] ocRequestWithType:YXOCRequestTypeFeedback params:@{@"feed": sendModel.feed, @"env": sendModel.env, @"files": sendModel.files} isUpload:YES success:^(YXOCModel* model) {
         block(model, model != nil);
-
     } fail:^(NSError* error) {
-        
+        block(nil, false);
     }];
 }
 
