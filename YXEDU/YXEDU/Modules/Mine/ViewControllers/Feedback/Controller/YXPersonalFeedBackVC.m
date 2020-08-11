@@ -98,6 +98,7 @@
 - (void)viewDidLoad {
     self.backType = BackWhite;
     [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
@@ -228,7 +229,6 @@
     [super viewWillAppear:animated];
     [self updateDotStatus];
     self.textColorType = TextColorWhite;
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)updateDotStatus {

@@ -45,47 +45,35 @@ class YXWebActionManager: NSObject {
             }
             break
         case "add_work":
-            let classNumber = model.params
-            
-            let request = YXHomeRequest.workCodeDidExpired(workCode: classNumber)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                if let didExpired = response.data?.didExpired, didExpired == 0 {
-                    let descriptionStr: String = {
-                        if model.teacherName.isEmpty {
-                            return "是否确认提取作业"
-                        } else {
-                            return "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧"
-                        }
-                    }()
-                    self.showAlert(title: "提取作业", description: descriptionStr, downTitle: "去做作业") {
-                        // 添加作业
-                        YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
-                            if let _workModel = workModel {
-                                self.toVC(scheme: model.scheme)
-                                YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
-                                let dataList = self.getBookHashDic(_workModel)
-                                YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
-                                // 跳转学习
-                                let vc         = YXExerciseViewController()
-                                let bookId     = (_workModel.type == .punch) ? (_workModel.bookIdList.first ?? 0) : 0
-                                let unitId     = _workModel.type == .punch ? _workModel.unitId : 0
-                                let learnType  = _workModel.type.learnType()
-                                vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType, homeworkId: _workModel.workId ?? 0)
-                                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                            }
-                        }
-                    }
-                    
+            let descriptionStr: String = {
+                if model.teacherName.isEmpty {
+                    return "是否确认提取作业"
                 } else {
-                    YXUtils.showHUD(nil, title: "作业码已过期")
+                    return "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧"
                 }
-
-            }) { (error) in
-                YXUtils.showHUD(nil, title: error.message)
+            }()
+            self.showAlert(title: "提取作业", description: descriptionStr, downTitle: "去做作业") { [weak self] in
+                guard let self = self else { return }
+                let workCode = model.params
+                let request = YXHomeRequest.pickUpWork(code: workCode)
+                // 添加作业
+                YYNetworkService.default.request(YYStructResponse<YXMyWorkModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self, let _workModel = response.data else { return }
+                    self.toVC(scheme: model.scheme)
+                    YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
+                    let dataList = self.getBookHashDic(_workModel)
+                    YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+                    // 跳转学习
+                    let vc         = YXExerciseViewController()
+                    let bookId     = (_workModel.type == .punch) ? (_workModel.bookIdList.first ?? 0) : 0
+                    let unitId     = _workModel.type == .punch ? _workModel.unitId : 0
+                    let learnType  = _workModel.type.learnType()
+                    vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType, homeworkId: _workModel.workId ?? 0)
+                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                }) { (error) in
+                    YXUtils.showHUD(nil, title: error.message)
+                }
             }
-            
-            break
-            
         case "make_team":
             self.addFriend(user: model.params, channel: model.channel, complete: nil)
             break

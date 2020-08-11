@@ -349,7 +349,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             alertView.shouldClose = false
             alertView.doneClosure = {(classNumber: String?) in
                 YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    if result != nil {
+                    if result {
                         alertView.removeFromSuperview()
                         let vc = YXMyClassViewController()
                         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)

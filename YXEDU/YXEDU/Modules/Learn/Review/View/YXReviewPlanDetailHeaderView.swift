@@ -314,7 +314,7 @@ class YXReviewPlanDetailHeaderView: YXView {
 
         let editView = YXReviewPlanEditView(point: p)
         editView.reviewPlanModel = reviewPlanModel
-        YXAlertQueueManager.default.addAlert(alertView: editView)
+        editView.show()
         
     }
     

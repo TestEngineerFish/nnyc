@@ -179,7 +179,7 @@ class YXReviewPlanDetailViewController: YXViewController {
     private func showMoreOption() {
         let editView = YXReviewPlanEditView(point: CGPoint(x: 0, y: 0))
         editView.reviewPlanModel = self.model
-        YXAlertQueueManager.default.addAlert(alertView: editView)
+        editView.show()
     }
     
     func share() {

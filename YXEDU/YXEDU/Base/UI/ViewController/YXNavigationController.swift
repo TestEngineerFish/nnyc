@@ -12,7 +12,7 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.registerNotification()
+        self.registerNotification()
         self.interactivePopGestureRecognizer?.delegate = self
     }
 
@@ -44,7 +44,6 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
     private func toFeedbackVC(image: UIImage?) {
         let vc = YXPersonalFeedBackVC()
         vc.screenShotImage = image
-
         YRRouter.sharedInstance().currentNavigationController()?.present(vc, animated: true, completion: nil)
     }
 

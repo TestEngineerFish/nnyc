@@ -147,11 +147,11 @@ class YXEditNameViewController: YXViewController, UITextFieldDelegate {
     // MARK: ==== UITextFieldDelegate =====
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if range.length <= 0 {
-            guard let name = textField.text, name.count < self.maxLength else {
+            YXLog(string)
+            guard let name = textField.text, (name.count + string.count) <= self.maxLength else {
                 return false
             }
-//            let offset = self.maxLength - name.count
-//            textField.text = name + string.substring(maxIndex: offset)
+
         }
         return true
     }
