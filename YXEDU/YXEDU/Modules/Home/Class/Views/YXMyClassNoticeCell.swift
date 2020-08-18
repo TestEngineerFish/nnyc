@@ -9,6 +9,22 @@
 import Foundation
 
 class YXMyClassNoticeCell: UITableViewCell {
+
+    var timeLabel: UILabel = {
+        let label = UILabel()
+        label.text          = ""
+        label.textColor     = UIColor.hex(0xBBBBBB)
+        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
+        label.textAlignment = .center
+        return label
+    }()
+    var customContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor    = UIColor.white
+        view.layer.cornerRadius = AdaptSize(12)
+        view.layer.setDefaultShadow()
+        return view
+    }()
     var redDotView = YXRedDotView()
     var contentLabel: UILabel = {
         let label = UILabel()
@@ -19,11 +35,11 @@ class YXMyClassNoticeCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    var timeLabel: UILabel = {
+    var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text          = ""
-        label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
+        label.textColor     = UIColor.gray1
+        label.font          = UIFont.regularFont(ofSize: AdaptSize(13))
         label.textAlignment = .left
         return label
     }()
@@ -31,52 +47,51 @@ class YXMyClassNoticeCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
+        self.createSubviews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setData(model: YXMyClassNoticeModel) {
-        self.redDotView.isHidden = !model.isNew
-        self.contentLabel.text   = model.content
-        self.timeLabel.text      = model.time
-        self.createSubviews()
-    }
 
     private func createSubviews() {
-        self.addSubview(redDotView)
-        self.addSubview(contentLabel)
         self.addSubview(timeLabel)
-        self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(20), bottom: 0, right: AdaptSize(20))
-        if redDotView.isHidden {
-            let contentH = self.contentLabel.text?.textHeight(font: contentLabel.font, width: screenWidth - AdaptSize(40)) ?? 0
-            contentLabel.snp.remakeConstraints { (make) in
-                make.top.equalToSuperview().offset(AdaptSize(20))
-                make.left.equalToSuperview().offset(AdaptSize(20))
-                make.right.equalToSuperview().offset(AdaptSize(-20))
-                make.height.equalTo(contentH)
-            }
-        } else {
-            let contentH = self.contentLabel.text?.textHeight(font: contentLabel.font, width: screenWidth - AdaptSize(51)) ?? 0
-            redDotView.snp.remakeConstraints { (make) in
-                make.left.equalToSuperview().offset(AdaptSize(20))
-                make.size.equalTo(CGSize(width: AdaptSize(6), height: AdaptSize(6)))
-                make.top.equalToSuperview().offset(AdaptSize(30))
-            }
-            contentLabel.snp.remakeConstraints { (make) in
-                make.top.equalToSuperview().offset(AdaptSize(20))
-                make.left.equalTo(redDotView.snp.right).offset(AdaptSize(5))
-                make.right.equalToSuperview().offset(AdaptSize(-20))
-                make.height.equalTo(contentH)
-            }
+        self.addSubview(customContentView)
+        customContentView.addSubview(redDotView)
+        customContentView.addSubview(contentLabel)
+        customContentView.addSubview(descriptionLabel)
+        self.separatorInset = UIEdgeInsets(top: 0, left: AdaptSize(1000), bottom: 0, right: AdaptSize(20))
+        timeLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(AdaptSize(10))
         }
-        timeLabel.snp.remakeConstraints { (make) in
-            make.left.equalTo(contentLabel)
-            make.top.equalTo(contentLabel.snp.bottom).offset(AdaptSize(10))
+        customContentView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
-            make.height.equalTo(AdaptSize(18))
-            make.bottom.equalToSuperview().offset(AdaptSize(-20))
+            make.top.equalTo(timeLabel.snp.bottom).offset(AdaptSize(10))
+            make.bottom.equalToSuperview().offset(AdaptSize(-10))
         }
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.top.equalToSuperview().offset(AdaptSize(15))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+        }
+        descriptionLabel.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(AdaptSize(15))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
+            make.top.equalTo(contentLabel.snp.bottom).offset(AdaptSize(10))
+            make.bottom.equalToSuperview().offset(AdaptSize(-15))
+        }
+        redDotView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(AdaptSize(5))
+            make.right.equalToSuperview().offset(AdaptSize(-5))
+            make.size.equalTo(redDotView.size)
+        }
+    }
+
+    func setData(model: YXMyClassNoticeModel) {
+        self.redDotView.isHidden   = model.isRead
+        self.contentLabel.text     = model.content
+        self.timeLabel.text        = model.timeStr
+        self.descriptionLabel.text = model.teacherName + "  |  " + model.className
     }
 }

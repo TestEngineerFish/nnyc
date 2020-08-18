@@ -52,15 +52,6 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         return button
     }()
 
-    var noticeButton: UIButton = {
-        let button = UIButton()
-        button.isHidden = true
-        button.setImage(UIImage(named: "class_notice"), for: .normal)
-        return button
-    }()
-
-    let redDotView = YXRedDotView()
-
     var classId: Int?
     var classDetailModel: YXMyClassDetailModel?
 
@@ -76,19 +67,6 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.sheetView.addSubview(leaveButton)
         self.sheetView.addSubview(lineView)
         self.sheetView.addSubview(cancelButton)
-        self.customNavigationBar?.addSubview(noticeButton)
-        noticeButton.addSubview(redDotView)
-        if self.customNavigationBar != nil {
-            self.noticeButton.snp.makeConstraints { (make) in
-                make.centerY.equalToSuperview()
-                make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-15))
-                make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
-            }
-        }
-        self.redDotView.snp.makeConstraints { (make) in
-            make.size.equalTo(redDotView.size)
-            make.top.right.equalToSuperview()
-        }
         self.tableView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(kNavHeight))
@@ -115,7 +93,6 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
         self.customNavigationBar?.title = "班级详情"
 //        self.customNavigationBar?.rightButton.setImage(UIImage(named: "more_black"), for: .normal)
 //        self.customNavigationBar?.rightButton.addTarget(self, action: #selector(showSheetView), for: .touchUpInside)
-        self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
         let hideTap = UITapGestureRecognizer(target: self, action: #selector(hideSheepView))
         self.backgroundView.addGestureRecognizer(hideTap)
         self.leaveButton.addTarget(self, action: #selector(leaveAction), for: .touchUpInside)
@@ -161,11 +138,6 @@ class YXMyClassDetailViewController: YXViewController, UITableViewDelegate, UITa
             self.backgroundView.layer.opacity = 1.0
             self.sheetView.transform = CGAffineTransform(translationX: 0, y: AdaptSize(-100) - kSafeBottomMargin)
         }
-    }
-
-    @objc private func showNoticeList() {
-        let vc = YXMyClassNoticeViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     @objc private func hideSheepView() {

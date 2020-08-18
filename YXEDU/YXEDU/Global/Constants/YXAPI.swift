@@ -295,6 +295,8 @@ struct YXAPI {
         static let workReport  = "/api/v1/class/work/report"
         /// 新作业提醒接口
         static let remindHomework = "/api/v1/class/remind"
+        /// 通知历史列表
+        static let notificationList = "/api/v1/class/noticelist"
     }
 }
 

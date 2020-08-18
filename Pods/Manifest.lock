@@ -38,6 +38,7 @@ PODS:
     - GrowingCoreKit (= 2.8.15)
   - GrowingCoreKit (2.8.15):
     - Growing (= 2.8.15)
+  - GTMRefresh (1.3.9)
   - HWWeakTimer (1.0)
   - IQKeyboardManager (6.2.1)
   - Kingfisher (5.9.0):
@@ -94,6 +95,7 @@ DEPENDENCIES:
   - FMDB
   - FSCalendar
   - GrowingAutoTrackKit
+  - GTMRefresh
   - HWWeakTimer
   - IQKeyboardManager (~> 6.2.0)
   - Kingfisher (~> 5.9.0)
@@ -140,6 +142,7 @@ SPEC REPOS:
     - Growing
     - GrowingAutoTrackKit
     - GrowingCoreKit
+    - GTMRefresh
     - HWWeakTimer
     - IQKeyboardManager
     - Kingfisher
@@ -186,6 +189,7 @@ SPEC CHECKSUMS:
   Growing: ffcd0ca9fd20e5c853de31e69e4a2a542412c44e
   GrowingAutoTrackKit: 6fb1db793ba0943e30d4e8da4e585e90af0f3df4
   GrowingCoreKit: 5b9ada602ec7c17deaced05d626eb0fcd5dfe94a
+  GTMRefresh: f69751db662aa6bfce56e4d7a1792ace85afd80e
   HWWeakTimer: 79488095ef2dd8937f94b676d12bd5fa954486e6
   IQKeyboardManager: 964638372b4a61892cc74fdfa6fd26de8c9464a2
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
@@ -216,6 +220,6 @@ SPEC CHECKSUMS:
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
   ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
 
-PODFILE CHECKSUM: a0e106ecf22aba0bc203a313050985e4ddf8a25a
+PODFILE CHECKSUM: 41b881fa512a1c8879b79207f5364711519ba229
 
 COCOAPODS: 1.8.4

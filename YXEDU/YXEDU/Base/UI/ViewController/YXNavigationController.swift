@@ -12,7 +12,7 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.registerNotification()
+//        self.registerNotification()
         self.interactivePopGestureRecognizer?.delegate = self
     }
 

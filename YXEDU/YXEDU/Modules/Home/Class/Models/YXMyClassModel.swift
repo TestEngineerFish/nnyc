@@ -73,13 +73,15 @@ struct YXMyClassModel: Mappable {
 }
 
 struct YXMyWorkListModel: Mappable {
+    var hadNewNotification: Bool = false
     var bookHash: [String:String]      = [:]
     var workModelList: [YXMyWorkModel] = []
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        bookHash      <- map["hashkey"]
-        workModelList <- map["list"]
+        hadNewNotification <- map["notice_num"]
+        bookHash           <- map["hashkey"]
+        workModelList      <- map["list"]
     }
 }
 

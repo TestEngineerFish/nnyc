@@ -9,7 +9,9 @@
 import Foundation
 
 class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITableViewDataSource  {
-    var tableView = UITableView(frame: .zero, style: .plain)
+
+    var page: Int = 1
+    var tableView       = UITableView(frame: .zero, style: .plain)
     var noticeModelList = [YXMyClassNoticeModel]()
 
     override func viewDidLoad() {
@@ -20,20 +22,25 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
     }
 
     private func bindProperty() {
-        for index in 0..<10 {
-            var model = YXMyClassNoticeModel()
-            model.content = index == 3 ? "暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收暑假作业已发放，请大家注意及时查收，暑假作业已发放，请大家注意及时查收" : "暑假作业已发放，请大家注意及时查收"
-            model.time    = "6月12号"
-            model.isNew   = index < 4
-            noticeModelList.append(model)
-        }
         self.customNavigationBar?.title = "班级通知"
         self.customNavigationBar?.backgroundColor = .white
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = .white
-        self.tableView.estimatedRowHeight = AdaptSize(50)
         self.tableView.register(YXMyClassNoticeCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassNoticeCell")
+        self.tableView.gtm_addRefreshHeaderView { [weak self] in
+            self?.requestData()
+        }
+        self.tableView.gtm_addLoadMoreFooterView { [weak self] in
+            guard let self = self else { return }
+            self.requestData(reload: false)
+        }
+        self.tableView.refreshingText("加载中")
+        self.tableView.releaseToRefreshText("松开加载")
+        self.tableView.refreshSuccessText("加载完成")
+        self.tableView.pullDownToRefreshText("下拉刷新")
+        self.tableView.releaseLoadMoreText("上拉加载更多")
+        self.tableView.noMoreDataText("")
     }
 
     private func createSubviews() {
@@ -46,8 +53,32 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
     }
 
     // MARK: ==== Request ====
-    private func requestData() {
-        self.tableView.reloadData()
+    private func requestData(reload: Bool = true) {
+        if reload {
+            self.page = 1
+        }
+        let request = YXMyClassRequestManager.notificationList(page: page)
+        YXUtils.showHUD(self.view)
+        YYNetworkService.default.request(YYStructResponse<YXMyClassNoticeListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
+                return
+            }
+            YXUtils.hideHUD(self.view)
+            self.tableView.endRefreshing(isSuccess: true)
+            if self.page == 1 {
+                self.noticeModelList = model.list
+            } else {
+                self.noticeModelList += model.list
+            }
+            self.page += model.hasMore ? 1 : 0
+            self.tableView.reloadData()
+        }) { [weak self] (error) in
+            guard let self = self else { return }
+            YXUtils.hideHUD(self.view)
+            self.tableView.endRefreshing(isSuccess: true)
+            YXUtils.showHUD(nil, title: error.message)
+        }
+
     }
 
     // MARK: ==== UITableViewDelegate && UITableViewDataSource ====

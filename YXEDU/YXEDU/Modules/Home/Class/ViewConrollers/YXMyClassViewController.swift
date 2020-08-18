@@ -17,6 +17,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         view.backgroundColor = UIColor.orange1
         return view
     }()
+
+    let redDotView = YXRedDotView()
+    var noticeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "class_notice"), for: .normal)
+        return button
+    }()
     
     var workTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -26,7 +33,11 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }()
 
     var classModelList = [YXMyClassModel]()
-    var workListModel: YXMyWorkListModel?
+    var workListModel: YXMyWorkListModel? {
+        didSet {
+            self.redDotView.isHidden = workListModel?.hadNewNotification != .some(true)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,11 +113,25 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
         self.workTableView.backgroundColor = .clear
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kReloadClassList, object: nil)
+        self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
     }
 
     private func createSubviews() {
         self.view.addSubview(backgroundView)
         self.view.addSubview(workTableView)
+        self.customNavigationBar?.addSubview(noticeButton)
+        noticeButton.addSubview(redDotView)
+        if self.customNavigationBar != nil {
+            self.noticeButton.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-10))
+                make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+            }
+        }
+        self.redDotView.snp.makeConstraints { (make) in
+            make.size.equalTo(redDotView.size)
+            make.top.right.equalToSuperview()
+        }
         backgroundView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview()
@@ -154,9 +179,16 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     // MARK: ==== Event ====
-    @objc private func reloadData() {
+    @objc
+    private func reloadData() {
         self.requestClassList()
         self.requestWorkList()
+    }
+
+    @objc
+    private func showNoticeList() {
+        let vc = YXMyClassNoticeViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     // MARK: ==== UITableViewDateSource && UITableViewDelegate ====
