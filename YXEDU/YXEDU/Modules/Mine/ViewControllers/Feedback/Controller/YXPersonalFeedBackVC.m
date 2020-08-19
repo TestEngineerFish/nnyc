@@ -97,8 +97,8 @@
 
 - (void)viewDidLoad {
     self.backType = BackWhite;
-    [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [super viewDidLoad];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];

@@ -24,8 +24,8 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [super viewDidLoad];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [button setTitle:@"保存" forState:UIControlStateNormal];
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
