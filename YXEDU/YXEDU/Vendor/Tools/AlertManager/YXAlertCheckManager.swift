@@ -127,7 +127,7 @@ class YXAlertCheckManager {
     func checkHomework(_ completion: (() -> Void)? ) {
         let request = YXMyClassRequestManager.remindHomework
         YYNetworkService.default.request(YYStructResponse<YXMyClassRemindModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+            guard let model = response.data, model.workId != 0 else {
                 completion?()
                 return
             }

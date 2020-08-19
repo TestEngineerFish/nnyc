@@ -69,6 +69,23 @@ struct YXWordModel: YXBaseWordModel {
     
     var column: Int = 0
     var row: Int = 0
+
+    /// 词性+词意
+    var partOfSpeechAndMeaningsStr: String {
+        get {
+            var text = ""
+            guard let list = self.partOfSpeechAndMeanings else {
+                return text
+            }
+            for p in list {
+                text.append(p.partOfSpeech ?? "")
+                text.append(p.meaning ?? "")
+                text.append(" ")
+            }
+            return text
+        }
+    }
+    
     init() {}
     
     init?(map: Map) {

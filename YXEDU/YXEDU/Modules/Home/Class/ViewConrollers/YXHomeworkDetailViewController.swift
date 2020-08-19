@@ -58,6 +58,14 @@ class YXHomeworkDetailViewController: YXViewController, YXHomeworkDetailViewProp
     }
 
     // MARK: ==== YXHomeworkDetailViewProperty ====
+
+    func showWordList() {
+        let vc = YXHomeworkWordListViewController()
+        vc.wordModelList = self.detailModel?.wordModelList ?? []
+        vc.bookName      = self.detailModel?.bookName ?? ""
+        self.navigationController?.present(vc, animated: true, completion: nil)
+    }
+
     func downAction() {
         guard let model = self.detailModel else {
             return

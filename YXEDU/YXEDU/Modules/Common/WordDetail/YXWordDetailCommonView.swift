@@ -132,7 +132,7 @@ class YXWordDetailCommonView: YXView, UITableViewDelegate, UITableViewDataSource
         }
 
         if let partOfSpeechAndMeanings = _word.partOfSpeechAndMeanings, partOfSpeechAndMeanings.count > 0 {
-            if partOfSpeechAndMeanings[0].partOfSpeech == "phrase" {
+            if partOfSpeechAndMeanings[0].isPhrase {
                 playButtonLeftOffset.constant = 0
                 partOfSpeechAndSenseLabel.text = partOfSpeechAndMeanings[0].meaning
                 

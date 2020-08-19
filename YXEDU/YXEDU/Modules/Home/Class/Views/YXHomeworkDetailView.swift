@@ -9,6 +9,7 @@
 import Foundation
 
 protocol YXHomeworkDetailViewProperty: NSObjectProtocol {
+    func showWordList()
     func downAction()
 }
 
@@ -206,7 +207,9 @@ class YXHomeworkDetailView: YXView {
 
     override func bindProperty() {
         super.bindProperty()
-        self.downButton.addTarget(self, action: #selector(downAction), for: .touchUpInside)
+        self.downButton.addTarget(self, action: #selector(self.downAction), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.showWordList))
+        self.wordNumView.addGestureRecognizer(tap)
     }
 
     func setDate(model: YXHomeworkDetailModel) {
@@ -256,6 +259,11 @@ class YXHomeworkDetailView: YXView {
     }
 
     // MARK: ==== Event ====
+    @objc
+    private func showWordList() {
+        self.delegate?.showWordList()
+    }
+
     @objc
     private func downAction() {
         self.delegate?.downAction()

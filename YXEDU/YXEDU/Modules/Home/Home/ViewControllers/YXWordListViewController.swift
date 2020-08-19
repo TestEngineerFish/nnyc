@@ -235,7 +235,7 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
                 wordListView.requestWordsList(page: 1)
             case 3:
                 wordListView.shouldShowEditButton = false
-                wordListView.shouldShowBottomView = true
+                wordListView.shouldShowBottomView = false
                 wordListView.type                 = .wrongWords
                 self.wordListViews[indexPath.row] = wordListView
                 self.wordListViews[indexPath.row]?.startReviewClosure = { [weak self] in
