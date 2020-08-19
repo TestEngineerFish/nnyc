@@ -41,6 +41,7 @@ extension YXExerciseViewController {
             guard let model = resultModel else {
                 YXLog("上报关卡失败")
                 UIView.toast("上报关卡失败")
+                YXUtils.showHUD(nil, title: "学习结果提交失败，请稍后再试")
                 self.navigationController?.popViewController(animated: true)
                 return
             }

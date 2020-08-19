@@ -57,14 +57,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             } else {
                 YXLog("后台返回词书列表数据错误")
+                self.sendFailNotification()
                 self.downloadFinished()
-                self.popRootVC()
             }
-        }) { error in
+        }) { [weak self] error in
+            guard let self = self else { return }
             YXLog("检测词书接口请求失败:\(error.message)")
             self.downloadFinished()
+            self.sendFailNotification()
             YXUtils.showHUD(nil, title: error.message)
-            self.popRootVC()
         }
     }
 
@@ -185,6 +186,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { [weakself = self] (response) in
             guard var bookModel = response.data else {
                 weakself.downloadError(with: bookId, newHash: newHash, error: "下载词书数据解析错误")
+                self.sendFailNotification()
                 return
             }
             YXLog("下载\(bookId)完成...")
@@ -192,7 +194,8 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             DispatchQueue.global().async {
                 weakself.updateWords(with: bookModel)
             }
-        }) { (error) in
+        }) { [weak self] (error) in
+            guard let self = self else { return }
             self.downloadError(with: bookId, newHash: newHash, error: error.message)
             YXUtils.showHUD(nil, title: error.message)
         }
@@ -215,11 +218,16 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
                 YXWordBookResourceManager.errorDownloadDict[_newHash] = downloadCount + 1
             } else {
-                NotificationCenter.default.post(name: YXNotification.kDownloadWordError, object: nil)
+                self.sendFailNotification()
                 YXWordBookResourceManager.downloadDataList.removeAll()
                 YXWordBookResourceManager.errorDownloadDict.removeAll()
             }
         }
+    }
+
+    /// 发送下载失败通知
+    private func sendFailNotification() {
+        NotificationCenter.default.post(name: YXNotification.kDownloadWordError, object: nil)
     }
 
     // TODO: ---- Tools ----
@@ -246,10 +254,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         }
         YXWordBookResourceManager.totalDownloadCount = resultList.count
         return resultList
-    }
-
-    private func popRootVC() {
-        YRRouter.sharedInstance().currentNavigationController()?.popToRootViewController(animated: true)
     }
 
     // TODO: ---- 本地词书数据库操作 ----

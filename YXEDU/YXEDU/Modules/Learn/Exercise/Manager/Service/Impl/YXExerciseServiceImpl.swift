@@ -54,6 +54,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, reviewId: reviewId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
             guard let self = self else {
+                completion?(false, nil, isGenerate)
                 return
             }
             self._resultModel = model
@@ -172,10 +173,13 @@ class YXExerciseServiceImpl: YXExerciseService {
         let reviewId = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
         let request  = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self else { return }
+            guard let self = self else {
+                completion?(nil, [:])
+                return
+            }
             // 获取学习数据
-            let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-            let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
+            let duration        = self.studyDao.getDurationTime(learn: self.learnConfig)
+            let studyCount      = self.studyDao.selectStudyCount(learn: self.learnConfig)
             let newWordCount    = self.studyDao.getNewWordCount(study: self._studyId)
             let reviewWordCount = self.studyDao.getReviewWordCount(study: self._studyId)
             // 上报Growing
@@ -195,7 +199,6 @@ class YXExerciseServiceImpl: YXExerciseService {
                 self.cleanStudyRecord()
             }
             self.studyDao.updateProgress(study: self._studyId, progress: .unreport)
-            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, [:])
         }
     }
