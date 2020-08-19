@@ -46,8 +46,8 @@ class YXHomeworkWordListViewController: YXViewController, UITableViewDelegate, U
         self.view.addSubview(tableView)
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(15))
-            make.top.equalToSuperview().offset(AdaptSize(100))
-            make.right.equalTo(closeButton.snp.left).offset(AdaptSize(-15))
+            make.top.equalToSuperview().offset(AdaptSize(17))
+            make.right.equalToSuperview().offset(AdaptSize(-15))
         }
         closeButton.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel).offset(AdaptSize(-10))
