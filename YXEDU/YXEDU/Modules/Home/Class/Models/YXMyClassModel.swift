@@ -26,6 +26,16 @@ enum YXHomeworkType: Int {
             return .homeworkWord
         }
     }
+    func description() -> String {
+        switch self {
+        case .punch:
+            return "每日打卡"
+        case .listen:
+            return "听力练习"
+        case .word:
+            return "单词练习"
+        }
+    }
 }
 
 enum YXWorkCompletionStatus: Int {

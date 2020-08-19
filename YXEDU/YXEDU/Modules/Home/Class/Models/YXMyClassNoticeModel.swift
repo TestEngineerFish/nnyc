@@ -21,7 +21,7 @@ struct YXMyClassNoticeListModel: Mappable {
 }
 
 struct YXMyClassNoticeModel: Mappable {
-    var isRead: Bool        = false
+    var isRead: Bool        = true
     var content: String     = ""
     var timeStr: String     = ""
     var teacherName: String = ""

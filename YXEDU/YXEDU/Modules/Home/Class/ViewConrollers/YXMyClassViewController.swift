@@ -191,6 +191,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    private func pushDetailView(work model: YXMyWorkModel, hashDic: [String:String]) {
+        let vc = YXHomeworkDetailViewController()
+        vc.workModel = model
+        vc.hashDic   = hashDic
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
     // MARK: ==== UITableViewDateSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.workListModel?.workModelList.count ?? 0
@@ -211,7 +218,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        return AdaptSize(44)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -224,5 +231,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = YXMyClassTableViewFooterView()
         return footerView
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let model = self.workListModel?.workModelList[indexPath.row], let hashDic = self.workListModel?.bookHash else {
+            return
+        }
+        YXLog("查看作业\(model.workName)详情")
+        self.pushDetailView(work: model, hashDic: hashDic)
     }
 }

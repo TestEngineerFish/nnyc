@@ -519,11 +519,6 @@ class YXReviewProgressView: YXView {
         self.progressView.backgroundColor     = self.color()
     }
     
-    override func layoutSubviews() {
-        
-        
-    }
-    
     override func bindData() {
         progressView.frame = CGRect(x: 0, y: 0, width: 0, height: self.height)
         if showAnimation {

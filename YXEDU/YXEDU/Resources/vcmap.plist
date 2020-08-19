@@ -26,5 +26,7 @@
 	<string>YXFeedbackListViewController</string>
 	<key>user/worknotice</key>
 	<string>YXMyClassViewController</string>
+	<key>user/classnotice</key>
+	<string>YXMyClassNoticeViewController</string>
 </dict>
 </plist>

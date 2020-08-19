@@ -63,6 +63,9 @@
 		223D5EFC24527D6900482127 /* YXCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFB24527D6900482127 /* YXCalendarView.swift */; };
 		223D5EFE2452D00300482127 /* YXCalendarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFD2452D00300482127 /* YXCalendarRequest.swift */; };
 		223D5F002452D18200482127 /* YXCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFF2452D18200482127 /* YXCalendarModel.swift */; };
+		223F955D24EBE29C007D050A /* YXHomeworkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F955C24EBE29C007D050A /* YXHomeworkDetailViewController.swift */; };
+		223F956124EBEA03007D050A /* YXHomeworkDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F956024EBEA03007D050A /* YXHomeworkDetailModel.swift */; };
+		223F956324ECBBCE007D050A /* YXHomeworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F956224ECBBCE007D050A /* YXHomeworkDetailView.swift */; };
 		224352C323A1DF5400F278E6 /* YXChallengeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C223A1DF5400F278E6 /* YXChallengeModel.swift */; };
 		224352C523A1E91B00F278E6 /* YXChallengePropertyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */; };
 		224352CB23A240AF00F278E6 /* YXChallengeRankTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */; };
@@ -683,6 +686,9 @@
 		223D5EFB24527D6900482127 /* YXCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarView.swift; sourceTree = "<group>"; };
 		223D5EFD2452D00300482127 /* YXCalendarRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarRequest.swift; sourceTree = "<group>"; };
 		223D5EFF2452D18200482127 /* YXCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarModel.swift; sourceTree = "<group>"; };
+		223F955C24EBE29C007D050A /* YXHomeworkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailViewController.swift; sourceTree = "<group>"; };
+		223F956024EBEA03007D050A /* YXHomeworkDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailModel.swift; sourceTree = "<group>"; };
+		223F956224ECBBCE007D050A /* YXHomeworkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailView.swift; sourceTree = "<group>"; };
 		224352C223A1DF5400F278E6 /* YXChallengeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeModel.swift; sourceTree = "<group>"; };
 		224352C423A1E91B00F278E6 /* YXChallengePropertyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengePropertyView.swift; sourceTree = "<group>"; };
 		224352CA23A240AF00F278E6 /* YXChallengeRankTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXChallengeRankTopView.swift; sourceTree = "<group>"; };
@@ -1608,6 +1614,7 @@
 				77DDBDC724C188B8000449EA /* YXMyClassListViewController.swift */,
 				224AE70924A05777009EAB06 /* YXMyClassWorkReportViewController.swift */,
 				222AFBAE24B1E27E001C894C /* YXMyClassNoticeViewController.swift */,
+				223F955C24EBE29C007D050A /* YXHomeworkDetailViewController.swift */,
 			);
 			path = ViewConrollers;
 			sourceTree = "<group>";
@@ -1625,6 +1632,7 @@
 				CF673B5324A8747100183E33 /* YXMyClassTableViewFooterView.swift */,
 				222AFBB224B1E374001C894C /* YXMyClassNoticeCell.swift */,
 				222AFBB424B356CB001C894C /* YXMyClassTableViewClassCell.swift */,
+				223F956224ECBBCE007D050A /* YXHomeworkDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1634,6 +1642,7 @@
 			children = (
 				224F2D2F24A1E3DD00B00E1E /* YXMyClassModel.swift */,
 				222AFBB024B1E30B001C894C /* YXMyClassNoticeModel.swift */,
+				223F956024EBEA03007D050A /* YXHomeworkDetailModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4286,6 +4295,7 @@
 				EE54F7D72362AA3100EC605A /* YXImageAnswerView.swift in Sources */,
 				2248C9F123B1B08F009342A5 /* YXChallengeMyRankCell.swift in Sources */,
 				22A5AFB8236C53E900FBFABD /* YXExerciseAnimation.swift in Sources */,
+				223F956124EBEA03007D050A /* YXHomeworkDetailModel.swift in Sources */,
 				EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */,
 				22FCA29A2474D92400A63847 /* YXNetworkModel.swift in Sources */,
 				2298678524D2B07D000D20E0 /* YXUserInfoCell.swift in Sources */,
@@ -4300,6 +4310,7 @@
 				224A2FC0238233CC00AD99B0 /* YXAvatarPinView.swift in Sources */,
 				EE5EF20423273BAE00655654 /* UIImage+YR.m in Sources */,
 				EE88DF4523ACC675004DFF10 /* YXListenFillWordExerciseView.swift in Sources */,
+				223F955D24EBE29C007D050A /* YXHomeworkDetailViewController.swift in Sources */,
 				22EA337624A094A10034CD7E /* YXSelectSchoolContentView.swift in Sources */,
 				77CBFD712373B48000A670D7 /* YXWordBookResourceManager.swift in Sources */,
 				7786B6D42361C4E40027D0E3 /* YXSingleGroupWordBookCell.swift in Sources */,
@@ -4521,6 +4532,7 @@
 				EE6C7D2723B0F477009DCC0C /* YXNotReviewWordView.swift in Sources */,
 				7784ADB62480D9EE00185806 /* YXPickWordsBySelfView.swift in Sources */,
 				228105E2248E8C650025F03F /* YXNewLearnListExerciseView.swift in Sources */,
+				223F956324ECBBCE007D050A /* YXHomeworkDetailView.swift in Sources */,
 				22C3A5FF2477C5410020694E /* YXStepConfigModel.swift in Sources */,
 				227F477723CC459400D6C603 /* YXWrongWordsListView.swift in Sources */,
 				EEACEB5323A4F0E40036B3A2 /* YXTableViewController.swift in Sources */,
@@ -4815,7 +4827,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";
@@ -4862,7 +4877,10 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/TencentAPI",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = YXEDU/Resources/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/YXEDU/Resources/Info.plist";

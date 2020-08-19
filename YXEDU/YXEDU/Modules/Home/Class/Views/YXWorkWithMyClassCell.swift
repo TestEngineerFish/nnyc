@@ -222,7 +222,6 @@ class YXWorkWithMyClassCell: UITableViewCell {
 
     // MARK: ==== Event ====
     @objc private func actionEvent() {
-        YXLog("查看详情")
         guard let _model = self.model else {
             return
         }
