@@ -220,15 +220,15 @@ class YXHomeworkDetailView: YXView {
         self.targetLabel.text       = "目标：" + model.type.description()
         self.bookNameLabel.text     = "词书：\(model.bookName)"
         self.wordNumLabel.text      = "\(model.wordCount)个单词"
-    
+
         var progress: CGFloat = 0
         if model.type == .punch {
             self.wordNumView.isHidden = true
-            self.progressLabel.text = String(format: "完成%ld/%ld天", model.punchDayCount, punchAmount)
+            self.progressLabel.text   = String(format: "完成%ld/%ld天", model.punchDayCount, punchAmount)
             progress = CGFloat(model.punchDayCount) / CGFloat(punchAmount)
         } else {
             self.wordNumView.isHidden = false
-            self.progressLabel.text = String(format: "完成%0.0f%@", model.progress, "%")
+            self.progressLabel.text   = "完成\(model.progress)%"
             progress = CGFloat(model.progress) / 100
         }
         DispatchQueue.main.async { [weak self] in
