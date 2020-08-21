@@ -238,6 +238,7 @@ class YXWordListViewController: YXViewController, BPSegmentDataSource {
                 wordListView.shouldShowBottomView = false
                 wordListView.type                 = .wrongWords
                 self.wordListViews[indexPath.row] = wordListView
+                self.requestWrongWordsList()
                 self.wordListViews[indexPath.row]?.startReviewClosure = { [weak self] in
                     guard let self = self else { return }
                     let taskModel = YXWordBookResourceModel(type: .all) {

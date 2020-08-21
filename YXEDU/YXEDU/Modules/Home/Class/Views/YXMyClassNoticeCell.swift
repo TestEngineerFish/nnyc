@@ -62,7 +62,6 @@ class YXMyClassNoticeCell: UITableViewCell {
         customContentView.addSubview(descriptionLabel)
         timeLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.height.equalTo(AdaptSize(18))
             make.top.equalToSuperview().offset(AdaptSize(10))
         }
         customContentView.snp.makeConstraints { (make) in
@@ -79,7 +78,6 @@ class YXMyClassNoticeCell: UITableViewCell {
             make.left.equalToSuperview().offset(AdaptSize(15))
             make.right.equalToSuperview().offset(AdaptSize(-15))
             make.top.equalTo(contentLabel.snp.bottom).offset(AdaptSize(10))
-            make.height.equalTo(AdaptSize(18))
             make.bottom.equalToSuperview().offset(AdaptSize(-15))
         }
         redDotView.snp.makeConstraints { (make) in
