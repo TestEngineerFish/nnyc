@@ -104,6 +104,7 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
                 return UIView()
             }
             footerView.descLabel.text = "暂无通知"
+            footerView.descLabel.font = UIFont.regularFont(ofSize: AdaptSize(15))
             return footerView
         } else {
             return UIView()
