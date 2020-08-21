@@ -120,7 +120,10 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             
             wordCountLabel.text = "\(wordsCount)"
-            tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.tableView.reloadData()
+            }
+
         }
     }
     var wrongWordSectionDataBackup: [[String: [YXWordModel]]]?
