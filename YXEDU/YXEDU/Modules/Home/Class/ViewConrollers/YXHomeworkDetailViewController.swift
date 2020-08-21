@@ -17,7 +17,7 @@ class YXHomeworkDetailViewController: YXViewController, YXHomeworkDetailViewProp
             guard let model = detailModel else {
                 return
             }
-            self.contentView.setDate(model: model)
+            self.contentView.setDate(model: model, punchAmount: workModel?.shareAmount ?? 0)
         }
     }
 
@@ -27,6 +27,10 @@ class YXHomeworkDetailViewController: YXViewController, YXHomeworkDetailViewProp
         super.viewDidLoad()
         self.createSubviews()
         self.bindProperty()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.requestData()
     }
 

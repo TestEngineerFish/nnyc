@@ -11,7 +11,7 @@ import Foundation
 class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITableViewDataSource  {
 
     var page: Int = 1
-    var tableView       = UITableView(frame: .zero, style: .plain)
+    var tableView       = UITableView()
     var noticeModelList = [YXMyClassNoticeModel]()
 
     override func viewDidLoad() {
@@ -27,6 +27,7 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = .white
+        self.tableView.separatorStyle  = .none
         self.tableView.register(YXMyClassNoticeCell.classForCoder(), forCellReuseIdentifier: "kYXMyClassNoticeCell")
         self.tableView.gtm_addRefreshHeaderView { [weak self] in
             self?.requestData()
@@ -41,6 +42,8 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
         self.tableView.pullDownToRefreshText("下拉刷新")
         self.tableView.releaseLoadMoreText("上拉加载更多")
         self.tableView.noMoreDataText("")
+        self.tableView.footerIdleImage(UIImage())
+        tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")
     }
 
     private func createSubviews() {
@@ -96,6 +99,18 @@ class YXMyClassNoticeViewController: YXViewController, UITableViewDelegate, UITa
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
+        if self.noticeModelList.isEmpty {
+            guard let footerView = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as? YXWordListEmptyCell else {
+                return UIView()
+            }
+            footerView.descLabel.text = "暂无通知"
+            return footerView
+        } else {
+            return UIView()
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return self.noticeModelList.isEmpty ? AdaptSize(356) : .zero
     }
 }

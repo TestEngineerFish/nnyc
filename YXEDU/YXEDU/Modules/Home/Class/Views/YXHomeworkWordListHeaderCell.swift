@@ -39,7 +39,7 @@ class YXHomeworkWordListHeaderCell: UITableViewCell {
     }
 
     private func bindProperty() {
-        self.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.separatorInset = UIEdgeInsets(top: 0, left: screenWidth, bottom: 0, right: 0)
         self.selectionStyle = .none
     }
 }

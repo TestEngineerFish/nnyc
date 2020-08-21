@@ -105,7 +105,7 @@ class YXHomeworkDetailView: YXView {
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
         return button
     }()
-    var progressView  = YXReviewProgressView(type: .iKnow, cornerRadius: AdaptIconSize(4))
+    var progressView = YXReviewProgressView(type: .iKnow, cornerRadius: AdaptIconSize(4))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -212,18 +212,29 @@ class YXHomeworkDetailView: YXView {
         self.wordNumView.addGestureRecognizer(tap)
     }
 
-    func setDate(model: YXHomeworkDetailModel) {
+    func setDate(model: YXHomeworkDetailModel, punchAmount: Int) {
         self.detailModel = model
         self.homeworkNameLabel.text = model.workName
         self.classNameLabel.text    = model.className
-        self.progressLabel.text     = "完成\(model.progress)%"
         self.deadlineLabel.text     = "截止日期：\(model.endDateStr)"
         self.targetLabel.text       = "目标：" + model.type.description()
         self.bookNameLabel.text     = "词书：\(model.bookName)"
         self.wordNumLabel.text      = "\(model.wordCount)个单词"
-        DispatchQueue.main.async { [weak self] in
-            self?.progressView.progress = CGFloat(model.progress) / 100
+    
+        var progress: CGFloat = 0
+        if model.type == .punch {
+            self.wordNumView.isHidden = true
+            self.progressLabel.text = String(format: "完成%ld/%ld天", model.punchDayCount, punchAmount)
+            progress = CGFloat(model.punchDayCount) / CGFloat(punchAmount)
+        } else {
+            self.wordNumView.isHidden = false
+            self.progressLabel.text = String(format: "完成%0.0f%@", model.progress, "%")
+            progress = CGFloat(model.progress) / 100
         }
+        DispatchQueue.main.async { [weak self] in
+            self?.progressView.progress = progress
+        }
+
         if model.type == .punch {
             switch model.punchStatus {
             case .unexpiredUnlearned:

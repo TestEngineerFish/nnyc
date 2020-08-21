@@ -117,7 +117,7 @@ class YXReviewSearchView: UIView, UITableViewDelegate, UITableViewDataSource, UI
     private func bindProperty() {
         self.tableView.delegate   = self
         self.tableView.dataSource = self
-        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: screenWidth, bottom: 0, right: 0)
         self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewSearchResultUnitListHederView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewSearchResultUnitListHederView)
         self.pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
