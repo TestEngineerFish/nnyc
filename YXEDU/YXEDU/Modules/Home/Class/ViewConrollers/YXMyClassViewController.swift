@@ -111,8 +111,9 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.workTableView.delegate        = self
         self.workTableView.dataSource      = self
         self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
-        self.workTableView.backgroundColor = .clear
-        self.redDotView.isHidden           = true
+        self.workTableView.backgroundColor    = .clear
+        self.workTableView.estimatedRowHeight = AdaptSize(50)
+        self.redDotView.isHidden              = true
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kReloadClassList, object: nil)
         self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
     }

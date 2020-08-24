@@ -223,7 +223,7 @@
                                     <constraint firstItem="oSW-8X-rVz" firstAttribute="centerY" secondItem="Soa-Pc-TqK" secondAttribute="centerY" id="voi-Pe-rw3"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cO-0l-n5N">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cO-0l-n5N">
                                 <rect key="frame" x="326" y="1036.5" width="58" height="0.5"/>
                                 <color key="backgroundColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -231,7 +231,7 @@
                                     <constraint firstAttribute="height" constant="0.5" id="pke-FR-W6e"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="快捷登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEL-EI-oR4">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="快捷登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEL-EI-oR4">
                                 <rect key="frame" x="392" y="1029.5" width="50" height="14.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="MmI-dX-6Ya"/>
@@ -240,7 +240,7 @@
                                 <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qQ-ga-3x0">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qQ-ga-3x0">
                                 <rect key="frame" x="450" y="1036.5" width="58" height="0.5"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -264,7 +264,7 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="xEr-wh-oSY"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="QSE-hi-XmC">
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="QSE-hi-XmC">
                                 <rect key="frame" x="313" y="1064" width="208" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IdG-Oj-rHD">
