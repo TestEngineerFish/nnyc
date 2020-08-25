@@ -164,8 +164,16 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
         self.calendarLabel.text = "\(loginModel.user?.punchDays ?? 0)"
 
+        // 学校信息
+        if let schollLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(1) as? UILabel {
+            schollLabel.text = true ? "学校信息" : "补充学校信息"
+        }
+        if let schoolDescriptionLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel {
+            schoolDescriptionLabel.text = true ? "去修改" : "去填写"
+        }
+
         // 账户信息
-        let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
+        let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
         self.bindInfo = [loginModel.user?.mobile ?? "", "", ""]
 
         if loginModel.user?.userBind?.contains(",1") ?? false || loginModel.user?.userBind?.contains("1")  ?? false {
@@ -184,7 +192,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
 
         // 发音
-        let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
+        let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as? UILabel
         if YXUserModel.default.didUseAmericanPronunciation {
             speechLabel?.text = "美式"
         } else {
@@ -192,7 +200,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
 
         // 每日提醒
-        let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
+        let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 4, section: 0))?.viewWithTag(2) as? UILabel
         if let date = YYCache.object(forKey: .reminder) as? Date {
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
@@ -314,20 +322,24 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellOne") ?? UITableViewCell()
+            return tableView.dequeueReusableCell(withIdentifier: "schoolCell") ?? UITableViewCell()
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
+            return tableView.dequeueReusableCell(withIdentifier: "lineCell") ?? UITableViewCell()
         case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
+            return tableView.dequeueReusableCell(withIdentifier: "CellOne") ?? UITableViewCell()
         case 3:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
+            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
         case 4:
+            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
+        case 5:
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
+        case 6:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
             let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
@@ -348,6 +360,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         
         switch indexPath.row {
         case 0:
+            let vc = YXEditSchoolViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        case 1:
+            break
+        case 2:
             let accountInfoView = YXAccountInfoView()
             accountInfoView.bindInfo = bindInfo
             accountInfoView.bindQQClosure = { [weak self] in
@@ -395,7 +412,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             accountInfoView.show()
             break
 
-        case 1:
+        case 3:
             let alertController = UIAlertController(title: "选择音标和发音", message: nil, preferredStyle: .actionSheet)
             let englishAction = UIAlertAction(title: "英式音标和发音", style: .default) { (action) in
                 YXUserModel.default.didUseAmericanPronunciation = false
@@ -422,18 +439,18 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             self.present(alertController, animated: true, completion: nil)
             break
 
-        case 2:
+        case 4:
             self.performSegue(withIdentifier: "SetReminder", sender: self)
             break
 
-        case 3:
+        case 5:
             break
 
-        case 4:
+        case 6:
             self.performSegue(withIdentifier: "FeedBack", sender: self)
             break
 
-        case 5:
+        case 7:
             self.performSegue(withIdentifier: "Settings", sender: self)
             break
             
@@ -443,7 +460,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 3 {
+        if indexPath.row == 1 || indexPath.row == 5 {
             return 6
         } else {
             return 44
