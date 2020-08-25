@@ -43,6 +43,7 @@ class YXEditSchoolViewController: YXViewController, YXEditSchoolViewProtocol, YX
 
     func selectShcoolName() {
         guard let localModel = self.contentView.localModel else {
+            YXUtils.showHUD(self.view, title: "请先选择地区")
             return
         }
         self.selectSchollView.show(selectLocal: localModel)

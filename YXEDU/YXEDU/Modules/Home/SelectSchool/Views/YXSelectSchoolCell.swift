@@ -28,6 +28,7 @@ class YXSelectSchoolCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.createSubviews()
+        self.selectionStyle = .none
     }
 
     required init?(coder: NSCoder) {
