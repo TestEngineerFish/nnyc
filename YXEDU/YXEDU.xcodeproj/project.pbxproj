@@ -61,6 +61,11 @@
 		223AC0FC24F5F93700C85800 /* YXCustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC0FB24F5F93700C85800 /* YXCustomCalendarCell.swift */; };
 		223AC0FE24F602B900C85800 /* YXMyClassEditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC0FD24F602B900C85800 /* YXMyClassEditNameViewController.swift */; };
 		223AC10024F602F700C85800 /* YXMyClassEditNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC0FF24F602F700C85800 /* YXMyClassEditNameView.swift */; };
+		223AC10224F63AA400C85800 /* YXNewLearningResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC10124F63AA400C85800 /* YXNewLearningResultViewController.swift */; };
+		223AC10424F63B9E00C85800 /* YXNewLearningResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC10324F63B9E00C85800 /* YXNewLearningResultView.swift */; };
+		223AC10624F63C8700C85800 /* YXNewLearningResultHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC10524F63C8700C85800 /* YXNewLearningResultHeaderView.swift */; };
+		223AC10824F63E2200C85800 /* YXNewLearningResultCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC10724F63E2200C85800 /* YXNewLearningResultCalendarView.swift */; };
+		223AC10A24F6499100C85800 /* YXProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223AC10924F6499100C85800 /* YXProgressView.swift */; };
 		223D2682239B4A70008DED9E /* BPItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267E239B4A70008DED9E /* BPItemContentView.swift */; };
 		223D2683239B4A70008DED9E /* BPSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D267F239B4A70008DED9E /* BPSegmentView.swift */; };
 		223D2684239B4A70008DED9E /* BPSegmentControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */; };
@@ -692,6 +697,11 @@
 		223AC0FB24F5F93700C85800 /* YXCustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCustomCalendarCell.swift; sourceTree = "<group>"; };
 		223AC0FD24F602B900C85800 /* YXMyClassEditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassEditNameViewController.swift; sourceTree = "<group>"; };
 		223AC0FF24F602F700C85800 /* YXMyClassEditNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMyClassEditNameView.swift; sourceTree = "<group>"; };
+		223AC10124F63AA400C85800 /* YXNewLearningResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearningResultViewController.swift; sourceTree = "<group>"; };
+		223AC10324F63B9E00C85800 /* YXNewLearningResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearningResultView.swift; sourceTree = "<group>"; };
+		223AC10524F63C8700C85800 /* YXNewLearningResultHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearningResultHeaderView.swift; sourceTree = "<group>"; };
+		223AC10724F63E2200C85800 /* YXNewLearningResultCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearningResultCalendarView.swift; sourceTree = "<group>"; };
+		223AC10924F6499100C85800 /* YXProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXProgressView.swift; sourceTree = "<group>"; };
 		223D267E239B4A70008DED9E /* BPItemContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPItemContentView.swift; sourceTree = "<group>"; };
 		223D267F239B4A70008DED9E /* BPSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentView.swift; sourceTree = "<group>"; };
 		223D2680239B4A70008DED9E /* BPSegmentControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSegmentControllerView.swift; sourceTree = "<group>"; };
@@ -1689,6 +1699,7 @@
 			isa = PBXGroup;
 			children = (
 				224A2FC5238233E100AD99B0 /* YXLearningResultViewController.swift */,
+				223AC10124F63AA400C85800 /* YXNewLearningResultViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1698,6 +1709,9 @@
 			children = (
 				224A2FC3238233E100AD99B0 /* YXLearningResultHeaderView.swift */,
 				224A2FC4238233E100AD99B0 /* YXTaskMapView.swift */,
+				223AC10324F63B9E00C85800 /* YXNewLearningResultView.swift */,
+				223AC10524F63C8700C85800 /* YXNewLearningResultHeaderView.swift */,
+				223AC10724F63E2200C85800 /* YXNewLearningResultCalendarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3762,6 +3776,7 @@
 				EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */,
 				EE6C7D1923B0A785009DCC0C /* YXTopWindowView.swift */,
 				222AFBAA24B1861E001C894C /* YXWebView.swift */,
+				223AC10924F6499100C85800 /* YXProgressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4228,6 +4243,7 @@
 				EE1B6965246E66F2000EADB2 /* YXExerciseServiceImpl+Data.swift in Sources */,
 				EE54F7D52362AA3100EC605A /* YXWordAnswerView.swift in Sources */,
 				7784ADBE248108BB00185806 /* YXShareImageView.swift in Sources */,
+				223AC10424F63B9E00C85800 /* YXNewLearningResultView.swift in Sources */,
 				EE5EFC4C23274BBB00655654 /* YXPolicyVC.m in Sources */,
 				EE5EF25D232740B800655654 /* UIColor+YXCustom.m in Sources */,
 				22991071249211AB00F1C198 /* YXDatabaseConfig+OptionConfig.swift in Sources */,
@@ -4409,6 +4425,7 @@
 				EED3D41D2331D04B00121218 /* YRRouter.m in Sources */,
 				77342B7F247270590082C771 /* YXLoginModel.swift in Sources */,
 				2205A9362361B06100C6E674 /* CALayer+Extension.swift in Sources */,
+				223AC10624F63C8700C85800 /* YXNewLearningResultHeaderView.swift in Sources */,
 				779D73DA2404ED5D00E461E2 /* YXAgreementVC.m in Sources */,
 				22991069249210FD00F1C198 /* YXDatabaseConfig+Book.swift in Sources */,
 				22767D1124D94646004895A0 /* UIImageView+Extension.swift in Sources */,
@@ -4418,6 +4435,7 @@
 				223AC0FA24F5144800C85800 /* YXEditSchoolView.swift in Sources */,
 				EE5EF20723273BAE00655654 /* NSDictionary+YR.m in Sources */,
 				EE3DAB9D2375122300B2FF40 /* YXWordBookDao.swift in Sources */,
+				223AC10A24F6499100C85800 /* YXProgressView.swift in Sources */,
 				EE5E008B23274FEB00655654 /* YXCalendarStudyMonthData.m in Sources */,
 				225B9D1A24625100006C758F /* YXReviewPlanCollectionViewItem.swift in Sources */,
 				EE5EF1FE23273BAE00655654 /* UIImageView+YRNetwork.m in Sources */,
@@ -4639,6 +4657,7 @@
 				EED3D4252331DE2D00121218 /* YXEvnOC.m in Sources */,
 				EE4E6B222398F04A002B845A /* YXExerciseRequest.swift in Sources */,
 				77B7C70723AA44E800149ACE /* YXRegisterAndLoginRequest.swift in Sources */,
+				223AC10224F63AA400C85800 /* YXNewLearningResultViewController.swift in Sources */,
 				22FCA2992474D92400A63847 /* YXNetworkRequest.swift in Sources */,
 				EEACEB1F239F9DA90036B3A2 /* YXReviewPlanTableViewCell.swift in Sources */,
 				EE5E00F123274FEC00655654 /* YXBasePickverView.m in Sources */,
@@ -4725,6 +4744,7 @@
 				77CF120123C643960042F55D /* YXHomeRequest.swift in Sources */,
 				EE1E4AA823694D8B007D248F /* YXFillWordGroupExerciseView.swift in Sources */,
 				222AFBBB24B47CAF001C894C /* YXWebViewStudyAction.swift in Sources */,
+				223AC10824F63E2200C85800 /* YXNewLearningResultCalendarView.swift in Sources */,
 				EE5E008D23274FEB00655654 /* YXCalendarMonthSummaryView.m in Sources */,
 				777C1E2A236BDF380097A822 /* YXHomeModel.swift in Sources */,
 			);

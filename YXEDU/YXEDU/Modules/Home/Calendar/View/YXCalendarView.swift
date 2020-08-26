@@ -236,7 +236,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
 
     @objc internal func clickPreviousButton() {
         self.selectedDate = NSDate.offsetMonths(-1, from: self.selectedDate)
-       self.calendarView.setCurrentPage(self.selectedDate, animated: true)
+        self.calendarView.setCurrentPage(self.selectedDate, animated: true)
         self.updateDate(self.selectedDate)
     }
 

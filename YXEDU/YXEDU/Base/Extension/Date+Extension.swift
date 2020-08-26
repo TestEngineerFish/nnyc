@@ -25,4 +25,10 @@ extension Date {
         let result = gregorian.date(byAdding: offsetComponents, to: self)
         return result
     }
+
+    /// 是否是当前月
+    func isCurrentMonth() -> Bool {
+        let currentMonth = (Date() as NSDate).month()
+        return (self as NSDate).month() == currentMonth
+    }
 }
