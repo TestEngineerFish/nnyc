@@ -22,6 +22,11 @@ struct YXAlertManager {
         YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
+    /// 提取作业或加入班级
+    /// - Parameters:
+    ///   - onlyClass: 是否仅加入班级
+    ///   - onlyHomework: 是否仅提取作业
+    ///   - block: 回调函数
     func showAddClassOrHomeworkAlert(onlyClass:Bool = false, onlyHomework: Bool = false, _ block:((String?)->Void)?) {
         var titleText  = "请输入班级号或作业提取码"
         var placeholder = "输入班级号或作业提取码"

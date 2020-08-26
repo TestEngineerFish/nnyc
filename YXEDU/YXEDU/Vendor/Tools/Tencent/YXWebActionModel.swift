@@ -20,11 +20,11 @@ struct YXWXWebModel: Mappable {
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        action  <- map["open_app_action"]
-        scheme  <- map["open_app_scheme"]
-        params  <- map["action_params"]
-        channel <- map["channel"]
-        name <- map["name"]
+        action      <- map["open_app_action"]
+        scheme      <- map["open_app_scheme"]
+        params      <- map["action_params"]
+        channel     <- map["channel"]
+        name        <- map["name"]
         teacherName <- map["teacher_name"]
     }
 }

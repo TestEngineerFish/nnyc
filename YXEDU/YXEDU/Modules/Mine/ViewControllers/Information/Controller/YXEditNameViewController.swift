@@ -151,7 +151,6 @@ class YXEditNameViewController: YXViewController, UITextFieldDelegate {
             guard let name = textField.text, (name.count + string.count) <= self.maxLength else {
                 return false
             }
-
         }
         return true
     }

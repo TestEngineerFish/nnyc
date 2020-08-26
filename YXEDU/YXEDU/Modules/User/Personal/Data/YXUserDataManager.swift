@@ -44,7 +44,16 @@ struct YXUserDataManager {
         let workCode  = _code.isPureNumbers() ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXMyWorkModel>.self, request: request, success: { (response) in
-            complate?(true)
+            if !classCode.isEmpty {
+                let vc = YXMyClassEditNameViewController()
+                vc.submitBlock = complate
+                vc.classId     = 0
+                vc.className   = ""
+                vc.teacherName = ""
+                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+            } else {
+                complate?(true)
+            }
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
             complate?(false)

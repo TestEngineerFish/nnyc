@@ -39,8 +39,8 @@ class YXWebActionManager: NSObject {
             }()
             self.showAlert(title: "加入班级", description: descriptionStr, downTitle: "加入") {
                 // 加入班级
-                YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
-                    self.toVC(scheme: model.scheme)
+                YXUserDataManager.share.joinClass(code: classNumber) { [weak self] (workModel) in
+                    self?.toVC(scheme: model.scheme)
                 }
             }
             break

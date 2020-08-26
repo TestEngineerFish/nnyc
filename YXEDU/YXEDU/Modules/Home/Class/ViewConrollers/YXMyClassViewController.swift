@@ -75,8 +75,6 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             
             editView.addClassDetailclosure = {
                 YXAlertManager().showAddClassOrHomeworkAlert { (classNumber: String?) in
-                    YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                    }
                     YXUserDataManager.share.joinClass(code: classNumber, complate: nil)
                 }
             }
