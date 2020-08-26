@@ -22,6 +22,33 @@ struct YXAlertManager {
         YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
+    func showAddClassOrHomeworkAlert(onlyClass:Bool = false, onlyHomework: Bool = false, _ block:((String?)->Void)?) {
+        var titleText  = "请输入班级号或作业提取码"
+        var placeholder = "输入班级号或作业提取码"
+        if onlyClass {
+            titleText = "请输入班级号"
+            placeholder = "输入班级号"
+        }
+        if onlyHomework {
+            titleText = "请输入作业提取码"
+            placeholder = "输入作业提取码"
+        }
+        let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
+        alertView.titleLabel.text = titleText
+        alertView.shouldOnlyShowOneButton = false
+        alertView.shouldClose             = false
+        alertView.clearButton.isHidden    = true
+        alertView.textCountLabel.isHidden = true
+        alertView.textMaxLabel.isHidden   = true
+        alertView.alertHeight.constant    = 222
+        alertView.doneClosure             = { (text: String?) in
+            block?(text)
+            alertView.removeFromSuperview()
+        }
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
+    }
+
+
     // MARK: ==== Tools ====
     private func skipPunchLearn(book id: Int) {
         let request = YXShareRequest.punch(type: YXShareChannel.qq.rawValue, bookId: id, learnType: YXLearnType.homeworkPunch.rawValue)

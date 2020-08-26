@@ -890,6 +890,13 @@ static CGFloat const kPickViewHeight = 272.f;
     return [[NSDate new] offsetYears:1];
 }
 
+//- (__kindof FSCalendarCell *)calendar:(FSCalendar *)calendar cellForDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)position {
+//
+//    FSCalendarCell *cell = [self.monthDataView.calendarView dequeueReusableCellWithIdentifier:@"kYXCustomCalendarCell" forDate:date atMonthPosition:position];
+//    return cell;
+//}
+
+
 #pragma mark - FSCalendarDelegateAppearance
 //已学习或者已打卡的背景色显示为: [UIColor colorWithWhite:1 alpha:0.55];
 - (UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillDefaultColorForDate:(NSDate *)date

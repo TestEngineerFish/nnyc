@@ -48,6 +48,7 @@
         calendarView.weekdayHeight                    = AdaptSize(50.f);
         calendarView.locale                           = [NSLocale localeWithLocaleIdentifier:@"zh-CN"];
         calendarView.appearance.titleFont             = [UIFont systemFontOfSize:AdaptSize(16.f)];
+//        [calendarView registerClass:[YXCustomCalendarCell class] forCellReuseIdentifier:@"kYXCustomCalendarCell"];
         _calendarView = calendarView;
     }
     return _calendarView;

@@ -74,21 +74,11 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             }
             
             editView.addClassDetailclosure = {
-                let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
-                alertView.titleLabel.text = "请输入班级号或作业提取码"
-                alertView.shouldOnlyShowOneButton = false
-                alertView.shouldClose = false
-                alertView.doneClosure = {(classNumber: String?) in
+                YXAlertManager().showAddClassOrHomeworkAlert { (classNumber: String?) in
                     YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                        alertView.removeFromSuperview()
                     }
-                    YXLog("班级号：\(classNumber ?? "")")
+                    YXUserDataManager.share.joinClass(code: classNumber, complate: nil)
                 }
-                alertView.clearButton.isHidden    = true
-                alertView.textCountLabel.isHidden = true
-                alertView.textMaxLabel.isHidden   = true
-                alertView.alertHeight.constant    = 222
-                YXAlertQueueManager.default.addAlert(alertView: alertView)
             }
             YXAlertQueueManager.default.addAlert(alertView: editView)
         } else {
