@@ -13,7 +13,12 @@ protocol YXNewLearningResultViewProtocol: NSObjectProtocol {
     func punchAction()
 }
 
-class YXNewLearningResultView: YXView {
+class YXNewLearningResultView: YXView, CAAnimationDelegate {
+
+    var fromWordCount = 0
+    var toWordCount   = 0
+    var fromDayCount  = 0
+    var toDayCount    = 0
 
     weak var delegate: YXNewLearningResultViewProtocol?
 
@@ -169,9 +174,55 @@ class YXNewLearningResultView: YXView {
     }
 
     func setData() {
-        self.wordCountLabel.text = "28"
-        self.dayCountLabel.text  = "3"
+        self.fromWordCount = 15
+        self.toWordCount   = 26
+        self.fromDayCount  = 10
+        self.toDayCount    = 11
+        self.wordCountLabel.text = "\(fromWordCount)"
+        self.dayCountLabel.text  = "\(fromDayCount)"
         self.resultView.setData()
         self.calendarContentView.setData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.augmentCount()
+        }
+    }
+
+    // MARK: ==== Tools ====
+    private func showNumberAnimation(label: UILabel) {
+
+        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [1.0, 0.0]
+
+        let upAnimation     = CABasicAnimation(keyPath: "transform.translation.y")
+        upAnimation.toValue = label.frame.origin.y - 40
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations = [opacityAnimation, upAnimation]
+        animationGroup.autoreverses   = false
+        animationGroup.duration       = 0.25
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)
+        animationGroup.delegate       = self
+
+        label.layer.add(animationGroup, forKey: "animationGroup")
+    }
+
+    private func augmentCount() {
+        self.wordCountLabel.text = "\(self.fromWordCount)"
+        self.dayCountLabel.text  = "\(self.fromDayCount)"
+        if self.fromWordCount < self.toWordCount {
+            self.showNumberAnimation(label: self.wordCountLabel)
+            self.fromWordCount += 1
+        }
+        if self.fromDayCount < self.toDayCount {
+            self.showNumberAnimation(label: self.dayCountLabel)
+            self.fromDayCount += 1
+        }
+    }
+
+    // MARK: ==== CAAnimationDelegate ====
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if flag {
+            self.augmentCount()
+        }
     }
 }
