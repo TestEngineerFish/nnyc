@@ -492,13 +492,12 @@ class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
                 make.height.equalToSuperview().multipliedBy(0.5)
                 make.width.equalTo(iconBackgroundImageView.snp.height).multipliedBy(0.5)
             }
-            return
             containerView.addSubview(otherLoginButton)
             otherLoginButton.snp.makeConstraints { (make) in
                 make.bottom.equalToSuperview()
                 make.centerX.equalToSuperview()
             }
-            
+            return
             view.addSubview(quickLoginLabel)
             quickLoginLabel.snp.makeConstraints { (make) in
                 make.bottom.greaterThanOrEqualToSuperview().offset(-100).priorityRequired()

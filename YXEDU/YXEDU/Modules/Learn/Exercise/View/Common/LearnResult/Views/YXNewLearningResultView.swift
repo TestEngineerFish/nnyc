@@ -19,6 +19,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
     var toWordCount   = 0
     var fromDayCount  = 0
     var toDayCount    = 0
+    var model: YXExerciseResultDisplayModel?
 
     weak var delegate: YXNewLearningResultViewProtocol?
 
@@ -84,7 +85,6 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
-        self.setData()
     }
 
     required init?(coder: NSCoder) {
@@ -173,14 +173,15 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
         self.delegate?.punchAction()
     }
 
-    func setData() {
+    func setData(model: YXExerciseResultDisplayModel) {
+        self.model = model
         self.fromWordCount = 15
         self.toWordCount   = 26
         self.fromDayCount  = 10
         self.toDayCount    = 11
         self.wordCountLabel.text = "\(fromWordCount)"
         self.dayCountLabel.text  = "\(fromDayCount)"
-        self.resultView.setData()
+        self.resultView.setData(model: model)
         self.calendarContentView.setData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.augmentCount()

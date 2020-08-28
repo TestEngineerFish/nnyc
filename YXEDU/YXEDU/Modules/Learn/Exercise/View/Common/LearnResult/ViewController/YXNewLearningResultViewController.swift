@@ -10,12 +10,15 @@ import Foundation
 
 class YXNewLearningResultViewController: YXViewController, YXNewLearningResultViewProtocol {
 
+    var model = YXExerciseResultDisplayModel()
+
     var contentView = YXNewLearningResultView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
         self.bindProperty()
+        self.setData()
     }
 
     private func createSubviews() {
@@ -31,7 +34,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
     }
 
     private func setData() {
-        self.contentView.setData()
+        self.contentView.setData(model: model)
     }
 
     // MARK: ==== YXNewLearningResultViewProtocol ====
