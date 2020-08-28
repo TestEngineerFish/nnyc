@@ -81,6 +81,9 @@ struct YXAPI {
         
         /// 徽章展示上报接口
         static let badgeDisplayReport = "/api/v1/user/badge/report"
+
+        /// 修改所属学校
+        static let updateSchoolInfo = "/api/v2/school/create"
         
     }
     

@@ -38,22 +38,41 @@ struct YXNewLoginUserInfoModel: Mappable {
     var userBind: String?
     var grade: String?
     var punchDays: Int?
+    var schoolInfo: YXSchoolInfoModel?
 
     init?(map: Map) {
         self.mapping(map: map)
     }
     
     mutating func mapping(map: Map) {
-        avatar    <- map["avatar"]
-        nick      <- map["nick"]
-        sex       <- map["sex"]
-        area      <- map["area"]
-        mobile    <- map["mobile"]
-        uuid      <- map["uuid"]
-        userBind  <- map["userBind"]
-        birthday  <- map["birthday"]
-        speech    <- map["speech"]
-        grade     <- map["grade"]
-        punchDays <- map["punchDays"]
+        avatar     <- map["avatar"]
+        nick       <- map["nick"]
+        sex        <- map["sex"]
+        area       <- map["area"]
+        mobile     <- map["mobile"]
+        uuid       <- map["uuid"]
+        userBind   <- map["userBind"]
+        birthday   <- map["birthday"]
+        speech     <- map["speech"]
+        grade      <- map["grade"]
+        punchDays  <- map["punchDays"]
+        schoolInfo <- map["school_info"]
+    }
+}
+
+struct YXSchoolInfoModel: Mappable {
+
+    var cityId: Int = 0
+    var schoolId: Int = 0
+    var schoolName: String = ""
+
+    init?(map: Map) {
+        self.mapping(map: map)
+    }
+
+    mutating func mapping(map: Map) {
+        cityId     <- map["yx_city_id"]
+        schoolId   <- map["yx_school_id"]
+        schoolName <- map["yx_school_name"]
     }
 }

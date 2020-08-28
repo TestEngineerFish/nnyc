@@ -14,6 +14,7 @@ public enum YXMineRequest: YYBaseRequest {
     case badgeDisplayReport(badgeId: Int)
     case getUserInfo
     case getCreditsInfo
+    case updateSchoolInfo(schoolId: Int, cityId: Int, schoolName: String)
 }
 
 extension YXMineRequest {
@@ -21,7 +22,7 @@ extension YXMineRequest {
         switch self {
         case .badgeList, .latestBadge, .getUserInfo, .getCreditsInfo:
             return .get
-        case .badgeDisplayReport:
+        case .badgeDisplayReport, .updateSchoolInfo:
             return .post
         }
     }
@@ -34,10 +35,12 @@ extension YXMineRequest {
             return YXAPI.Profile.latestBadge
         case .badgeDisplayReport:
             return YXAPI.Profile.badgeDisplayReport
-            case .getUserInfo:
+        case .getUserInfo:
             return YXAPI.User.getInfo
-            case .getCreditsInfo:
+        case .getCreditsInfo:
             return YXAPI.User.getCreditsInfo
+        case .updateSchoolInfo:
+            return YXAPI.Profile.updateSchoolInfo
         }
     }
     
@@ -45,6 +48,8 @@ extension YXMineRequest {
         switch self {
         case .badgeDisplayReport(let badgeId):
             return ["user_badge_id" : badgeId]
+        case .updateSchoolInfo(let schoolId, let cityId, let schoolName):
+            return ["yx_school_id" : schoolId, "yx_city_id" : cityId, "yx_school_name" : schoolName]
         default:
             return nil
         }

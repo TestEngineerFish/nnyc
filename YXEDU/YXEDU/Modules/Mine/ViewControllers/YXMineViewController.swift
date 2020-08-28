@@ -166,10 +166,10 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
         // 学校信息
         if let schollLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(1) as? UILabel {
-            schollLabel.text = true ? "学校信息" : "补充学校信息"
+            schollLabel.text = (loginModel.user?.schoolInfo != nil) ? "学校信息" : "补充学校信息"
         }
         if let schoolDescriptionLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel {
-            schoolDescriptionLabel.text = true ? "去修改" : "去填写"
+            schoolDescriptionLabel.text = (loginModel.user?.schoolInfo != nil) ? "去修改" : "去填写"
         }
 
         // 账户信息
@@ -361,6 +361,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         switch indexPath.row {
         case 0:
             let vc = YXEditSchoolViewController()
+            vc.schoolInfoModel = self.temporaryUserModel?.schoolInfo
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
             break

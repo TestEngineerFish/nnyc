@@ -240,3 +240,20 @@ struct YXMyClassRemindModel: Mappable {
         workId      <- map["work_id"]
     }
 }
+
+struct YXMyClassSummaryModel: Mappable {
+
+    var classId: Int        = 0
+    var className: String   = ""
+    var teacherName: String = ""
+    var isFirstJoin: Bool   = false
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        classId     <- map["class_id"]
+        className   <- map["class_name"]
+        teacherName <- map["teacher_name"]
+        isFirstJoin <- map["first_add_class"]
+    }
+}

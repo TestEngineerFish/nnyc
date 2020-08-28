@@ -184,9 +184,9 @@ class YXMyClassEditNameView: YXView, UITextFieldDelegate {
         self.delegate?.editName(name: name)
     }
 
-    func setData(className: String, teacherName: String) {
-        self.titleLabel.text   = "你已成功加入 " + className
-        self.teacherLabel.text = "老师：" + teacherName
+    func setData(model: YXMyClassSummaryModel) {
+        self.titleLabel.text   = "你已成功加入 " + model.className
+        self.teacherLabel.text = "老师：" + model.teacherName
     }
 
     // MARK: ==== UITextFieldDelegate ====

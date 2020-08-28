@@ -11,6 +11,7 @@ import Foundation
 protocol YXEditSchoolViewProtocol: NSObjectProtocol {
     func selectSchoolLocal()
     func selectShcoolName()
+    func submitAction()
 }
 
 class YXEditSchoolView: YXView {
@@ -118,6 +119,7 @@ class YXEditSchoolView: YXView {
         self.localLabel.addGestureRecognizer(tapLocal)
         self.nameLabel.addGestureRecognizer(tapName)
         self.doneButton.setStatus(.disable)
+        self.doneButton.addTarget(self, action: #selector(self.submitAction), for: .touchUpInside)
     }
 
     // MARK: ==== Event ====
@@ -129,5 +131,10 @@ class YXEditSchoolView: YXView {
     @objc
     private func tapNameAction() {
         self.delegate?.selectShcoolName()
+    }
+
+    @objc
+    private func submitAction() {
+        self.delegate?.submitAction()
     }
 }

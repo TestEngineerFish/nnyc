@@ -10,9 +10,7 @@ import Foundation
 
 class YXMyClassEditNameViewController: YXViewController, YXMyClassEditNameViewProtocol {
 
-    var classId: Int        = 0
-    var className: String   = ""
-    var teacherName: String = ""
+    var classModel: YXMyClassSummaryModel?
     var submitBlock: ((Bool)->Void)?
 
     var contentView = YXMyClassEditNameView()
@@ -31,14 +29,22 @@ class YXMyClassEditNameViewController: YXViewController, YXMyClassEditNameViewPr
     }
 
     private func bindProperty() {
+        guard let classModel = self.classModel else { return }
         self.customNavigationBar?.isHidden = true
         self.contentView.delegate          = self
-        self.contentView.setData(className: self.className, teacherName: self.teacherName)
+        self.contentView.setData(model: classModel)
     }
 
     // MARK: ==== Request ====
     private func requestEditName(name: String) {
-        self.submitBlock?(true)
+        let request = YXOCRequest.changeName(name: name)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
+            self.navigationController?.popViewController(animated: true)
+            self.submitBlock?(true)
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
+        }
     }
 
     // MARK: ==== YXMyClassEditNameViewProtocol ====

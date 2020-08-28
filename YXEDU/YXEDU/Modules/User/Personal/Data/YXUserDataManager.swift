@@ -43,13 +43,11 @@ struct YXUserDataManager {
         let classCode = _code.isPureNumbers() ? _code : ""
         let workCode  = _code.isPureNumbers() ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyWorkModel>.self, request: request, success: { (response) in
-            if !classCode.isEmpty {
+        YYNetworkService.default.request(YYStructResponse<YXMyClassSummaryModel>.self, request: request, success: { (response) in
+            if response.data?.isFirstJoin == .some(true) {
                 let vc = YXMyClassEditNameViewController()
                 vc.submitBlock = complate
-                vc.classId     = 0
-                vc.className   = ""
-                vc.teacherName = ""
+                vc.classModel  = response.data
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
             } else {
                 complate?(true)
