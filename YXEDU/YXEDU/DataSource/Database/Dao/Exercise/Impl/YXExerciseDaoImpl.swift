@@ -19,6 +19,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
             type.rawValue,
             model.wordId as Any,
             model.word as Any,
+            model.grade as Any,
             model.bookId as Any,
             model.unitId as Any,
             model.wordType.rawValue as Any,
@@ -119,6 +120,7 @@ class YXExerciseDaoImpl: YYDatabase, YXExerciseDao {
         model.unitId = Int(result.int(forColumn: "unit_id"))
         model.bookId = Int(result.int(forColumn: "book_id"))
         model.score  = Int(result.int(forColumn: "score"))
+        model.grade  = Int(result.int(forColumn: "grade"))
         model.exerciseId = Int(result.int(forColumn: "exercise_id"))
         return model
     }

@@ -12,6 +12,7 @@ import ObjectMapper
 struct YXWordModel: YXBaseWordModel {
     var gradeId: Int? = -1
     var gardeType: Int? = 1
+    var grade: Int? // 年级
     var bookId: Int? = -1
     var bookHash: String = ""
     var unitId: Int? = -1
@@ -94,6 +95,7 @@ struct YXWordModel: YXBaseWordModel {
         bookHash      <- map["book_hash"]
         listenScore   <- map["listen_score"]
         wordType      <- (map["word_type"], EnumTransform<YXWordType>())
+        grade         <- map["grade"]
     }
 }
 

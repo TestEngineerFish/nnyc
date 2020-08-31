@@ -69,7 +69,7 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
         // 特殊VC，不支持侧滑返回
         let specialVCList = [YXExerciseViewController.classForCoder(),
                              YXExerciseResultViewController.classForCoder(),
-                             YXLearningResultViewController.classForCoder(),
+                             YXNewLearningResultViewController.classForCoder(),
                              YXBindPhoneViewController.classForCoder(),
                              YXSelectSchoolViewController.classForCoder(),
                              YXAddBookGuideViewController.classForCoder()]

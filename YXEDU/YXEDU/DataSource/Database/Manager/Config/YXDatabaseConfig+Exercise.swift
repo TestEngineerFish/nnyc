@@ -12,6 +12,11 @@ extension YYSQLManager {
     
     enum ExerciseSQL: String {
 
+        case addGradeField =
+        """
+        ALTER TABLE all_exercise_v1 ADD grade INTEGER
+        """
+
         case insertExercise =
         """
         insert into
@@ -20,12 +25,13 @@ extension YYSQLManager {
             learn_type,
             word_id,
             word,
+            grade,
             book_id,
             unit_id,
             word_type,
             next_step
         )
-        values(?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case getNewWordList =
