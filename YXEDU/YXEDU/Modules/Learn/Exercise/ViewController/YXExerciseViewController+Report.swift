@@ -69,11 +69,11 @@ extension YXExerciseViewController {
     //MARK: process
     // 处理基本练习结果页
     func processBaseExerciseResult(newCount: Int, reviewCount: Int) {
-        let vc = YXLearningResultViewController()
-        vc.learnConfig       = service.learnConfig
+//        let vc = YXLearningResultViewController()
+        let vc = YXNewLearningResultViewController()
         vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
-//        self.navigationController?.popViewController(animated: false)
+        vc.learnConfig       = service.learnConfig
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     

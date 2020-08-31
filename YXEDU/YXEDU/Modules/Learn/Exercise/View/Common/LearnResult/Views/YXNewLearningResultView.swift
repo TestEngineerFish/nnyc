@@ -189,6 +189,20 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
     }
 
     // MARK: ==== Tools ====
+
+    private func augmentCount() {
+        self.wordCountLabel.text = "\(self.fromWordCount)"
+        self.dayCountLabel.text  = "\(self.fromDayCount)"
+        if self.fromWordCount < self.toWordCount {
+            self.showNumberAnimation(label: self.wordCountLabel)
+            self.fromWordCount += 1
+        }
+        if self.fromDayCount < self.toDayCount {
+            self.showNumberAnimation(label: self.dayCountLabel)
+            self.fromDayCount += 1
+        }
+    }
+
     private func showNumberAnimation(label: UILabel) {
 
         let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
@@ -205,19 +219,6 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
         animationGroup.delegate       = self
 
         label.layer.add(animationGroup, forKey: "animationGroup")
-    }
-
-    private func augmentCount() {
-        self.wordCountLabel.text = "\(self.fromWordCount)"
-        self.dayCountLabel.text  = "\(self.fromDayCount)"
-        if self.fromWordCount < self.toWordCount {
-            self.showNumberAnimation(label: self.wordCountLabel)
-            self.fromWordCount += 1
-        }
-        if self.fromDayCount < self.toDayCount {
-            self.showNumberAnimation(label: self.dayCountLabel)
-            self.fromDayCount += 1
-        }
     }
 
     // MARK: ==== CAAnimationDelegate ====

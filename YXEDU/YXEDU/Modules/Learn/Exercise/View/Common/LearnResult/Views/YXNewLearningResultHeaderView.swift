@@ -89,6 +89,7 @@ class YXNewLearningResultHeaderView: YXView {
 
     // MARK: ==== Event ====
     func setData(model: YXExerciseResultDisplayModel) {
+        self.model = model
         self.setStarView()
         self.setResultImage()
         self.setTitleValue()
@@ -219,10 +220,10 @@ class YXNewLearningResultHeaderView: YXView {
         let attrString = NSMutableAttributedString(string: "\(model.title ?? "")\(typeName) \(score)%")
         let start = attrString.length - "\(score)%".count
 
-        let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.black1]
+        let all: [NSAttributedString.Key : Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.white]
         attrString.addAttributes(all, range: NSRange(location: 0, length: attrString.length))
 
-        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.orange1]
+        let nicknameAttr: [NSMutableAttributedString.Key: Any] = [.font: UIFont.mediumFont(ofSize: AdaptFontSize(17)),.foregroundColor: UIColor.white]
         attrString.addAttributes(nicknameAttr, range: NSRange(location: start, length: "\(score)%".count))
 
         return attrString
