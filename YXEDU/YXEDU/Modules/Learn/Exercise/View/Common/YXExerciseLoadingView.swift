@@ -272,7 +272,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                     }
                 }
             } else {
-                self.speed  = .normal
+                self.speed  = .highSpeed
             }
         } else {
             // 防止进度回滚

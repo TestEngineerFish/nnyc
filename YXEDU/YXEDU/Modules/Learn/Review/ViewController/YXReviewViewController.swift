@@ -251,12 +251,11 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     /// 智能复习
     func startReviewEvent() {
-//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
         if (headerView?.reviewModel.canMakeReviewPlans ?? 0) > 0 {
-            let taskModel = YXWordBookResourceModel(type: .all) {
-                YXWordBookResourceManager.shared.contrastBookData()
-            }
-            YXWordBookResourceManager.shared.addTask(model: taskModel)
+//            let taskModel = YXWordBookResourceModel(type: .all) {
+//                YXWordBookResourceManager.shared.contrastBookData()
+//            }
+//            YXWordBookResourceManager.shared.addTask(model: taskModel)
             let vc = YXExerciseViewController()
             vc.learnConfig = YXAIReviewLearnConfig()
             self.navigationController?.pushViewController(vc, animated: true)
@@ -269,11 +268,10 @@ extension YXReviewViewController {
     
     /// 开始复习 —— 复习计划
     func startReviewPlanEvent(planId: Int) {
-//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)
@@ -282,10 +280,10 @@ extension YXReviewViewController {
     
     /// 开始听力 —— 复习计划
     func startListenPlanEvent(planId: Int) {
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)

@@ -139,10 +139,10 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func listenEvent() {
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)
@@ -151,10 +151,10 @@ class YXReviewPlanDetailViewController: YXViewController {
     
     
     func reviewEvent() {
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()        
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)

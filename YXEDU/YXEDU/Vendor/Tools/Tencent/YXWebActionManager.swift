@@ -61,8 +61,10 @@ class YXWebActionManager: NSObject {
                     guard let self = self, let _workModel = response.data else { return }
                     self.toVC(scheme: model.scheme)
                     YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
-                    let dataList = self.getBookHashDic(_workModel)
-                    YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+                    if _workModel.type == .punch {
+                        let dataList = self.getBookHashDic(_workModel)
+                        YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+                    }
                     // 跳转学习
                     let vc         = YXExerciseViewController()
                     let bookId     = (_workModel.type == .punch) ? (_workModel.bookIdList.first ?? 0) : 0

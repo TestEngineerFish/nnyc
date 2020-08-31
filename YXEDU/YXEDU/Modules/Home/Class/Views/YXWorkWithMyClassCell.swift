@@ -259,8 +259,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
             return
         }
         YXLog(String(format: "==== 开始做%@，作业ID：%ld ====", type.desc, workId))
-        let dataList = self.getBookHashDic()
-        YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+        if type == .homeworkPunch {
+            let dataList = self.getBookHashDic()
+            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+        }
 
         // 跳转学习
         let vc = YXExerciseViewController()
