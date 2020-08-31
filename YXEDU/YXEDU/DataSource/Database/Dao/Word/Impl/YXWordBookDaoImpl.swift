@@ -15,7 +15,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     /// 更新词书中所有单词
     /// - Parameter bookModel: 词书对象
-    func updateWords(bookModel: YXWordBookModel) {
+    func updateBookModel(bookModel: YXWordBookModel) {
         guard let bookId = bookModel.bookId, let unitsList = bookModel.units, let newHash = bookModel.bookHash else {
             YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "数据解析失败")
             return
@@ -120,6 +120,37 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
                 }
             }
         }
+    }
+
+    /// 更新、保存单词
+    /// - Parameter wordModelList: 单词列表
+    func updateWordModelList(with wordModelList: [YXWordModel]) {
+        YXWordBookResourceManager.wordDownloading = true
+        let deleteWordSQL = YYSQLManager.WordSQL.deleteWord.rawValue
+        let insertWordSQL  = YYSQLManager.WordSQL.insertWord.rawValue
+        for wordModel in wordModelList {
+            guard let bookId = wordModel.bookId else {
+                return
+            }
+            // 删除旧单词
+            let deleteWordSuccess = self.wordRunner.executeUpdate(deleteWordSQL, withArgumentsIn: [bookId])
+            let msg = String(format: "删除单词:%@, word_id: %d, book_id:%d", wordModel.word ?? "", wordModel.wordId ?? 0, bookId)
+            if deleteWordSuccess {
+                YXLog(msg + " 成功")
+            } else {
+                Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
+                YXLog(msg + " 失败")
+            }
+            // 增加新单词
+            let insertWordParams  = self.getWordSQLParams(word: wordModel)
+            let insertWordSuccess = self.wordRunner.executeUpdate(insertWordSQL, withArgumentsIn: insertWordParams)
+            if !insertWordSuccess {
+                let msg = String(format: "插入单词:%@, word_id: %d, book_id:%d 失败", wordModel.word ?? "", wordModel.wordId ?? 0, bookId)
+                Bugly.reportError(NSError(domain: msg, code: 0, userInfo: nil))
+                YXLog(msg)
+            }
+        }
+        YXWordBookResourceManager.wordDownloading = false
     }
 
     /// 仅测试用，删除所用词书和单词

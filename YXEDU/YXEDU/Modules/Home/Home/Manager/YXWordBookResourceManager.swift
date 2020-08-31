@@ -14,6 +14,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     var group                     = DispatchGroup()
     static var totalDownloadCount = 0
+    static var wordDownloading    = false
     static let shared             = YXWordBookResourceManager()
     static var stop               = false {
         willSet {
@@ -192,7 +193,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                weakself.updateWords(with: bookModel)
+                weakself.updateBookModel(with: bookModel)
             }
         }) { [weak self] (error) in
             guard let self = self else { return }
@@ -258,13 +259,19 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     // TODO: ---- 本地词书数据库操作 ----
 
-    /// 保存、更新单词
-    private func updateWords(with bookModel: YXWordBookModel) {
+    /// 保存、更新词书
+    private func updateBookModel(with bookModel: YXWordBookModel) {
         if YXWordBookResourceManager.stop {
             YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "当前正在学习中，不再下载其他词书")
             return
         }
-        YXWordBookDaoImpl().updateWords(bookModel: bookModel)
+        YXWordBookDaoImpl().updateBookModel(bookModel: bookModel)
+    }
+
+    /// 保存、更新单词
+    /// - Parameter wordModelList: 单词列表
+    func updateWordModel(with wordModelList: [YXWordModel]) {
+        YXWordBookDaoImpl().updateWordModelList(with: wordModelList)
     }
 }
 

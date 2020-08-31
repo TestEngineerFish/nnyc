@@ -15,7 +15,8 @@ struct YXExerciseResultModel: Mappable {
     var type: YXLearnType           = .base
     var newWordCount: Int           = 0
     var reviewWordCount: Int        = 0
-    var wordList: [YXExerciseWordModel] = []
+    var ruleList: [YXExerciseWordModel] = []
+    var wordModelList: [YXWordModel]    = []
     
     init?(map: Map) {}
     
@@ -24,7 +25,8 @@ struct YXExerciseResultModel: Mappable {
         type            <- (map["review_type"], YXExerciseDataTypeTransform())
         newWordCount    <- map["new_word_num"]
         reviewWordCount <- map["review_word_num"]
-        wordList        <- map["rule_list"]
+        ruleList        <- map["rule_list"]
+        wordModelList   <- map["word_list"]
     }
 }
 

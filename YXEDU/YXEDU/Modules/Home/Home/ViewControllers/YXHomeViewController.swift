@@ -91,7 +91,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
             
             alertView.adjustAlertHeight()
             YXAlertQueueManager.default.addAlert(alertView: alertView)
-            
         } else {
             self.study(focus: false)
         }
@@ -339,8 +338,11 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
 
     private func toMyClass() {
+//        guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
+//            return
+//        }
 //        let vc = YXNewLearningResultViewController()
-//        vc.learnConfig = YXLearnConfigImpl(bookId: 14, unitId: 11, planId: 0, learnType: .base, homeworkId: 0)
+//        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return
         if YXUserModel.default.isJoinClass {

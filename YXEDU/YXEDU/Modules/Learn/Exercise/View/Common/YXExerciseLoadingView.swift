@@ -263,12 +263,12 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
-                    if YXExerciseViewController.requesting == .some(true) {
-                        self.status = .requestIng
-                        self.speed  = .normal
-                    } else {
+                    if YXExerciseViewController.requesting == .some(false) && YXWordBookResourceManager.wordDownloading == false {
                         self.status = .requestEnd
                         self.speed  = .highSpeed
+                    } else {
+                        self.status = .requestIng
+                        self.speed  = .normal
                     }
                 }
             } else {
@@ -287,13 +287,12 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 self.speed  = .highSpeed
                 // 是否已请求到数据
                 if YXExerciseViewController.requesting != nil {
-                    YXLog("开始加载学习数据")
-                    if YXExerciseViewController.requesting == .some(true) {
-                        self.status = .requestIng
-                        self.speed  = .normal
-                    } else {
+                    if YXExerciseViewController.requesting == .some(false) && YXWordBookResourceManager.wordDownloading == false {
                         self.status = .requestEnd
                         self.speed  = .highSpeed
+                    } else {
+                        self.status = .requestIng
+                        self.speed  = .normal
                     }
                 }
             } else {
