@@ -129,7 +129,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         var wordModelList = [[String:Int]]()
         self.selectedWordsListView.wordsModelList.forEach { (reviewWordModel) in
             var wordModel = [String:Int]()
-            wordModel["book_id"] = reviewWordModel.bookId
+            wordModel["book_id"] = reviewWordModel.originBookId
             wordModel["word_id"] = reviewWordModel.id
             wordModelList.append(wordModel)
         }
