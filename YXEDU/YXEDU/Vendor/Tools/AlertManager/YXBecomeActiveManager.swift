@@ -64,7 +64,6 @@ class YXBecomeActiveManager: NSObject {
         check(completion)
     }
     
-    
     private func goToReviewPlanDetail(planId: Int, fromUser: String?) {
         let vc = YXReviewPlanShareDetailViewController()
         vc.planId = planId
