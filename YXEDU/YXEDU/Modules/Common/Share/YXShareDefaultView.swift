@@ -20,8 +20,15 @@ enum YXShareType: Int {
     case url   = 1
 }
 
+enum YXShareDefaultViewType: Int {
+    case normal
+    case white
+}
+
 class YXShareDefaultView: UIView {
-    
+
+    var type: YXShareDefaultViewType
+
     var qqImageView: UIImageView = {
         let imageView   = UIImageView()
         imageView.image = UIImage(named: "gameShareQQ")
@@ -86,8 +93,9 @@ class YXShareDefaultView: UIView {
     var shareDescription = ""
     var finishedBlock: FinishedBlock? // 分享后立刻执行
     var completeBlock: ((YXShareChannel, Bool) -> Void)? // 分享回调后才会执行
-    
-    override init(frame: CGRect) {
+
+    init(type: YXShareDefaultViewType = .normal, frame: CGRect) {
+        self.type = type
         super.init(frame: frame)
         self.bindProperty()
         self.createSubviews()
@@ -105,6 +113,22 @@ class YXShareDefaultView: UIView {
         self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
         self.coinImageView.isHidden = true
+        switch self.type {
+        case .white:
+            self.qqImageView.image       = UIImage(named: "shareQQ_white")
+            self.wechatImageView.image   = UIImage(named: "shareWechat_white")
+            self.timeLineImageView.image = UIImage(named: "shareTimeLine_white")
+            self.qqLabel.textColor       = .white
+            self.wechatLabel.textColor   = .white
+            self.timeLineLabel.textColor = .white
+        default:
+            self.qqImageView.image       = UIImage(named: "gameShareQQ")
+            self.wechatImageView.image   = UIImage(named: "gameShareWechat")
+            self.timeLineImageView.image = UIImage(named: "gameShareTimeLine")
+            self.qqLabel.textColor       = .black2
+            self.wechatLabel.textColor   = .black2
+            self.timeLineLabel.textColor = .black2
+        }
     }
     
     private func createSubviews() {

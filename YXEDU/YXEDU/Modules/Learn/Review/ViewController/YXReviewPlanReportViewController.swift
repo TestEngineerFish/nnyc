@@ -24,7 +24,7 @@ class YXReviewPlanReportViewController: YXViewController, WKNavigationDelegate {
      }()
     
     var shareChannelView: YXShareDefaultView = {
-        let shareView = YXShareDefaultView()
+        let shareView = YXShareDefaultView(frame: .zero)
         return shareView
     }()
     

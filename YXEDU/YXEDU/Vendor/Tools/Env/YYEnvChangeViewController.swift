@@ -64,7 +64,7 @@ typealias YYEVC = YYEnvChangeViewController
 
     private static let envData = [
         EnvType.dev  : ["title" : "开发环境", "api" : "http://common.api.xstudyedu.com",  "h5" : "http://common.api.xstudyedu.com"],
-        EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test.xstudyedu.com", "h5" : "http://nnyc-api-test.xstudyedu.com"],
+        EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test-2.xstudyedu.com", "h5" : "http://nnyc-api-test-2.xstudyedu.com"],
         EnvType.pre  : ["title" : "预发环境", "api" : "http://nnyc-api-pre.xstudyedu.com",  "h5" : "https://pre.helloyouyou.com"],
         EnvType.release : ["title" : "正式环境", "api" : "http://nnyc-api.xstudyedu.com",   "h5" : "http://nnyc-api.xstudyedu.com"]
     ]

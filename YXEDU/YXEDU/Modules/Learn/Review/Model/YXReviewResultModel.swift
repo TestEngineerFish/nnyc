@@ -79,6 +79,9 @@ struct YXExerciseResultDisplayModel {
     var score: Int = 0
     var studyDay: Int = 0
     var isShowCoin = false
+
+    /// 是否当前首次学习
+    var isFirstStudy = true
     
     /// 需要加强的单词
     var words: [YXWordModel]?
@@ -106,7 +109,7 @@ struct YXExerciseResultDisplayModel {
     }
     
     static func displayModel(newStudyWordCount: Int, reviewWordCount: Int, model: YXLearnResultModel) -> YXExerciseResultDisplayModel {
-        
+
         var displayModel = YXExerciseResultDisplayModel()
         displayModel.type = .base
         displayModel.title = model.unitName
@@ -116,7 +119,7 @@ struct YXExerciseResultDisplayModel {
         
         
         displayModel.newStudyWordNum = newStudyWordCount //新学
-        displayModel.reviewWordNum = reviewWordCount //巩固
+        displayModel.reviewWordNum   = reviewWordCount //巩固
 
         displayModel.score = model.score
         

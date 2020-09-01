@@ -26,7 +26,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
                     return
                 }
             }
-            let shareView = YXShareDefaultView()
+            let shareView = YXShareDefaultView(frame: .zero)
             // 分享完成后的回调
             shareView.completeBlock = { [weak self] (channel: YXShareChannel, result: Bool) in
                 guard let self = self, let callBackStr = self.callback else {

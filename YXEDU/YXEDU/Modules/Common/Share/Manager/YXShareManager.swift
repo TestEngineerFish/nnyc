@@ -1,353 +1,81 @@
 //
-//  YXShareViewController.swift
+//  YXShareManager.swift
 //  YXEDU
 //
-//  Created by 沙庭宇 on 2019/12/21.
-//  Copyright © 2019 shiji. All rights reserved.
+//  Created by 沙庭宇 on 2020/9/1.
+//  Copyright © 2020 shiji. All rights reserved.
 //
 
-import UIKit
-import Alamofire
+import Foundation
 
-enum YXShareImageType: Int {
-    /// 学习结果分享
-    case learnResult        = 1
-    /// 复习计划分享
-    case planReviewResult   = 2
-    /// 智能复习分享
-    case aiReviewReuslt     = 3
-    /// 听写复习分享
-    case listenReviewResult = 4
-    /// 挑战结果分享
-    case challengeResult    = 5
-}
+class YXShareManager: NSObject {
 
-class YXShareViewController: YXViewController {
-
-    var backButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(kIconFont_back, for: .normal)
-        button.setTitleColor(UIColor.black1, for: .normal)
-        button.titleLabel?.font = UIFont.iconfont(size: AdaptSize(16))
-        return button
-    }()
-
-    var changeBackgroundImageButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("换背景", for: .normal)
-        button.setTitleColor(UIColor.gray1, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: AdaptFontSize(14))
-        return button
-    }()
-
-    var headerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.clear
-        return view
-    }()
-
-    var footerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.clear
-        return view
-    }()
-    
-    var shareImageBorderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-
-    var shareImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor.white
-        return imageView
-    }()
-
-    var shareTypeBorderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.clear
-        return view
-    }()
-    
-    var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text          = "炫耀一下"
-        label.textColor     = UIColor.black3
-        label.font          = UIFont.regularFont(ofSize: AdaptFontSize(12))
-        label.textAlignment = .center
-        return label
-    }()
-    
-    var leftLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black4.withAlphaComponent(0.5)
-        return view
-    }()
-    
-    var rightLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black4.withAlphaComponent(0.5)
-        return view
-    }()
-    
-    var shareChannelView: YXShareDefaultView = {
-        let shareView = YXShareDefaultView(frame: CGRect.zero)
-        return shareView
-    }()
-    var loadingView = UIActivityIndicatorView(style: .gray)
     var qrCodeImage = UIImage(named: "shareQRCode")
-    var bookId: Int = 0
-    var learnType: YXLearnType?
+
+    private var wordsAmount: Int = 0
+    private var daysAmount: Int = 0
+    private var gameModel: YXGameResultModel?
+    private var shareType: YXShareImageType = .learnResult
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
     private var currentBackgroundImageIndex = 0
 
-    var wordsAmount = 0
-    var daysAmount  = 0
-    var hideCoin    = true
-    var gameModel: YXGameResultModel?
-    var shareType: YXShareImageType = .challengeResult
-    var backAction: (()->Void)?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.customNavigationBar?.isHidden = true
-        self.setQRCodeImage { [weak self] in
-            self?.getBackgroundImageList()
-        }
-        self.bindProperty()
-        self.createSubviews()
-    }
-    
-    private func bindProperty() {
-        self.backButton.addTarget(self, action: #selector(clickBackBtn), for: .touchUpInside)
-        self.changeBackgroundImageButton.addTarget(self, action: #selector(changeBackgroundImage), for: .touchUpInside)
-        self.changeBackgroundImageButton.isHidden    = (shareType == .challengeResult)
-        // 设置分享数据
-        self.shareChannelView.shareType              = .image
-        self.shareChannelView.coinImageView.isHidden = hideCoin
-        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
-            guard let self = self else { return }
-            // 挑战分享不算打卡
-            if self.shareType != .challengeResult {
-                self.punch(channel)
-            }
-        }
-    }
-    
-    private func createSubviews() {
-        self.view.addSubview(backButton)
-        self.view.addSubview(changeBackgroundImageButton)
-        self.view.addSubview(headerView)
-        self.view.addSubview(footerView)
-
-        headerView.addSubview(shareImageBorderView)
-        shareImageBorderView.addSubview(shareImageView)
-        shareImageView.addSubview(loadingView)
-        footerView.addSubview(shareTypeBorderView)
-
-        shareTypeBorderView.addSubview(leftLineView)
-        shareTypeBorderView.addSubview(rightLineView)
-        shareTypeBorderView.addSubview(descriptionLabel)
-        shareTypeBorderView.addSubview(shareChannelView)
-
-        backButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(kStatusBarHeight + AdaptIconSize(13))
-            make.width.height.equalTo(AdaptSize(22))
-            make.left.equalToSuperview().offset(AdaptSize(14))
-        }
-        changeBackgroundImageButton.sizeToFit()
-        changeBackgroundImageButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(backButton)
-            make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.size.equalTo(changeBackgroundImageButton.size)
-        }
-        let headerViewH = (screenHeight - kNavHeight - kSafeBottomMargin) * 0.68
-        headerView.snp.makeConstraints { (make) in
-            make.height.equalTo(headerViewH)
-            make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(kNavHeight)
-        }
-        footerView.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(headerView.snp.bottom)
-        }
-        let imageViewW = AdaptIconSize(319) * headerViewH/AdaptIconSize(436)
-        let imageViewSize = CGSize(width: imageViewW, height: headerViewH)
-        shareImageBorderView.size = imageViewSize
-        shareImageBorderView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.size.equalTo(imageViewSize)
-        }
-        shareImageView.size = imageViewSize
-        shareImageView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
-        }
-        loadingView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptIconSize(45), height: AdaptIconSize(45)))
-            make.center.equalToSuperview()
-        }
-
-        shareTypeBorderView.snp.makeConstraints { (make) in
-            make.height.equalTo(AdaptSize(100))
-            make.width.equalToSuperview()
-            make.center.equalToSuperview()
-        }
-
-        descriptionLabel.sizeToFit()
-        descriptionLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
-            make.size.equalTo(descriptionLabel.size)
-        }
-        leftLineView.snp.makeConstraints { (make) in
-            make.right.equalTo(descriptionLabel.snp.left).offset(AdaptSize(-19))
-            make.centerY.equalTo(descriptionLabel)
-            make.size.equalTo(CGSize(width: AdaptIconSize(83), height: AdaptSize(1)))
-        }
-        rightLineView.snp.makeConstraints { (make) in
-            make.left.equalTo(descriptionLabel.snp.right).offset(AdaptSize(19))
-            make.centerY.equalTo(descriptionLabel)
-            make.size.equalTo(CGSize(width: AdaptIconSize(83), height: AdaptSize(1)))
-        }
-        shareChannelView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(AdaptSize(19))
-            make.width.equalToSuperview()
-            make.height.equalTo(AdaptIconSize(65))
-        }
-        shareImageBorderView.layer.setDefaultShadow(cornerRadius: AdaptSize(13), shadowRadius: AdaptSize(13))
-        shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
-    }
-    
-    // MARK: ==== Request ====
-
-    private func getBackgroundImageList() {
-        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
-            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
-            self.backgroundImageUrls         = imageUrls
-            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
-            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
-            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { [weak self] backgroundImage in
-                guard let self = self else { return }
-                DispatchQueue.main.async() { [weak self] in
-                    guard let self = self else { return }
-                    self.loadingView.stopAnimating()
-                    switch self.shareType {
-                    case .learnResult:
-                        self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
-                    case .aiReviewReuslt:
-                        self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
-                    case .planReviewResult:
-                        self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
-                    case .listenReviewResult:
-                        self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
-                    case .challengeResult:
-                        self.shareImageView.image = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
-                    }
-                    self.shareChannelView.shareImage = self.shareImageView.image
-                }
-            }
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
-        }
-    }
-
-    private func punch(_ channel: YXShareChannel) {
-        let request = YXShareRequest.punch(type: channel.rawValue, bookId: self.bookId, learnType: self.learnType?.rawValue ?? 0)
-        YYNetworkService.default.request(YYStructResponse<YXShareModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else { return }
-            var isFinished = false
-            if model.state {
-                if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
-                    YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(count + 1)")
-                    YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
-                    
-                } else {
-                    YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
-                    YYCache.set(1, forKey: YXLocalKey.punchCount)
-                }
-                
-                if channel == .timeLine {
-                    self.shareChannelView.coinImageView.isHidden = true
-                    isFinished = true
-                }
-                
-                self.navigationController?.popViewController(animated: true)
-                
-            } else {
-                YXLog("打卡分享失败")
-            }
-            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
-            NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
-            
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
-        }
-    }
+//    override init() {
+//        super.init()
+//    }
 
     // MARK: ==== Event ====
-    @objc private func clickBackBtn(_ button: UIButton) {
-        if self.backAction != nil {
-            self.backAction?()
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
-        button.isEnabled = false
+
+    func setData(wordsAmount: Int, daysAmount: Int, type: YXShareImageType) {
+        self.wordsAmount = wordsAmount
+        self.daysAmount  = daysAmount
+        self.shareType   = type
     }
-    
-    // MARK: ==== Tools ====
-    @objc
-    private func changeBackgroundImage() {
+
+    /// 设置分享图
+    /// - Parameter block: 回调
+    func setShareImage(complete block:((UIImage?)->Void)?) {
+        self.setQRCodeImage { [weak self] in
+            guard let self = self else { return }
+            self.getShareImageUrlList { [weak self] in
+                guard let self = self else { return }
+                self.getBackgroundImage(from: self.currentBackgroundImageUrl) { [weak self] image in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async() { [weak self] in
+                        let shareImage = self?.composeImage(background: image)
+                        block?(shareImage)
+                    }
+                }
+            }
+        }
+    }
+
+    /// 更换图片
+    func refreshImage(complete block:((UIImage?)->Void)?) {
         guard let urls = backgroundImageUrls, urls.count > 0 else { return }
         self.currentBackgroundImageIndex = (self.currentBackgroundImageIndex + 1) % urls.count
         currentBackgroundImageUrl = urls[self.currentBackgroundImageIndex]
-        getBackgroundImage(from: currentBackgroundImageUrl) { backgroundImage in
-            DispatchQueue.main.async() {
-                switch self.shareType {
-                case .learnResult:
-                    self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
-                case .aiReviewReuslt:
-                    self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
-                case .planReviewResult:
-                    self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
-                case .listenReviewResult:
-                    self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
-                case .challengeResult:
-                    self.shareImageView.image = self.createChallengeReviewShareImage(backgroundImage)
-                }
-                self.shareChannelView.shareImage = self.shareImageView.image
+        getBackgroundImage(from: currentBackgroundImageUrl) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                let shareImage = self.composeImage(background: image)
+                block?(shareImage)
             }
         }
-    }
-    
-    private func getBackgroundImage(from urlString: String?, completeClosure: @escaping ((_ image: UIImage?) -> Void)) {
-        guard let urlString = urlString, let url = URL(string: urlString) else {
-            completeClosure(nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-            guard let data = data, error == nil else {
-                completeClosure(nil)
-                return
-            }
-            
-            completeClosure(UIImage(data: data))
-        }).resume()
     }
 
+    // MARK: ==== Tools ====
+
+    /// 设置分享二维码
+    /// - Parameter block: 完成回调
     private func setQRCodeImage(complete block:(()->Void)?) {
-        self.loadingView.startAnimating()
         let request = YXShareRequest.getQRCode
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else {
                 return
             }
-            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { [weak self] (image, data, error, result) in
-                guard let self = self else { return }
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
                 if let _image = image {
                     self.qrCodeImage = _image
                 }
@@ -357,7 +85,63 @@ class YXShareViewController: YXViewController {
             YXUtils.showHUD(nil, title: error.message)
         }
     }
-    
+
+    /// 获取分享图地址列表
+    /// - Parameters:
+    ///   - shareType: 分享属性
+    ///   - block: 回调
+    private func getShareImageUrlList(complete block:(()->Void)?) {
+        let request = YXShareRequest.changeBackgroundImage(type: self.shareType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
+            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
+            self.backgroundImageUrls         = imageUrls
+            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
+            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
+            block?()
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
+        }
+    }
+
+    /// 获得分享背景图
+    /// - Parameters:
+    ///   - urlString: 图片地址
+    ///   - block: 回调
+    private func getBackgroundImage(from urlString: String?, complete block: @escaping ((_ image: UIImage?) -> Void)) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            block(nil)
+            return
+        }
+
+        URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+            guard let data = data, error == nil else {
+                block(nil)
+                return
+            }
+
+            block(UIImage(data: data))
+        }).resume()
+    }
+
+    private func composeImage(background image: UIImage?) -> UIImage? {
+        var shareImage: UIImage?
+        switch self.shareType {
+        case .learnResult:
+            shareImage = self.createLearnResultShareImage(image)
+        case .aiReviewReuslt:
+            shareImage = self.createAIReviewShareImage(image)
+        case .planReviewResult:
+            shareImage = self.createPlanReviewShareImage(image)
+        case .listenReviewResult:
+            shareImage = self.createListenReviewShareImage(image)
+        case .challengeResult:
+            shareImage = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
+        }
+        return shareImage
+    }
+
+    // MARK: ==== Draw ====
+
     /// 创建学习结果打卡页面
     private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
 
@@ -370,19 +154,19 @@ class YXShareViewController: YXViewController {
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
         dateFormatter.locale     = Locale(identifier: "en")
-        
+
         shareImageView.dateLabel.text      = dateFormatter.string(from: Date())
         shareImageView.wordCountLabel.text = "\(self.wordsAmount)"
         shareImageView.dayCountLabel.text  = "\(self.daysAmount)"
-                
+
         let renderer = UIGraphicsImageRenderer(size: shareImageView.bounds.size)
         let image = renderer.image { context in
             shareImageView.drawHierarchy(in: shareImageView.bounds, afterScreenUpdates: true)
         }
-                
+
         return image
     }
-    
+
     /// 创建听写复习打卡分享页面
     private func createListenReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
         let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
@@ -404,7 +188,7 @@ class YXShareViewController: YXViewController {
         aboveLabel.layer.shadowOpacity = 1.0
         aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(aboveLabel.layer)
-        
+
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -420,7 +204,7 @@ class YXShareViewController: YXViewController {
         amountLabel.layer.shadowOpacity = 1.0
         amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
-        
+
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的听写练习"
@@ -435,7 +219,7 @@ class YXShareViewController: YXViewController {
         belowLabel.layer.shadowOpacity = 1.0
         belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
-        
+
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -454,7 +238,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        
+
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -473,12 +257,12 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-    
+
     /// 创建智能复习打卡分享页面
     private func createAIReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
         let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
         lableContainer.backgroundColor = .clear
-        
+
         let logoImage    = UIImage(named: "gameShareLogo_orange")
         let shareBgImage = backgroundImage
         let aboveLabel: UILabel = {
@@ -495,7 +279,7 @@ class YXShareViewController: YXViewController {
         aboveLabel.layer.shadowOpacity = 1.0
         aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(aboveLabel.layer)
-        
+
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -511,7 +295,7 @@ class YXShareViewController: YXViewController {
         amountLabel.layer.shadowOpacity = 1.0
         amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
-        
+
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个"
@@ -526,7 +310,7 @@ class YXShareViewController: YXViewController {
         belowLabel.layer.shadowOpacity = 1.0
         belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
-        
+
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -545,7 +329,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        
+
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -564,12 +348,12 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-    
+
     /// 创建复习计划打卡分享页面
     private func createPlanReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
         let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
         lableContainer.backgroundColor = .clear
-        
+
         let logoImage    = UIImage(named: "gameShareLogo_purple")
         let shareBgImage = backgroundImage
         let aboveLabel: UILabel = {
@@ -586,7 +370,7 @@ class YXShareViewController: YXViewController {
         aboveLabel.layer.shadowOpacity = 1.0
         aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(aboveLabel.layer)
-        
+
         let amountLabel: UILabel = {
             let label = UILabel()
             label.text          = "\(wordsAmount)"
@@ -602,7 +386,7 @@ class YXShareViewController: YXViewController {
         amountLabel.layer.shadowOpacity = 1.0
         amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(amountLabel.layer)
-        
+
         let belowLabel: UILabel = {
             let label = UILabel()
             label.text          = "个单词的自动复习"
@@ -617,7 +401,7 @@ class YXShareViewController: YXViewController {
         belowLabel.layer.shadowOpacity = 1.0
         belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
         lableContainer.layer.addSublayer(belowLabel.layer)
-        
+
         let contentImage = UIImage(named: "reviewShareContent")
         let bottomLabel: UILabel = {
             let label = UILabel()
@@ -636,7 +420,7 @@ class YXShareViewController: YXViewController {
             label.textAlignment = .center
             return label
         }()
-        
+
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -655,7 +439,7 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
-    
+
     /// 创建挑战打卡分享页面
     private func createChallengeReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
         guard let model = self.gameModel else {
@@ -708,7 +492,7 @@ class YXShareViewController: YXViewController {
             return label
         }()
         let treeBranchImage = UIImage(named: "treeBranchImage")
-        
+
         // ---- 内容绘制 ----
         let imageSize = CGSize(width: 375, height: 514)
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
@@ -727,4 +511,5 @@ class YXShareViewController: YXViewController {
         }
         return shareImage
     }
+
 }

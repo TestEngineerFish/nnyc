@@ -173,12 +173,16 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
         self.delegate?.punchAction()
     }
 
-    func setData(model: YXExerciseResultDisplayModel) {
-        self.model = model
-        self.fromWordCount = 15
-        self.toWordCount   = 26
-        self.fromDayCount  = 10
-        self.toDayCount    = 11
+    /// 设置数据
+    /// - Parameters:
+    ///   - currentLearnedWordsCount: 当次学习的单词数
+    ///   - model: 学习结果模型对象
+    func setData(currentLearnedWordsCount:Int, model: YXExerciseResultDisplayModel) {
+        self.model         = model
+        self.fromWordCount = model.allWordNum - currentLearnedWordsCount
+        self.toWordCount   = model.allWordNum
+        self.fromDayCount  = model.isFirstStudy ? model.studyDay - 1 : model.studyDay
+        self.toDayCount    = model.studyDay
         self.wordCountLabel.text = "\(fromWordCount)"
         self.dayCountLabel.text  = "\(fromDayCount)"
         self.resultView.setData(model: model)

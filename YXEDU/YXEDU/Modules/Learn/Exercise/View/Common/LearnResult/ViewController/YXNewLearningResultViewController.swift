@@ -8,16 +8,19 @@
 
 import Foundation
 
-class YXNewLearningResultViewController: YXViewController, YXNewLearningResultViewProtocol {
+class YXNewLearningResultViewController: YXViewController, YXNewLearningResultViewProtocol, YXNewLearningResultShareViewProtocol {
 
     var requestCount: Int      = 0 // 请求次数
     var newLearnAmount: Int    = 0 // 新学单词数
     var reviewLearnAmount: Int = 0 // 复习单词数量
+    var shareType: YXShareImageType = .learnResult
     var model: YXExerciseResultDisplayModel?
     var learnConfig: YXLearnConfig?
 
     var contentView = YXNewLearningResultView()
     var loadingView = YXExerciseResultLoadingView()
+    lazy private var shareView = YXNewLearningResultShareView()
+    private var shareManager = YXShareManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +49,20 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
 
     private func bindProperty() {
         self.customNavigationBar?.isHidden = true
-        self.contentView.delegate          = self
         self.contentView.isHidden          = true
+        self.contentView.delegate          = self
+        self.shareView.delegate            = self
+        self.shareManager.setShareImage { [weak self] (image: UIImage?) in
+            guard let self = self else { return }
+            self.shareView.shareImageView.image        = image
+            self.shareView.shareChannelView.shareImage = image
+        }
     }
 
     private func setData() {
         guard let _model = self.model else { return }
-        self.contentView.setData(model: _model)
+        self.contentView.setData(currentLearnedWordsCount: newLearnAmount + reviewLearnAmount, model: _model)
+        self.shareManager.setData(wordsAmount: _model.allWordNum, daysAmount: _model.studyDay, type: self.shareType)
     }
 
     // MARK: ==== Request ====
@@ -78,15 +88,6 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
                 self.loadingView.removeFromSuperview()
                 self.contentView.isHidden = false
                 self.model = self.transformModel(response.data)
-//                if let _unitModelList = self.model?.unitList {
-//                    for (index, unitModel) in _unitModelList.enumerated() {
-//                        if unitModel.unitID == config.unitId {
-//                            self.currentUnitIndex = index + 1
-//                        }
-//                    }
-//                }
-
-//                self.loadSubViews()
                 self.setData()
             }
         }) { (error) in
@@ -96,12 +97,18 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
 
     // MARK: ==== YXNewLearningResultViewProtocol ====
     func closedAction() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     func punchAction() {
-        let vc = YXShareViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.shareView.show()
+    }
+
+    // MARK: ==== YXNewLearningResultShareViewProtocol ====
+    func refreshAction(complete block: ((UIImage?)->Void)?) {
+        self.shareManager.refreshImage(complete: { (image) in
+            block?(image)
+        })
     }
 
     // MARK: ==== Tools ====
