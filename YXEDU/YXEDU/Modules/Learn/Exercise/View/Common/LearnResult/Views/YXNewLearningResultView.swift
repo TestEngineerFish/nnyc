@@ -173,7 +173,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
     private func punchAction() {
         if self.calendarContentView.todayCell?.isShowed == .some(false) {
             self.calendarContentView.todayCell?.showAnimation(duration: 0.8)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.punchAction()
                 self.punchButton.setTitle("打卡分享", for: .normal)
@@ -195,12 +195,19 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         self.toWordCount   = model.allWordNum
         self.fromDayCount  = model.studyDay - 1
         self.toDayCount    = model.studyDay
-        self.wordCountLabel.text = "\(fromWordCount)"
-        self.dayCountLabel.text  = "\(fromDayCount)"
+
         self.resultView.setData(model: model)
         self.calendarContentView.setData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.augmentCount()
+        //  首次上报，显示动画
+        let isFirstStudy: Bool = YYCache.object(forKey: YXLocalKey.currentFirstReport) as? Bool ?? true
+        YYCache.set(false, forKey: YXLocalKey.currentFirstReport)
+        if isFirstStudy {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.augmentCount()
+            }
+        } else {
+            self.wordCountLabel.text = "\(toWordCount)"
+            self.dayCountLabel.text  = "\(toDayCount)"
         }
     }
 
@@ -208,10 +215,6 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
     private func augmentCount() {
         self.wordCountLabel.text = "\(self.fromWordCount)"
         self.dayCountLabel.text  = "\(self.fromDayCount)"
-        //  首次上报，显示动画
-        let isFirstStudy: Bool = YYCache.object(forKey: YXLocalKey.currentFirstReport) as? Bool ?? true
-        YYCache.set(false, forKey: YXLocalKey.currentFirstReport)
-        guard isFirstStudy else { return }
         if self.fromWordCount < self.toWordCount {
             self.showNumberAnimation(label: self.wordCountLabel)
             self.fromWordCount += 1
