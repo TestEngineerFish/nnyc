@@ -79,9 +79,6 @@ struct YXExerciseResultDisplayModel {
     var score: Int = 0
     var studyDay: Int = 0
     var isShowCoin = false
-
-    /// 是否当前首次学习
-    var isFirstStudy = true
     
     /// 需要加强的单词
     var words: [YXWordModel]?

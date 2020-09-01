@@ -13,7 +13,7 @@ protocol YXNewLearningResultViewProtocol: NSObjectProtocol {
     func punchAction()
 }
 
-class YXNewLearningResultView: YXView, CAAnimationDelegate {
+class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultCalendarViewProtocol {
 
     var fromWordCount = 0
     var toWordCount   = 0
@@ -156,6 +156,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
     override func bindProperty() {
         super.bindProperty()
         self.collectView.layer.setDefaultShadow()
+        self.calendarContentView.delegate   = self
         self.backgroundView.backgroundColor = UIColor.gradientColor(with: backgroundView.size, colors: [UIColor.hex(0xFAB222), UIColor.hex(0xFF7C05)], direction: .horizontal)
         self.punchButton.backgroundColor = UIColor.gradientColor(with: punchButton.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .horizontal)
         self.closeButton.addTarget(self, action: #selector(self.closedAction), for: .touchUpInside)
@@ -170,7 +171,17 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
 
     @objc
     private func punchAction() {
-        self.delegate?.punchAction()
+        if self.calendarContentView.todayCell?.isShowed == .some(false) {
+            self.calendarContentView.todayCell?.showAnimation(duration: 0.8)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.punchAction()
+                self.punchButton.setTitle("打卡分享", for: .normal)
+            }
+        } else {
+            self.delegate?.punchAction()
+            self.punchButton.setTitle("打卡分享", for: .normal)
+        }
     }
 
     /// 设置数据
@@ -178,10 +189,11 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
     ///   - currentLearnedWordsCount: 当次学习的单词数
     ///   - model: 学习结果模型对象
     func setData(currentLearnedWordsCount:Int, model: YXExerciseResultDisplayModel) {
+
         self.model         = model
         self.fromWordCount = model.allWordNum - currentLearnedWordsCount
         self.toWordCount   = model.allWordNum
-        self.fromDayCount  = model.isFirstStudy ? model.studyDay - 1 : model.studyDay
+        self.fromDayCount  = model.studyDay - 1
         self.toDayCount    = model.studyDay
         self.wordCountLabel.text = "\(fromWordCount)"
         self.dayCountLabel.text  = "\(fromDayCount)"
@@ -193,10 +205,13 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
     }
 
     // MARK: ==== Tools ====
-
     private func augmentCount() {
         self.wordCountLabel.text = "\(self.fromWordCount)"
         self.dayCountLabel.text  = "\(self.fromDayCount)"
+        //  首次上报，显示动画
+        let isFirstStudy: Bool = YYCache.object(forKey: YXLocalKey.currentFirstReport) as? Bool ?? true
+        YYCache.set(false, forKey: YXLocalKey.currentFirstReport)
+        guard isFirstStudy else { return }
         if self.fromWordCount < self.toWordCount {
             self.showNumberAnimation(label: self.wordCountLabel)
             self.fromWordCount += 1
@@ -230,5 +245,10 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate {
         if flag {
             self.augmentCount()
         }
+    }
+
+    // MARK: ==== YXNewLearningResultCalendarViewProtocol ====
+    func calendarPunchAction() {
+        self.punchAction()
     }
 }

@@ -8,20 +8,16 @@
 
 import Foundation
 
-class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarDelegate {
+protocol YXNewLearningResultCalendarViewProtocol: NSObjectProtocol {
+    func calendarPunchAction()
+}
 
-    var selectedDate = Date()
+class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarDelegate, YXCalendarCellProtocol {
 
-    var leftButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "arrow_left_gray"), for: .normal)
-        return button
-    }()
-    var rightButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "arrow_right_gray"), for: .normal)
-        return button
-    }()
+    weak var delegate: YXNewLearningResultCalendarViewProtocol?
+    var validDict = [String:YXCalendarStudyModel]()
+
+    var todayCell: YXCalendarCell?
     var titleLabel: UILabel = {
         let label = UILabel()
         label.text          = ""
@@ -31,18 +27,22 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         return label
     }()
     var calendarView: FSCalendar = {
-        let weekValue = ["日", "一", "二", "三", "四", "五", "六", ]
+        let weekValue = ["SUM", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
         let calendar = FSCalendar()
         calendar.headerHeight    = .zero
         calendar.weekdayHeight   = AdaptSize(32)
         calendar.locale          = Locale(identifier: "zh-CN")
         calendar.scrollDirection = .horizontal
-        calendar.appearance.titleDefaultColor     = UIColor.gray1
-        calendar.appearance.titlePlaceholderColor = UIColor.black4
-        calendar.appearance.weekdayFont      = UIFont.regularFont(ofSize: AdaptSize(13))
-        calendar.appearance.weekdayTextColor = UIColor.gray1
-        calendar.calendarWeekdayView.backgroundColor    = UIColor.hex(0xF4F4F4)
-        calendar.calendarWeekdayView.layer.cornerRadius = AdaptSize(2)
+        calendar.appearance.todayColor               = .clear
+        calendar.appearance.todaySelectionColor      = .clear
+        calendar.appearance.titleTodayColor          = .gray1
+        calendar.appearance.titleDefaultColor        = UIColor.gray1
+        calendar.appearance.titlePlaceholderColor    = UIColor.black4
+        calendar.appearance.weekdayFont              = UIFont.regularFont(ofSize: AdaptSize(12))
+        calendar.appearance.weekdayTextColor         = UIColor.hex(0xBBBBBB)
+        calendar.calendarWeekdayView.backgroundColor = UIColor.clear
+        calendar.scrollEnabled   = false
+        calendar.allowsSelection = false
         for (index, label) in calendar.calendarWeekdayView.weekdayLabels.enumerated() {
             if index < weekValue.count {
                 label.text = weekValue[index]
@@ -55,6 +55,7 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
+        self.requestCalendarData()
     }
 
     required init?(coder: NSCoder) {
@@ -63,24 +64,10 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
 
     override func createSubviews() {
         super.createSubviews()
-        self.addSubview(leftButton)
-        self.addSubview(rightButton)
         self.addSubview(titleLabel)
         self.addSubview(calendarView)
-        leftButton.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptSize(5))
-            make.centerY.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(40), height: AdaptSize(20)))
-        }
-        rightButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(AdaptSize(-5))
-            make.centerY.equalTo(titleLabel)
-            make.size.equalTo(CGSize(width: AdaptSize(40), height: AdaptSize(20)))
-        }
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.left.equalTo(leftButton.snp.right)
-            make.right.equalTo(rightButton.snp.left)
+            make.top.left.right.equalToSuperview()
         }
         calendarView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptFontSize(20))
@@ -93,39 +80,62 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
     override func bindProperty() {
         super.bindProperty()
         self.calendarView.delegate   = self
-        self.leftButton.addTarget(self, action: #selector(self.previousMonth), for: .touchUpInside)
-        self.rightButton.addTarget(self, action: #selector(self.nextMonth), for: .touchUpInside)
-        self.calendarView.register(YXCustomCalendarCell.classForCoder(), forCellReuseIdentifier: "kYXCustomCalendarCell")
+    }
+
+    // MARK: ==== Request ====
+    private func requestCalendarData() {
+        let date = NSDate().offsetMonths(-1)
+        let request = YXCalendarRequest.getMonthly(time: Int(date!.timeIntervalSince1970))
+        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
+                return
+            }
+            self.validDict.removeAll()
+            model.studyModel.forEach { (studyModel) in
+                let date = NSDate(timeIntervalSince1970: Double(studyModel.time ?? 0))
+                self.validDict.updateValue(studyModel, forKey: date.formatYMD())
+            }
+            self.calendarView.reloadData()
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
+        }
     }
 
     // MARK: ==== Event ====
 
-    @objc
-    private func previousMonth() {
-        self.selectedDate = NSDate.offsetMonths(-1, from: self.selectedDate)
-        self.calendarView.setCurrentPage(self.selectedDate, animated: true)
-    }
-
-    @objc
-    private func nextMonth() {
-        self.selectedDate = NSDate.offsetMonths(1, from: self.selectedDate)
-        self.calendarView.setCurrentPage(self.selectedDate, animated: true)
-    }
-
     func setData() {
-        self.titleLabel.text = "2020年6月"
+        let dateFormatter        = DateFormatter()
+        dateFormatter.dateFormat = "MMMM.YYYY"
+        dateFormatter.locale     = Locale(identifier: "en")
+        self.titleLabel.text = dateFormatter.string(from: Date())
     }
 
     // MARK: ==== FSCalendarDelegate ====
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-//        let view: UIView = {
-//            let view = UIView()
-//            view.backgroundColor = UIColor.orange1
-//            return view
-//        }()
-//        calendar.addSubview(view)
-//        view.snp.makeConstraints { (make) in
-//            make.edges.equalToSuperview()
-//        }
+        if let model = self.validDict[(date as NSDate).formatYMD()] {
+            cell.removeAllSubviews()
+            let isTody = (date as NSDate).isToday()
+            let customCellSize = CGSize(width: AdaptSize(40), height: AdaptSize(45))
+            let customCell = YXCalendarCell(model: model, isToday: isTody, frame: CGRect(origin: .zero, size: customCellSize))
+            customCell.delegate = self
+            cell.addSubview(customCell)
+            customCell.snp.makeConstraints { (make) in
+                make.center.equalToSuperview()
+                make.size.equalTo(customCellSize)
+            }
+            if isTody {
+                self.todayCell = customCell
+            }
+        } else {
+            cell.titleLabel.snp.remakeConstraints { (make) in
+                make.center.equalToSuperview()
+            }
+        }
     }
+
+    // MARK: ==== YXCalendarCellProtocol ====
+    func clickAction() {
+        self.delegate?.calendarPunchAction()
+    }
+
 }
