@@ -39,7 +39,7 @@ class YXEditSchoolView: YXView {
     }()
     var localLineView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black6
+        view.backgroundColor = UIColor.black4
         return view
     }()
     var nameLabel: UILabel = {
@@ -53,7 +53,7 @@ class YXEditSchoolView: YXView {
     }()
     var nameLineView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black6
+        view.backgroundColor = UIColor.black4
         return view
     }()
     var doneButton: YXButton = {

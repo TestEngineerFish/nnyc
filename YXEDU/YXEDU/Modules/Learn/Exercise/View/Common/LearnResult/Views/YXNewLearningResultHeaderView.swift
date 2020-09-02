@@ -35,7 +35,12 @@ class YXNewLearningResultHeaderView: YXView {
         label.numberOfLines = 0
         return label
     }()
-    let progressView = YXProgressView(cornerRadius: AdaptSize(4), animation: true)
+    var progressView: YXProgressView = {
+        let view = YXProgressView()
+        view.backgroundColor              = UIColor.white.withAlphaComponent(0.23)
+        view.progressView.backgroundColor = UIColor.white
+        return view
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,18 +62,18 @@ class YXNewLearningResultHeaderView: YXView {
         imageView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(AdaptSize(-18))
-            make.size.equalTo(CGSize(width: AdaptIconSize(233), height: AdaptIconSize(141)))
+            make.size.equalTo(CGSize(width: AdaptIconSize(260), height: AdaptIconSize(169)))
         }
         starView.snp.makeConstraints { (make) in
             make.centerX.equalTo(imageView)
-            make.bottom.equalTo(imageView)
-            make.width.equalTo(AdaptIconSize(94))
+            make.bottom.equalTo(imageView).offset(AdaptSize(-12))
+            make.width.equalTo(AdaptIconSize(90))
             make.height.equalTo(AdaptIconSize(45))
         }
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptFontSize(-20))
-            make.top.equalTo(imageView.snp.bottom).offset(AdaptSize(11))
+            make.top.equalTo(starView.snp.bottom).offset(AdaptSize(5))
         }
         descriptionLabel.snp.makeConstraints { (make) in
             make.left.right.equalTo(titleLabel)
@@ -94,9 +99,15 @@ class YXNewLearningResultHeaderView: YXView {
         self.setResultImage()
         self.setTitleValue()
         self.setDescriptionValue()
+        self.setProgressView()
 
         self.progressView.isHidden     = self.isHiddenProgress()
         self.descriptionLabel.isHidden = self.isHiddenDescriptionLabel()
+        if model.score <= 1, self.superview != nil {
+            self.snp.updateConstraints { (make) in
+                make.height.equalTo(AdaptSize(200))
+            }
+        }
     }
 
     // MARK: ==== Tools ====
@@ -109,10 +120,10 @@ class YXNewLearningResultHeaderView: YXView {
             } else {
                 let score = model.score == 0 ? 1 : model.score
                 if score < 1 {
-                    self.imageView.image = UIImage(named: "learnResult0")
+                    self.imageView.image = UIImage(named: "review_result_progress_new")
                 } else {
                     if model.type == .base || model.type == .homeworkPunch {
-                        self.imageView.image =  UIImage(named: "review_result_base_\(model.score)star")
+                        self.imageView.image =  UIImage(named: "review_result_base_\(model.score)star_new")
                     } else if model.type == .planListenReview || model.type == .homeworkListen {
                         self.imageView.image = UIImage(named: "review_result_listen_\(model.score)star")
                     } else {// 计划或者智能
@@ -121,7 +132,7 @@ class YXNewLearningResultHeaderView: YXView {
                 }
             }
         } else { // 未完成
-            self.imageView.image = UIImage(named: "review_result_progress")
+            self.imageView.image = UIImage(named: "review_result_progress_new")
         }
     }
 

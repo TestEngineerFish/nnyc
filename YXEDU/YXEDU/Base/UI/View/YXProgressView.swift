@@ -13,16 +13,12 @@ class YXProgressView: YXView {
     public var progress: CGFloat = 0 {
         didSet { self.bindData() }
     }
-    private var showAnimation: Bool
-    private var progressView = UIView()
-    private var cornerRadius: CGFloat
+    var showAnimation: Bool  = true
+    var progressView: UIView = UIView()
 
-    init(cornerRadius: CGFloat = AdaptSize(5), animation: Bool = false) {
-        self.cornerRadius  = cornerRadius
-        self.showAnimation = animation
-        super.init(frame: CGRect.zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.createSubviews()
-        self.bindProperty()
     }
 
     required init?(coder: NSCoder) {
@@ -31,31 +27,25 @@ class YXProgressView: YXView {
 
     override func createSubviews() {
         self.addSubview(progressView)
-        self.progressView.snp.makeConstraints { (make) in
-            make.left.top.height.equalToSuperview()
-            make.width.equalTo(0)
-        }
     }
 
     override func bindProperty() {
-        self.backgroundColor     = UIColor.gray2
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius  = cornerRadius
-
-        self.progressView.layer.masksToBounds = true
-        self.progressView.layer.cornerRadius  = cornerRadius
-        self.progressView.backgroundColor     = .orange1
+        super.bindProperty()
+        self.layer.cornerRadius              = self.height / 2
+        self.progressView.layer.cornerRadius = self.height / 2
     }
 
     override func bindData() {
         super.bindData()
+        self.bindProperty()
         if showAnimation {
-            UIView.animate(withDuration: 0.6) {[weak self] in
+            self.progressView.frame = CGRect(origin: .zero, size: CGSize(width: 0, height: self.height))
+            UIView.animate(withDuration: 0.6) { [weak self] in
                 guard let self = self else { return }
                 self.progressView.width = self.progress * self.width
             }
         } else {
-            self.progressView.width = self.progress * self.width
+            self.progressView.frame = CGRect(origin: .zero, size: CGSize(width: self.progress * self.width, height: self.height))
         }
     }
 }

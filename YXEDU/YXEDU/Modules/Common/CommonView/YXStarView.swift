@@ -115,7 +115,7 @@ class YXStarView: UIView {
         self.showAnimation()
     }
     
-    /// 显示流程学习结果
+    /// 显示主流程学习结果
     func showLearnResultView(starNum: Int) {
         self.starNumber = starNum
         self.resetStatus()

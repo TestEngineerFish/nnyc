@@ -13,7 +13,7 @@ protocol YXNewLearningResultViewProtocol: NSObjectProtocol {
     func punchAction()
 }
 
-class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultCalendarViewProtocol {
+class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultCalendarViewProtocol, UIScrollViewDelegate {
 
     var fromWordCount = 0
     var toWordCount   = 0
@@ -23,7 +23,18 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
 
     weak var delegate: YXNewLearningResultViewProtocol?
 
-    var backgroundView: UIView = {
+    var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator   = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    var scrollViewContentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
+    var headerBackgroundView: UIView = {
         let view = UIView()
         return view
     }()
@@ -93,21 +104,32 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
 
     override func createSubviews() {
         super.createSubviews()
-        self.addSubview(backgroundView)
-        self.addSubview(resultView)
-        self.addSubview(closeButton)
-        self.addSubview(collectView)
-        self.addSubview(calendarContentView)
-        self.addSubview(punchButton)
+        self.addSubview(scrollView)
+        scrollView.addSubview(scrollViewContentView)
+        scrollViewContentView.addSubview(headerBackgroundView)
+        scrollViewContentView.addSubview(resultView)
+        scrollViewContentView.addSubview(closeButton)
+        scrollViewContentView.addSubview(collectView)
+        scrollViewContentView.addSubview(calendarContentView)
         collectView.addSubview(wordCountLabel)
         collectView.addSubview(wordTitleLabel)
         collectView.addSubview(dayCountLabel)
         collectView.addSubview(dayTitleLabel)
+        self.addSubview(punchButton)
 
-        backgroundView.size = CGSize(width: screenWidth, height: AdaptSize(243) + kStatusBarHeight)
-        backgroundView.snp.makeConstraints { (make) in
+        scrollView.snp.makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(punchButton.snp.top)
+        }
+        scrollViewContentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+            make.width.equalTo(screenWidth)
+            make.bottom.equalTo(calendarContentView)
+        }
+        headerBackgroundView.size = CGSize(width: screenWidth, height: AdaptSize(243) + kStatusBarHeight)
+        headerBackgroundView.snp.makeConstraints { (make) in
             make.top.centerX.equalToSuperview()
-            make.size.equalTo(backgroundView.size)
+            make.size.equalTo(headerBackgroundView.size)
         }
         closeButton.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
@@ -157,7 +179,8 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         super.bindProperty()
         self.collectView.layer.setDefaultShadow()
         self.calendarContentView.delegate   = self
-        self.backgroundView.backgroundColor = UIColor.gradientColor(with: backgroundView.size, colors: [UIColor.hex(0xFAB222), UIColor.hex(0xFF7C05)], direction: .horizontal)
+        self.scrollView.delegate            = self
+        self.headerBackgroundView.backgroundColor = UIColor.gradientColor(with: headerBackgroundView.size, colors: [UIColor.hex(0xFAB222), UIColor.hex(0xFF7C05)], direction: .horizontal)
         self.punchButton.backgroundColor = UIColor.gradientColor(with: punchButton.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .horizontal)
         self.closeButton.addTarget(self, action: #selector(self.closedAction), for: .touchUpInside)
         self.punchButton.addTarget(self, action: #selector(self.punchAction), for: .touchUpInside)
@@ -253,5 +276,12 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
     // MARK: ==== YXNewLearningResultCalendarViewProtocol ====
     func calendarPunchAction() {
         self.punchAction()
+    }
+
+    // MARK: ==== UIScrollViewDelegate ====
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            scrollView.contentOffset.y = 0
+        }
     }
 }

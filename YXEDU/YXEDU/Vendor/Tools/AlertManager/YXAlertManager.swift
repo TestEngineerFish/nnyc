@@ -28,14 +28,16 @@ struct YXAlertManager {
     ///   - onlyHomework: 是否仅提取作业
     ///   - block: 回调函数
     func showAddClassOrHomeworkAlert(onlyClass:Bool = false, onlyHomework: Bool = false, _ block:((String?)->Void)?) {
-        var titleText  = "请输入班级号或作业提取码"
-        var placeholder = "输入班级号或作业提取码"
+        var titleText    = "请输入班级号或作业提取码"
+        var placeholder  = "输入班级号或作业提取码"
+        var keyboardType = UIKeyboardType.asciiCapable
         if onlyClass {
-            titleText = "请输入班级号"
-            placeholder = "输入班级号"
+            titleText    = "请输入班级号"
+            placeholder  = "输入班级号"
+            keyboardType = .phonePad
         }
         if onlyHomework {
-            titleText = "请输入作业提取码"
+            titleText   = "请输入作业提取码"
             placeholder = "输入作业提取码"
         }
         let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
@@ -46,6 +48,7 @@ struct YXAlertManager {
         alertView.textCountLabel.isHidden = true
         alertView.textMaxLabel.isHidden   = true
         alertView.alertHeight.constant    = 222
+        alertView.textField.keyboardType  = keyboardType
         alertView.doneClosure             = { (text: String?) in
             block?(text)
             alertView.removeFromSuperview()

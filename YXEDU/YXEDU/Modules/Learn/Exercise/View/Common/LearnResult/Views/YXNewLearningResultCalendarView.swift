@@ -22,7 +22,7 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         let label = UILabel()
         label.text          = ""
         label.textColor     = UIColor.black1
-        label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(15))
+        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(15))
         label.textAlignment = .center
         return label
     }()
@@ -94,6 +94,10 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
             model.studyModel.forEach { (studyModel) in
                 let date = NSDate(timeIntervalSince1970: Double(studyModel.time ?? 0))
                 self.validDict.updateValue(studyModel, forKey: date.formatYMD())
+            }
+            // 容错处理（防止后台未及时返回当前学习数据）
+            if let todayModel = YXCalendarStudyModel(JSON: ["date": Int(Date().timeIntervalSince1970), "status": 1]) {
+                self.validDict.updateValue(todayModel, forKey: NSDate().formatYMD())
             }
             self.calendarView.reloadData()
         }) { (error) in
