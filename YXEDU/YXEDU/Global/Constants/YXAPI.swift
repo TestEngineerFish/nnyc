@@ -90,13 +90,13 @@ struct YXAPI {
     //MARK: - 练习模块
     struct Exercise {
         /// 练习接口
-        static let exercise = "/api/v2/learn/getstudy"
+        static let exercise = "/api/v3/learn/getstudy"
         /// 学习地图
         static let learnMap = "/api/v1/learn/getbookunitstatus"
         /// 基础学习结果页
         static let learnResult = "/api/v2/learn/getcurrentunitstatus"
         /// 上报接口
-        static let report = "/api/v2/learn/report"
+        static let report = "/api/v3/learn/report"
         /// 单词跟读分上报
         static let reportListenScore = "/api/v1/learn/updatelistenscore"
         /// 获得学习步骤配置
