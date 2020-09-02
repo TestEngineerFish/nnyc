@@ -126,14 +126,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     /// - Parameter wordModelList: 单词列表
     func updateWordModelList(with wordModelList: [YXWordModel]) {
         YXWordBookResourceManager.wordDownloading = true
-        let deleteWordSQL = YYSQLManager.WordSQL.deleteWord.rawValue
+        let deleteWordSQL = YYSQLManager.WordSQL.deleteWordById.rawValue
         let insertWordSQL  = YYSQLManager.WordSQL.insertWord.rawValue
         for wordModel in wordModelList {
-            guard let bookId = wordModel.bookId else {
-                return
-            }
+            let bookId = wordModel.bookId ?? 0
             // 删除旧单词
-            let deleteWordSuccess = self.wordRunner.executeUpdate(deleteWordSQL, withArgumentsIn: [bookId])
+            let deleteWordSuccess = self.wordRunner.executeUpdate(deleteWordSQL, withArgumentsIn: [wordModel.wordId ?? 0])
             let msg = String(format: "删除单词:%@, word_id: %d, book_id:%d", wordModel.word ?? "", wordModel.wordId ?? 0, bookId)
             if deleteWordSuccess {
                 YXLog(msg + " 成功")

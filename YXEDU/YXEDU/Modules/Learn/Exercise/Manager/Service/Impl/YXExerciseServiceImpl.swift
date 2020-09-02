@@ -70,24 +70,32 @@ class YXExerciseServiceImpl: YXExerciseService {
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        
         // 更新当前轮数据（如果做完）
         self.updateCurrentTurn()
+        // 是否全部做完
+        guard var exerciseModel = turnDao.selectExercise(study: _studyId) else {
+            YXLog("全部做完")
+            return nil
+        }
         
         // 查找练习
-        let model = self._findExercise()
-        
-        // 打印
-        self._printCurrentTurn()
-        // 兼容后台返回错误题型
-        if model?.type == .some(.none) {
-            if var exerciseModel = model {
-                exerciseModel.status = .right
-                self.answerAction(exercise: exerciseModel)
-                return self._findExercise()
+        if var model = self._findExercise(exercise: &exerciseModel) {
+            // 打印
+            self._printCurrentTurn()
+            // 兼容后台返回错误题型
+            if model.type == .some(.none) {
+                model.status = .right
+                self.answerAction(exercise: model)
+                return self._findExercise(exercise: &model)
             }
+            return model
+        } else {
+            // 更新当前轮中为已完成
+            turnDao.updateExerciseFinishStatus(step: exerciseModel.stepId)
+            // 更新exercise中nextStep为END
+            exerciseDao.updateNextStep(exercise: exerciseModel.eid, next: "END")
+            return self.fetchExerciseModel()
         }
-        return model
     }
 
     func addStudyCount() {

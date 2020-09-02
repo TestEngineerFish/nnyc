@@ -54,26 +54,28 @@ extension YXExerciseServiceImpl {
     }
     
     /// 查找一个练习
-    func _findExercise() -> YXExerciseModel? {
-        guard var exerciseModel = turnDao.selectExercise(study: _studyId), let wordId = exerciseModel.word?.wordId else {
-            YXLog("当前轮没有数据了")
+    func _findExercise(exercise model: inout YXExerciseModel) -> YXExerciseModel? {
+        guard let wordId = model.word?.wordId else {
+            YXLog("单词ID为空")
             return nil
         }
-        if exerciseModel.type == .newLearnMasterList {
+        if model.type == .newLearnMasterList {
             // -- N3的题
-            let exerciseModel = self._finedN3Exercise(exercise: exerciseModel)
+            let exerciseModel = self._finedN3Exercise(exercise: model)
             return exerciseModel
         } else {
             // -- 正常出题
             // 初始化单词对象
-            var _wordModel = self._queryWord(wordId: wordId, bookId: exerciseModel.word?.bookId ?? 0)
-            _wordModel?.wordType = exerciseModel.word?.wordType ?? .newWord
-            if _wordModel != nil {
-                exerciseModel.word  = _wordModel
+            if var _wordModel = self._queryWord(wordId: wordId, bookId: model.word?.bookId) {
+                _wordModel.wordType = model.word?.wordType ?? .newWord
+                model.word  = _wordModel
+                // 选项初始化
+                let _exerciseModel = _processExerciseOption(exercise: model)
+                return _exerciseModel
+            } else {
+                // 找不到对应单词
+                return nil
             }
-            // 选项初始化
-            let _exerciseModel = _processExerciseOption(exercise: exerciseModel)
-            return _exerciseModel
         }
     }
     
@@ -95,9 +97,9 @@ extension YXExerciseServiceImpl {
     }
 
     /// 查询单词内容
-    func _queryWord(wordId: Int, bookId: Int) -> YXWordModel? {
-        if learnConfig.learnType == .base || learnConfig.learnType.isHomework() {
-            return wordDao.selectWord(bookId: bookId, wordId: wordId)
+    func _queryWord(wordId: Int, bookId: Int?) -> YXWordModel? {
+        if let _bookId = bookId, let wordModel = wordDao.selectWord(bookId: _bookId, wordId: wordId) {
+            return wordModel
         } else {
             return wordDao.selectWord(wordId: wordId)
         }

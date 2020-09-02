@@ -201,6 +201,7 @@ class YXUserModel: NSObject {
         
         self.didLogin = true
         YXWordBookResourceManager.stop = false
+        YXWordBookResourceManager.wordDownloading = false
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
@@ -239,6 +240,7 @@ class YXUserModel: NSObject {
         self.token    = nil
         // 停止资源管理器队列任务
         YXWordBookResourceManager.stop = true
+        YXWordBookResourceManager.wordDownloading = false
         // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()

@@ -218,12 +218,20 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         self.toWordCount   = model.allWordNum
         self.fromDayCount  = model.studyDay - 1
         self.toDayCount    = model.studyDay
+        // 容错处理
+        if self.fromWordCount < 0 {
+            self.fromWordCount = 0
+        }
+        if self.fromDayCount < 0 {
+            self.fromDayCount = 0
+        }
 
         self.resultView.setData(model: model)
         self.calendarContentView.setData()
         //  首次上报，显示动画
-        let isFirstStudy: Bool = YYCache.object(forKey: YXLocalKey.currentFirstReport) as? Bool ?? true
-        YYCache.set(false, forKey: YXLocalKey.currentFirstReport)
+        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
+        let isFirstStudy: Bool = YYCache.object(forKey: cacheKey) as? Bool ?? true
+        YYCache.set(false, forKey: cacheKey)
         if isFirstStudy {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.augmentCount()

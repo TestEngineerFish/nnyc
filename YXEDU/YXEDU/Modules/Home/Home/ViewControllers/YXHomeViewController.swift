@@ -344,7 +344,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 //        }
 //        let vc = YXNewLearningResultViewController()
 //        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-//        vc.newLearnAmount    = 15
+//        vc.newLearnAmount    = 5
 //        vc.reviewLearnAmount = 11
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return
