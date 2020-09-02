@@ -159,7 +159,6 @@
                     self.switchExerciseView()
                 }
             } else {
-                UIView.toast("加载数据失败")
                 YXUtils.showHUD(nil, title: "加载学习数据失败，请稍后再试")
                 self.navigationController?.popViewController(animated: true)
             }

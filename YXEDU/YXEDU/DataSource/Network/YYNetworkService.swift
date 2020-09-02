@@ -325,16 +325,15 @@ enum YXMiMeType: String {
 
             case .failure(let error):
                 self.clearCountAction(requestStr)
-                let msg = (error as NSError).message
+                let _error = error as NSError
+                var msg    = _error.message
                 YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
-                guard let urlError = error as? URLError, self.processErrorCode(error: urlError) else {
-                    if (error as NSError).code == 2 {
-                        YXUtils.showHUD(nil, title: "连接服务器失败，请稍后重试")
-                    } else {
-                        fail(error as NSError)
-                    }
-                    return
+                // 自定义错误提示
+                if let urlError = error as? URLError {
+                    msg = self.processErrorCode(error: urlError.code)
+                    _error.customErrorMsg = msg
                 }
+                fail(_error)
             }
         }
         
@@ -346,7 +345,7 @@ enum YXMiMeType: String {
     /// 处理非正常错误请求
     /// - Parameter error: 错误对象
     /// - Returns: 是否处理
-    private func processErrorCode(error: URLError) -> Bool {
+    private func processErrorCode(error code: URLError.Code) -> String {
         let serviceErrorList: [URLError.Code] = [.badURL,
                                                  .unsupportedURL,
                                                  .cannotFindHost,
@@ -354,12 +353,12 @@ enum YXMiMeType: String {
                                                  .dnsLookupFailed,
                                                  .redirectToNonExistentLocation,
                                                  .badServerResponse]
-        if serviceErrorList.contains(error.code) {
+        if serviceErrorList.contains(code) {
             YXUtils.showHUD(nil, title: "连接服务器失败，请稍后重试")
         }
         //数据错误
-        var errorMsg: String?
-        switch error.code {
+        var errorMsg: String = "网络错误，请稍后重试"
+        switch code {
             // 超时
         case .timedOut:
             errorMsg = "网络连接超时，请稍后重试"
@@ -428,11 +427,7 @@ enum YXMiMeType: String {
         default:
             break
         }
-        guard let msg = errorMsg else {
-            return false
-        }
-        YXUtils.showHUD(nil, title: msg)
-        return true
+        return errorMsg
     }
 
 

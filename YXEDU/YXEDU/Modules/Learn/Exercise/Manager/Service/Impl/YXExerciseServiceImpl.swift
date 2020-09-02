@@ -64,7 +64,7 @@ class YXExerciseServiceImpl: YXExerciseService {
                 completion?(true, nil, isGenerate)
             }
         }) { (msg) in
-            YXUtils.showHUD(nil, title: msg)
+//            YXUtils.showHUD(nil, title: msg)
             completion?(false, msg, isGenerate)
         }
     }

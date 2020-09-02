@@ -113,6 +113,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         self.requestBaseInfo()
         self.requestActivity()
         self.checkComment()
+        self.checkDownloadBook()
         YXStepConfigManager.share.contrastStepConfig()
         YXAlertCheckManager.default.checkLatestBadge()
         YXRedDotManager.share.updateTaskCenterBadge()
@@ -364,8 +365,8 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
     /// 检测当前词书是否需要更新
     private func checkDownloadBook() {
-        let taskModel = YXWordBookResourceModel(type: .single, book: self.homeModel?.bookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: self.homeModel?.bookId)
+        let taskModel = YXWordBookResourceModel(type: .single, book: YXUserModel.default.currentBookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: YXUserModel.default.currentBookId)
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
     }
@@ -552,7 +553,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
             return
         }
-        self.checkDownloadBook()
         YXUserModel.default.lastStoredDate = Date()
         YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
         let vc = YXExerciseViewController()
