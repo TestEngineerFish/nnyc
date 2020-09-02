@@ -231,6 +231,17 @@
     self.textColorType = TextColorWhite;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.containerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(AdaptSize(16));
+        make.left.equalTo(self.view).offset(AdaptSize(16));
+        make.right.equalTo(self.view).offset(AdaptSize(-16));
+        make.height.mas_equalTo(364);
+        make.centerX.equalTo(self.view);
+    }];
+}
+
 - (void)updateDotStatus {
     NSInteger badgeNum = [YXRedDotManager.share getFeedbackReplyBadgeNum];
     [self.dotView setHidden:(badgeNum <= 0)];

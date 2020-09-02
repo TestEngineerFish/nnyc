@@ -365,8 +365,11 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
     /// 检测当前词书是否需要更新
     private func checkDownloadBook() {
-        let taskModel = YXWordBookResourceModel(type: .single, book: YXUserModel.default.currentBookId) {
-            YXWordBookResourceManager.shared.contrastBookData(by: YXUserModel.default.currentBookId)
+        guard let bookId = YXUserModel.default.currentBookId else {
+            return
+        }
+        let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {
+            YXWordBookResourceManager.shared.contrastBookData(by: bookId)
         }
         YXWordBookResourceManager.shared.addTask(model: taskModel)
     }
@@ -551,8 +554,10 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
     private func study(focus: Bool) {
         guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
+            YXUtils.showHUD(self.view, title: "当前数据未加载完成，请稍后重试")
             return
         }
+        self.checkDownloadBook()
         YXUserModel.default.lastStoredDate = Date()
         YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
         let vc = YXExerciseViewController()
