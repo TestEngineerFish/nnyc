@@ -127,13 +127,13 @@ class YXShareViewController: YXViewController {
         // 设置分享数据
         self.shareChannelView.shareType              = .image
         self.shareChannelView.coinImageView.isHidden = hideCoin
-        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
-            guard let self = self else { return }
-            // 挑战分享不算打卡
-            if self.shareType != .challengeResult {
-                self.punch(channel)
-            }
-        }
+//        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
+//            guard let self = self else { return }
+//            // 挑战分享不算打卡
+//            if self.shareType != .challengeResult {
+//                self.punch(channel)
+//            }
+//        }
     }
     
     private func createSubviews() {
