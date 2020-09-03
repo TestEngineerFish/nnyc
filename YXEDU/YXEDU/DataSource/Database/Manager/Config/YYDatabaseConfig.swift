@@ -143,6 +143,7 @@ extension YYSQLManager {
         learn_type integer(1) NOT NULL,
         word_id integer NOT NULL,
         word char(128),
+        grade integer(4) NOT NULL DEFAULT(0),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(8) NOT NULL DEFAULT(0),
         word_type integer(1) NOT NULL DEFAULT(0),
@@ -196,6 +197,7 @@ extension YYSQLManager {
         app_version text,
         app_build text,
         sys_version text,
+        create_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
         remark text
         );
         """

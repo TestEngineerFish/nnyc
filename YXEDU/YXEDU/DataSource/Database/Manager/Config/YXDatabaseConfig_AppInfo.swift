@@ -32,13 +32,13 @@ extension YYSQLManager {
         /// 获取记录总数
         case recordAmount =
         """
-        SELECT count(*) FROM app_info
+        SELECT count(*) amount FROM app_info
         """
         /// 删除旧的记录
         case delegetOldRecord =
         """
         DELETE FROM app_info
-        WHERE id < ?
+        WHERE id <= ?
         """
     }
 }

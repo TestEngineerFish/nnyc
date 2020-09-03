@@ -102,6 +102,14 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: .currentAvatarImage) as? UIImage
         }
     }
+    var lastVersion: String? {
+        set {
+            YYCache.set(newValue, forKey: "kLastVersion")
+        }
+        get {
+            return YYCache.object(forKey: "kLastVersion") as? String
+        }
+    }
     /// 金币使用、获取说明
     var coinExplainUrl: String? {
         set {

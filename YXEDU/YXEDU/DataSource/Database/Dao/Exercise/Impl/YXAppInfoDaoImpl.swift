@@ -8,7 +8,7 @@
 
 import Foundation
 
-class YXAppInfoDaoImpl: YXBaseExerciseDaoImpl, YXAppInfoDao {
+class YXAppInfoDaoImpl: YYDatabase, YXAppInfoDao {
 
     /// 插入记录
     /// - Parameters:
@@ -37,7 +37,7 @@ class YXAppInfoDaoImpl: YXBaseExerciseDaoImpl, YXAppInfoDao {
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: []), result.next() else {
             return 0
         }
-        return Int(result.int(forColumn: "count"))
+        return Int(result.int(forColumn: "amount"))
     }
 
     /// 删除旧的记录

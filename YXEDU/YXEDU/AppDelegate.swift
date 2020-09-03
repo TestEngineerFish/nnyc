@@ -24,24 +24,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        // 检测是否刚升级
-        guard let lastRecord = YXAppInfoDaoImpl().lastRecord(), let currentVersion = UIDevice().appVersion() else {
-            return true
-        }
-        if lastRecord.appVersion != currentVersion {
-            YXLog("刚升级⬆️")
+        // 检测是否首次安装或者升级安装
+        if YXUserModel.default.lastVersion == nil {
+            print("首次安装")
+        } else if YXUserModel.default.lastVersion != UIDevice().appVersion() {
+            print("刚升级")
         } else {
-            YXLog("未升级")
+            print("未升级")
+        }
+        YXUserModel.default.lastVersion = UIDevice().appVersion()
+
+        if let lastRecord = YXAppInfoDaoImpl().lastRecord() {
+            // 设备信息表瘦身
+            let maxRecord = 3000
+            if YXAppInfoDaoImpl().recordAmount() > maxRecord {
+                let firstId = lastRecord.id - maxRecord + 1
+                YXAppInfoDaoImpl().deleteOrder(first: firstId)
+            }
         }
         // 添加App信息
-        YXAppInfoDaoImpl().insertRecord(appVersion: UIDevice().appVersion(), appBuild: YRDevice.appBuild(), sysVersion: UIDevice().sysVersion(), remark: "2不下载词书")
+        YXAppInfoDaoImpl().insertRecord(appVersion: UIDevice().appVersion(), appBuild: YRDevice.appBuild(), sysVersion: UIDevice().sysVersion(), remark: "取消下载词书,仅主流程和打卡作业保留下载")
 
-        // 设备信息表瘦身
-        let maxAmount = 3000
-        if YXAppInfoDaoImpl().recordAmount() > maxAmount {
-            let firstId    = lastRecord.id - maxAmount
-            YXAppInfoDaoImpl().deleteOrder(first: firstId)
-        }
         return true
     }
     
