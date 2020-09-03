@@ -70,7 +70,7 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
         guard let localModel = self.selectLocalModel, let schoolModel = self.selectSchoolModel else {
             return
         }
-        self.submit(schoolId: schoolModel.id, areaId: localModel.id)
+        self.submit(schoolId: schoolModel.id, areaId: localModel.id, schoolName: schoolModel.name)
     }
 
     func toNextView() {
@@ -86,8 +86,8 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     // MARK: ==== Request ====
 
-    @objc private func submit(schoolId: Int, areaId: Int) {
-        let request = YXSelectSchoolRequestManager.submit(schoolId: schoolId, areaId: areaId)
+    @objc private func submit(schoolId: Int, areaId: Int, schoolName: String) {
+        let request = YXSelectSchoolRequestManager.submit(schoolId: schoolId, areaId: areaId, schoolName: schoolName)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             self.toNextView()

@@ -279,9 +279,9 @@ struct YXAPI {
     // MARK: - Search School
     struct SelectSchool {
         /// 搜索学校列表
-        static let searchSchool = "/api/v1/school/list"
+        static let searchSchool = "/api/v2/school/list"
         /// 提交学生所属的学校
-        static let submit = "/api/v1/school/create"
+        static let submit = "/api/v2/school/create"
     }
 
     // MARK: - MyClass

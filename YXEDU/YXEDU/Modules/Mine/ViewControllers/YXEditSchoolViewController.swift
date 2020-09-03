@@ -37,12 +37,10 @@ class YXEditSchoolViewController: YXViewController, YXEditSchoolViewProtocol, YX
         self.selectSchollView.delegate  = self
         let cityName = self.getCityName()
         if let model = self.schoolInfoModel, !model.schoolName.isEmpty, !cityName.isEmpty, let localModel = YXLocalModel(JSON: ["id" : model.cityId]), let schoolModel = YXLocalModel(JSON: ["id" : model.schoolId, "name" : model.schoolName]) {
-            self.customNavigationBar?.title = "修改学校信息"
             self.selectedLocal(local: localModel, name: cityName)
             self.selectSchool(school: schoolModel)
-        } else {
-            self.customNavigationBar?.title = "补充学校信息"
         }
+        self.customNavigationBar?.title = "学校信息"
     }
 
     // MARK: ==== Request ====

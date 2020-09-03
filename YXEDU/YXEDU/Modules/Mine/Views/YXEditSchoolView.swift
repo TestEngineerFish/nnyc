@@ -22,7 +22,7 @@ class YXEditSchoolView: YXView {
 
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text          = "请选择您孩子的就读学校"
+        label.text          = "请选择就读学校"
         label.textColor     = UIColor.black1
         label.font          = UIFont.mediumFont(ofSize: AdaptFontSize(20))
         label.textAlignment = .left
