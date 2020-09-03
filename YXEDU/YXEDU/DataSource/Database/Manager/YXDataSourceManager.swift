@@ -108,6 +108,9 @@ extension YYDataSourceManager {
         if !db.columnExists("grade", inTableWithName: "all_exercise_v1") {
             let sql = YYSQLManager.ExerciseSQL.addGradeField.rawValue
             db.executeUpdate(sql, withArgumentsIn: [])
+            // 清除所有学习记录
+            YXExerciseServiceImpl().cleanAllStudyRecord()
+            YXLog("版本升级到2.7.9及以上，清除之前缓存")
         }
     }
 

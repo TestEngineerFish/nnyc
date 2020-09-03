@@ -107,7 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
-        YXWordBookResourceManager.stop = false
         // 检测各种弹框
         YXAlertQueueManager.default.processQueue()
     }
