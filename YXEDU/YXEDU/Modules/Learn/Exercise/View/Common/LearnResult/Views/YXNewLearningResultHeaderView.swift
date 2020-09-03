@@ -73,7 +73,7 @@ class YXNewLearningResultHeaderView: YXView {
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptFontSize(-20))
-            make.top.equalTo(starView.snp.bottom).offset(AdaptSize(5))
+            make.top.equalTo(starView.snp.bottom)
         }
         descriptionLabel.snp.makeConstraints { (make) in
             make.left.right.equalTo(titleLabel)

@@ -10,6 +10,7 @@ import Foundation
 
 protocol YXNewLearningResultShareViewProtocol: NSObjectProtocol {
     func refreshAction(complete block: ((UIImage?)->Void)?)
+    func shareFinished(type: YXShareChannel)
 }
 
 class YXNewLearningResultShareView: YXView {
@@ -52,7 +53,7 @@ class YXNewLearningResultShareView: YXView {
     var shareChannelView: YXShareDefaultView = {
         let shareView = YXShareDefaultView(type: .white, frame: CGRect.zero)
         shareView.shareType = .image
-        shareView.coinImageView.isHidden = true
+        shareView.coinImageView.isHidden = false
         return shareView
     }()
     var loadingView = UIActivityIndicatorView(style: .gray)
@@ -132,6 +133,9 @@ class YXNewLearningResultShareView: YXView {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         self.closeButton.addTarget(self, action: #selector(self.hide), for: .touchUpInside)
         self.refreshButton.addTarget(self, action: #selector(self.refreshAction), for: .touchUpInside)
+        self.shareChannelView.finishedBlock = { [weak self] type in
+            self?.delegate?.shareFinished(type: type)
+        }
     }
 
     // MARK: ==== Event ====

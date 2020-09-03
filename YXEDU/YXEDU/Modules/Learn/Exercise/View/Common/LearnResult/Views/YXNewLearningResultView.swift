@@ -87,7 +87,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         let button = UIButton()
         button.setTitle("打卡", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(15))
+        button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: kSafeBottomMargin, right: 0)
         return button
     }()
@@ -138,7 +138,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         }
         resultView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(kStatusBarHeight)
+            make.top.equalToSuperview().offset(kStatusBarHeight - AdaptSize(8))
             make.height.equalTo(AdaptSize(178))
         }
         collectView.snp.makeConstraints { (make) in
@@ -196,7 +196,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
     private func punchAction() {
         if self.calendarContentView.todayCell?.isShowed == .some(false) {
             self.calendarContentView.todayCell?.showAnimation(duration: 0.8)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.punchAction()
                 self.punchButton.setTitle("打卡分享", for: .normal)
@@ -261,11 +261,12 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
         opacityAnimation.values = [1.0, 0.0]
 
-        let upAnimation     = CABasicAnimation(keyPath: "transform.translation.y")
-        upAnimation.toValue = label.frame.origin.y - 40
+        let upAnimation       = CABasicAnimation(keyPath: "transform.translation.y")
+        upAnimation.fromValue = label.frame.origin.y + 2
+        upAnimation.toValue   = label.frame.origin.y - 30
 
         let animationGroup = CAAnimationGroup()
-        animationGroup.animations = [opacityAnimation, upAnimation]
+        animationGroup.animations     = [opacityAnimation, upAnimation]
         animationGroup.autoreverses   = false
         animationGroup.duration       = 0.25
         animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)

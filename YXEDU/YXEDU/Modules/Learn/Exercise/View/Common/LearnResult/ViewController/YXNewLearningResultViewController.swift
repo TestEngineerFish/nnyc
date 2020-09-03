@@ -95,6 +95,12 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         }
     }
 
+    private func requestShare(type: YXShareChannel) {
+        if type == .timeLine {
+            self.shareView.shareChannelView.coinImageView.isHidden = true
+        }
+    }
+
     // MARK: ==== YXNewLearningResultViewProtocol ====
     func closedAction() {
         self.navigationController?.popToRootViewController(animated: true)
@@ -109,6 +115,10 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         self.shareManager.refreshImage(complete: { (image) in
             block?(image)
         })
+    }
+
+    func shareFinished(type: YXShareChannel) {
+        self.requestShare(type: type)
     }
 
     // MARK: ==== Tools ====

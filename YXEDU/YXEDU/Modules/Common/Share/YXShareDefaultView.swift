@@ -167,10 +167,18 @@ class YXShareDefaultView: UIView {
             make.left.equalTo(wechatImageView.snp.right).offset(AdaptIconSize(62))
             make.size.equalTo(CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38)))
         }
-        coinImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(25)))
-            make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
-            make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+        if type == .white {
+            coinImageView.snp.makeConstraints { (make) in
+                make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+                make.right.equalTo(timeLineImageView).offset(AdaptSize(10))
+                make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+            }
+        } else {
+            coinImageView.snp.makeConstraints { (make) in
+                make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(25)))
+                make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
+                make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+            }
         }
         timeLineLabel.sizeToFit()
         timeLineLabel.snp.makeConstraints { (make) in
