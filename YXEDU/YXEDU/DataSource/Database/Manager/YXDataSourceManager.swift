@@ -70,7 +70,7 @@ extension YYDataSourceManager {
     
     private func wordRunner() throws -> FMDatabase {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
-        let db = try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
+        let db = try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateTables)
         return db
     }
     

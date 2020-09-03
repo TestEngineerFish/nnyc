@@ -22,6 +22,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public static let `default` = UIApplication.shared.delegate as! AppDelegate
     
     var window: UIWindow?
+
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // 检测是否刚升级
+        guard let lastRecord = YXAppInfoDaoImpl().lastRecord(), let currentVersion = UIDevice().appVersion() else {
+            return true
+        }
+        if lastRecord.appVersion != currentVersion {
+            YXLog("刚升级⬆️")
+        } else {
+            YXLog("未升级")
+        }
+        // 添加App信息
+        YXAppInfoDaoImpl().insertRecord(appVersion: UIDevice().appVersion(), appBuild: YRDevice.appBuild(), sysVersion: UIDevice().sysVersion(), remark: "2不下载词书")
+
+        // 设备信息表瘦身
+        let maxAmount = 3000
+        if YXAppInfoDaoImpl().recordAmount() > maxAmount {
+            let firstId    = lastRecord.id - maxAmount
+            YXAppInfoDaoImpl().deleteOrder(first: firstId)
+        }
+        return true
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)

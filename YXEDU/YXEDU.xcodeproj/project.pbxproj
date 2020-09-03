@@ -130,6 +130,9 @@
 		2277CD0A24FDDD8500F26C33 /* YXNewLearningResultShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD0924FDDD8400F26C33 /* YXNewLearningResultShareView.swift */; };
 		2277CD0D24FDECCE00F26C33 /* YXShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD0C24FDECCE00F26C33 /* YXShareManager.swift */; };
 		2277CD0F24FE24F100F26C33 /* YXCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD0E24FE24F100F26C33 /* YXCalendarCell.swift */; };
+		2277CD152500914300F26C33 /* YXAppInfoDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD142500914300F26C33 /* YXAppInfoDao.swift */; };
+		2277CD172500920400F26C33 /* YXDatabaseConfig_AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD162500920400F26C33 /* YXDatabaseConfig_AppInfo.swift */; };
+		2277CD19250092D300F26C33 /* YXAppInfoDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD18250092D300F26C33 /* YXAppInfoDaoImpl.swift */; };
 		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
 		2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F256236D544F0080A0B2 /* YXWordButton.swift */; };
 		227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 227C6EEB228A5AA800282EA1 /* iconfont.ttf */; };
@@ -769,6 +772,9 @@
 		2277CD0924FDDD8400F26C33 /* YXNewLearningResultShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNewLearningResultShareView.swift; sourceTree = "<group>"; };
 		2277CD0C24FDECCE00F26C33 /* YXShareManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXShareManager.swift; sourceTree = "<group>"; };
 		2277CD0E24FE24F100F26C33 /* YXCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarCell.swift; sourceTree = "<group>"; };
+		2277CD142500914300F26C33 /* YXAppInfoDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAppInfoDao.swift; sourceTree = "<group>"; };
+		2277CD162500920400F26C33 /* YXDatabaseConfig_AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXDatabaseConfig_AppInfo.swift; sourceTree = "<group>"; };
+		2277CD18250092D300F26C33 /* YXAppInfoDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAppInfoDaoImpl.swift; sourceTree = "<group>"; };
 		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
 		2279F256236D544F0080A0B2 /* YXWordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordButton.swift; sourceTree = "<group>"; };
 		227C6EEB228A5AA800282EA1 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iconfont.ttf; sourceTree = "<group>"; };
@@ -1956,6 +1962,7 @@
 				2299106C2492115B00F1C198 /* YXDatabaseConfig+CurrentTurn.swift */,
 				2299106E2492118200F1C198 /* YXDatabaseConfig+SearchHistory.swift */,
 				22991070249211AB00F1C198 /* YXDatabaseConfig+OptionConfig.swift */,
+				2277CD162500920400F26C33 /* YXDatabaseConfig_AppInfo.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2855,6 +2862,7 @@
 				EE1B6953246C2A91000EADB2 /* YXExerciseDao.swift */,
 				228105DD2487E21F0025F03F /* YXStudyRecordDao.swift */,
 				EE4201CF248A310400231704 /* YXWordStepDao.swift */,
+				2277CD142500914300F26C33 /* YXAppInfoDao.swift */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -2867,6 +2875,7 @@
 				EE1B696F2473B031000EADB2 /* YXExerciseDaoImpl.swift */,
 				228105DB2487E1FC0025F03F /* YXStudyRecordDaoImpl.swift */,
 				EE1B69682472B0C8000EADB2 /* YXWordStepDaoImpl.swift */,
+				2277CD18250092D300F26C33 /* YXAppInfoDaoImpl.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -4663,6 +4672,7 @@
 				771512E4236713E600F6D400 /* YXMineViewController.swift in Sources */,
 				EE1E4AA623694D59007D248F /* YXFillWordAccordingToChinese_ConnectionExerciseView.swift in Sources */,
 				7709753323992FF70071A779 /* YXWordDetailFeaturedView.swift in Sources */,
+				2277CD152500914300F26C33 /* YXAppInfoDao.swift in Sources */,
 				EE5EF259232740B800655654 /* UIImage+Custom.m in Sources */,
 				224A2FC7238233E100AD99B0 /* YXTaskMapView.swift in Sources */,
 				22E70D4F24A1ABF30039C634 /* YXSelectSchoolRequestManager.swift in Sources */,
@@ -4701,6 +4711,7 @@
 				EE77210A237C1F8400CD632E /* YYMediaCache.swift in Sources */,
 				EE5E0218232756BF00655654 /* MDMulticastDelegate.m in Sources */,
 				EE77211E23841FEC00CD632E /* YXExerciseReportModel.swift in Sources */,
+				2277CD172500920400F26C33 /* YXDatabaseConfig_AppInfo.swift in Sources */,
 				EE08F3662372E06B00FA3FDF /* YXWordModel.swift in Sources */,
 				7709753023992D570071A779 /* YXWordDetailFeaturedClassicCell.swift in Sources */,
 				EE08F3752372E3C200FA3FDF /* YYBaseResopnse.swift in Sources */,
@@ -4736,6 +4747,7 @@
 				77AED817242EF71300E3F884 /* YXReviewPlanStatusModel.swift in Sources */,
 				22ED54C0236B23AD00011B82 /* YXLetterButton.swift in Sources */,
 				EE5EF251232740B800655654 /* CALayer+YXCustom.m in Sources */,
+				2277CD19250092D300F26C33 /* YXAppInfoDaoImpl.swift in Sources */,
 				EE1B69702473B031000EADB2 /* YXExerciseDaoImpl.swift in Sources */,
 				EE5E008C23274FEB00655654 /* YXCalendarWordCell.m in Sources */,
 				224AE702249A00C1009EAB06 /* YXMyClassStudentCell.swift in Sources */,
@@ -4913,7 +4925,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.7.6;
+				MARKETING_VERSION = 2.7.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4963,7 +4975,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.7.6;
+				MARKETING_VERSION = 2.7.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

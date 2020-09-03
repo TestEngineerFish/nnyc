@@ -89,7 +89,6 @@ class YXUserModel: NSObject {
                 self.userAvatarImage = UIImage(data: imageData)
             }
         }
-
         get {
             return YYCache.object(forKey: .userAvatarPath) as? String
         }
@@ -99,7 +98,6 @@ class YXUserModel: NSObject {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentAvatarImage)
         }
-
         get {
             return YYCache.object(forKey: .currentAvatarImage) as? UIImage
         }
