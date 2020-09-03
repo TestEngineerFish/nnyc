@@ -160,7 +160,7 @@
                 }
             } else {
                 YXUtils.showHUD(nil, title: "加载学习数据失败，请稍后再试")
-                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
@@ -283,7 +283,7 @@
 
     @objc private func downloadWordError() {
         self.loadingView?.stopAnimation()
-        self.navigationController?.popViewController(animated: false)
+        self.navigationController?.popToRootViewController(animated: true)
         YXUtils.showHUD(nil, title: "下载词书失败，请稍后重试")
     }
 

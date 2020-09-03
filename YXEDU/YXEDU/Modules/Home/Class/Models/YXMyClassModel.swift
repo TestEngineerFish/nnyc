@@ -115,6 +115,9 @@ struct YXMyWorkModel: Mappable {
     var studyWordCount    = 0
     var studyDayCount     = 0
     var bookHash          = [String:String]()
+    // 作业码提取
+    var teacherName: String?
+    var isFirstJoin: Bool = true
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
@@ -134,6 +137,8 @@ struct YXMyWorkModel: Mappable {
         studyWordCount <- map["study_words"]
         studyDayCount  <- map["study_days"]
         bookHash       <- map["hashkey"]
+        teacherName    <- map["teacher_name"]
+        isFirstJoin    <- map["first_add_class"]
         if type == .punch {
             shareWorkStatus    <- (map["no_status"], EnumTransform<YXShareWorkStatusType>())
         } else {
@@ -248,6 +253,7 @@ struct YXMyClassSummaryModel: Mappable {
     var teacherName: String = ""
     var isFirstJoin: Bool   = false
 
+    init() {}
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {

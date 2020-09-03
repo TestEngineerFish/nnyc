@@ -40,7 +40,6 @@ class YXMyClassEditNameViewController: YXViewController, YXMyClassEditNameViewPr
         let request = YXOCRequest.changeName(name: name)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
-            self.navigationController?.popViewController(animated: true)
             self.submitBlock?(true)
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
@@ -57,6 +56,7 @@ class YXMyClassEditNameViewController: YXViewController, YXMyClassEditNameViewPr
         }
     }
     func editName(name: String) {
+        self.contentView.endEditing(true)
         self.requestEditName(name: name)
     }
 }
