@@ -133,6 +133,7 @@
 		2277CD152500914300F26C33 /* YXAppInfoDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD142500914300F26C33 /* YXAppInfoDao.swift */; };
 		2277CD172500920400F26C33 /* YXDatabaseConfig_AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD162500920400F26C33 /* YXDatabaseConfig_AppInfo.swift */; };
 		2277CD19250092D300F26C33 /* YXAppInfoDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD18250092D300F26C33 /* YXAppInfoDaoImpl.swift */; };
+		2277CD1D2502460600F26C33 /* YXRollNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2277CD1C2502460500F26C33 /* YXRollNumberView.swift */; };
 		2279F253236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */; };
 		2279F257236D544F0080A0B2 /* YXWordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2279F256236D544F0080A0B2 /* YXWordButton.swift */; };
 		227C6EEC228A5AA800282EA1 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 227C6EEB228A5AA800282EA1 /* iconfont.ttf */; };
@@ -775,6 +776,7 @@
 		2277CD142500914300F26C33 /* YXAppInfoDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAppInfoDao.swift; sourceTree = "<group>"; };
 		2277CD162500920400F26C33 /* YXDatabaseConfig_AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXDatabaseConfig_AppInfo.swift; sourceTree = "<group>"; };
 		2277CD18250092D300F26C33 /* YXAppInfoDaoImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXAppInfoDaoImpl.swift; sourceTree = "<group>"; };
+		2277CD1C2502460500F26C33 /* YXRollNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXRollNumberView.swift; sourceTree = "<group>"; };
 		2279F252236D2EDA0080A0B2 /* YXListenAndLackWordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXListenAndLackWordQuestionView.swift; sourceTree = "<group>"; };
 		2279F256236D544F0080A0B2 /* YXWordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXWordButton.swift; sourceTree = "<group>"; };
 		227C6EEB228A5AA800282EA1 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iconfont.ttf; sourceTree = "<group>"; };
@@ -1722,6 +1724,7 @@
 				223AC10524F63C8700C85800 /* YXNewLearningResultHeaderView.swift */,
 				223AC10724F63E2200C85800 /* YXNewLearningResultCalendarView.swift */,
 				2277CD0E24FE24F100F26C33 /* YXCalendarCell.swift */,
+				2277CD1C2502460500F26C33 /* YXRollNumberView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4325,6 +4328,7 @@
 				2247360624BC7F8400745612 /* YXActivityModel.swift in Sources */,
 				EEACEB06239E62160036B3A2 /* YXReviewViewController.swift in Sources */,
 				77B0A5B323B1E53B0093A181 /* YXWordBookRequest.swift in Sources */,
+				2277CD1D2502460600F26C33 /* YXRollNumberView.swift in Sources */,
 				77626C04239E37E600B9407A /* YXWordListEditCell.swift in Sources */,
 				776F7480238BC7690027D166 /* YXBadgeListModel.swift in Sources */,
 				EE5E02612327793800655654 /* BSRootVC.m in Sources */,

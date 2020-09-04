@@ -13,7 +13,7 @@ protocol YXNewLearningResultViewProtocol: NSObjectProtocol {
     func punchAction()
 }
 
-class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultCalendarViewProtocol, UIScrollViewDelegate {
+class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, UIScrollViewDelegate {
 
     var fromWordCount = 0
     var toWordCount   = 0
@@ -56,6 +56,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         label.textColor     = UIColor.orange1
         label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
         label.textAlignment = .center
+        label.isHidden      = true
         return label
     }()
     var wordTitleLabel: UILabel = {
@@ -72,6 +73,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         label.textColor     = UIColor.orange1
         label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
         label.textAlignment = .center
+        label.isHidden      = true
         return label
     }()
     var dayTitleLabel: UILabel = {
@@ -142,7 +144,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
             make.height.equalTo(AdaptSize(178))
         }
         collectView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(AdaptFontSize(20))
+            make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
             make.top.equalTo(resultView.snp.bottom).offset(AdaptFontSize(20))
             make.height.equalTo(AdaptSize(90))
@@ -152,7 +154,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
             make.top.equalToSuperview().offset(AdaptSize(15))
         }
         wordTitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(wordCountLabel.snp.bottom).offset(AdaptSize(1))
+            make.bottom.equalToSuperview().offset(AdaptSize(-20))
             make.centerX.equalTo(wordCountLabel)
         }
         dayCountLabel.snp.makeConstraints { (make) in
@@ -160,7 +162,7 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
             make.top.equalToSuperview().offset(AdaptSize(15))
         }
         dayTitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(dayCountLabel.snp.bottom).offset(AdaptSize(1))
+            make.centerY.equalTo(wordTitleLabel)
             make.centerX.equalTo(dayCountLabel)
         }
         calendarContentView.snp.makeConstraints { (make) in
@@ -234,52 +236,24 @@ class YXNewLearningResultView: YXView, CAAnimationDelegate, YXNewLearningResultC
         YYCache.set(false, forKey: cacheKey)
         if isFirstStudy {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.augmentCount()
+                self?.setRollNumberView(showAnimation: true)
             }
         } else {
+            self.wordCountLabel.isHidden = false
+            self.dayCountLabel.isHidden  = false
             self.wordCountLabel.text = "\(toWordCount)"
             self.dayCountLabel.text  = "\(toDayCount)"
         }
+
     }
 
-    // MARK: ==== Tools ====
-    private func augmentCount() {
-        self.wordCountLabel.text = "\(self.fromWordCount)"
-        self.dayCountLabel.text  = "\(self.fromDayCount)"
-        if self.fromWordCount < self.toWordCount {
-            self.showNumberAnimation(label: self.wordCountLabel)
-            self.fromWordCount += 1
-        }
-        if self.fromDayCount < self.toDayCount {
-            self.showNumberAnimation(label: self.dayCountLabel)
-            self.fromDayCount += 1
-        }
-    }
-
-    private func showNumberAnimation(label: UILabel) {
-
-        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
-        opacityAnimation.values = [1.0, 0.0]
-
-        let upAnimation       = CABasicAnimation(keyPath: "transform.translation.y")
-        upAnimation.fromValue = label.frame.origin.y + 2
-        upAnimation.toValue   = label.frame.origin.y - 30
-
-        let animationGroup = CAAnimationGroup()
-        animationGroup.animations     = [opacityAnimation, upAnimation]
-        animationGroup.autoreverses   = false
-        animationGroup.duration       = 0.25
-        animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)
-        animationGroup.delegate       = self
-
-        label.layer.add(animationGroup, forKey: "animationGroup")
-    }
-
-    // MARK: ==== CAAnimationDelegate ====
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            self.augmentCount()
-        }
+    private func setRollNumberView(showAnimation: Bool) {
+        let wordRollView = YXRollNumberView(from: fromWordCount, to: toWordCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, frame: CGRect(x: 0, y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+        let dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+        self.collectView.addSubview(wordRollView)
+        self.collectView.addSubview(dayRollView)
+        wordRollView.show()
+        dayRollView.show()
     }
 
     // MARK: ==== YXNewLearningResultCalendarViewProtocol ====
