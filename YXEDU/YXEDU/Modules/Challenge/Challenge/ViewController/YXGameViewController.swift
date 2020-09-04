@@ -154,6 +154,7 @@ class YXGameViewController: YXViewController, YXGameViewControllerProtocol {
                         let shareVC = YXShareViewController()
                         shareVC.shareType   = .challengeResult
                         shareVC.gameModel   = model
+                        shareVC.learnType   = .challengeGame
                         shareVC.backAction  = {
                             YRRouter.popViewController(2, animated: true)
                         }

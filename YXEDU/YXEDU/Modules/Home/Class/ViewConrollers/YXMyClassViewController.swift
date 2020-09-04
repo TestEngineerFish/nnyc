@@ -157,13 +157,16 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     private func requestWorkList() {
         let request = YXMyClassRequestManager.workList
+        YXUtils.showProgress(self.view)
         YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let listModel = response.data else {
                 return
             }
+            YXUtils.hideHUD(self.view)
             self.workListModel = listModel
             self.workTableView.reloadData()
-        }) { (error) in
+        }) { [weak self] (error) in
+            YXUtils.hideHUD(self?.view)
             YXUtils.showHUD(nil, title: error.message)
         }
     }

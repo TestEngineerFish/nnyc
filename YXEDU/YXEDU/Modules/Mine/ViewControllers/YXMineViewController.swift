@@ -165,9 +165,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.calendarLabel.text = "\(loginModel.user?.punchDays ?? 0)"
 
         // 学校信息
-        if let schollLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(1) as? UILabel {
-            schollLabel.text = (loginModel.user?.schoolInfo?.schoolId != .some(0)) ? "学校信息" : "补充学校信息"
-        }
         if let schoolDescriptionLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel {
             schoolDescriptionLabel.text = (loginModel.user?.schoolInfo?.schoolId != .some(0)) ? "去修改" : "去填写"
         }

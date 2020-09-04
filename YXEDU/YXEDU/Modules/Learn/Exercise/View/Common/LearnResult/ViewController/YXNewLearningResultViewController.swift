@@ -64,6 +64,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         self.contentView.setData(currentLearnedWordsCount: newLearnAmount + reviewLearnAmount, model: _model)
         self.shareManager.setData(wordsAmount: _model.allWordNum, daysAmount: _model.studyDay, type: self.shareType)
         self.shareView.shareChannelView.coinImageView.isHidden = !_model.isShowCoin
+        NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
     }
 
     // MARK: ==== Request ====
@@ -90,6 +91,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
                 self.contentView.isHidden = false
                 self.model = self.transformModel(response.data)
                 self.setData()
+                self.updatePunchCount()
             }
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
@@ -104,6 +106,18 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
             }
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
+        }
+    }
+
+    // MARK: ==== Event ====
+    private func updatePunchCount() {
+        if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(count + 1)")
+            YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
+
+        } else {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
+            YYCache.set(1, forKey: YXLocalKey.punchCount)
         }
     }
 

@@ -127,13 +127,14 @@ class YXShareViewController: YXViewController {
         // 设置分享数据
         self.shareChannelView.shareType              = .image
         self.shareChannelView.coinImageView.isHidden = hideCoin
-//        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
-//            guard let self = self else { return }
+        self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
+            guard let self = self, let learnType = self.learnType else { return }
+            self.requestShare(shareType: channel, learnType: learnType)
 //            // 挑战分享不算打卡
 //            if self.shareType != .challengeResult {
 //                self.punch(channel)
 //            }
-//        }
+        }
     }
     
     private func createSubviews() {
@@ -250,6 +251,21 @@ class YXShareViewController: YXViewController {
                     self.shareChannelView.shareImage = self.shareImageView.image
                 }
             }
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
+        }
+    }
+
+    private func requestShare(shareType: YXShareChannel, learnType: YXLearnType) {
+        let request = YXExerciseRequest.learnShare(shareType: shareType.rawValue, learnType: learnType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            var isFinished = false
+            if shareType == .timeLine {
+                self.shareChannelView.coinImageView.isHidden = true
+                isFinished = true
+            }
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
+            NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
         }

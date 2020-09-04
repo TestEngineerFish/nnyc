@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
 
@@ -174,6 +173,7 @@ class YXExerciseResultViewController: YXViewController {
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
+                self.updatePunchCount()
             } else {
                 UIView.toast("请求数据失败")
                 self.navigationController?.popViewController(animated: true)
@@ -187,5 +187,17 @@ class YXExerciseResultViewController: YXViewController {
             return
         }
         self.shareFinished = isFinised
+    }
+
+    // MARK: ==== Event ====
+    private func updatePunchCount() {
+        if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(count + 1)")
+            YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
+
+        } else {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
+            YYCache.set(1, forKey: YXLocalKey.punchCount)
+        }
     }
 }
