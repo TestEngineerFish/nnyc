@@ -185,8 +185,15 @@ class YXMyClassEditNameView: YXView, UITextFieldDelegate {
     }
 
     func setData(model: YXMyClassSummaryModel) {
-        self.titleLabel.text   = "你已成功加入 " + model.className
+        var titleText = "班级"
+        if !model.className.isEmpty {
+            titleText = String(format: "<%@>", model.className)
+        }
+        self.titleLabel.text   = String(format: "你已成功加入%@", titleText)
         self.teacherLabel.text = "老师：" + model.teacherName
+        if model.teacherName.isEmpty {
+            self.teacherLabel.isHidden = true
+        }
     }
 
     // MARK: ==== UITextFieldDelegate ====
