@@ -16,6 +16,7 @@ public enum YXExerciseRequest: YYBaseRequest {
     case addUserBook(userId: String, bookId: Int, unitId: Int)
     case reportListenScore(wordId: Int, score: Int)
     case stepConfig
+    case learnShare(shareType: Int, learnType: Int)
 }
 
 
@@ -24,7 +25,7 @@ extension YXExerciseRequest {
         switch self {
         case .exercise, .learnMap, .learnResult, .addUserBook, .stepConfig:
             return .get
-        case .report, .reportListenScore:
+        case .report, .reportListenScore, .learnShare:
             return .post
         }
     }
@@ -45,6 +46,8 @@ extension YXExerciseRequest {
             return YXAPI.Exercise.reportListenScore
         case .stepConfig:
             return YXAPI.Exercise.stepConfig
+        case .learnShare:
+            return YXAPI.Exercise.learnShare
         }
     }
 
@@ -62,6 +65,8 @@ extension YXExerciseRequest {
             return ["learn_type" : type, "cost_time" : time, "learn_result" : result, "review_id" : reviewId, "book_id" : bookId]
         case .reportListenScore(let wordId, let score):
             return ["word_id" : wordId, "listen_score" : score]
+        case .learnShare(let shareType, let learnType):
+            return ["type" : shareType, "learn_type" : learnType]
         default:
             return nil
         }

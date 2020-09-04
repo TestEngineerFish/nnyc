@@ -20,10 +20,6 @@ class YXShareManager: NSObject {
     private var currentBackgroundImageUrl: String?
     private var currentBackgroundImageIndex = 0
 
-//    override init() {
-//        super.init()
-//    }
-
     // MARK: ==== Event ====
 
     func setData(wordsAmount: Int, daysAmount: Int, type: YXShareImageType) {

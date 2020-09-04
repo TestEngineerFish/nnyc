@@ -101,6 +101,8 @@ struct YXAPI {
         static let reportListenScore = "/api/v1/learn/updatelistenscore"
         /// 获得学习步骤配置
         static let stepConfig = "/api/v1/learn/getstepsconfig"
+        /// 学习结果分享
+        static let learnShare = "api/v3/learn/share"
     }
     
     

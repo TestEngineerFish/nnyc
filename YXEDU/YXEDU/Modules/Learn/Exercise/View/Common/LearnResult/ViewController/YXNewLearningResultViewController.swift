@@ -19,7 +19,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
 
     var contentView = YXNewLearningResultView()
     var loadingView = YXExerciseResultLoadingView()
-    lazy private var shareView = YXNewLearningResultShareView()
+    private var shareView    = YXNewLearningResultShareView()
     private var shareManager = YXShareManager()
 
     override func viewDidLoad() {
@@ -63,6 +63,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         guard let _model = self.model else { return }
         self.contentView.setData(currentLearnedWordsCount: newLearnAmount + reviewLearnAmount, model: _model)
         self.shareManager.setData(wordsAmount: _model.allWordNum, daysAmount: _model.studyDay, type: self.shareType)
+        self.shareView.shareChannelView.coinImageView.isHidden = !_model.isShowCoin
     }
 
     // MARK: ==== Request ====
@@ -95,9 +96,14 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         }
     }
 
-    private func requestShare(type: YXShareChannel) {
-        if type == .timeLine {
-            self.shareView.shareChannelView.coinImageView.isHidden = true
+    private func requestShare(shareType: YXShareChannel, learnType: YXLearnType) {
+        let request = YXExerciseRequest.learnShare(shareType: shareType.rawValue, learnType: learnType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            if shareType == .timeLine {
+                self.shareView.shareChannelView.coinImageView.isHidden = true
+            }
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -118,7 +124,8 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
     }
 
     func shareFinished(type: YXShareChannel) {
-        self.requestShare(type: type)
+        let learnType = learnConfig?.learnType ?? .base
+        self.requestShare(shareType: type, learnType: learnType)
     }
 
     // MARK: ==== Tools ====
