@@ -53,7 +53,6 @@ class YXNewLearningResultShareView: YXView {
     var shareChannelView: YXShareDefaultView = {
         let shareView = YXShareDefaultView(type: .white, frame: CGRect.zero)
         shareView.shareType = .image
-        shareView.coinImageView.isHidden = false
         return shareView
     }()
     var loadingView = UIActivityIndicatorView(style: .gray)

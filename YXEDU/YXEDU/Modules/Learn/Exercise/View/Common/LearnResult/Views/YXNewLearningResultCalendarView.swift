@@ -84,8 +84,7 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
 
     // MARK: ==== Request ====
     private func requestCalendarData() {
-        let date = NSDate().offsetMonths(-1)
-        let request = YXCalendarRequest.getMonthly(time: Int(date!.timeIntervalSince1970))
+        let request = YXCalendarRequest.getMonthly(time: Int(NSDate().timeIntervalSince1970))
         YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let model = response.data else {
                 return
