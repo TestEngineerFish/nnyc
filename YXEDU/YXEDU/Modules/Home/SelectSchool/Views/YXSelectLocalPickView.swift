@@ -215,14 +215,19 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            if row < self.citiesArray.count && !self.areasArray.isEmpty {
+            if row < self.citiesArray.count {
                 self.areasArray = self.citiesArray[row].areaList
                 pickerView.reloadComponent(1)
-                var areaIndex = pickerView.selectedRow(inComponent: 1)
-                areaIndex = areaIndex >= self.areasArray.count ? self.areasArray.count - 1 : areaIndex
-                if !self.areasArray.isEmpty && areaIndex >= 0 {
-                    self.localsArray = self.areasArray[areaIndex].localList
+                if self.areasArray.isEmpty {
+                    self.localsArray = []
                     pickerView.reloadComponent(2)
+                } else {
+                    var areaIndex = pickerView.selectedRow(inComponent: 1)
+                    areaIndex = areaIndex >= self.areasArray.count ? self.areasArray.count - 1 : areaIndex
+                    if areaIndex >= 0 {
+                        self.localsArray = self.areasArray[areaIndex].localList
+                        pickerView.reloadComponent(2)
+                    }
                 }
             }
         } else if component == 1 {
