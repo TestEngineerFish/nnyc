@@ -110,7 +110,7 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "MMMM.YYYY"
         dateFormatter.locale     = Locale(identifier: "en")
-        self.titleLabel.text = dateFormatter.string(from: Date())
+        self.titleLabel.text     = dateFormatter.string(from: Date())
     }
 
     // MARK: ==== FSCalendarDelegate ====
