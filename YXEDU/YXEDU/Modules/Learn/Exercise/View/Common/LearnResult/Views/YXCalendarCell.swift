@@ -70,7 +70,7 @@ class YXCalendarCell: YXView {
         self.addSubview(largeDayLabel)
         smallPunchImageView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(AdaptSize(10))
-            make.size.equalTo(CGSize(width: AdaptSize(15), height: AdaptSize(12)))
+            make.size.equalTo(CGSize(width: AdaptSize(15), height: AdaptSize(15)))
             make.centerX.equalToSuperview()
         }
         largePunchImageView.snp.makeConstraints { (make) in
@@ -98,23 +98,28 @@ class YXCalendarCell: YXView {
         self.smallDayLabel.text = isToday ? "今" : "\(day)"
         self.largeDayLabel.text = isToday ? "今" : "\(day)"
 
+        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
+        self.isShowed = !(YYCache.object(forKey: cacheKey) as? Bool ?? true)
+
         if self.model.status == 0 {
             self.largeDayLabel.isHidden = false
         } else {
             self.smallDayLabel.isHidden = false
-            if isToday {
+            if isToday && !self.isShowed {
                 self.largePunchImageView.isHidden = false
             } else {
                 self.smallPunchImageView.isHidden = false
             }
         }
-        if isToday {
+
+        if isToday && !self.isShowed {
             self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
             self.smallDayLabel.textColor = .white
             self.largeDayLabel.textColor = .white
         } else {
             self.backgroundColor = UIColor.hex(0xFFF0DA)
         }
+
     }
 
     // MARK: ==== Event ====

@@ -53,5 +53,8 @@ struct YXNotification {
     static let kShowRightButton            = NSNotification.Name("kShowRightButton")
     /// 下载词书失败
     static let kDownloadWordError          = NSNotification.Name("kDownloadWordError")
-    
+    /// 结果动画播放完成
+    static let kResultPlayFinished         = NSNotification.Name("kResultPlayFinished")
+    /// 单词动画播放完成
+    static let kWordAnimationPlayFinished  = NSNotification.Name("kWordAnimationPlayFinished")
 }

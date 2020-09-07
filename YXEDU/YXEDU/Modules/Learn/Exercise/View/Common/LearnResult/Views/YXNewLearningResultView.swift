@@ -86,8 +86,11 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     }()
     let calendarContentView = YXNewLearningResultCalendarView()
     var punchButton: UIButton = {
+        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
+        let isFirst  = YYCache.object(forKey: cacheKey) as? Bool ?? true
+        let _title   = isFirst ? "打卡" : "分享海报"
         let button = UIButton()
-        button.setTitle("打卡", for: .normal)
+        button.setTitle(_title, for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.mediumFont(ofSize: AdaptFontSize(17))
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: kSafeBottomMargin, right: 0)
@@ -98,6 +101,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
+        self.addNotification()
     }
 
     required init?(coder: NSCoder) {
@@ -188,6 +192,11 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         self.punchButton.addTarget(self, action: #selector(self.punchAction), for: .touchUpInside)
     }
 
+    private func addNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resultPlayFinishedNotification), name: YXNotification.kResultPlayFinished, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.wordAnimationPlayFinished), name: YXNotification.kWordAnimationPlayFinished, object: nil)
+    }
+
     // MARK: ==== Event ====
     @objc
     private func closedAction() {
@@ -201,11 +210,32 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.punchAction()
-                self.punchButton.setTitle("打卡分享", for: .normal)
+                self.punchButton.setTitle("分享海报", for: .normal)
             }
         } else {
             self.delegate?.punchAction()
-            self.punchButton.setTitle("打卡分享", for: .normal)
+            self.punchButton.setTitle("分享海报", for: .normal)
+        }
+    }
+
+    @objc
+    private func resultPlayFinishedNotification() {
+        self.showWordRollAnimation()
+    }
+
+    @objc
+    private func wordAnimationPlayFinished() {
+        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
+        let isFirstStudy: Bool = YYCache.object(forKey: cacheKey) as? Bool ?? true
+        YYCache.set(false, forKey: cacheKey)
+        YXLog("当天首次进入结果页，显示动画")
+        if isFirstStudy {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.showDayRollAnimation()
+            }
+        } else {
+            self.dayCountLabel.isHidden  = false
+            self.dayCountLabel.text  = "\(toDayCount)"
         }
     }
 
@@ -230,29 +260,17 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
 
         self.resultView.setData(model: model)
         self.calendarContentView.setData()
-        //  首次上报，显示动画
-        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
-        let isFirstStudy: Bool = YYCache.object(forKey: cacheKey) as? Bool ?? true
-        YYCache.set(false, forKey: cacheKey)
-        if isFirstStudy {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.setRollNumberView(showAnimation: true)
-            }
-        } else {
-            self.wordCountLabel.isHidden = false
-            self.dayCountLabel.isHidden  = false
-            self.wordCountLabel.text = "\(toWordCount)"
-            self.dayCountLabel.text  = "\(toDayCount)"
-        }
-
     }
 
-    private func setRollNumberView(showAnimation: Bool) {
-        let wordRollView = YXRollNumberView(from: fromWordCount, to: toWordCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, frame: CGRect(x: 0, y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
-        let dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+    private func showWordRollAnimation() {
+        let wordRollView = YXRollNumberView(from: fromWordCount, to: toWordCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .word, frame: CGRect(x: 0, y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
         self.collectView.addSubview(wordRollView)
-        self.collectView.addSubview(dayRollView)
         wordRollView.show()
+    }
+
+    private func showDayRollAnimation() {
+        let dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .day, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+        self.collectView.addSubview(dayRollView)
         dayRollView.show()
     }
 

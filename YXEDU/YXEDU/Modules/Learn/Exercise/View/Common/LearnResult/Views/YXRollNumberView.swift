@@ -7,20 +7,26 @@
 //
 
 import Foundation
+enum YXRollType: Int {
+    case word
+    case day
+}
 
 class YXRollNumberView: YXView, CAAnimationDelegate {
     var fromNumber: Int
     var toNumber: Int
     var labelFont: UIFont
     var labelColor: UIColor
+    var type: YXRollType
     var labelList = [UILabel]()
     var timer: Timer?
 
-    init(from: Int, to: Int, font: UIFont, color: UIColor, frame: CGRect) {
+    init(from: Int, to: Int, font: UIFont, color: UIColor, type: YXRollType, frame: CGRect) {
         self.fromNumber = from
         self.toNumber   = to
         self.labelFont  = font
         self.labelColor = color
+        self.type       = type
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
@@ -42,8 +48,9 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
     override func bindProperty() {
         super.bindProperty()
         self.timer?.invalidate()
-        self.timer = nil
-        self.timer = Timer(timeInterval: 0.2, repeats: true, block: { [weak self] (timer: Timer) in
+        self.timer   = nil
+        let interval = type == .word ? 0.1 : 0.2
+        self.timer = Timer(timeInterval: interval, repeats: true, block: { [weak self] (timer: Timer) in
             guard let self = self else { return }
             let label: UILabel = {
                 let label = UILabel()
@@ -62,6 +69,9 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
                 self.showNumberAnimation(label: label)
             } else {
                 self.showLastAnimation(label: label)
+                if self.type == .word {
+                    NotificationCenter.default.post(name: YXNotification.kWordAnimationPlayFinished, object: nil)
+                }
             }
             self.fromNumber += 1
             if self.fromNumber > self.toNumber {
@@ -91,7 +101,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
         let animationGroup = CAAnimationGroup()
         animationGroup.animations     = [scaleAnimater, opacityAnimation, upAnimation]
         animationGroup.autoreverses   = false
-        animationGroup.duration       = 0.5
+        animationGroup.duration       = type == .word ? 0.2 : 0.5
         animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)
         animationGroup.delegate       = self
         animationGroup.isRemovedOnCompletion = false
@@ -114,7 +124,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
         let animationGroup = CAAnimationGroup()
         animationGroup.animations     = [scaleAnimater, opacityAnimation, upAnimation]
         animationGroup.autoreverses   = false
-        animationGroup.duration       = 0.2
+        animationGroup.duration       = type == .word ? 0.06 : 0.2
         animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)
         animationGroup.delegate       = self
         animationGroup.isRemovedOnCompletion = false

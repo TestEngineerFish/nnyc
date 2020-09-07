@@ -315,25 +315,32 @@ class YXStarView: UIView {
         animation.duration       = 0.5
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         if self.starNumber > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                guard let self = self else { return }
                 self.leftStarEnableImageView.isHidden = false
                 self.leftStarEnableImageView.layer.add(animation, forKey: nil)
                 YXAVPlayerManager.share.playStar1()
             }
         }
         if self.starNumber > 1 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
                 self.centerStarEnableImageView.isHidden = false
                 self.centerStarEnableImageView.layer.add(animation, forKey: nil)
                 YXAVPlayerManager.share.playStar2()
             }
         }
         if self.starNumber > 2 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                guard let self = self else { return }
                 self.rightStarEnableImageView.isHidden = false
                 self.rightStarEnableImageView.layer.add(animation, forKey: nil)
                 YXAVPlayerManager.share.playStar3()
             }
+        }
+        let afterTime = DispatchTime.now() + Double(self.starNumber) * 0.5
+        DispatchQueue.main.asyncAfter(deadline: afterTime + 0.5) {
+            NotificationCenter.default.post(name: YXNotification.kResultPlayFinished, object: nil)
         }
     }
 }
