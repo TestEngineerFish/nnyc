@@ -513,7 +513,6 @@ enum YXMiMeType: String {
                 params[key] = v
             }
         }
-        UITextField().resignFirstResponder()
         return params.count > 0 ? params : nil
     }
 }
