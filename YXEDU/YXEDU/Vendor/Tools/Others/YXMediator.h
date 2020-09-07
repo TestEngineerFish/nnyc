@@ -15,7 +15,7 @@
 /** 用户被挤掉
  * @version 2.0.0
  */
-- (void)userKickedOut;
+- (void)userKickedOut:(NSString *)message;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 

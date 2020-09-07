@@ -46,14 +46,18 @@
     return shared;
 }
 
-- (void)userKickedOut {
+- (void)userKickedOut:(NSString *)message {
     
     if (_kickedOutAlertVC) {
         return;
     }
+    NSString *msg = @"您的账号已在其他设备登录";
+    if (message) {
+        msg = message;
+    }
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     UIWindow *mainWindow = app.window;
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您的账号已在其他设备登录" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示" message:msg preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [[YXUserModel default] logoutWithForce:NO finished:nil];
     }];

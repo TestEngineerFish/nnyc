@@ -268,7 +268,8 @@ enum YXMiMeType: String {
                         }
                     } else {
                         YXLog("连续10002，退出登录吧")
-                        YXMediator.shared().userKickedOut()
+                        let errorMsg = (x as YYBaseResopnse).statusMessage
+                        YXMediator.shared().userKickedOut(errorMsg)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
@@ -316,7 +317,8 @@ enum YXMiMeType: String {
                         }
                     } else {
                         YXLog("连续10002，退出登录吧")
-                        YXMediator.shared().userKickedOut()
+                        let errorMsg = (x as YYBaseResopnse).statusMessage
+                        YXMediator.shared().userKickedOut(errorMsg)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
@@ -487,7 +489,9 @@ enum YXMiMeType: String {
                 NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
 
             } else if responseStatusCode == 10003 {
-                YXMediator.shared().userKickedOut()
+                YXMediator.shared()?.userKickedOut(nil)
+            } else if responseStatusCode == 10004 {
+                YXMediator.shared()?.userKickedOut(baseResponse.statusMessage)
             }
             
             // 把错误抛会上层
