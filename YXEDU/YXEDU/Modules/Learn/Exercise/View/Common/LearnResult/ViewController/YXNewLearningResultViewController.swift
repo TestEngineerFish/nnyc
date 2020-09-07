@@ -65,6 +65,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         self.shareManager.setData(wordsAmount: _model.allWordNum, daysAmount: _model.studyDay, type: self.shareType)
         self.shareView.shareChannelView.coinImageView.isHidden = !_model.isShowCoin
         NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
+        self.setNextUnitData()
     }
 
     // MARK: ==== Request ====
@@ -98,12 +99,29 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         }
     }
 
+    /// 分享渠道上报
+    /// - Parameters:
+    ///   - shareType: 分享方式
+    ///   - learnType: 学习类型
     private func requestShare(shareType: YXShareChannel, learnType: YXLearnType) {
         let request = YXExerciseRequest.learnShare(shareType: shareType.rawValue, learnType: learnType.rawValue)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
             if shareType == .timeLine {
                 self.shareView.shareChannelView.coinImageView.isHidden = true
             }
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
+        }
+    }
+
+    /// 学习新单元
+    private func requestLearnNextUnit(_ unitId: Int?, bookId: Int?) {
+        guard let uuidStr = YXUserModel.default.uuid, let _unitId = unitId, let _bookId = bookId else {
+            return
+        }
+        let request = YXExerciseRequest.addUserBook(userId: uuidStr, bookId: _bookId, unitId: _unitId)
+        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
+            YXLog("学习新单元成功")
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
         }
@@ -118,6 +136,26 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         } else {
             YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
             YYCache.set(1, forKey: YXLocalKey.punchCount)
+        }
+    }
+
+    private func setNextUnitData() {
+        guard let _model = self.model else { return }
+        if _model.state {
+            var currentIndex  = 0
+            let unitModelList = _model.unitList ?? []
+            for (index, unitModel) in unitModelList.enumerated() {
+                if self.learnConfig?.unitId == unitModel.unitID {
+                    currentIndex = index
+                    break
+                }
+            }
+            let nextIndex = currentIndex + 1
+            if nextIndex < unitModelList.count {
+                let unitId = unitModelList[nextIndex].unitID
+                let bookId = unitModelList[nextIndex].bookID
+                self.requestLearnNextUnit(unitId, bookId: bookId)
+            }
         }
     }
 
