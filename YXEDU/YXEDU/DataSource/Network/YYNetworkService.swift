@@ -261,7 +261,7 @@ enum YXMiMeType: String {
                 if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", requestStr, dataStr))
                 }
-                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                if (x as YYBaseResopnse).statusCode == .some(YXNetworkStatusCode.tokenExpired.rawValue) {
                     if self.addCountAction(requestStr) {
                         self.tokenRenewal {
                             self.postBody(type, request: request, success: success, fail: fail)
@@ -310,7 +310,7 @@ enum YXMiMeType: String {
                 }
                 x.response = response.response
                 x.request  = response.request
-                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                if (x as YYBaseResopnse).statusCode == .some(YXNetworkStatusCode.tokenExpired.rawValue) {
                     if self.addCountAction(requestStr) {
                         self.tokenRenewal {
                             _ = self.httpRequest(type, request: request, success: success, fail: fail)
@@ -478,27 +478,25 @@ enum YXMiMeType: String {
 
         if responseStatusCode == 0 {
             success?(response)
-            
         } else {
-            if responseStatusCode == 10002 {
-                // 上层已处理
-                YXLog("Token过期 10002")
-            } else if responseStatusCode == 6666 {
-                // 停服
-                let serviceStop = YXNotification.kServiceStop
-                NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
-
-            } else if responseStatusCode == 10003 {
-                YXMediator.shared()?.userKickedOut(nil)
-            } else if responseStatusCode == 10004 {
-                YXMediator.shared()?.userKickedOut(baseResponse.statusMessage)
+            if let status = YXNetworkStatusCode(rawValue: responseStatusCode) {
+                switch status {
+                case .tokenExpired:
+                    // 上层已处理
+                    YXLog("Token过期 10002")
+                case .stopServing:
+                    let serviceStop = YXNotification.kServiceStop
+                    NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
+                case .accountKictOut:
+                    YXMediator.shared()?.userKickedOut(nil)
+                case .accountResign:
+                    YXMediator.shared()?.userKickedOut(baseResponse.statusMessage)
+                }
             }
-            
             // 把错误抛会上层
             if let errorMsg = baseResponse.statusMessage {
                 fail?(NSError(domain: "com.youyou.httpError", code: responseStatusCode, userInfo: [NSLocalizedDescriptionKey : errorMsg]))
             }
-            
         }
     }
 
@@ -515,6 +513,18 @@ enum YXMiMeType: String {
                 params[key] = v
             }
         }
+        UITextField().resignFirstResponder()
         return params.count > 0 ? params : nil
     }
+}
+
+enum YXNetworkStatusCode: Int {
+    /// 停服
+    case stopServing    = 6666
+    /// Token过期
+    case tokenExpired   = 10002
+    /// 账户被踢
+    case accountKictOut = 10003
+    /// 账户注销
+    case accountResign  = 10004
 }
