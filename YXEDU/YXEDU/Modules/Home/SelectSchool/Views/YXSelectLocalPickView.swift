@@ -20,13 +20,23 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     var localName: String {
         get {
+            var name = ""
             let cityIndex  = self.pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.citiesArray[cityIndex]
+            if cityIndex < self.citiesArray.count {
+                let cityModel  = self.citiesArray[cityIndex]
+                name += cityModel.name
+            }
             let areaIndex  = self.pickerView.selectedRow(inComponent: 1)
-            let areaModel  = self.areasArray[areaIndex]
+            if areaIndex < self.areasArray.count {
+                let areaModel  = self.areasArray[areaIndex]
+                name += areaModel.name
+            }
             let localIndex = self.pickerView.selectedRow(inComponent: 2)
-            let localModel = self.localsArray[localIndex]
-            return String(format: "%@%@%@", cityModel.name, areaModel.name, localModel.name)
+            if localIndex < self.localsArray.count {
+                let localModel = self.localsArray[localIndex]
+                name += localModel.name
+            }
+            return name
         }
     }
 
@@ -162,8 +172,30 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
     }
 
     @objc private func downSelectLocal() {
+        let cityIndex  = self.pickerView.selectedRow(inComponent: 0)
+        let areaIndex  = self.pickerView.selectedRow(inComponent: 1)
         let localIndex = self.pickerView.selectedRow(inComponent: 2)
-        let localModel = self.localsArray[localIndex]
+        var localModel = YXLocalModel()
+        if self.localsArray.isEmpty {
+            if self.areasArray.isEmpty {
+                if cityIndex < self.citiesArray.count {
+                    let cityModel   = self.citiesArray[cityIndex]
+                    localModel.name = cityModel.name
+                    localModel.id   = cityModel.id
+                }
+            } else {
+                if areaIndex < self.areasArray.count {
+                    let areaModel   = self.areasArray[areaIndex]
+                    localModel.name = areaModel.name
+                    localModel.id   = areaModel.id
+                }
+            }
+        } else {
+            if localIndex < self.localsArray.count {
+                localModel = self.localsArray[localIndex]
+            }
+        }
+
         self.delegate?.selectedLocal(local: localModel, name: self.localName)
         self.hide()
     }
