@@ -630,6 +630,7 @@
 		EEACEB9323AA27930036B3A2 /* YXTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */; };
 		EEACEB9A23AB81170036B3A2 /* YXSearchHistoryDaoImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9923AB81160036B3A2 /* YXSearchHistoryDaoImpl.swift */; };
 		EEACEB9C23AB81230036B3A2 /* YXSearchHistoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB9B23AB81220036B3A2 /* YXSearchHistoryDao.swift */; };
+		EEC1D1262507812400AE939F /* YXBaseLearnResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC1D1252507812400AE939F /* YXBaseLearnResultModel.swift */; };
 		EED3D40E2331C75B00121218 /* YYEnvChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */; };
 		EED3D41A2331D04B00121218 /* UIViewController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4112331D04B00121218 /* UIViewController+Router.m */; };
 		EED3D41B2331D04B00121218 /* YRLocatorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EED3D4142331D04B00121218 /* YRLocatorProvider.m */; };
@@ -1375,6 +1376,7 @@
 		EEACEB9223AA27930036B3A2 /* YXTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXTableViewCell.swift; sourceTree = "<group>"; };
 		EEACEB9923AB81160036B3A2 /* YXSearchHistoryDaoImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSearchHistoryDaoImpl.swift; sourceTree = "<group>"; };
 		EEACEB9B23AB81220036B3A2 /* YXSearchHistoryDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YXSearchHistoryDao.swift; sourceTree = "<group>"; };
+		EEC1D1252507812400AE939F /* YXBaseLearnResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXBaseLearnResultModel.swift; sourceTree = "<group>"; };
 		EED3D40D2331C75B00121218 /* YYEnvChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YYEnvChangeViewController.swift; sourceTree = "<group>"; };
 		EED3D4112331D04B00121218 /* UIViewController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Router.m"; sourceTree = "<group>"; };
 		EED3D4122331D04B00121218 /* YRRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRRouter.h; sourceTree = "<group>"; };
@@ -1702,6 +1704,7 @@
 			isa = PBXGroup;
 			children = (
 				224DF54923840E6B00D2B0BF /* YXLearnResultModel.swift */,
+				EEC1D1252507812400AE939F /* YXBaseLearnResultModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4563,6 +4566,7 @@
 				2290EACF23701210000BCA47 /* YXNewLearnJuniorHighSchoolExerciseView.swift in Sources */,
 				7786B6D02361C3820027D0E3 /* YXGroupWordBookCell.swift in Sources */,
 				224DEB9B24A9DA9000512DFB /* YXNavigationController.swift in Sources */,
+				EEC1D1262507812400AE939F /* YXBaseLearnResultModel.swift in Sources */,
 				77342BAF2473A8730082C771 /* YXVersionModel.m in Sources */,
 				771E88682362ACE9000BFAAD /* YXRegisterAndLoginViewController.swift in Sources */,
 				222AFBB724B42382001C894C /* YXAlertManager.swift in Sources */,
@@ -4929,7 +4933,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.7.8;
+				MARKETING_VERSION = 2.7.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4979,7 +4983,7 @@
 					"$(PROJECT_DIR)/YXEDU/Vendor/3rdParty/WechtSDK1.8.7.1_NoPay",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 2.7.8;
+				MARKETING_VERSION = 2.7.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yx.nnyc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

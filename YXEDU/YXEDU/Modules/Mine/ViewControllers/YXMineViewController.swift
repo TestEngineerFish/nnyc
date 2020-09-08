@@ -166,7 +166,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
 
         // 学校信息
         if let schoolDescriptionLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel {
-            schoolDescriptionLabel.text = (loginModel.user?.schoolInfo?.schoolId != .some(0)) ? "去修改" : "去填写"
+            schoolDescriptionLabel.text = (loginModel.user?.schoolInfo?.cityId != .some(0)) ? "去修改" : "去填写"
         }
 
         // 账户信息

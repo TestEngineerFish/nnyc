@@ -95,6 +95,10 @@ struct YXAPI {
         static let learnMap = "/api/v1/learn/getbookunitstatus"
         /// 基础学习结果页
         static let learnResult = "/api/v2/learn/getcurrentunitstatus"
+        
+        /// 基础学习结果页（新）
+        static let baseLearnResult = "/api/v1/learn/mainstudypunchdata"
+
         /// 上报接口
         static let report = "/api/v3/learn/report"
         /// 单词跟读分上报

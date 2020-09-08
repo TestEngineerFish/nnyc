@@ -127,6 +127,29 @@ struct YXExerciseResultDisplayModel {
         displayModel.sharedPeople = model.sharedPeople
         return displayModel
     }
+    
+    static func displayModel(newStudyWordCount: Int, reviewWordCount: Int, model: YXBaseLearnResultModel) -> YXExerciseResultDisplayModel {
+
+        var displayModel = YXExerciseResultDisplayModel()
+        displayModel.type = .base
+        displayModel.title = model.unitName
+        
+        displayModel.allWordNum = model.allWordCount // 今日所学单词数
+        displayModel.studyDay = model.studyDay  // 坚持多少天
+        
+        
+        displayModel.newStudyWordNum = newStudyWordCount //新学
+        displayModel.reviewWordNum   = reviewWordCount //巩固
+
+        displayModel.score = model.score
+        
+        displayModel.isShowCoin = model.isShowCoin
+        displayModel.state      = model.status
+//        displayModel.unitList   = model.unitList
+        displayModel.isAction   = model.isAction
+        displayModel.sharedPeople = model.sharedPeople
+        return displayModel
+    }
 }
 
 

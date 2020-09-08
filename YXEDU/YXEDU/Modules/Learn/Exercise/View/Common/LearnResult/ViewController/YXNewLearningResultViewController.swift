@@ -73,8 +73,8 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         guard let config = self.learnConfig else {
             return
         }
-        let request = YXExerciseRequest.learnResult(bookId: config.bookId, unitId: config.unitId, wordId: config.homeworkId)
-        YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { [weak self] (response) in
+        let request = YXExerciseRequest.baseLearnResult(bookId: config.bookId, unitId: config.unitId, wordId: config.homeworkId)
+        YYNetworkService.default.request(YYStructResponse<YXBaseLearnResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else {
                 return
             }
@@ -181,7 +181,7 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
     }
 
     // MARK: ==== Tools ====
-    private func transformModel(_ model: YXLearnResultModel?) -> YXExerciseResultDisplayModel? {
+    private func transformModel(_ model: YXBaseLearnResultModel?) -> YXExerciseResultDisplayModel? {
         guard let _model = model else {
             return nil
         }

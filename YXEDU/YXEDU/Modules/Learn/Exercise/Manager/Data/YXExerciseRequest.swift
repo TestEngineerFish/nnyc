@@ -11,6 +11,7 @@ import UIKit
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise(isGenerate: Bool, type: Int, reviewId: Int?)
     case learnMap(bookId: Int)
+    case baseLearnResult(bookId: Int, unitId: Int, wordId: Int)
     case learnResult(bookId: Int, unitId: Int, wordId: Int)
     case report(type: Int, reviewId: Int, time: Int, result: String, bookId: Int)
     case addUserBook(userId: String, bookId: Int, unitId: Int)
@@ -23,7 +24,7 @@ public enum YXExerciseRequest: YYBaseRequest {
 extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .exercise, .learnMap, .learnResult, .addUserBook, .stepConfig:
+        case .exercise, .learnMap, .baseLearnResult, .learnResult, .addUserBook, .stepConfig:
             return .get
         case .report, .reportListenScore, .learnShare:
             return .post
@@ -36,6 +37,8 @@ extension YXExerciseRequest {
             return YXAPI.Exercise.exercise
         case .learnMap:
             return YXAPI.Exercise.learnMap
+        case .baseLearnResult:
+            return YXAPI.Exercise.baseLearnResult
         case .learnResult:
             return YXAPI.Exercise.learnResult
         case .report:
@@ -57,6 +60,8 @@ extension YXExerciseRequest {
             return ["is_generate" : isGenerate, "learn_type" : type, "review_id" : planId]
         case .learnMap(let bookId):
             return ["book_id" : bookId]
+        case .baseLearnResult(let bookId, let unitId, let workId):
+            return ["book_id" : bookId, "unit_id" : unitId, "work_id" : workId]
         case .learnResult(let bookId, let unitId, let workId):
             return ["book_id" : bookId, "unit_id" : unitId, "work_id" : workId]
         case .addUserBook(let userId, let bookId, let unitId):
