@@ -54,6 +54,7 @@ typealias YYEVC = YYEnvChangeViewController
     private enum EnvType: Int {
         case dev = 0
         case test = 1
+        case test2 = 4
         case pre = 2
         case release = 3
     }
@@ -63,8 +64,9 @@ typealias YYEVC = YYEnvChangeViewController
     private var currentSelected: Int = 3
 
     private static let envData = [
-        EnvType.dev  : ["title" : "开发环境", "api" : "http://common.api.xstudyedu.com",  "h5" : "http://common.api.xstudyedu.com"],
-        EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test-2.xstudyedu.com", "h5" : "http://nnyc-api-test-2.xstudyedu.com"],
+        EnvType.dev  : ["title" : "开发环境", "api" : "http://common.api.xstudyedu.com",  "h5" : "http://common.api.xstudyedu.com"],        
+        EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test.xstudyedu.com", "h5" : "http://nnyc-api-test.xstudyedu.com"],
+        EnvType.test2 : ["title" : "测试环境", "api" : "http://nnyc-api-test-2.xstudyedu.com", "h5" : "http://nnyc-api-test-2.xstudyedu.com"],
         EnvType.pre  : ["title" : "预发环境", "api" : "http://nnyc-api-pre.xstudyedu.com",  "h5" : "https://pre.helloyouyou.com"],
         EnvType.release : ["title" : "正式环境", "api" : "http://nnyc-api.xstudyedu.com",   "h5" : "http://nnyc-api.xstudyedu.com"]
     ]
