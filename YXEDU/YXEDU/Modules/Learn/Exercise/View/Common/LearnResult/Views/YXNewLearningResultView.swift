@@ -51,15 +51,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         view.layer.cornerRadius = AdaptSize(8)
         return view
     }()
-//    var wordCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.text          = ""
-//        label.textColor     = UIColor.orange1
-//        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
-//        label.textAlignment = .center
-//        label.isHidden      = true
-//        return label
-//    }()
+    var wordRollView: YXRollNumberView?
     var wordTitleLabel: UILabel = {
         let label = UILabel()
         label.text          = "今日单词"
@@ -68,15 +60,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         label.textAlignment = .center
         return label
     }()
-//    var dayCountLabel: UILabel = {
-//        let label = UILabel()
-//        label.text          = ""
-//        label.textColor     = UIColor.orange1
-//        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
-//        label.textAlignment = .center
-//        label.isHidden      = true
-//        return label
-//    }()
+    var dayRollView: YXRollNumberView?
     var dayTitleLabel: UILabel = {
         let label = UILabel()
         label.text          = "坚持天数"
@@ -116,9 +100,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         scrollViewContentView.addSubview(closeButton)
         scrollViewContentView.addSubview(collectView)
         scrollViewContentView.addSubview(calendarContentView)
-//        collectView.addSubview(wordCountLabel)
         collectView.addSubview(wordTitleLabel)
-//        collectView.addSubview(dayCountLabel)
         collectView.addSubview(dayTitleLabel)
         self.addSubview(punchButton)
 
@@ -152,18 +134,10 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
             make.top.equalTo(resultView.snp.bottom).offset(AdaptFontSize(20))
             make.height.equalTo(AdaptSize(90))
         }
-//        wordCountLabel.snp.makeConstraints { (make) in
-//            make.centerX.equalToSuperview().multipliedBy(0.5)
-//            make.top.equalToSuperview().offset(AdaptSize(15))
-//        }
         wordTitleLabel.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(AdaptSize(-20))
             make.centerX.equalToSuperview().multipliedBy(0.5)
         }
-//        dayCountLabel.snp.makeConstraints { (make) in
-//            make.centerX.equalToSuperview().multipliedBy(1.5)
-//            make.top.equalToSuperview().offset(AdaptSize(15))
-//        }
         dayTitleLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(wordTitleLabel)
             make.centerX.equalToSuperview().multipliedBy(1.5)
@@ -192,7 +166,6 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     }
 
     private func addNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.resultPlayFinishedNotification), name: YXNotification.kResultPlayFinished, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.wordAnimationPlayFinished), name: YXNotification.kWordAnimationPlayFinished, object: nil)
     }
 
@@ -218,16 +191,8 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     }
 
     @objc
-    private func resultPlayFinishedNotification() {
-        // 学完需要等结果星星动画播放结束后才播放
-        self.showWordRollAnimation()
-    }
-
-    @objc
     private func wordAnimationPlayFinished() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.showDayRollAnimation()
-        }
+        self.dayRollView?.show()
     }
 
     /// 设置数据
@@ -238,7 +203,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         self.model         = model
         self.fromWordCount = YXUserModel.default.isFirstStudy ? model.allWordNum - currentLearnedWordsCount : model.allWordNum
         self.toWordCount   = model.allWordNum
-        self.fromDayCount  = model.studyDay - 1
+        self.fromDayCount  = YXUserModel.default.isFirstStudy ? model.studyDay - 1 : model.studyDay
         self.toDayCount    = model.studyDay
         // 更新学习记录
         YXUserModel.default.isFirstStudy = false
@@ -249,24 +214,22 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         if self.fromDayCount < 0 {
             self.fromDayCount = 0
         }
-        // 未学完，自动播放动画
-        if !model.state {
-            self.showWordRollAnimation()
-        }
+
         self.resultView.setData(model: model)
         self.calendarContentView.setData(model.studyModelList)
-    }
+        self.wordRollView = YXRollNumberView(from: fromWordCount, to: toWordCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .word, frame: CGRect(x: 0, y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+        self.collectView.addSubview(wordRollView!)
+        self.dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .day, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
+        self.collectView.addSubview(dayRollView!)
 
-    private func showWordRollAnimation() {
-        let wordRollView = YXRollNumberView(from: fromWordCount, to: toWordCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .word, frame: CGRect(x: 0, y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
-        self.collectView.addSubview(wordRollView)
-        wordRollView.show()
-    }
+        if YXUserModel.default.isFirstStudy {
+            self.resultView.starView.complateBlock = { [weak self] in
+                self?.wordRollView?.show()
+            }
+        } else {
+            self.wordRollView?.show()
+        }
 
-    private func showDayRollAnimation() {
-        let dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .day, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
-        self.collectView.addSubview(dayRollView)
-        dayRollView.show()
     }
 
     // MARK: ==== YXNewLearningResultCalendarViewProtocol ====

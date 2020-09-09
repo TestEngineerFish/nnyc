@@ -245,7 +245,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
         if isLoading { return }
         // 更新状态
         let originStatus = self.status
-        if exercisType == .base {
+        if exercisType == .base || exercisType == .homeworkPunch {
             // 防止进度回滚
             if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
                 self.status = .downloadBook

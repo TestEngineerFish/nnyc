@@ -30,6 +30,7 @@ extension YXExerciseServiceImpl {
         let studyId = self._processStudyRecord()
         if studyId == 0 {
             YXLog("插入学习记录失败")
+            completion?()
             return
         }
 

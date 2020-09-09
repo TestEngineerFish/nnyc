@@ -117,7 +117,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
             return unique
         }
         if result.next() {
-            unique = result.string(forColumn: "unique") ?? ""
+            unique = result.string(forColumn: "unique_code") ?? ""
         }
         return unique
     }

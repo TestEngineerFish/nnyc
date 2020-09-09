@@ -26,7 +26,7 @@ extension YYSQLManager {
         unlearned_new_word_count,
         review_word_count,
         unlearned_review_word_count,
-        unique
+        unique_code
         )
         values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """

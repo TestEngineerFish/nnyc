@@ -25,7 +25,7 @@ class YXStarView: UIView {
     var rightStarEnableImageView   = UIImageView()
     
     var starNumber = 0
-    
+    var complateBlock:(()->Void)?
     /// 上次学习结果
     func showLastNewLearnResultView(score: Int) {
         self.starNumber = {
@@ -339,8 +339,8 @@ class YXStarView: UIView {
             }
         }
         let afterTime = DispatchTime.now() + Double(self.starNumber) * 0.5
-        DispatchQueue.main.asyncAfter(deadline: afterTime + 0.5) {
-            NotificationCenter.default.post(name: YXNotification.kResultPlayFinished, object: nil)
+        DispatchQueue.main.asyncAfter(deadline: afterTime + 0.5) { [weak self] in
+            self?.complateBlock?()
         }
     }
 }

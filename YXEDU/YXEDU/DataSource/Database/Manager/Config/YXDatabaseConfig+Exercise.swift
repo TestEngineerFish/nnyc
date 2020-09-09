@@ -18,7 +18,7 @@ extension YYSQLManager {
         """
         case addUniqueField =
         """
-        ALTER TABLE all_exercise_v1 ADD unique TEXT
+        ALTER TABLE all_exercise_v1 ADD unique_code TEXT
         """
 
         case insertExercise =

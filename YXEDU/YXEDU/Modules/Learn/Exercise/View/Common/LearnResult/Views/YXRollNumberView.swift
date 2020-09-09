@@ -43,6 +43,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
 
     override func createSubviews() {
         super.createSubviews()
+        self.createLabel()
     }
 
     override func bindProperty() {
@@ -52,44 +53,35 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
         var isFirst  = true
         let interval = type == .word ? 0.1 : 0.2
         self.timer = Timer(timeInterval: interval, repeats: true, block: { [weak self] (timer: Timer) in
-            guard let self = self else { return }
-            let label: UILabel = {
-                let label = UILabel()
-                label.text          = "\(self.fromNumber)"
-                label.textColor     = self.labelColor
-                label.font          = self.labelFont
-                label.textAlignment = .center
-                return label
-            }()
-            self.addSubview(label)
-            self.labelList.append(label)
-            label.snp.makeConstraints { (make) in
-                make.edges.equalToSuperview()
-            }
-            // 断言
-            if self.fromNumber >= self.toNumber {
-                timer.invalidate()
-            }
+            guard let self = self, let label = self.labelList.last else { return }
             if isFirst {
                 self.showFirstNumberAniamtion(label: label)
                 isFirst = false
-            } else if self.fromNumber >= self.toNumber {
+            } else if self.fromNumber < self.toNumber {
+                self.showNumberAnimation(label: label)
+            } else {
                 self.showLastAnimation(label: label)
                 if self.type == .word {
                     NotificationCenter.default.post(name: YXNotification.kWordAnimationPlayFinished, object: nil)
                 }
-            } else {
-                self.showNumberAnimation(label: label)
+                timer.invalidate()
+                return
             }
             self.fromNumber += 1
+            self.createLabel()
         })
     }
-
 
     // MARK: ==== Event ====
 
     func show() {
-        RunLoop.current.add(timer!, forMode: .default)
+        if self.fromNumber >= self.toNumber {
+            if self.type == .word {
+                NotificationCenter.default.post(name: YXNotification.kWordAnimationPlayFinished, object: nil)
+            }
+        } else {
+            RunLoop.current.add(timer!, forMode: .default)
+        }
     }
 
     private func showFirstNumberAniamtion(label: UILabel) {
@@ -161,9 +153,29 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
         label.layer.add(animationGroup, forKey: "lastAnimationGroup")
     }
 
+    // MARK: ==== Tools ====
+    @discardableResult
+    private func createLabel() -> UILabel {
+        let label: UILabel = {
+            let label = UILabel()
+            label.text          = "\(self.fromNumber)"
+            label.textColor     = self.labelColor
+            label.font          = self.labelFont
+            label.textAlignment = .center
+            return label
+        }()
+        self.addSubview(label)
+        self.labelList.append(label)
+        label.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        return label
+    }
+
     // MARK: ==== CAAnimationDelegate ====
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if flag {
+            guard self.labelList.count > 1 else { return }
             self.labelList.first?.removeFromSuperview()
             self.labelList.removeFirst()
         }

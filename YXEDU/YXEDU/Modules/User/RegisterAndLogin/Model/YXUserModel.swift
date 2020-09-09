@@ -158,12 +158,13 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.currentUnitId) as? Int
         }
     }
-    /// 当天是否已学习
+    /// 是否当天首次学习
     var isFirstStudy: Bool {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD())
         }
         get {
+            return true
             return YYCache.object(forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD()) as? Bool ?? true
         }
     }
