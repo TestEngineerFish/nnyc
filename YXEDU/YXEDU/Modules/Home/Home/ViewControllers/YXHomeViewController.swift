@@ -339,15 +339,15 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 
 
     private func toMyClass() {
-        guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
-            return
-        }
-        let vc = YXNewLearningResultViewController()
-        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
-        vc.newLearnAmount    = 5
-        vc.reviewLearnAmount = 11
-        self.navigationController?.pushViewController(vc, animated: true)
-        return
+//        guard let bookId = YXUserModel.default.currentBookId, let unitId = YXUserModel.default.currentUnitId else {
+//            return
+//        }
+//        let vc = YXNewLearningResultViewController()
+//        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+//        vc.newLearnAmount    = 5
+//        vc.reviewLearnAmount = 11
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        return
         if YXUserModel.default.isJoinClass {
             let vc = YXMyClassViewController()
             self.navigationController?.pushViewController(vc, animated: true)
