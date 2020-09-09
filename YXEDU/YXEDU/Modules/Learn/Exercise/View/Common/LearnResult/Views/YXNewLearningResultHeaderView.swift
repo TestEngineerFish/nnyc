@@ -122,12 +122,21 @@ class YXNewLearningResultHeaderView: YXView {
                 if score < 1 {
                     self.imageView.image = UIImage(named: "review_result_progress_new")
                 } else {
+                    let score: Int = {
+                        if model.score > 3 {
+                            return 3
+                        } else if model.score < 1 {
+                            return 1
+                        } else {
+                            return model.score
+                        }
+                    }()
                     if model.type == .base || model.type == .homeworkPunch {
-                        self.imageView.image =  UIImage(named: "review_result_base_\(model.score)star_new")
+                        self.imageView.image =  UIImage(named: "review_result_base_\(score)star_new")
                     } else if model.type == .planListenReview || model.type == .homeworkListen {
-                        self.imageView.image = UIImage(named: "review_result_listen_\(model.score)star")
+                        self.imageView.image = UIImage(named: "review_result_listen_\(score)star")
                     } else {// 计划或者智能
-                        self.imageView.image = UIImage(named: "review_result_\(model.score)star")
+                        self.imageView.image = UIImage(named: "review_result_\(score)star")
                     }
                 }
             }

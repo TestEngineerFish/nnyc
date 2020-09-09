@@ -201,15 +201,11 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     ///   - model: 学习结果模型对象
     func setData(currentLearnedWordsCount:Int, model: YXExerciseResultDisplayModel) {
         self.model         = model
+        self.fromWordCount = model.allWordNum - currentLearnedWordsCount
+        self.fromDayCount  = YXUserModel.default.isFirstStudy ? model.studyDay - 1 : model.studyDay
         self.toWordCount   = model.allWordNum
         self.toDayCount    = model.studyDay
-        if model.state && YXUserModel.default.isFirstStudy {
-            self.fromWordCount = model.allWordNum - currentLearnedWordsCount
-            self.fromDayCount  = model.studyDay - 1
-        } else {
-            self.fromWordCount = model.allWordNum
-            self.fromDayCount  = model.studyDay
-        }
+
         // 更新学习记录
         YXUserModel.default.isFirstStudy = false
         // 容错处理
@@ -227,12 +223,14 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         self.dayRollView  = YXRollNumberView(from: fromDayCount, to: toDayCount, font: UIFont.DINAlternateBold(ofSize: AdaptFontSize(32)), color: UIColor.orange1, type: .day, frame: CGRect(x: screenWidth/2 - AdaptSize(20), y: AdaptSize(15), width: screenWidth/2 - AdaptSize(20), height: AdaptSize(37)))
         self.collectView.addSubview(dayRollView!)
 
-        if YXUserModel.default.isFirstStudy {
+        if model.state {
             self.resultView.starView.complateBlock = { [weak self] in
                 self?.wordRollView?.show()
             }
         } else {
-            self.wordRollView?.show()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+                self?.wordRollView?.show()
+            }
         }
 
     }
