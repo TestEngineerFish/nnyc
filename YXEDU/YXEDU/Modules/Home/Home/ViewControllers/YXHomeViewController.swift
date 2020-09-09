@@ -113,7 +113,6 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         self.requestBaseInfo()
         self.requestActivity()
         self.checkComment()
-        self.checkDownloadBook()
         YXStepConfigManager.share.contrastStepConfig()
         YXAlertCheckManager.default.checkLatestBadge()
         YXRedDotManager.share.updateTaskCenterBadge()
@@ -183,6 +182,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
                 self.subItemCollectionView.reloadData()
             }
             self.uploadGrowing()
+            self.checkDownloadBook()
             block?()
         }) { error in
             YXLog("获取主页基础数据失败：", error.localizedDescription)

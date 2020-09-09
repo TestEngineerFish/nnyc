@@ -122,6 +122,7 @@
 		22545A4F244956CF002A82BE /* wrong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22545A4D244956CE002A82BE /* wrong.mp3 */; };
 		22545A50244956CF002A82BE /* right.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 22545A4E244956CF002A82BE /* right.mp3 */; };
 		2258DB2224BBF04A006BD4F4 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2258DB2124BBF04A006BD4F4 /* AuthenticationServices.framework */; };
+		225A2A162508DF8800766FC0 /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 225A2A152508DF8800766FC0 /* city.json */; };
 		225B9D1A24625100006C758F /* YXReviewPlanCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B9D1924625100006C758F /* YXReviewPlanCollectionViewItem.swift */; };
 		2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2269DD862398F9E3001F116A /* RegisterSliderView.swift */; };
 		22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2275081F239F747700A53B9B /* YXReviewBottomView.swift */; };
@@ -205,7 +206,6 @@
 		22E70D4524A0A4930039C634 /* YXSearchSchoolListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4424A0A4930039C634 /* YXSearchSchoolListView.swift */; };
 		22E70D4724A0C7520039C634 /* YXSelectSchoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4624A0C7520039C634 /* YXSelectSchoolCell.swift */; };
 		22E70D4924A0D45A0039C634 /* YXSelectLocalPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4824A0D45A0039C634 /* YXSelectLocalPickView.swift */; };
-		22E70D4B24A0D50C0039C634 /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 22E70D4A24A0D50C0039C634 /* city.json */; };
 		22E70D4D24A0D5E70039C634 /* YXCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4C24A0D5E70039C634 /* YXCityModel.swift */; };
 		22E70D4F24A1ABF30039C634 /* YXSelectSchoolRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E70D4E24A1ABF20039C634 /* YXSelectSchoolRequestManager.swift */; };
 		22E9FFC42473BF6B006B6F60 /* YXOCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E9FFC32473BF6B006B6F60 /* YXOCModel.swift */; };
@@ -765,6 +765,7 @@
 		22545A4D244956CE002A82BE /* wrong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wrong.mp3; sourceTree = "<group>"; };
 		22545A4E244956CF002A82BE /* right.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = right.mp3; sourceTree = "<group>"; };
 		2258DB2124BBF04A006BD4F4 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		225A2A152508DF8800766FC0 /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		225B9D1924625100006C758F /* YXReviewPlanCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanCollectionViewItem.swift; sourceTree = "<group>"; };
 		2269DD862398F9E3001F116A /* RegisterSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSliderView.swift; sourceTree = "<group>"; };
 		2275081F239F747700A53B9B /* YXReviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewBottomView.swift; sourceTree = "<group>"; };
@@ -852,7 +853,6 @@
 		22E70D4424A0A4930039C634 /* YXSearchSchoolListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSearchSchoolListView.swift; sourceTree = "<group>"; };
 		22E70D4624A0C7520039C634 /* YXSelectSchoolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolCell.swift; sourceTree = "<group>"; };
 		22E70D4824A0D45A0039C634 /* YXSelectLocalPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectLocalPickView.swift; sourceTree = "<group>"; };
-		22E70D4A24A0D50C0039C634 /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		22E70D4C24A0D5E70039C634 /* YXCityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCityModel.swift; sourceTree = "<group>"; };
 		22E70D4E24A1ABF20039C634 /* YXSelectSchoolRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXSelectSchoolRequestManager.swift; sourceTree = "<group>"; };
 		22E9FFB824738570006B6F60 /* YXNetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXNetworkRequest.swift; sourceTree = "<group>"; };
@@ -3046,7 +3046,7 @@
 		EE5E0114232752AA00655654 /* File */ = {
 			isa = PBXGroup;
 			children = (
-				22E70D4A24A0D50C0039C634 /* city.json */,
+				225A2A152508DF8800766FC0 /* city.json */,
 				EE5E01152327533E00655654 /* location.json */,
 			);
 			path = File;
@@ -4025,7 +4025,7 @@
 				77626C01239E311000B9407A /* YXWordListHeaderView.xib in Resources */,
 				771E88632362ABC8000BFAAD /* RegisterAndLogin.storyboard in Resources */,
 				77252A7523628940007D86A0 /* YXSelectGradeCell.xib in Resources */,
-				22E70D4B24A0D50C0039C634 /* city.json in Resources */,
+				225A2A162508DF8800766FC0 /* city.json in Resources */,
 				77097535239930040071A779 /* YXWordDetailFeaturedView.xib in Resources */,
 				77F69A7B23617CCB00E55185 /* YXHomeStudyDataCell.xib in Resources */,
 				77626C09239E428700B9407A /* YXWordListEmptyCell.xib in Resources */,
