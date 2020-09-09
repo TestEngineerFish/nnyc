@@ -366,6 +366,7 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
     /// 检测当前词书是否需要更新
     private func checkDownloadBook() {
         guard let bookId = YXUserModel.default.currentBookId else {
+            YXLog("首页-暂无当前学习的ID，无法开启下载任务")
             return
         }
         let taskModel = YXWordBookResourceModel(type: .single, book: bookId) {

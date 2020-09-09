@@ -68,7 +68,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
                 return
             }
             self.fromNumber += 1
-            self.createLabel()
+            self.createLabel(isHide: true)
         })
     }
 
@@ -108,6 +108,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
     }
 
     private func showNumberAnimation(label: UILabel) {
+        label.isHidden = false
         let scaleAnimater    = CAKeyframeAnimation(keyPath: "transform.scale")
         scaleAnimater.values = [0.8, 1.0, 0.8]
 
@@ -131,6 +132,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
     }
 
     private func showLastAnimation(label: UILabel) {
+        label.isHidden = false
         let scaleAnimater    = CAKeyframeAnimation(keyPath: "transform.scale")
         scaleAnimater.values = [0.8, 1.0]
 
@@ -155,13 +157,14 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
 
     // MARK: ==== Tools ====
     @discardableResult
-    private func createLabel() -> UILabel {
+    private func createLabel(isHide: Bool = false) -> UILabel {
         let label: UILabel = {
             let label = UILabel()
             label.text          = "\(self.fromNumber)"
             label.textColor     = self.labelColor
             label.font          = self.labelFont
             label.textAlignment = .center
+            label.isHidden      = isHide
             return label
         }()
         self.addSubview(label)
