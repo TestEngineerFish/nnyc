@@ -104,6 +104,9 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.redDotView.isHidden              = true
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kReloadClassList, object: nil)
         self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
+        self.customNavigationBar?.leftButtonAction = { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: true)
+        }
     }
 
     private func createSubviews() {

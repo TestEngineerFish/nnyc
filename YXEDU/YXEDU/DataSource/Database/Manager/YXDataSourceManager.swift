@@ -104,10 +104,12 @@ extension YYDataSourceManager {
     /// 增加字段，兼容老版本
     /// - Parameter db: 数据库对象
     private func addField(db: FMDatabase) {
-        // V: 2.7.8 grade
+        // V: 2.7.9 grade
         if !db.columnExists("grade", inTableWithName: "all_exercise_v1") {
-            let sql = YYSQLManager.ExerciseSQL.addGradeField.rawValue
-            db.executeUpdate(sql, withArgumentsIn: [])
+            let addGradeSQL = YYSQLManager.ExerciseSQL.addGradeField.rawValue
+            db.executeUpdate(addGradeSQL, withArgumentsIn: [])
+            let addUniqueSQL = YYSQLManager.ExerciseSQL.addUniqueField.rawValue
+            db.executeUpdate(addUniqueSQL, withArgumentsIn: [])
             // 清除所有学习记录
             YXExerciseServiceImpl().cleanAllStudyRecord()
             YXLog("版本升级到2.7.9及以上，清除之前缓存")

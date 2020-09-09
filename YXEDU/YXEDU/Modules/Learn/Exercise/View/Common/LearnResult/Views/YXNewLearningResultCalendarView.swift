@@ -55,7 +55,6 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         super.init(frame: frame)
         self.createSubviews()
         self.bindProperty()
-        self.requestCalendarData()
     }
 
     required init?(coder: NSCoder) {
@@ -73,7 +72,7 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
             make.left.equalToSuperview().offset(AdaptFontSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
             make.top.equalTo(titleLabel.snp.bottom).offset(AdaptSize(10))
-            make.height.equalTo(AdaptSize(288))
+            make.height.equalTo(AdaptSize(350))
         }
     }
 
@@ -82,35 +81,23 @@ class YXNewLearningResultCalendarView: YXView, FSCalendarDataSource, FSCalendarD
         self.calendarView.delegate   = self
     }
 
-    // MARK: ==== Request ====
-    private func requestCalendarData() {
-        let request = YXCalendarRequest.getMonthly(time: Int(NSDate().timeIntervalSince1970))
-        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else {
-                return
-            }
-            self.validDict.removeAll()
-            model.studyModel.forEach { (studyModel) in
-                let date = NSDate(timeIntervalSince1970: Double(studyModel.time ?? 0))
-                self.validDict.updateValue(studyModel, forKey: date.formatYMD())
-            }
-            // 容错处理（防止后台未及时返回当前学习数据）
-            if let todayModel = YXCalendarStudyModel(JSON: ["date": Int(Date().timeIntervalSince1970), "status": 1]) {
-                self.validDict.updateValue(todayModel, forKey: NSDate().formatYMD())
-            }
-            self.calendarView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
-        }
-    }
-
     // MARK: ==== Event ====
 
-    func setData() {
+    func setData(_ modelList: [YXCalendarStudyModel]) {
         let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "MMMM.YYYY"
         dateFormatter.locale     = Locale(identifier: "en")
         self.titleLabel.text     = dateFormatter.string(from: Date())
+        self.validDict.removeAll()
+        modelList.forEach { (studyModel) in
+            let date = NSDate(timeIntervalSince1970: Double(studyModel.time ?? 0))
+            self.validDict.updateValue(studyModel, forKey: date.formatYMD())
+        }
+        // 容错处理（防止后台未及时返回当前学习数据）
+        if let todayModel = YXCalendarStudyModel(JSON: ["date": Int(Date().timeIntervalSince1970), "status": 1]) {
+            self.validDict.updateValue(todayModel, forKey: NSDate().formatYMD())
+        }
+        self.calendarView.reloadData()
     }
 
     // MARK: ==== FSCalendarDelegate ====

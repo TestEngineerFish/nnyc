@@ -16,6 +16,10 @@ extension YYSQLManager {
         """
         ALTER TABLE all_exercise_v1 ADD grade INTEGER
         """
+        case addUniqueField =
+        """
+        ALTER TABLE all_exercise_v1 ADD unique TEXT
+        """
 
         case insertExercise =
         """

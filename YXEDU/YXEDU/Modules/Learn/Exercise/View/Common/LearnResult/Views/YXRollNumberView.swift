@@ -49,6 +49,7 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
         super.bindProperty()
         self.timer?.invalidate()
         self.timer   = nil
+        var isFirst  = true
         let interval = type == .word ? 0.1 : 0.2
         self.timer = Timer(timeInterval: interval, repeats: true, block: { [weak self] (timer: Timer) in
             guard let self = self else { return }
@@ -65,18 +66,22 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
             label.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
-            if self.fromNumber < self.toNumber {
-                self.showNumberAnimation(label: label)
-            } else {
+            // 断言
+            if self.fromNumber >= self.toNumber {
+                timer.invalidate()
+            }
+            if isFirst {
+                self.showFirstNumberAniamtion(label: label)
+                isFirst = false
+            } else if self.fromNumber >= self.toNumber {
                 self.showLastAnimation(label: label)
                 if self.type == .word {
                     NotificationCenter.default.post(name: YXNotification.kWordAnimationPlayFinished, object: nil)
                 }
+            } else {
+                self.showNumberAnimation(label: label)
             }
             self.fromNumber += 1
-            if self.fromNumber > self.toNumber {
-                timer.invalidate()
-            }
         })
     }
 
@@ -85,6 +90,29 @@ class YXRollNumberView: YXView, CAAnimationDelegate {
 
     func show() {
         RunLoop.current.add(timer!, forMode: .default)
+    }
+
+    private func showFirstNumberAniamtion(label: UILabel) {
+        let scaleAnimater    = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimater.values = [1.0, 0.8]
+
+        let opacityAnimation    = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [1.0, 0.0]
+
+        let upAnimation       = CABasicAnimation(keyPath: "transform.translation.y")
+        upAnimation.fromValue = label.frame.origin.y
+        upAnimation.toValue   = label.frame.origin.y - self.height
+
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations     = [scaleAnimater, opacityAnimation, upAnimation]
+        animationGroup.autoreverses   = false
+        animationGroup.duration       = type == .word ? 0.14 : 0.3
+        animationGroup.timingFunction = CAMediaTimingFunction(name: .linear)
+        animationGroup.delegate       = self
+        animationGroup.isRemovedOnCompletion = false
+        animationGroup.fillMode = .forwards
+
+        label.layer.add(animationGroup, forKey: "firstAnimationGroup")
     }
 
     private func showNumberAnimation(label: UILabel) {

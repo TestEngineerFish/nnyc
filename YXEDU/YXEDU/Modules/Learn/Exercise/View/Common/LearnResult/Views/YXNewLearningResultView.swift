@@ -27,6 +27,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator   = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isScrollEnabled = true
         return scrollView
     }()
     var scrollViewContentView: UIView = {
@@ -50,15 +51,15 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         view.layer.cornerRadius = AdaptSize(8)
         return view
     }()
-    var wordCountLabel: UILabel = {
-        let label = UILabel()
-        label.text          = ""
-        label.textColor     = UIColor.orange1
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
-        label.textAlignment = .center
-        label.isHidden      = true
-        return label
-    }()
+//    var wordCountLabel: UILabel = {
+//        let label = UILabel()
+//        label.text          = ""
+//        label.textColor     = UIColor.orange1
+//        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
+//        label.textAlignment = .center
+//        label.isHidden      = true
+//        return label
+//    }()
     var wordTitleLabel: UILabel = {
         let label = UILabel()
         label.text          = "今日单词"
@@ -67,15 +68,15 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         label.textAlignment = .center
         return label
     }()
-    var dayCountLabel: UILabel = {
-        let label = UILabel()
-        label.text          = ""
-        label.textColor     = UIColor.orange1
-        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
-        label.textAlignment = .center
-        label.isHidden      = true
-        return label
-    }()
+//    var dayCountLabel: UILabel = {
+//        let label = UILabel()
+//        label.text          = ""
+//        label.textColor     = UIColor.orange1
+//        label.font          = UIFont.DINAlternateBold(ofSize: AdaptFontSize(32))
+//        label.textAlignment = .center
+//        label.isHidden      = true
+//        return label
+//    }()
     var dayTitleLabel: UILabel = {
         let label = UILabel()
         label.text          = "坚持天数"
@@ -86,9 +87,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     }()
     let calendarContentView = YXNewLearningResultCalendarView()
     var punchButton: UIButton = {
-        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
-        let isFirst  = YYCache.object(forKey: cacheKey) as? Bool ?? true
-        let _title   = isFirst ? "打卡" : "分享海报"
+        let _title   = YXUserModel.default.isFirstStudy ? "打卡" : "分享海报"
         let button = UIButton()
         button.setTitle(_title, for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -117,9 +116,9 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         scrollViewContentView.addSubview(closeButton)
         scrollViewContentView.addSubview(collectView)
         scrollViewContentView.addSubview(calendarContentView)
-        collectView.addSubview(wordCountLabel)
+//        collectView.addSubview(wordCountLabel)
         collectView.addSubview(wordTitleLabel)
-        collectView.addSubview(dayCountLabel)
+//        collectView.addSubview(dayCountLabel)
         collectView.addSubview(dayTitleLabel)
         self.addSubview(punchButton)
 
@@ -153,21 +152,21 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
             make.top.equalTo(resultView.snp.bottom).offset(AdaptFontSize(20))
             make.height.equalTo(AdaptSize(90))
         }
-        wordCountLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview().multipliedBy(0.5)
-            make.top.equalToSuperview().offset(AdaptSize(15))
-        }
+//        wordCountLabel.snp.makeConstraints { (make) in
+//            make.centerX.equalToSuperview().multipliedBy(0.5)
+//            make.top.equalToSuperview().offset(AdaptSize(15))
+//        }
         wordTitleLabel.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview().offset(AdaptSize(-20))
-            make.centerX.equalTo(wordCountLabel)
+            make.centerX.equalToSuperview().multipliedBy(0.5)
         }
-        dayCountLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview().multipliedBy(1.5)
-            make.top.equalToSuperview().offset(AdaptSize(15))
-        }
+//        dayCountLabel.snp.makeConstraints { (make) in
+//            make.centerX.equalToSuperview().multipliedBy(1.5)
+//            make.top.equalToSuperview().offset(AdaptSize(15))
+//        }
         dayTitleLabel.snp.makeConstraints { (make) in
             make.centerY.equalTo(wordTitleLabel)
-            make.centerX.equalTo(dayCountLabel)
+            make.centerX.equalToSuperview().multipliedBy(1.5)
         }
         calendarContentView.snp.makeConstraints { (make) in
             make.top.equalTo(collectView.snp.bottom).offset(AdaptFontSize(25))
@@ -205,7 +204,7 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
 
     @objc
     private func punchAction() {
-        if self.calendarContentView.todayCell?.isShowed == .some(false) {
+        if self.calendarContentView.todayCell?.isShowedAnimation == .some(true) {
             self.calendarContentView.todayCell?.showAnimation(duration: 0.8)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) { [weak self] in
                 guard let self = self else { return }
@@ -220,22 +219,14 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
 
     @objc
     private func resultPlayFinishedNotification() {
+        // 学完需要等结果星星动画播放结束后才播放
         self.showWordRollAnimation()
     }
 
     @objc
     private func wordAnimationPlayFinished() {
-        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
-        let isFirstStudy: Bool = YYCache.object(forKey: cacheKey) as? Bool ?? true
-        YYCache.set(false, forKey: cacheKey)
-        YXLog("当天首次进入结果页，显示动画")
-        if isFirstStudy {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.showDayRollAnimation()
-            }
-        } else {
-            self.dayCountLabel.isHidden  = false
-            self.dayCountLabel.text  = "\(toDayCount)"
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.showDayRollAnimation()
         }
     }
 
@@ -244,12 +235,13 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     ///   - currentLearnedWordsCount: 当次学习的单词数
     ///   - model: 学习结果模型对象
     func setData(currentLearnedWordsCount:Int, model: YXExerciseResultDisplayModel) {
-
         self.model         = model
-        self.fromWordCount = model.allWordNum - currentLearnedWordsCount
+        self.fromWordCount = YXUserModel.default.isFirstStudy ? model.allWordNum - currentLearnedWordsCount : model.allWordNum
         self.toWordCount   = model.allWordNum
         self.fromDayCount  = model.studyDay - 1
         self.toDayCount    = model.studyDay
+        // 更新学习记录
+        YXUserModel.default.isFirstStudy = false
         // 容错处理
         if self.fromWordCount < 0 {
             self.fromWordCount = 0
@@ -257,9 +249,12 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
         if self.fromDayCount < 0 {
             self.fromDayCount = 0
         }
-
+        // 未学完，自动播放动画
+        if !model.state {
+            self.showWordRollAnimation()
+        }
         self.resultView.setData(model: model)
-        self.calendarContentView.setData()
+        self.calendarContentView.setData(model.studyModelList)
     }
 
     private func showWordRollAnimation() {

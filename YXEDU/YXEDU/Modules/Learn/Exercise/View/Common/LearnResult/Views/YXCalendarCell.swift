@@ -17,7 +17,7 @@ class YXCalendarCell: YXView {
     weak var delegate: YXCalendarCellProtocol?
     var model: YXCalendarStudyModel
     var isToday: Bool
-    var isShowed = false
+    let isShowedAnimation = YXUserModel.default.isFirstStudy
 
     var smallPunchImageView: UIImageView = {
         let imageView = UIImageView()
@@ -98,21 +98,18 @@ class YXCalendarCell: YXView {
         self.smallDayLabel.text = isToday ? "今" : "\(day)"
         self.largeDayLabel.text = isToday ? "今" : "\(day)"
 
-        let cacheKey = YXLocalKey.currentFirstReport.rawValue + NSDate().formatYMD()
-        self.isShowed = !(YYCache.object(forKey: cacheKey) as? Bool ?? true)
-
         if self.model.status == 0 {
             self.largeDayLabel.isHidden = false
         } else {
             self.smallDayLabel.isHidden = false
-            if isToday && !self.isShowed {
+            if isToday && self.isShowedAnimation {
                 self.largePunchImageView.isHidden = false
             } else {
                 self.smallPunchImageView.isHidden = false
             }
         }
 
-        if isToday && !self.isShowed {
+        if isToday && self.isShowedAnimation {
             self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
             self.smallDayLabel.textColor = .white
             self.largeDayLabel.textColor = .white
@@ -124,8 +121,7 @@ class YXCalendarCell: YXView {
 
     // MARK: ==== Event ====
     func showAnimation(duration: Double) {
-        guard !isShowed else { return }
-        self.isShowed = true
+        guard self.isShowedAnimation else { return }
         let animater            = CAKeyframeAnimation(keyPath: "transform.scale")
         animater.values         = [1.0, 0.1, 1.2, 1.0]// 先保持大小比例,再放大,最后恢复默认大小
         animater.duration       = duration
@@ -144,7 +140,7 @@ class YXCalendarCell: YXView {
 
     @objc
     private func clickAction() {
-        guard isToday, !isShowed else {
+        guard isToday, self.isShowedAnimation else {
             return
         }
         self.delegate?.clickAction()

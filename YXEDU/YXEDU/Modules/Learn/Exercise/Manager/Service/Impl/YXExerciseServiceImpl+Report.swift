@@ -27,6 +27,11 @@ extension YXExerciseServiceImpl {
         return modelArray.toJSONString() ?? ""
     }
 
+    /// 获取学习唯一标识符
+    func getLearnUnique() -> String {
+        return self.studyDao.getUnique(study: _studyId)
+    }
+
     /// 获取学习时长
     func getLearnDuration() -> Int {
         return self.studyDao.getDurationTime(learn: learnConfig)

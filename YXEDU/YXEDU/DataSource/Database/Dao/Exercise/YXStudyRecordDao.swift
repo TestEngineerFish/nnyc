@@ -15,8 +15,9 @@ protocol YXStudyRecordDao {
     ///   - config: 学习配置信息
     /// - Parameter newWordCount: 总新学单词数量
     /// - Parameter reviewWordCount: 总复习单词数量
+    /// - Parameter unique: 后台需要记录的唯一标识符
     @discardableResult
-    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int) -> Int
+    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int, unique: String) -> Int
 
     /// 查询学习记录对象
     /// - Parameter config: 学习配置信息
@@ -67,6 +68,10 @@ protocol YXStudyRecordDao {
     /// 获得开始学习时间
     /// - Parameter config: 学习配置信息
     func getStartTime(learn config: YXLearnConfig) -> String
+
+    /// 获取学习记录唯一标识符
+    /// - Parameter id: 学习ID
+    func getUnique(study id: Int) -> String
 
     /// 获得学习持续时间
     /// - Parameter config: 学习配置信息

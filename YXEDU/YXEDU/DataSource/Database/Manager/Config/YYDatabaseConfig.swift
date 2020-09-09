@@ -144,6 +144,7 @@ extension YYSQLManager {
         word_id integer NOT NULL,
         word char(128),
         grade integer(4) NOT NULL DEFAULT(0),
+        unique text(32),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(8) NOT NULL DEFAULT(0),
         word_type integer(1) NOT NULL DEFAULT(0),

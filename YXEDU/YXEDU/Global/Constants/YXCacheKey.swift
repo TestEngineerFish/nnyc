@@ -63,8 +63,8 @@ enum YXLocalKey: String {
     case isShowSelectBool              = "kIsShowSelectBool"
     /// 最后一次主流程学习时间
     case lastStoredDate                = "kLastStoredDate"
-    /// 当天是否学习上报过
-    case currentFirstReport            = "kCurrentFirstReport"
+    /// 是否当天首次学习
+    case currentFirstStudy             = "kCurrentFirstStudy"
 
 }
 

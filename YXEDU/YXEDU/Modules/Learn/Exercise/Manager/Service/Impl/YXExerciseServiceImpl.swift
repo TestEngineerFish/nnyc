@@ -177,8 +177,9 @@ class YXExerciseServiceImpl: YXExerciseService {
         YXLog("====上报数据====")
         YXLog("new上报内容：" + reportContent)
         YXLog("new学习时长：\(duration)")
+        let unique   = self.getLearnUnique()
         let reviewId = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
-        let request  = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId)
+        let request  = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId, unique: unique)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else {
                 completion?(nil, [:])

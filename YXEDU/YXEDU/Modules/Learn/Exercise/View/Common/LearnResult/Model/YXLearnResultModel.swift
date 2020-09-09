@@ -29,21 +29,23 @@ struct YXLearnResultModel: Mappable {
     var status: Bool       = false
     var isAction:Bool      = false
     var sharedPeople: Int  = 0
+    var calendarStudyModelList: [YXCalendarStudyModel] = []
     
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        countStatus   <- map["count_status"]
-        status        <- map["status"]
-        unitName      <- map["unit_name"]
-        allWordCount  <- map["all_words_num"]
-        learnWordsNum <- map["learn_words_num"]
+        countStatus    <- map["count_status"]
+        status         <- map["status"]
+        unitName       <- map["unit_name"]
+        allWordCount   <- map["all_words_num"]
+        learnWordsNum  <- map["learn_words_num"]
         reviewWordsNum <- map["know_words_num"]
-        isShowCoin    <- map["is_show_coin"]
-        score         <- map["score"]
-        unitList      <- map["list"]
-        studyDay      <- map["study_day"]
-        isAction      <- map["activity_clock_notice"]
-        sharedPeople  <- map["which_people"]
+        isShowCoin     <- map["is_show_coin"]
+        score          <- map["score"]
+        unitList       <- map["list"]
+        studyDay       <- map["study_day"]
+        isAction       <- map["activity_clock_notice"]
+        sharedPeople   <- map["which_people"]
+        calendarStudyModelList <- map["study_detail"]
     }
 }
