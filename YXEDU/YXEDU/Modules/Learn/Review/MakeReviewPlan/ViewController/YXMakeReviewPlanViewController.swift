@@ -126,14 +126,10 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     /// 创建复习计划
     /// - Parameter name: 复习计划名称
     private func requestMakeReviewPlan(_ name: String) {
-        var wordModelList = [[String:Int]]()
-        self.selectedWordsListView.wordsModelList.forEach { (reviewWordModel) in
-            var wordModel = [String:Int]()
-            wordModel["book_id"] = reviewWordModel.originBookId
-            wordModel["word_id"] = reviewWordModel.id
-            wordModelList.append(wordModel)
+        let idsList = self.selectedWordsListView.wordsModelList.map { (wordModel) -> Int in
+            return wordModel.id
         }
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: wordModelList, options: []) else {
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: idsList, options: []) else {
             return
         }
         let idsStr = String(data: jsonData, encoding: String.Encoding.utf8) ?? ""
