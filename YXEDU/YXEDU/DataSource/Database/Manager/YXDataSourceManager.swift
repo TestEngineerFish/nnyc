@@ -108,7 +108,7 @@ extension YYDataSourceManager {
         if !db.columnExists("grade", inTableWithName: "all_exercise_v1") {
             let addGradeSQL = YYSQLManager.ExerciseSQL.addGradeField.rawValue
             db.executeUpdate(addGradeSQL, withArgumentsIn: [])
-            let addUniqueSQL = YYSQLManager.ExerciseSQL.addUniqueField.rawValue
+            let addUniqueSQL = YYSQLManager.StudyRecordSQL.addUniqueField.rawValue
             db.executeUpdate(addUniqueSQL, withArgumentsIn: [])
             // 清除所有学习记录
             YXExerciseServiceImpl().cleanAllStudyRecord()

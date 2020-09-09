@@ -46,9 +46,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     if wordBookDownloadModels.isEmpty {
                         self.downloadFinished()
                     } else {
-                        wordBookDownloadModels.forEach { (wordBookDownloadModel) in
+                        wordBookDownloadModels.forEach { [weak self] (wordBookDownloadModel) in
                             if wordBookDownloadModel.id == bookId {
-                                self.checkLocalBooksStatus(with: [wordBookDownloadModel])
+                                self?.checkLocalBooksStatus(with: [wordBookDownloadModel])
                                 return
                             }
                         }

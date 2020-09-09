@@ -164,7 +164,6 @@ class YXUserModel: NSObject {
             YYCache.set(newValue, forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD())
         }
         get {
-            return true
             return YYCache.object(forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD()) as? Bool ?? true
         }
     }

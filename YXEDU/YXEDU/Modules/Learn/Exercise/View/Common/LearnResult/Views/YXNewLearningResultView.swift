@@ -201,10 +201,15 @@ class YXNewLearningResultView: YXView, YXNewLearningResultCalendarViewProtocol, 
     ///   - model: 学习结果模型对象
     func setData(currentLearnedWordsCount:Int, model: YXExerciseResultDisplayModel) {
         self.model         = model
-        self.fromWordCount = YXUserModel.default.isFirstStudy ? model.allWordNum - currentLearnedWordsCount : model.allWordNum
         self.toWordCount   = model.allWordNum
-        self.fromDayCount  = YXUserModel.default.isFirstStudy ? model.studyDay - 1 : model.studyDay
         self.toDayCount    = model.studyDay
+        if model.state && YXUserModel.default.isFirstStudy {
+            self.fromWordCount = model.allWordNum - currentLearnedWordsCount
+            self.fromDayCount  = model.studyDay - 1
+        } else {
+            self.fromWordCount = model.allWordNum
+            self.fromDayCount  = model.studyDay
+        }
         // 更新学习记录
         YXUserModel.default.isFirstStudy = false
         // 容错处理

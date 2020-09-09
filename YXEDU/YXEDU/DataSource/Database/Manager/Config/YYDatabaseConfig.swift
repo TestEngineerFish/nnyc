@@ -130,6 +130,7 @@ extension YYSQLManager {
         unlearned_review_word_count integer(1) NOT NULL DEFAULT(0),
         study_duration integer(4) NOT NULL DEFAULT(0),
         start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
+        unique_code char(128),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
@@ -144,7 +145,6 @@ extension YYSQLManager {
         word_id integer NOT NULL,
         word char(128),
         grade integer(4) NOT NULL DEFAULT(0),
-        unique_code text(32),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(8) NOT NULL DEFAULT(0),
         word_type integer(1) NOT NULL DEFAULT(0),

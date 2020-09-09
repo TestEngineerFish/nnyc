@@ -17,7 +17,7 @@ class YXCalendarCell: YXView {
     weak var delegate: YXCalendarCellProtocol?
     var model: YXCalendarStudyModel
     var isToday: Bool
-    let isShowedAnimation = YXUserModel.default.isFirstStudy
+    var isShowedAnimation = YXUserModel.default.isFirstStudy
 
     var smallPunchImageView: UIImageView = {
         let imageView = UIImageView()
@@ -122,6 +122,7 @@ class YXCalendarCell: YXView {
     // MARK: ==== Event ====
     func showAnimation(duration: Double) {
         guard self.isShowedAnimation else { return }
+        self.isShowedAnimation = false
         let animater            = CAKeyframeAnimation(keyPath: "transform.scale")
         animater.values         = [1.0, 0.1, 1.2, 1.0]// 先保持大小比例,再放大,最后恢复默认大小
         animater.duration       = duration
