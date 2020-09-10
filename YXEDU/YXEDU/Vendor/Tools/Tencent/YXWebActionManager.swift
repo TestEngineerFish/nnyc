@@ -66,6 +66,7 @@ class YXWebActionManager: NSObject {
                             self?.toExerciseVC(model: _workModel)
                         }
                         vc.classModel  = self.transformToSummaryModel(model: _workModel)
+                        YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
                         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
                     } else {
                         self.toExerciseVC(model: _workModel)

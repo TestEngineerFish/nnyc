@@ -48,6 +48,7 @@ struct YXUserDataManager {
                 let vc = YXMyClassEditNameViewController()
                 vc.submitBlock = complate
                 vc.classModel  = response.data
+                YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
             } else {
                 complate?(true)
