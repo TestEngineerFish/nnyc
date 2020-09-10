@@ -40,6 +40,7 @@ class YXMyClassEditNameViewController: YXViewController, YXMyClassEditNameViewPr
         let request = YXOCRequest.changeName(name: name)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
+            self.navigationController?.popViewController(animated: false)
             self.submitBlock?(true)
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)

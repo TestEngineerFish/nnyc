@@ -161,10 +161,10 @@ class YXUserModel: NSObject {
     /// 是否当天首次学习
     var isFirstStudy: Bool {
         set {
-            YYCache.set(newValue, forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD())
+            YYCache.set(newValue, forKey: YXLocalKey.key(.currentFirstStudy) + NSDate().formatYMD())
         }
         get {
-            return YYCache.object(forKey: YXLocalKey.currentFirstStudy.rawValue + NSDate().formatYMD()) as? Bool ?? true
+            return YYCache.object(forKey: YXLocalKey.key(.currentFirstStudy) + NSDate().formatYMD()) as? Bool ?? true
         }
     }
     /// 是否已加入班级
