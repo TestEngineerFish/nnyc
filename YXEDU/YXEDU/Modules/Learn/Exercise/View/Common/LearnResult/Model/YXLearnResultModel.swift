@@ -32,12 +32,12 @@ struct YXLearnResultModel: Mappable {
     var calendarStudyModelList: [YXCalendarStudyModel] = []
     
     init?(map: Map) {}
-
+    
     mutating func mapping(map: Map) {
         countStatus    <- map["count_status"]
         status         <- map["status"]
         unitName       <- map["unit_name"]
-        allWordCount   <- map["all_words_num"]
+        allWordCount   <- (map["all_words_num"], IntTransform())
         learnWordsNum  <- map["learn_words_num"]
         reviewWordsNum <- map["know_words_num"]
         isShowCoin     <- map["is_show_coin"]

@@ -125,6 +125,7 @@
 		225A2A162508DF8800766FC0 /* city.json in Resources */ = {isa = PBXBuildFile; fileRef = 225A2A152508DF8800766FC0 /* city.json */; };
 		225B9D1A24625100006C758F /* YXReviewPlanCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B9D1924625100006C758F /* YXReviewPlanCollectionViewItem.swift */; };
 		2269DD872398F9E3001F116A /* RegisterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2269DD862398F9E3001F116A /* RegisterSliderView.swift */; };
+		226F0B112509C05300F453F6 /* YXMapperTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226F0B102509C05300F453F6 /* YXMapperTransform.swift */; };
 		22750820239F747700A53B9B /* YXReviewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2275081F239F747700A53B9B /* YXReviewBottomView.swift */; };
 		22761BF623B1BC6800A49811 /* YXChallengeFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22761BF523B1BC6800A49811 /* YXChallengeFooterView.swift */; };
 		22767D1124D94646004895A0 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22767D1024D94646004895A0 /* UIImageView+Extension.swift */; };
@@ -768,6 +769,7 @@
 		225A2A152508DF8800766FC0 /* city.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.json; sourceTree = "<group>"; };
 		225B9D1924625100006C758F /* YXReviewPlanCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewPlanCollectionViewItem.swift; sourceTree = "<group>"; };
 		2269DD862398F9E3001F116A /* RegisterSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSliderView.swift; sourceTree = "<group>"; };
+		226F0B102509C05300F453F6 /* YXMapperTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXMapperTransform.swift; sourceTree = "<group>"; };
 		2275081F239F747700A53B9B /* YXReviewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXReviewBottomView.swift; sourceTree = "<group>"; };
 		22761BF523B1BC6800A49811 /* YXChallengeFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXChallengeFooterView.swift; sourceTree = "<group>"; };
 		22767D1024D94646004895A0 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
@@ -3466,6 +3468,7 @@
 				EE08F3652372E06B00FA3FDF /* YXWordModel.swift */,
 				EE5EF2AD2327423F00655654 /* YXMaterialModel.h */,
 				EE5EF2AE2327423F00655654 /* YXMaterialModel.m */,
+				226F0B102509C05300F453F6 /* YXMapperTransform.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4500,6 +4503,7 @@
 				EEACEB5C23A4F1060036B3A2 /* YYRefreshFrashContentView.swift in Sources */,
 				EE5E0171232754FA00655654 /* YXCrashReport.m in Sources */,
 				77F69A7623616CE600E55185 /* YXDesignableLabel.swift in Sources */,
+				226F0B112509C05300F453F6 /* YXMapperTransform.swift in Sources */,
 				2297D98523AE37EA00DAF3B0 /* YXShareViewController.swift in Sources */,
 				CF4F3743242DEC4A00CA0C0B /* YXReviewResultTipsListView.swift in Sources */,
 				77AF1E4D24035E5200EB39A4 /* YXAddBookGuideViewController.swift in Sources */,
