@@ -171,7 +171,7 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 上报关卡
-    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int]) -> Void)?) {
+    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int], _ unique: String) -> Void)?) {
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")
@@ -182,7 +182,7 @@ class YXExerciseServiceImpl: YXExerciseService {
         let request  = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId, unique: unique)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else {
-                completion?(nil, [:])
+                completion?(nil, [:], unique)
                 return
             }
             // 获取学习数据
@@ -200,14 +200,14 @@ class YXExerciseServiceImpl: YXExerciseService {
             // 清除数据库对应数据
             self.cleanStudyRecord(hasNextGroup: response.data?.hasNextGroup ?? false)
             self._loadStudyRecord()
-            completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
+            completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount], unique)
         }) { (error) in
             // 容错处理
             if reportContent == "[]" {
                 self.cleanStudyRecord()
             }
             self.studyDao.updateProgress(study: self._studyId, progress: .unreport)
-            completion?(nil, [:])
+            completion?(nil, [:], unique)
         }
     }
     

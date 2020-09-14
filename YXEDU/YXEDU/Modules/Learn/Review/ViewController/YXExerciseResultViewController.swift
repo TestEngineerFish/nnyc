@@ -15,8 +15,9 @@ class YXExerciseResultViewController: YXViewController {
     
     var model: YXExerciseResultDisplayModel?
     var resultView: YXExerciseResultView?
-    var shareFinished = false
-    var loadingView   = YXExerciseResultLoadingView()
+    var unique: String = ""
+    var shareFinished  = false
+    var loadingView    = YXExerciseResultLoadingView()
     
     deinit {
         resultView?.removeFromSuperview()
@@ -165,7 +166,7 @@ class YXExerciseResultViewController: YXViewController {
     func fetchData() {
         guard let config = self.config else {return}
         let reviewId = config.learnType.isHomework() ? config.homeworkId : config.planId
-        YXReviewDataManager().fetchReviewResult(type: config.learnType, reviewId: reviewId) { [weak self] (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: config.learnType, reviewId: reviewId, unique: self.unique) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
             if var model = resultModel {

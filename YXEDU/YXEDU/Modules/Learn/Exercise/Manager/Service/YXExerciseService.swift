@@ -89,7 +89,7 @@ protocol YXExerciseService {
     /// 上报学习数据
     /// - Parameters:
     ///   - completion: 完成回调
-    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int]) -> Void)?)
+    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int], _ unique: String) -> Void)?)
 
     // TODO: ====  清除数据 ====
 

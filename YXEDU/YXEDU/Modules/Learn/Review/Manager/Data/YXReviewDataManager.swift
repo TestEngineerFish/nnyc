@@ -70,8 +70,8 @@ struct YXReviewDataManager {
     ///   - type:
     ///   - planId:
     ///   - completion:
-    func fetchReviewResult(type: YXLearnType, reviewId: Int, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
-        let request = YXReviewRequest.reviewResult(type: type.rawValue, reviewId: reviewId)
+    func fetchReviewResult(type: YXLearnType, reviewId: Int, unique: String, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.reviewResult(type: type.rawValue, reviewId: reviewId, unique: unique)
         YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in

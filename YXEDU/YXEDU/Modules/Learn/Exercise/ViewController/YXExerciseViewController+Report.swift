@@ -37,7 +37,7 @@ extension YXExerciseViewController {
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        self.service.reportReport { (resultModel, dict) in
+        self.service.reportReport { (resultModel, dict, unique) in
             guard let model = resultModel else {
                 YXLog("上报关卡失败")
                 UIView.toast("上报关卡失败")
@@ -60,7 +60,7 @@ extension YXExerciseViewController {
                     let reviewWordCount = dict["reviewWordCount"] ?? 0
                     self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
                 } else {
-                    self.processReviewResult()
+                    self.processReviewResult(unique: unique)
                 }
             }
         }
@@ -78,9 +78,10 @@ extension YXExerciseViewController {
     }
     
     /// 处理复习结果页
-    func processReviewResult() {
+    func processReviewResult(unique: String) {
         let vc = YXExerciseResultViewController()
         vc.config = learnConfig
+        vc.unique = unique
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

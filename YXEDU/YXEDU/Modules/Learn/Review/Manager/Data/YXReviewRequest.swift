@@ -14,7 +14,7 @@ public enum YXReviewRequest: YYBaseRequest {
     case removeReviewPlan(planId: Int)
     case reviewPlan
     case reviewPlanDetail(planId: Int)
-    case reviewResult(type: Int, reviewId: Int)
+    case reviewResult(type: Int, reviewId: Int, unique: String)
     case reviewPlanStatusList(page: Int)
     case studentStudyList(planId: Int, page: Int)
     case resetReviewPlan(planId: Int)
@@ -73,8 +73,8 @@ extension YXReviewRequest {
             return ["review_plan_id" : planId, "review_plan_name" : planName]
         case .removeReviewPlan(let planId):
             return ["review_plan_id" : planId]
-        case .reviewResult(let type, let reviewId):
-            return ["learn_type" : type, "review_id" : reviewId]
+        case .reviewResult(let type, let reviewId, let unique):
+            return ["learn_type" : type, "review_id" : reviewId, "unique" : unique]
         case .reviewPlanStatusList(let page):
             return ["page": page]
         case .studentStudyList(let planId, let page):
