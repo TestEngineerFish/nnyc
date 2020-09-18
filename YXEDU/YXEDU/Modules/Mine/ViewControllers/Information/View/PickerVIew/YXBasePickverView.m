@@ -330,6 +330,9 @@
         NSString *minDateStr = @"1949-1-1";
         _datePicker.minimumDate = [dateFormatter dateFromString:minDateStr];
         _datePicker.maximumDate = [NSDate date];
+        if (@available(iOS 13.4, *)) {
+            _datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+        }
         [self.containerView addSubview:_datePicker];
     }
 
