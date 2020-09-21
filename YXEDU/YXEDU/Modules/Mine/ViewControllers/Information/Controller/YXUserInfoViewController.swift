@@ -230,7 +230,7 @@ class YXUserInfoViewController: YXViewController, UITableViewDelegate, UITableVi
             case 0:
                 cell.setData(title: "头像", detail: "", hideAvatar: false)
             case 1:
-                cell.setData(title: "昵称", detail: nick)
+                cell.setData(title: "姓名", detail: nick)
             case 2:
                 cell.setData(title: "性别", detail: sex)
             default:

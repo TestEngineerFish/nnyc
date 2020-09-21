@@ -56,7 +56,7 @@ class YXMyClassEditNameView: YXView, UITextFieldDelegate {
     }()
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text          = "为了帮助老师认识你，建议在班级里使用自己的姓名作为昵称哦!"
+        label.text          = "为了帮助老师认识你，建议在班级里使用自己的姓名作为姓名哦!"
         label.textColor     = UIColor.hex(0x666666)
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .left
@@ -65,7 +65,7 @@ class YXMyClassEditNameView: YXView, UITextFieldDelegate {
     }()
     var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder     = "请输入你的昵称"
+        textField.placeholder     = "请输入你的姓名"
         textField.textColor       = UIColor.black1
         textField.font            = UIFont.regularFont(ofSize: AdaptFontSize(15))
         textField.backgroundColor = UIColor.hex(0xF2F2F2)

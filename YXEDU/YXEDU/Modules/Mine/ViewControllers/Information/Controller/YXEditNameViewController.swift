@@ -97,6 +97,7 @@ class YXEditNameViewController: YXViewController, UITextFieldDelegate {
     }
 
     private func bindProperty() {
+        self.customNavigationBar?.title = "修改姓名"
         let _name = name.count > maxLength ? name.substring(maxIndex: maxLength) : name
         self.nameTextField.text     = _name
         self.nameTextField.delegate = self

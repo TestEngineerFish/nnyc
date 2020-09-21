@@ -551,7 +551,7 @@ typedef void(^WXCheckULCompletion)(WXULCheckStep step, WXCheckULStepResult* resu
 
 @property(nonatomic, copy) NSString *openId;   // 小程序openid
 @property(nonatomic, copy) NSString *unionId;  // unionId
-@property(nonatomic, copy) NSString *nickName; // 用户昵称
+@property(nonatomic, copy) NSString *nickName; // 用户姓名
 
 @end
 
