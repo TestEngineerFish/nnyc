@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// 复习结果页（除基础学习外）
 class YXExerciseResultViewController: YXViewController {
 
@@ -16,8 +15,9 @@ class YXExerciseResultViewController: YXViewController {
     
     var model: YXExerciseResultDisplayModel?
     var resultView: YXExerciseResultView?
-    var shareFinished = false
-    var loadingView   = YXExerciseResultLoadingView()
+    var unique: String = ""
+    var shareFinished  = false
+    var loadingView    = YXExerciseResultLoadingView()
     
     deinit {
         resultView?.removeFromSuperview()
@@ -27,8 +27,8 @@ class YXExerciseResultViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.fetchData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.fetchData()
         }
     }
     
@@ -62,8 +62,10 @@ class YXExerciseResultViewController: YXViewController {
     
     private func initResultView() {
         self.loadingView.removeFromSuperview()
-
-        self.resultView = YXExerciseResultView(model: model!)
+        guard let _model = model else {
+            return
+        }
+        self.resultView = YXExerciseResultView(model: _model)
         
         resultView?.processEvent = { [weak self] in
             self?.processEvent()
@@ -164,7 +166,7 @@ class YXExerciseResultViewController: YXViewController {
     func fetchData() {
         guard let config = self.config else {return}
         let reviewId = config.learnType.isHomework() ? config.homeworkId : config.planId
-        YXReviewDataManager().fetchReviewResult(type: config.learnType, reviewId: reviewId) { [weak self] (resultModel, error) in
+        YXReviewDataManager().fetchReviewResult(type: config.learnType, reviewId: reviewId, unique: self.unique) { [weak self] (resultModel, error) in
             guard let self = self else {return}
             
             if var model = resultModel {
@@ -172,6 +174,7 @@ class YXExerciseResultViewController: YXViewController {
                 let m = YXExerciseResultDisplayModel.displayModel(model: model)
                 self.model = m
                 self.initResultView()
+                self.updatePunchCount()
             } else {
                 UIView.toast("请求数据失败")
                 self.navigationController?.popViewController(animated: true)
@@ -185,5 +188,17 @@ class YXExerciseResultViewController: YXViewController {
             return
         }
         self.shareFinished = isFinised
+    }
+
+    // MARK: ==== Event ====
+    private func updatePunchCount() {
+        if let count = YYCache.object(forKey: YXLocalKey.punchCount) as? Int {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： \(count + 1)")
+            YYCache.set(count + 1, forKey: YXLocalKey.punchCount)
+
+        } else {
+            YXLog("用户 \(YXUserModel.default.uuid ?? "") 打卡次数： 1")
+            YYCache.set(1, forKey: YXLocalKey.punchCount)
+        }
     }
 }

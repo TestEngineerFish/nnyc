@@ -117,6 +117,9 @@
 }
 
 + (void)showLoadingInfo:(NSString *)info toView:(UIView *)view {
+    if (!view) {
+        view = [UIApplication sharedApplication].keyWindow;
+    }
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     //    hud.delegate = self;
     hud.mode = MBProgressHUDModeIndeterminate;
@@ -143,21 +146,24 @@
 }
 
 + (void)showHUD:(UIView *)view title:(NSString *)text {
-    if (!view) {
-        view = [UIApplication sharedApplication].keyWindow;
-    }
-    if (view == nil) { return; }
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    // Configure for text only and offset down
-    hud.mode = MBProgressHUDModeText;
-    hud.detailsLabel.text         = text;
-    hud.detailsLabel.font         = [UIFont systemFontOfSize:14.0f];
-    hud.detailsLabel.textColor    = [UIColor whiteColor];
-    hud.bezelView.style           = MBProgressHUDBackgroundStyleSolidColor;
-    hud.bezelView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    hud.margin                    = 10.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:1];
+    __block UIView *targetView = view;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!targetView) {
+            targetView = [UIApplication sharedApplication].keyWindow;
+        }
+        if (targetView == nil) { return; }
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:targetView animated:YES];
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.detailsLabel.text         = text;
+        hud.detailsLabel.font         = [UIFont systemFontOfSize:14.0f];
+        hud.detailsLabel.textColor    = [UIColor whiteColor];
+        hud.bezelView.style           = MBProgressHUDBackgroundStyleSolidColor;
+        hud.bezelView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        hud.margin                    = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hideAnimated:YES afterDelay:1];
+    });
 }
 
 + (BOOL)currentHUDForView:(UIView *)view {
@@ -192,21 +198,6 @@
 
 + (void)hidenProgress:(UIView *)_view {
     [MBProgressHUD hideHUDForView:_view animated:YES];
-}
-
-+ (NSString *)currentWifiSSID {
-    // Does not work on the simulator.
-    NSString *ssid = nil;
-    NSArray *ifs = (id)CFBridgingRelease(CNCopySupportedInterfaces());
-    YXLog(@"ifs:%@",ifs);
-    for (NSString *ifnam in ifs) {
-        NSDictionary *info = (id)CFBridgingRelease(CNCopyCurrentNetworkInfo((CFStringRef)ifnam));
-        YXLog(@"dici：%@",[info  allKeys]);
-        if (info[@"SSID"]) {
-            ssid = info[@"SSID"];
-        }
-    }
-    return ssid;
 }
 
 #pragma mark -MBProgressHUDDelegate-

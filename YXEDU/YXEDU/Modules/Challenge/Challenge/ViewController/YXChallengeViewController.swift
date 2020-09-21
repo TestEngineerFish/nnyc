@@ -29,7 +29,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.requestChallengeData()
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -43,8 +43,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             make.edges.equalToSuperview()
         }
         self.tableView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(-kStatusBarHeight + AdaptSize(15))
-            make.left.right.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         self.tableView.delegate        = self
         self.tableView.dataSource      = self
@@ -58,13 +57,13 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     // MARK: ==== Request ====
     private func requestChallengeData() {
         let request = YXChallengeRequest.challengeModel
-        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let _challengeModel = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let _challengeModel = response.data else {
                 return
             }
             self.updateChallengeData(model: _challengeModel)
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -79,14 +78,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
 
     private func requestUnlockGame() {
         let request = YXChallengeRequest.unlock
-        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             if let statusModel = response.data, statusModel.state == 1 {
                 self.requestChallengeData()
             } else {
                 self.showGoldLackAlert()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -94,15 +94,15 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
     private func requestReportShowPreviousResult(_ version: Int) {
         let request = YXChallengeRequest.showPrevious(version: version)
         YYNetworkService.default.request(YYStructResponse<YXChallengeUnlockModel>.self, request: request, success: nil) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     /// 展示上期结果弹框
     private func requestPreviousResult() {
         let request = YXChallengeRequest.rankedList
-        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
-            guard let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0, let previousRankVersion = self.challengeModel?.userModel?.previousRankVersion else {
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let challengeModel = response.data, let userModel = challengeModel.userModel, userModel.ranking > 0, let previousRankVersion = self.challengeModel?.userModel?.previousRankVersion else {
                 return
             }
 
@@ -114,7 +114,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
             }
             self.requestReportShowPreviousResult(previousRankVersion)
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -142,30 +142,33 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         case .lock:
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "确定花费\(gameInfo.unlockCoin)松鼠币解锁游戏吗？"
-            alertView.doneClosure = { _ in
+            alertView.doneClosure = { [weak self] (text: String?) in
+                guard let self = self else { return }
                 if userModel.myCoins >= gameInfo.unlockCoin {
                     self.requestUnlockGame()
                 } else {
                     self.showGoldLackAlert()
                 }
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         case .task:
             let alertView = YXAlertView(type: .normal)
             alertView.descriptionLabel.text = "背完今天的单词可以获得一次免费挑战机会！"
             alertView.leftButton.setTitle("直接挑战", for: .normal)
             alertView.rightOrCenterButton.setTitle("去背单词", for: .normal)
-            alertView.cancleClosure = {
+            alertView.cancleClosure = { [weak self] in
+                guard let self = self else { return }
                 if userModel.myCoins >= gameInfo.unitCoin {
                     self.playGame()
                 } else {
                     self.showGoldLackAlert()
                 }
             }
-            alertView.doneClosure = { _ in
+            alertView.doneClosure = { [weak self] (text: String?) in
+                guard let self = self else { return }
                 self.tabBarController?.selectedIndex = 0
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         case .free:
             self.playGame()
         case .again:
@@ -194,7 +197,7 @@ class YXChallengeViewController: YXViewController, UITableViewDelegate, UITableV
         alertView.descriptionLabel.text = "您的松果币余额不足，建议去任务中心看看哦"
         alertView.rightOrCenterButton.setTitle("我知道了", for: .normal)
         alertView.shouldOnlyShowOneButton = true
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     // MARK: ==== UITableViewDataSource && UITableViewDelegate ====
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -23,27 +23,27 @@ class YXWordAndImageQuestionView: YXBaseQuestionView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        titleLabel?.sizeToFit()
-        titleLabel?.snp.makeConstraints({ (make) in
-            make.top.equalTo(AdaptIconSize(24))
-            make.centerX.equalToSuperview()
-            make.size.equalTo(titleLabel?.size ?? CGSize.zero)
-        })
-        
-        audioPlayerView?.snp.makeConstraints({ (make) in
-            make.centerY.equalTo(titleLabel!)
-            make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
-            make.width.height.equalTo(AdaptIconSize(22))
-        })
-        
-        imageView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(titleLabel!.snp.bottom).offset(AdaptIconSize(28))
-            make.centerX.equalToSuperview()
-            make.width.equalTo(AdaptIconSize(130))
-            make.height.equalTo(AdaptIconSize(94))
-        })
-        
+        if titleLabel != nil {
+            titleLabel?.sizeToFit()
+            titleLabel?.snp.makeConstraints({ (make) in
+                make.top.equalTo(AdaptIconSize(24))
+                make.centerX.equalToSuperview()
+                make.size.equalTo(titleLabel?.size ?? CGSize.zero)
+            })
+
+            audioPlayerView?.snp.makeConstraints({ (make) in
+                make.centerY.equalTo(titleLabel!)
+                make.left.equalTo(titleLabel!.snp.right).offset(AdaptIconSize(3))
+                make.width.height.equalTo(AdaptIconSize(22))
+            })
+
+            imageView?.snp.makeConstraints({ (make) in
+                make.top.equalTo(titleLabel!.snp.bottom).offset(AdaptIconSize(28))
+                make.centerX.equalToSuperview()
+                make.width.equalTo(AdaptIconSize(130))
+                make.height.equalTo(AdaptIconSize(94))
+            })
+        }        
     }
     
     override func bindData() {

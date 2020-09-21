@@ -62,7 +62,7 @@ class YYDataSourceQueueManager: NSObject {
 extension YYDataSourceQueueManager {
     private func wordRunner() throws -> FMDatabaseQueue {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
-        return try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
+        return try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateTables)
     }
 
     /**

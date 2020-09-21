@@ -97,6 +97,7 @@
 
 - (void)viewDidLoad {
     self.backType = BackWhite;
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
 
@@ -209,21 +210,18 @@
     }];
 
     [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(16);
-        make.left.greaterThanOrEqualTo(self.view).offset(16);
-        make.right.lessThanOrEqualTo(self.view).offset(-16);
-        make.width.mas_equalTo(600).priorityLow;
+        make.top.equalTo(self.view).offset(AdaptSize(16));
+        make.left.equalTo(self.view).offset(AdaptSize(16));
+        make.right.equalTo(self.view).offset(AdaptSize(-16));
         make.height.mas_equalTo(364);
         make.centerX.equalTo(self.view);
     }];
     
     [self.submitButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.containerView.mas_bottom).offset(24);
-        make.left.greaterThanOrEqualTo(self.view).offset(86);
-        make.right.lessThanOrEqualTo(self.view).offset(-86);
-        make.width.mas_equalTo(560).priorityLow;
+        make.top.equalTo(self.containerView.mas_bottom).offset(AdaptSize(24));
+        make.left.equalTo(self.view).offset(86);
+        make.right.equalTo(self.view).offset(-86);
         make.height.mas_equalTo(44);
-        make.centerX.equalTo(self.view);
     }];
 }
 
@@ -231,7 +229,17 @@
     [super viewWillAppear:animated];
     [self updateDotStatus];
     self.textColorType = TextColorWhite;
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.containerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(AdaptSize(16));
+        make.left.equalTo(self.view).offset(AdaptSize(16));
+        make.right.equalTo(self.view).offset(AdaptSize(-16));
+        make.height.mas_equalTo(364);
+        make.centerX.equalTo(self.view);
+    }];
 }
 
 - (void)updateDotStatus {
@@ -261,12 +269,16 @@
     sendModel.env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
     
     [self.feedViewModel submitFeedBack:sendModel finish:^(id obj, BOOL result) {
-        [YXUtils hideHUD:weakSelf.view];
+        [YXUtils hideHUD:self.view];
         if (result) {
-            [YXUtils showHUD:[UIApplication sharedApplication].keyWindow title:@"提交成功"];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [YXUtils showHUD:self.view title:@"提交成功"];
+            if (weakSelf.navigationController) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            } else {
+                [weakSelf dismissViewControllerAnimated:true completion:nil];
+            }
         } else {
-//            [YXUtils showHUD:self.view title:@"网络错误!"];
+            [YXUtils showHUD:self.view title:@"网络错误!"];
         }
     }];
     [YXLogManager.share report:NO];

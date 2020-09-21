@@ -21,10 +21,10 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         didSet {
             if shouldOnlyShowOneButton {
                 cancelButtonRightDistance.constant = 20
-                doneButtonLeftDistance.constant = 20
+                doneButtonLeftDistance.constant    = 20
             } else {
                 cancelButtonRightDistance.constant = ((screenWidth - 88) / 2) + 10
-                doneButtonLeftDistance.constant = ((screenWidth - 88) / 2) + 10
+                doneButtonLeftDistance.constant    = ((screenWidth - 88) / 2) + 10
             }
         }
     }
@@ -59,19 +59,21 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     @IBOutlet weak var alertHeight: NSLayoutConstraint!
     
     @IBAction func cancle(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.contentView.alpha = 0
-            
-        }, completion: { completed in
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.contentView.alpha = 0
+        }, completion: { [weak self] completed in
+            guard let self = self else { return }
             self.cancleClosure?()
             self.removeFromSuperview()
         })
     }
     
     @IBAction func done(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            guard let self = self else { return }
             self.contentView.alpha = self.shouldClose ? 0 : 1
-        }, completion: { completed in
+        }, completion: { [weak self] completed in
+            guard let self = self else { return }
             var text = self.textField.text
             if text == "" {
                 text = self.textField.placeholder
@@ -84,11 +86,10 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
     }
     
     @IBAction func close(_ sender: Any) {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.contentView.alpha = 0
-            
-        }, completion: { completed in
-            self.removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.contentView.alpha = 0
+        }, completion: { [weak self] completed in
+            self?.removeFromSuperview()
         })
     }
     
@@ -100,7 +101,9 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         super.init(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         self.type = type
         initializationFromNib()
-        
+        self.leftButton.layer.masksToBounds = false
+        self.rightOrCenterButton.layer.masksToBounds = false
+        self.containerView.layer.masksToBounds = false
         self.textField.placeholder = text
     }
     
@@ -134,7 +137,7 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         if var text = textField.text, text.isEmpty == false {
             if text.count >= 20  {
                 textField.text = text.substring(maxIndex: 20)
-                text = textField.text!
+                text = textField.text ?? ""
             }
             clearButton.isHidden = false
             textCountLabel.text = "\(text.count)"
@@ -163,7 +166,8 @@ class YXAlertView: YXTopWindowView, UITextFieldDelegate {
         containerView.alpha = 0
         backgroundView.alpha = 0
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+            guard let self = self else { return }
             self.containerView.transform = .identity
             self.containerView.alpha = 1
             self.backgroundView.alpha = 0.7

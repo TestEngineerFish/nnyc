@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -41,9 +41,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KbT-WN-PFS">
-                        <rect key="frame" x="316.5" y="96" width="86.5" height="22"/>
+                        <rect key="frame" x="345" y="96" width="58" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="width" priority="750" constant="196" id="szm-UB-Cjr"/>
+                            <constraint firstAttribute="width" constant="58" id="szm-UB-Cjr"/>
                         </constraints>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
@@ -52,7 +52,7 @@
                             <action selector="showWordDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0ul-zX-iDg"/>
                         </connections>
                     </button>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordListMask" translatesAutoresizingMaskIntoConstraints="NO" id="Bfi-re-0ha">
+                    <imageView clipsSubviews="YES" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordListMask" translatesAutoresizingMaskIntoConstraints="NO" id="Bfi-re-0ha">
                         <rect key="frame" x="152.5" y="91" width="164" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="aZF-UX-98z"/>
@@ -70,7 +70,7 @@
                     <constraint firstAttribute="bottom" secondItem="ovL-QG-taA" secondAttribute="bottom" id="HhL-rL-Ni1"/>
                     <constraint firstItem="XYT-kM-Mem" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.2" id="Ido-5y-vsv"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KY9-rk-jIQ"/>
-                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" secondItem="B8z-m1-4c5" secondAttribute="trailing" priority="750" id="Rq0-My-kcy"/>
+                    <constraint firstItem="KbT-WN-PFS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="B8z-m1-4c5" secondAttribute="trailing" id="Rq0-My-kcy"/>
                     <constraint firstItem="B8z-m1-4c5" firstAttribute="trailing" secondItem="Bfi-re-0ha" secondAttribute="trailing" id="Y0O-z4-8Lq"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cSb-d8-Qp4"/>
                     <constraint firstItem="Bfi-re-0ha" firstAttribute="leading" secondItem="XYT-kM-Mem" secondAttribute="trailing" constant="20" id="iPJ-6N-RJb"/>

@@ -292,4 +292,20 @@ public extension UIImage {
         return newImage
     }
 
+    /// 裁切圆角
+    /// - Parameters:
+    ///   - radius: 圆角半径
+    ///   - size:视图大小
+    func corner(radius: CGFloat, with size:CGSize) -> UIImage? {
+        let rect = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: radius).cgPath
+        UIGraphicsGetCurrentContext()?.addPath(path)
+        UIGraphicsGetCurrentContext()?.clip()
+        self.draw(in: rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+
 }

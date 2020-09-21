@@ -12,6 +12,11 @@ extension YYSQLManager {
 
     enum StudyRecordSQL: String {
 
+        case addUniqueField =
+        """
+        ALTER TABLE study_record_v1 ADD unique_code TEXT
+        """
+
         case insertStudyRecord =
         """
         INSERT INTO
@@ -25,9 +30,10 @@ extension YYSQLManager {
         new_word_count,
         unlearned_new_word_count,
         review_word_count,
-        unlearned_review_word_count
+        unlearned_review_word_count,
+        unique_code
         )
-        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case selectStudy =

@@ -229,13 +229,15 @@ class YXShareCodeView: UIView {
 
     // MARK: ==== Animation ====
     private func showAnimation() {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) {  [weak self] in
+            guard let self = self else { return }
             self.contentView.transform = CGAffineTransform(translationX: 0, y: -self.contentView.size.height)
         }
     }
 
     private func hideAnimation(finished  block:(()->Void)?) {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else { return }
             self.contentView.transform = .identity
         }) { (finish) in
             if finish {

@@ -11,20 +11,22 @@ import UIKit
 public enum YXExerciseRequest: YYBaseRequest {
     case exercise(isGenerate: Bool, type: Int, reviewId: Int?)
     case learnMap(bookId: Int)
+    case baseLearnResult(bookId: Int, unitId: Int, wordId: Int)
     case learnResult(bookId: Int, unitId: Int, wordId: Int)
-    case report(type: Int, reviewId: Int, time: Int, result: String, bookId: Int)
+    case report(type: Int, reviewId: Int, time: Int, result: String, bookId: Int, unique: String)
     case addUserBook(userId: String, bookId: Int, unitId: Int)
     case reportListenScore(wordId: Int, score: Int)
     case stepConfig
+    case learnShare(shareType: Int, learnType: Int)
 }
 
 
 extension YXExerciseRequest {
     var method: YYHTTPMethod {
         switch self {
-        case .exercise, .learnMap, .learnResult, .addUserBook, .stepConfig:
+        case .exercise, .learnMap, .baseLearnResult, .learnResult, .addUserBook, .stepConfig:
             return .get
-        case .report, .reportListenScore:
+        case .report, .reportListenScore, .learnShare:
             return .post
         }
     }
@@ -35,6 +37,8 @@ extension YXExerciseRequest {
             return YXAPI.Exercise.exercise
         case .learnMap:
             return YXAPI.Exercise.learnMap
+        case .baseLearnResult:
+            return YXAPI.Exercise.baseLearnResult
         case .learnResult:
             return YXAPI.Exercise.learnResult
         case .report:
@@ -45,6 +49,8 @@ extension YXExerciseRequest {
             return YXAPI.Exercise.reportListenScore
         case .stepConfig:
             return YXAPI.Exercise.stepConfig
+        case .learnShare:
+            return YXAPI.Exercise.learnShare
         }
     }
 
@@ -54,14 +60,18 @@ extension YXExerciseRequest {
             return ["is_generate" : isGenerate, "learn_type" : type, "review_id" : planId]
         case .learnMap(let bookId):
             return ["book_id" : bookId]
+        case .baseLearnResult(let bookId, let unitId, let workId):
+            return ["book_id" : bookId, "unit_id" : unitId, "work_id" : workId]
         case .learnResult(let bookId, let unitId, let workId):
             return ["book_id" : bookId, "unit_id" : unitId, "work_id" : workId]
         case .addUserBook(let userId, let bookId, let unitId):
             return ["user_id":userId, "book_id":bookId, "unit_id":unitId]
-        case .report(let type, let reviewId, let time, let result, let bookId):
-            return ["learn_type" : type, "cost_time" : time, "learn_result" : result, "review_id" : reviewId, "book_id" : bookId]
+        case .report(let type, let reviewId, let time, let result, let bookId, let unique):
+            return ["learn_type" : type, "cost_time" : time, "learn_result" : result, "review_id" : reviewId, "book_id" : bookId, "unique" : unique]
         case .reportListenScore(let wordId, let score):
             return ["word_id" : wordId, "listen_score" : score]
+        case .learnShare(let shareType, let learnType):
+            return ["type" : shareType, "learn_type" : learnType]
         default:
             return nil
         }

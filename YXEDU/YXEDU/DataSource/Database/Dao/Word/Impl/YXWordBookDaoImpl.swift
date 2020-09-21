@@ -15,7 +15,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
 
     /// 更新词书中所有单词
     /// - Parameter bookModel: 词书对象
-    func updateWords(bookModel: YXWordBookModel) {
+    func updateBookModel(bookModel: YXWordBookModel) {
         guard let bookId = bookModel.bookId, let unitsList = bookModel.units, let newHash = bookModel.bookHash else {
             YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "数据解析失败")
             return
@@ -122,6 +122,35 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         }
     }
 
+    /// 更新、保存单词
+    /// - Parameter wordModelList: 单词列表
+    func updateWordModelList(with wordModelList: [YXWordModel]) {
+        YXWordBookResourceManager.wordDownloading = true
+        let deleteWordSQL = YYSQLManager.WordSQL.deleteWordById.rawValue
+        let insertWordSQL  = YYSQLManager.WordSQL.insertWord.rawValue
+        for wordModel in wordModelList {
+            let bookId = wordModel.bookId ?? 0
+            // 删除旧单词
+            let deleteWordSuccess = self.wordRunner.executeUpdate(deleteWordSQL, withArgumentsIn: [wordModel.wordId ?? 0])
+            let msg = String(format: "删除单词:%@, word_id: %d, book_id:%d", wordModel.word ?? "", wordModel.wordId ?? 0, bookId)
+            if deleteWordSuccess {
+                YXLog(msg + " 成功")
+            } else {
+                Bugly.reportError(NSError(domain: msg + "失败", code: 0, userInfo: nil))
+                YXLog(msg + " 失败")
+            }
+            // 增加新单词
+            let insertWordParams  = self.getWordSQLParams(word: wordModel)
+            let insertWordSuccess = self.wordRunner.executeUpdate(insertWordSQL, withArgumentsIn: insertWordParams)
+            if !insertWordSuccess {
+                let msg = String(format: "插入单词:%@, word_id: %d, book_id:%d 失败", wordModel.word ?? "", wordModel.wordId ?? 0, bookId)
+                Bugly.reportError(NSError(domain: msg, code: 0, userInfo: nil))
+                YXLog(msg)
+            }
+        }
+        YXWordBookResourceManager.wordDownloading = false
+    }
+
     /// 仅测试用，删除所用词书和单词
     func deleteAll() {
         let deleteBooksSQL = YYSQLManager.BookSQL.deleteAllBooks.rawValue
@@ -130,7 +159,7 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
             db.executeUpdate(deleteBooksSQL, withArgumentsIn: [])
             db.executeUpdate(deleteWordsSQL, withArgumentsIn: [])
             DispatchQueue.main.async {
-                YXUtils.showHUD(kWindow, title: "删除成功")
+                YXUtils.showHUD(nil, title: "删除成功")
             }
         }
     }
@@ -163,12 +192,12 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         var book: YXWordBookModel?
         if result.next() {
             book = YXWordBookModel()
-            book!.bookId = Int(result.int(forColumn: "bookId"))
-            book!.bookName = result.string(forColumn: "bookName")
-            book!.bookWordSourcePath = result.string(forColumn: "bookSource")
-            book!.bookHash = result.string(forColumn: "bookHash")
-            book!.gradeId = Int(result.int(forColumn: "gradeId"))
-            book!.gradeType = Int(result.int(forColumn: "gradeType"))
+            book?.bookId             = Int(result.int(forColumn: "bookId"))
+            book?.bookName           = result.string(forColumn: "bookName")
+            book?.bookWordSourcePath = result.string(forColumn: "bookSource")
+            book?.bookHash           = result.string(forColumn: "bookHash")
+            book?.gradeId            = Int(result.int(forColumn: "gradeId"))
+            book?.gradeType          = Int(result.int(forColumn: "gradeType"))
         }
         
         result.close()
@@ -352,15 +381,15 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
     private func createWordModel(result: FMResultSet) -> YXWordModel {
         var word = YXWordModel()
         
-        let partOfSpeechAndMeaningsDataString: String! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
-        let deformationsDataString: String!    = (result.string(forColumn: "deformations") ?? "[]")
-        let examplessDatStringa: String!       = (result.string(forColumn: "examples") ?? "[]")
-        let fixedMatchsDataString: String!     = (result.string(forColumn: "fixedMatchs") ?? "[]")
-        let commonPhrasesDataString: String!   = (result.string(forColumn: "commonPhrases") ?? "[]")
-        let wordAnalysisDataString: String!    = (result.string(forColumn: "wordAnalysis") ?? "[]")
-        let detailedSyntaxsDataString: String! = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
-        let synonymsData: Data! = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8)!
-        let antonymsData: Data! = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8)!
+        let partOfSpeechAndMeaningsDataString: String = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
+        let deformationsDataString: String    = (result.string(forColumn: "deformations") ?? "[]")
+        let examplessDatStringa: String       = (result.string(forColumn: "examples") ?? "[]")
+        let fixedMatchsDataString: String     = (result.string(forColumn: "fixedMatchs") ?? "[]")
+        let commonPhrasesDataString: String   = (result.string(forColumn: "commonPhrases") ?? "[]")
+        let wordAnalysisDataString: String    = (result.string(forColumn: "wordAnalysis") ?? "[]")
+        let detailedSyntaxsDataString: String = (result.string(forColumn: "detailedSyntaxs") ?? "[]")
+        let synonymsData: Data = (result.string(forColumn: "synonyms") ?? "[]").data(using: .utf8) ?? Data()
+        let antonymsData: Data = (result.string(forColumn: "antonyms") ?? "[]").data(using: .utf8) ?? Data()
 
         word.wordId                  = Int(result.int(forColumn: "wordId"))
         word.word                    = result.string(forColumn: "word")
@@ -376,8 +405,8 @@ class YXWordBookDaoImpl: YYDatabase, YXWordBookDao {
         word.commonPhrases           = [YXWordCommonPhrasesModel](JSONString: commonPhrasesDataString)
         word.wordAnalysis            = [YXWordAnalysisModel](JSONString: wordAnalysisDataString)
         word.detailedSyntaxs         = [YXWordDetailedSyntaxModel](JSONString: detailedSyntaxsDataString)
-        word.synonyms                = try? (JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers) as! [String])
-        word.antonyms                = try? (JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers) as! [String])
+        word.synonyms                = (try? JSONSerialization.jsonObject(with: synonymsData, options: .mutableContainers)) as? [String]
+        word.antonyms                = (try? JSONSerialization.jsonObject(with: antonymsData, options: .mutableContainers)) as? [String]
         word.gradeId                 = Int(result.int(forColumn: "gradeId"))
         word.gardeType               = Int(result.int(forColumn: "gardeType"))
         word.bookId                  = Int(result.int(forColumn: "bookId"))

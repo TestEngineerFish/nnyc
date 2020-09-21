@@ -9,7 +9,7 @@
 import UIKit
 
 @objc
-class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXStudyReportViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
     private var studyResult: YXStudyReportResultModel?
     private var studyContent: [YXStudyReportResultContentModel]?
@@ -39,22 +39,21 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var studyDaysCountPercentLabel: UILabel!
     @IBOutlet weak var studyDaysCountImageView: UIImageView!
     @IBOutlet weak var blankView: YXStudyReportBlankView!
-    
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor            = UIColor.hex(0xFFA83E)
+        self.customNavigationBar?.title      = "学习报告"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+        self.viewTopConstraint.constant = kStatusBarHeight
         studyContentTableView.register(UINib(nibName: "YXStudyReportContentCell", bundle: nil), forCellReuseIdentifier: "YXStudyReportContentCell")
         fetchStudyReport(withDate: selectDate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
-        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        self.navigationController?.navigationBar.tintColor = UIColor.white
         
         if canSelectDate == false {
             switchDateButton.isHidden = true
@@ -62,15 +61,6 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             reportDateLabelCenter.isActive = true
         }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.navigationBar.barStyle = .default
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        self.navigationController?.navigationBar.tintColor = UIColor.black
     }
     
     private func fetchStudyReport(withDate date: TimeInterval) {
@@ -147,7 +137,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             }
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -166,7 +156,8 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     @IBAction func changeDate(_ sender: Any) {
         let currentSelectDate = selectDate == 0 ? Date() : Date(timeIntervalSince1970: self.selectDate)
         let calendarView = YXCalendarView(frame: .zero, selected: currentSelectDate)
-        calendarView.selectedBlock = { date in
+        calendarView.selectedBlock = { [weak self] date in
+            guard let self = self else { return }
             self.selectDate = date.timeIntervalSince1970
             
             if self.selectDate > Date().timeIntervalSince1970 {
@@ -175,8 +166,7 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.fetchStudyReport(withDate: self.selectDate)
         }
-        
-        calendarView.show()
+        YXAlertQueueManager.default.addAlert(alertView: calendarView)
     }
     
     @IBAction func showBetterWords(_ sender: Any) {
@@ -204,7 +194,9 @@ class YXStudyReportViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXStudyReportContentCell", for: indexPath) as! YXStudyReportContentCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXStudyReportContentCell", for: indexPath) as? YXStudyReportContentCell else {
+            return UITableViewCell()
+        }
         guard let content = studyContent?[indexPath.row] else { return cell }
         
         cell.nameLabel.text = content.name

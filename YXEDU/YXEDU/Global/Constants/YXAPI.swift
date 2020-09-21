@@ -50,6 +50,8 @@ struct YXAPI {
         static let getBookList = "/api/v1/book/getbooklist"
         /// 加入班级
         static let joinClass = "/api/v1/class/add"
+        /// 提取作业
+        static let pickUpWork = "/api/v1/class/work/code"
         /// 返回活动信息
         static let activityInfo = "/api/v1/activity/index"
         /// 添加好友
@@ -79,23 +81,32 @@ struct YXAPI {
         
         /// 徽章展示上报接口
         static let badgeDisplayReport = "/api/v1/user/badge/report"
+
+        /// 修改所属学校
+        static let updateSchoolInfo = "/api/v2/school/create"
         
     }
     
     //MARK: - 练习模块
     struct Exercise {
         /// 练习接口
-        static let exercise = "/api/v2/learn/getstudy"
+        static let exercise = "/api/v3/learn/getstudy"
         /// 学习地图
-        static let learnMap = "/api/v1/learn/getbookunitstatus"
+        static let learnMap = "/api/v2/learn/getbookunitstatus"
         /// 基础学习结果页
         static let learnResult = "/api/v2/learn/getcurrentunitstatus"
+        
+        /// 基础学习结果页（新）
+        static let baseLearnResult = "/api/v1/learn/mainstudypunchdata"
+
         /// 上报接口
-        static let report = "/api/v2/learn/report"
+        static let report = "/api/v3/learn/report"
         /// 单词跟读分上报
         static let reportListenScore = "/api/v1/learn/updatelistenscore"
         /// 获得学习步骤配置
         static let stepConfig = "/api/v1/learn/getstepsconfig"
+        /// 学习结果分享
+        static let learnShare = "api/v3/learn/share"
     }
     
     
@@ -103,7 +114,7 @@ struct YXAPI {
     struct Word {
         // 下載词书
         static let downloadWordBook = "/api/v1/book/getstudybooklist"
-        // 下載词书
+        // 单词详情
         static let wordDetail       = "/api/v1/word/info"
         /// 用户添加词书
         static let addUserBook      = "/api/v1/book/adduserbook"
@@ -274,9 +285,9 @@ struct YXAPI {
     // MARK: - Search School
     struct SelectSchool {
         /// 搜索学校列表
-        static let searchSchool = "/api/v1/school/list"
+        static let searchSchool = "/api/v2/school/list"
         /// 提交学生所属的学校
-        static let submit = "/api/v1/school/create"
+        static let submit = "/api/v2/school/create"
     }
 
     // MARK: - MyClass
@@ -293,6 +304,10 @@ struct YXAPI {
         static let workReport  = "/api/v1/class/work/report"
         /// 新作业提醒接口
         static let remindHomework = "/api/v1/class/remind"
+        /// 通知历史列表
+        static let notificationList = "/api/v1/class/noticelist"
+        /// 作业详情
+        static let workDetail = "/api/v1/class/work/detail"
     }
 }
 

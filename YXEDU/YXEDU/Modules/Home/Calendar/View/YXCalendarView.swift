@@ -12,6 +12,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
 
     var validDict = [String:YXCalendarStudyModel]()
     var selectedBlock: ((Date)->Void)?
+    var originDate: Date
     var selectedDate: Date
     var selectedDateStr: String {
         get {
@@ -85,10 +86,12 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
         let button = YXButton(.theme, frame: .zero)
         button.setTitle("确定", for: .normal)
         button.titleLabel?.font = UIFont.regularFont(ofSize: AdaptFontSize(17))
+        button.setStatus(.disable)
         return button
     }()
 
     init(frame: CGRect, selected: Date) {
+        self.originDate   = selected
         self.selectedDate = selected
         super.init(frame: frame)
         self.requestCalendarData(self.selectedDate)
@@ -157,8 +160,8 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     // MARK: ==== Request ====
     internal func requestCalendarData(_ date: Date) {
         let request = YXCalendarRequest.getMonthly(time: Int(date.timeIntervalSince1970))
-        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXCalendarModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
                 return
             }
             self.validDict.removeAll()
@@ -178,7 +181,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
             }
             self.calendarView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             self.hide()
         }
     }
@@ -191,19 +194,21 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     }
 
     @objc private func hide() {
-        UIView.animate(withDuration: 0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
             self.contentView.transform          = .identity
-        }) { (finished) in
+        }) { [weak self] (finished) in
             if finished {
-                self.removeFromSuperview()
+                self?.removeFromSuperview()
             }
         }
     }
 
     override func show() {
         super.show()
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
             self.contentView.transform          = CGAffineTransform(translationX: 0, y: AdaptSize(-451))
         }
@@ -231,7 +236,7 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
 
     @objc internal func clickPreviousButton() {
         self.selectedDate = NSDate.offsetMonths(-1, from: self.selectedDate)
-       self.calendarView.setCurrentPage(self.selectedDate, animated: true)
+        self.calendarView.setCurrentPage(self.selectedDate, animated: true)
         self.updateDate(self.selectedDate)
     }
 
@@ -252,6 +257,11 @@ class YXCalendarView: YXTopWindowView, FSCalendarDataSource, FSCalendarDelegate,
     }
 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        if date == self.originDate {
+            self.downButton.setStatus(.disable)
+        } else {
+            self.downButton.setStatus(.normal)
+        }
         self.selectedDate = date
     }
 

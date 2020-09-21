@@ -11,8 +11,8 @@ import UIKit
 class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var grades: [YXGradeWordBookListModel] = []
-    private var selectedGrade: YXGradeWordBookListModel!
-    private var selectClosure: ((_ grade: String, _ version: String?) -> Void)!
+    private var selectedGrade: YXGradeWordBookListModel?
+    private var selectClosure: ((_ grade: String, _ version: String?) -> Void)?
     private var storeSeleteIndex: [String: Int] = ["所有年级": 0]
     
     @IBOutlet var contentView: UIView!
@@ -40,23 +40,23 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         contentView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         
         selectedGrade = YXGradeWordBookListModel()
-        selectedGrade.wordBooks = []
-        selectedGrade.gradeName = "所有年级"
-        selectedGrade.isSelect = true
+        selectedGrade?.wordBooks = []
+        selectedGrade?.gradeName = "所有年级"
+        selectedGrade?.isSelect = true
         for grade in grades {
             guard let wordBooks = grade.wordBooks, wordBooks.count > 0 else { continue }
             
             for wordBook in wordBooks {
-                if selectedGrade.wordBooks!.count == 0 {
-                    selectedGrade.wordBooks!.append(wordBook)
+                if selectedGrade?.wordBooks?.count == .some(0) {
+                    selectedGrade?.wordBooks?.append(wordBook)
                     
                 } else {
-                    guard selectedGrade.wordBooks!.contains(where: { $0.bookName != wordBook.bookName}) else { continue }
-                    selectedGrade.wordBooks!.append(wordBook)
+                    guard let _wordBooks = selectedGrade?.wordBooks, _wordBooks.contains(where: { $0.bookName != wordBook.bookName}) else { continue }
+                    selectedGrade?.wordBooks?.append(wordBook)
                 }
             }
         }
-        grades.insert(selectedGrade, at: 0)
+        grades.insert(selectedGrade!, at: 0)
         collectionViewHeight.constant = CGFloat(38 * grades.count)
         
         gradeCollectionView.delegate = self
@@ -80,12 +80,14 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             return grades.count
             
         } else {
-            return selectedGrade.versions.count
+            return selectedGrade?.versions.count ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXSelectGradeCell", for: indexPath) as! YXSelectGradeCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXSelectGradeCell", for: indexPath) as? YXSelectGradeCell else {
+            return UICollectionViewCell()
+        }
         
         if collectionView.tag == 1 {
             let grade = grades[indexPath.row]
@@ -101,13 +103,12 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             }
             
         } else {
-            let version = selectedGrade.versions[indexPath.row]
-            cell.gradeLabel.text = version.bookVersion
+            let version = selectedGrade?.versions[indexPath.row]
+            cell.gradeLabel.text = version?.bookVersion
             
-            if version.isSelect {
+            if version?.isSelect == .some(true) {
                 cell.gradeLabel.textColor = .orange1
                 cell.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
-                
             } else {
                 cell.gradeLabel.textColor = .black
                 cell.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
@@ -129,24 +130,24 @@ class YXSelectGradeView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             grades[indexPath.row].isSelect = true
             selectedGrade = grades[indexPath.row]
             
-            if selectedGrade.gradeName == storeSeleteIndex.first?.key {
-                selectedGrade.versions[storeSeleteIndex.first?.value ?? 0].isSelect = true
+            if selectedGrade?.gradeName == storeSeleteIndex.first?.key {
+                selectedGrade?.versions[storeSeleteIndex.first?.value ?? 0].isSelect = true
             }
             
             gradeCollectionView.reloadData()
             versionCollectionView.reloadData()
 
         } else {
-            for index in 0..<selectedGrade.versions.count {
-                selectedGrade.versions[index].isSelect = false
+            for index in 0..<(selectedGrade?.versions.count ?? 0) {
+                selectedGrade?.versions[index].isSelect = false
             }
             
-            selectedGrade.versions[indexPath.row].isSelect = true
+            selectedGrade?.versions[indexPath.row].isSelect = true
             versionCollectionView.reloadData()
             
-            guard let gradeName = selectedGrade.gradeName, let versionName = selectedGrade.versions[indexPath.row].bookVersion else { return }
+            guard let gradeName = selectedGrade?.gradeName, let versionName = selectedGrade?.versions[indexPath.row].bookVersion else { return }
             storeSeleteIndex = [gradeName: indexPath.row]
-            selectClosure(gradeName, versionName)
+            selectClosure?(gradeName, versionName)
         }
     }
     

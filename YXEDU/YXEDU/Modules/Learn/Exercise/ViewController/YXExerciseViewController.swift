@@ -46,11 +46,8 @@
     /// 是否在请求接口中，用于Loading页面的状态更新
     static var requesting: Bool?
     static var selectWord: Bool?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-    }
+    /// 是否不允许退出学习
+    var isFocusStudy: Bool = false
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -74,7 +71,6 @@
         YYCache.remove(forKey: .learningState)
         YXAVPlayerManager.share.finishedBlock = nil
         YXAVPlayerManager.share.pauseAudio()
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -95,6 +91,10 @@
             make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalToSuperview()
         }
+        // 学习中不允许返回
+        if isFocusStudy {
+            self.headerView.focusStudy()
+        }
     }
     
     private func bindProperty() {
@@ -106,12 +106,14 @@
         }
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadWordError), name: YXNotification.kDownloadWordError, object: nil)
     }
     
     private func initManager() {
         service.learnConfig = self.learnConfig
         service.initService()
         YXExerciseViewController.requesting = true
+        YXGrowingManager.share.uploadNewStudy()
         YYCache.set(false, forKey: .newLearnReportGIO)
         let log = String(format: "==== 开始%@学习, 配置信息：%@ ====", self.learnConfig.learnType.desc, self.learnConfig.desc)
         YXLog(log)
@@ -157,8 +159,8 @@
                     self.switchExerciseView()
                 }
             } else {
-                UIView.toast("加载数据失败")
-                self.navigationController?.popViewController(animated: true)
+                YXUtils.showHUD(nil, title: "加载学习数据失败，请稍后再试")
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
@@ -227,10 +229,6 @@
                     make.bottom.equalToSuperview()
                 }
             }
-            // 停止音频播放
-            if !YXAVPlayerManager.share.isPlayingResult() {
-                YXAVPlayerManager.share.pauseAudio()
-            }
             YXAVPlayerManager.share.finishedBlock = nil
             let exerciseView = YXExerciseViewFactory.buildView(exerciseModel: model)
             exerciseView.frame = CGRect(x: screenWidth, y: self.headerView.frame.maxY, width: screenWidth, height: exerciseViewHeight)
@@ -281,6 +279,12 @@
     @objc private func willEnterForeground() {
         YXGrowingManager.share.startDate = NSDate()
         self.service.setStartTime()
+    }
+
+    @objc private func downloadWordError() {
+        self.loadingView?.stopAnimation()
+        self.navigationController?.popToRootViewController(animated: true)
+        YXUtils.showHUD(nil, title: "下载词书失败，请稍后重试")
     }
 
     // TODO: ---- Event ----
@@ -450,7 +454,7 @@ extension YXExerciseViewController: YXExerciseHeaderViewProtocol {
             self.delegate?.hideAlertEvent()
         }
         
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     func clickSwitchBtnEvent() {
@@ -491,10 +495,14 @@ extension YXExerciseViewController: YXExerciseBottomViewProtocol {
 
  extension YXExerciseViewController: YXExerciseAnimationCompleteDelegate, YXExerciseDownloadCompleteDelegate {
     func downloadComplete() {
+        YXLog("当前词书下载完成，开始主流程的学习")
         self.startStudy()
     }
 
     func animationComplete() {
+        guard self.navigationController?.topViewController?.classForCoder == YXExerciseViewController.classForCoder(), self.service.progress != .unreport else {
+            return
+        }
         self.switchExerciseView()
     }
  }

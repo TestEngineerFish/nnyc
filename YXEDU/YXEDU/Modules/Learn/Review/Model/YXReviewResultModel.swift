@@ -87,6 +87,8 @@ struct YXExerciseResultDisplayModel {
 
     /// 是否在活动时间内
     var isAction: Bool = false
+    // 日历数据
+    var studyModelList = [YXCalendarStudyModel]()
     
     static func displayModel(model: YXReviewResultModel) -> YXExerciseResultDisplayModel {
         var displayModel = YXExerciseResultDisplayModel()
@@ -106,25 +108,21 @@ struct YXExerciseResultDisplayModel {
     }
     
     static func displayModel(newStudyWordCount: Int, reviewWordCount: Int, model: YXLearnResultModel) -> YXExerciseResultDisplayModel {
-        
-        var displayModel = YXExerciseResultDisplayModel()
-        displayModel.type = .base
-        displayModel.title = model.unitName
-        
-        displayModel.allWordNum = model.allWordCount // 今日所学单词数
-        displayModel.studyDay = model.studyDay  // 坚持多少天
-        
-        
-        displayModel.newStudyWordNum = newStudyWordCount //新学
-        displayModel.reviewWordNum = reviewWordCount //巩固
 
-        displayModel.score = model.score
-        
-        displayModel.isShowCoin = model.isShowCoin
-        displayModel.state      = model.status
-        displayModel.unitList   = model.unitList
-        displayModel.isAction   = model.isAction
-        displayModel.sharedPeople = model.sharedPeople
+        var displayModel = YXExerciseResultDisplayModel()
+        displayModel.type            = .base
+        displayModel.title           = model.unitName
+        displayModel.allWordNum      = model.allWordCount // 今日所学单词数
+        displayModel.studyDay        = model.studyDay  // 坚持多少天
+        displayModel.newStudyWordNum = newStudyWordCount //新学
+        displayModel.reviewWordNum   = reviewWordCount //巩固
+        displayModel.score           = model.score
+        displayModel.isShowCoin      = model.isShowCoin
+        displayModel.state           = model.status
+        displayModel.unitList        = model.unitList
+        displayModel.isAction        = model.isAction
+        displayModel.sharedPeople    = model.sharedPeople
+        displayModel.studyModelList  = model.calendarStudyModelList
         return displayModel
     }
 }

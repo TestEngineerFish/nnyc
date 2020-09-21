@@ -54,7 +54,7 @@ class YXReviewSelectedWordsListView: UIView, UITableViewDataSource, UITableViewD
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = UIColor.clear
-        self.tableView.separatorInset  = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.tableView.separatorInset  = UIEdgeInsets(top: 0, left: screenWidth, bottom: 0, right: 0)
         self.tableView.register(YXReviewSelectedWordCell.classForCoder(), forCellReuseIdentifier: kYXReviewSelectedWordCell)
         self.setSubviews()
     }

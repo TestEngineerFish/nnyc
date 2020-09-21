@@ -9,17 +9,16 @@
 import UIKit
 
 /// 中文或单词答案
-class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource {
+class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     enum Config {
-        static var itemHeight: CGFloat = AdaptSize(isPad() ? 60 : 45)
-        static var itemWidth: CGFloat = AdaptSize(isPad() ? 540 : 280)
+        static var itemHeight: CGFloat   = AdaptSize(isPad() ? 60 : 45)
+        static var itemWidth: CGFloat    = AdaptSize(isPad() ? 540 : 280)
         static var itemInterval: CGFloat = AdaptSize(isPad() ? 26 : 13)
     }
-    
-    private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
-    private var collectionViewCell: UICollectionViewCell!
+
+    private var collectionView: UICollectionView?
+    private var collectionViewCell: UICollectionViewCell?
     
     var titleFont = UIFont.pfSCRegularFont(withSize: AdaptFontSize(14))
     var titleLabel: UILabel {
@@ -31,44 +30,39 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
     
     override func createSubviews() {
         super.createSubviews()
-        flowLayout = UICollectionViewFlowLayout()
+        let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
+//        flowLayout.itemSize = CGSize(width: Config.itemWidth, height: Config.itemHeight)
         flowLayout.minimumLineSpacing = Config.itemInterval
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: AdaptSize(35), bottom: 0, right: AdaptSize(35))
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = UIColor.white
-        collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        self.addSubview(collectionView)
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.decelerationRate = UIScrollView.DecelerationRate.fast
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.isScrollEnabled = false
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        self.addSubview(collectionView!)
 
-        collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
+        collectionView?.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
         
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         let itemNum = CGFloat(self.exerciseModel.option?.firstItems?.count ?? 0)
         let h = (Config.itemHeight + Config.itemInterval) * itemNum - Config.itemInterval
-        collectionView.snp.makeConstraints { (make) in
+        collectionView?.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalToSuperview()
             make.height.equalTo(h)
         }
     }
-    
-    override func bindData() {
-//        self.collectionView.reloadData()
-    }
-    
         
     //MARK:- delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -97,7 +91,7 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         let label = self.titleLabel
         label.text = exerciseModel.option?.firstItems?[indexPath.row].content
-        
+
         cell.contentView.addSubview(label)
         label.snp.makeConstraints { (make) in
             make.left.equalTo(AdaptSize(isPad() ? 45 : 21))
@@ -140,8 +134,6 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         
         // 设置选中效果
         if let itemModelList = exerciseModel.option?.firstItems {
-//            collectionView.reloadSections(IndexSet(integer: 0))
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weakSelf = self] in
                 for index in 0..<itemModelList.count {
                     weakSelf.exerciseModel.option?.firstItems?[index].isWrong = false
@@ -151,9 +143,15 @@ class YXItemAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollection
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Config.itemWidth, height: Config.itemHeight)
+    }
     
     private func itemSize() -> CGSize {
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
     }
-    
 }

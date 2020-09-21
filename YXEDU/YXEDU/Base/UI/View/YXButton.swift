@@ -29,8 +29,6 @@ class YXButton: UIButton {
     var status: YXButtonStatusEnum = .normal
     var type: YXButtonType
 
-    let sizeKeyPath = "frame"
-
     // MARK: ---- Init ----
 
     init(_ type: YXButtonType = .normal, frame: CGRect = .zero) {
@@ -75,6 +73,7 @@ class YXButton: UIButton {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
                 self.backgroundColor = UIColor.gradientColor(with: self.size, colors: [UIColor.hex(0xFDBA33), UIColor.hex(0xFB8417)], direction: .vertical)
+
             } else if type == .border {
                 self.layer.cornerRadius  = self.size.height / 2
                 self.layer.masksToBounds = true
@@ -88,7 +87,7 @@ class YXButton: UIButton {
             self.isEnabled = false
             if type == .theme {
                 self.layer.cornerRadius  = self.size.height / 2
-                self.layer.masksToBounds = true
+//                self.layer.masksToBounds = true
                 self.setTitleColor(UIColor.hex(0xEAD2BA), for: .disabled)
                 self.backgroundColor = UIColor.hex(0xFFF4E9)
             }

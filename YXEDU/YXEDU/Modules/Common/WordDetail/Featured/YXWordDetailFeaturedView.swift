@@ -18,12 +18,12 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
         case detailedSyntax = "语法详解"
     }
     
-    private var word: YXWordModel!
-    private var sections: [[String: Any]] = []
-    private var sectionExpandStatus: [Bool] = []
-    private var wordAnalysisExpandStatus: [Bool] = []
+    private var word: YXWordModel?
+    private var sections: [[String: Any]]          = []
+    private var sectionExpandStatus: [Bool]        = []
+    private var wordAnalysisExpandStatus: [Bool]   = []
     private var detailedSyntaxExpandStatus: [Bool] = []
-    private var mostCommonPhrasesLength: CGFloat = 44
+    private var mostCommonPhrasesLength: CGFloat   = 44
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -53,12 +53,12 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
-        if let fixedMatchs = word.fixedMatchs, fixedMatchs.count > 0 {
+        if let fixedMatchs = word?.fixedMatchs, fixedMatchs.count > 0 {
             sections.append([SectionType.fixedMatch.rawValue: fixedMatchs])
             sectionExpandStatus.append(false)
         }
         
-        if let commonPhrases = word.commonPhrases, commonPhrases.count > 0 {
+        if let commonPhrases = word?.commonPhrases, commonPhrases.count > 0 {
             sections.append([SectionType.commonPhrases.rawValue: commonPhrases])
             sectionExpandStatus.append(false)
             
@@ -76,7 +76,7 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             mostCommonPhrasesLength = mostCommonPhrasesLength + mostWidth
         }
         
-        if let wordAnalysis = word.wordAnalysis, wordAnalysis.count > 0 {
+        if let wordAnalysis = word?.wordAnalysis, wordAnalysis.count > 0 {
             sections.append([SectionType.wordAnalysis.rawValue: wordAnalysis])
             sectionExpandStatus.append(true)
             
@@ -85,7 +85,7 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        if let detailedSyntaxs = word.detailedSyntaxs, detailedSyntaxs.count > 0 {
+        if let detailedSyntaxs = word?.detailedSyntaxs, detailedSyntaxs.count > 0 {
             sections.append([SectionType.detailedSyntax.rawValue: detailedSyntaxs])
             sectionExpandStatus.append(true)
             
@@ -291,7 +291,9 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
         
         switch section.keys.first {
         case SectionType.fixedMatch.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFixedMatchCell", for: indexPath) as! YXWordDetailFixedMatchCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFixedMatchCell", for: indexPath) as? YXWordDetailFixedMatchCell else {
+                return UITableViewCell()
+            }
             
             if indexPath.section == sections.count - 1 {
                 cell.backgroundColor = .white
@@ -310,7 +312,9 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             return cell
             
         case SectionType.commonPhrases.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailCommonPhrasesCell", for: indexPath) as! YXWordDetailCommonPhrasesCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailCommonPhrasesCell", for: indexPath) as? YXWordDetailCommonPhrasesCell else {
+                return UITableViewCell()
+            }
             
             if indexPath.section == sections.count - 1 {
                 cell.backgroundColor = .white
@@ -329,7 +333,9 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             return cell
             
         case SectionType.wordAnalysis.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as! YXWordDetailFeaturedClassicCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as? YXWordDetailFeaturedClassicCell else {
+                return UITableViewCell()
+            }
             
             if indexPath.section == sections.count - 1 {
                 cell.backgroundColor = .white
@@ -354,8 +360,8 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             }
             
             cell.contentLabel.text = content
-            cell.totalCount = analysis?.list?.count ?? 0
-            cell.isExpand = wordAnalysisExpandStatus[indexPath.row]
+            cell.totalCount    = analysis?.list?.count ?? 0
+            cell.isExpand      = wordAnalysisExpandStatus[indexPath.row]
             cell.expandClosure = { [weak self] in
                 guard let self = self else { return }
                 self.wordAnalysisExpandStatus[indexPath.row] = !self.wordAnalysisExpandStatus[indexPath.row]
@@ -366,7 +372,9 @@ class YXWordDetailFeaturedView: YXView, UITableViewDelegate, UITableViewDataSour
             return cell
             
         case SectionType.detailedSyntax.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as! YXWordDetailFeaturedClassicCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordDetailFeaturedClassicCell", for: indexPath) as? YXWordDetailFeaturedClassicCell else {
+                return UITableViewCell()
+            }
             
             if indexPath.section == sections.count - 1 {
                 cell.backgroundColor = .white

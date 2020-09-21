@@ -27,17 +27,18 @@ class YXLogManager: NSObject {
             MBProgressHUD.showAdded(to: kWindow, animated: true)
         }
         let request = YXLogRequest.report(file: fileData)
-        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: { (response) in
+        YYNetworkService.default.upload(YYStructResponse<YXLogModel>.self, request: request, mimeType: YXMiMeType.file.rawValue, fileName: "log", success: {[weak self] (response) in
+            guard let self = self else { return }
             if showToast {
                 MBProgressHUD.hide(for: kWindow, animated: true)
-                YXUtils.showHUD(kWindow, title: "上传完成")
+                YXUtils.showHUD(nil, title: "上传完成")
             }
             self.deleteZip()
             self.deleteFile()
         }) { (error) in
             if showToast {
                 MBProgressHUD.hide(for: kWindow, animated: true)
-                YXUtils.showHUD(kWindow, title: "上传失败，请稍后再试")
+                YXUtils.showHUD(nil, title: "上传失败，请稍后再试")
             }
         }
     }

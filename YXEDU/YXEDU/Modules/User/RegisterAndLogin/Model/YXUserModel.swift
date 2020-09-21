@@ -89,7 +89,6 @@ class YXUserModel: NSObject {
                 self.userAvatarImage = UIImage(data: imageData)
             }
         }
-
         get {
             return YYCache.object(forKey: .userAvatarPath) as? String
         }
@@ -99,9 +98,16 @@ class YXUserModel: NSObject {
         set {
             YYCache.set(newValue, forKey: YXLocalKey.currentAvatarImage)
         }
-
         get {
             return YYCache.object(forKey: .currentAvatarImage) as? UIImage
+        }
+    }
+    var lastVersion: String? {
+        set {
+            YYCache.set(newValue, forKey: "kLastVersion")
+        }
+        get {
+            return YYCache.object(forKey: "kLastVersion") as? String
         }
     }
     /// 金币使用、获取说明
@@ -152,6 +158,15 @@ class YXUserModel: NSObject {
             return YYCache.object(forKey: YXLocalKey.currentUnitId) as? Int
         }
     }
+    /// 是否当天首次学习
+    var isFirstStudy: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.key(.currentFirstStudy) + NSDate().formatYMD())
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.key(.currentFirstStudy) + NSDate().formatYMD()) as? Bool ?? true
+        }
+    }
     /// 是否已加入班级
     var isJoinClass: Bool {
         set {
@@ -159,6 +174,15 @@ class YXUserModel: NSObject {
         }
         get {
             return YYCache.object(forKey: YXLocalKey.isJoinClass) as? Bool ?? false
+        }
+    }
+    /// 新用户练习是否完成
+    var isFinishedNewUserStudy: Bool {
+        set {
+            YYCache.set(newValue, forKey: YXLocalKey.isFinishedNewUserStudy)
+        }
+        get {
+            return YYCache.object(forKey: YXLocalKey.isFinishedNewUserStudy) as? Bool ?? true
         }
     }
     /// 是否有新作业
@@ -192,6 +216,7 @@ class YXUserModel: NSObject {
         
         self.didLogin = true
         YXWordBookResourceManager.stop = false
+        YXWordBookResourceManager.wordDownloading = false
         // 登录后设置别名给友盟
         let alias = YXUserModel.default.uuid ?? ""
         UMessage.setAlias(alias, type: kUmengAliasType) { (response, error) in
@@ -209,11 +234,12 @@ class YXUserModel: NSObject {
     @objc func logout(force:Bool = true, finished block: (()->Void)? = nil) {
         if force {
             let request = YXRegisterAndLoginRequest.logout
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self else { return }
                 self.logoutAfterEvent()
                 block?()
             }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         } else {
             self.logoutAfterEvent()
@@ -229,6 +255,7 @@ class YXUserModel: NSObject {
         self.token    = nil
         // 停止资源管理器队列任务
         YXWordBookResourceManager.stop = true
+        YXWordBookResourceManager.wordDownloading = false
         // 断开数据库连接
         YYDataSourceManager.default.close()
         YYDataSourceQueueManager.default.close()

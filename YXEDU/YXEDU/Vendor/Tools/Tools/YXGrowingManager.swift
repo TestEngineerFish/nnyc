@@ -63,38 +63,37 @@ struct YXGrowingManager {
     }
 
     /// 上报新的用户变量 new_study_tutorial，使用新流程的用户上报1，默认为0
-    /// - Parameter isNew: 是否使用新流程
-    func uploadNewStudy(isNew: Bool) {
-        let numberValue = isNew ? NSNumber(value: 1) : NSNumber(value: 0)
+    func uploadNewStudy() {
+        let numberValue = YXUserModel.default.isFinishedNewUserStudy ? NSNumber(value: 0) : NSNumber(value: 1)
         Growing.setPeopleVariableWithKey("new_study_tutorial", andNumberValue: numberValue)
     }
 
     /// 数据打点
     func biReport(learn config: YXLearnConfig, duration: Int,  study count: Int) {
-          var typeName = "主流程"
-          switch config.learnType {
-              case .wrong:
-                  typeName = "抽查复习"
-              case .planListenReview:
-                  typeName = "词单听写"
-              case .planReview:
-                  typeName = "词单复习"
-              case .aiReview:
-                  typeName = "智能复习"
-              default:
-                  typeName = "主流程"
-          }
+        var typeName = "主流程"
+        switch config.learnType {
+        case .wrong:
+            typeName = "抽查复习"
+        case .planListenReview:
+            typeName = "词单听写"
+        case .planReview:
+            typeName = "词单复习"
+        case .aiReview:
+            typeName = "智能复习"
+        default:
+            typeName = "主流程"
+        }
 
-          let bid = (YYCache.object(forKey: .currentChooseBookId) as? Int) ?? 0
-          let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
+        let bid = YXUserModel.default.currentBookId ?? 0
+        let grade = YXWordBookDaoImpl().selectBook(bookId: bid)?.gradeId ?? 0
 
-          let studyResult: [String : Any] = [
-              "study_grade" : "\(grade)",      //学习书本年级
-              "study_cost_time" : duration,   //学习时间
-              "study_count" : count,
-              "study_type" : typeName
-          ]
-          Growing.track("study_result", withVariable: studyResult)
-      }
+        let studyResult: [String : Any] = [
+            "study_grade" : "\(grade)",      //学习书本年级
+            "study_cost_time" : duration,   //学习时间
+            "study_count" : count,
+            "study_type" : typeName
+        ]
+        Growing.track("study_result", withVariable: studyResult)
+    }
 
 }

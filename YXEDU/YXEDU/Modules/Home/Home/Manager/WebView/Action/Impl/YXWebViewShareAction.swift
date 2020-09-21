@@ -17,25 +17,25 @@ class YXWebViewShareAction: YRWebViewJSAction {
             // 是否安装判断
             if actionModel.type.getShareChannel() == .wechat || actionModel.type.getShareChannel() == .timeLine {
                 if WXApiManager.shared()?.wxIsInstalled() == .some(false) {
-                    YXUtils.showHUD(kWindow, title: "你未安装微信，暂时无法分享")
+                    YXUtils.showHUD(nil, title: "你未安装微信，暂时无法分享")
                     return
                 }
             } else if actionModel.type.getShareChannel() == .qq || actionModel.type.getShareChannel() == .qzone {
                 if !TencentOAuth.iphoneQQInstalled() && !TencentOAuth.iphoneTIMInstalled() {
-                    YXUtils.showHUD(kWindow, title: "你未安装QQ，暂时无法分享")
+                    YXUtils.showHUD(nil, title: "你未安装QQ，暂时无法分享")
                     return
                 }
             }
-            let shareView = YXShareDefaultView()
+            let shareView = YXShareDefaultView(frame: .zero)
             // 分享完成后的回调
-            shareView.completeBlock = { (channel: YXShareChannel, result: Bool) in
-                guard let callBackStr = self.callback else {
+            shareView.completeBlock = { [weak self] (channel: YXShareChannel, result: Bool) in
+                guard let self = self, let callBackStr = self.callback else {
                     return
                 }
                 let resultDic = ["result":result]
                 let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
-                DispatchQueue.main.async {
-                    self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+                DispatchQueue.main.async { [weak self] in
+                    self?.jsBridge?.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
                 }
             }
             self.getShareImage { (shareImage) in
@@ -51,7 +51,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
     /// 获取分享图片
     private func getShareImage(complete block: ((UIImage?)->Void)?) {
         let request = YXShareRequest.getActivityShareImage
-        YXUtils.showLoadingInfo("加载中", to: kWindow)
+        YXUtils.showLoadingInfo("加载中…", to: kWindow)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
             guard let model = response.data else { return }
             SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
@@ -60,7 +60,7 @@ class YXWebViewShareAction: YRWebViewJSAction {
             })
         }) { (error) in
             YXUtils.hideHUD(kWindow)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

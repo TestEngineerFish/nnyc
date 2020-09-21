@@ -54,12 +54,12 @@ class YXAlertCheckManager {
                     YYCache.set(key, forKey: key)
                     
                     alertView = YXAlertView()
-                    alertView?.tag = YXAlertWeightType.recommendUpdateVersion
+                    alertView?.priority = .C
                 } else if versionModel.state == .force {
                     alertView = YXAlertView()
                     alertView?.shouldClose = false
+                    alertView?.priority    = .B
                     alertView?.shouldOnlyShowOneButton = true
-                    alertView?.tag = YXAlertWeightType.updateVersion
                 }
                 
                 alertView?.shouldDismissWhenTapBackground = false
@@ -100,37 +100,34 @@ class YXAlertCheckManager {
     }
     
     /// 检查最新徽章
-    func checkLatestBadge(_ completion: (() -> Void)? ) {
+    func checkLatestBadge() {
         // 没登录，不要识别口令
         if YXUserModel.default.didLogin == false {
-            completion?()
             return
         }
         
         let request = YXMineRequest.latestBadge
         YYNetworkService.default.request(YYStructDataArrayResponse<YXBadgeModel>.self, request: request, success: { (response) in
             guard let badgeList = response.dataArray, badgeList.count > 0 else {
-                completion?()
                 return                
             }
-            
+            var alertViewList = [YXTopWindowView]()
             for badge in badgeList {
                 let badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: true)
-                badgeDetailView.tag = YXAlertWeightType.latestBadge
+                badgeDetailView.priority = .F
                 badgeDetailView.isReport = true
-                YXAlertQueueManager.default.addAlert(alertView: badgeDetailView)
+                alertViewList.append(badgeDetailView)
             }
-            completion?()
+            YXAlertQueueManager.default.addAlertList(alertViewList: alertViewList)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
-            completion?()
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     func checkHomework(_ completion: (() -> Void)? ) {
         let request = YXMyClassRequestManager.remindHomework
         YYNetworkService.default.request(YYStructResponse<YXMyClassRemindModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+            guard let model = response.data, model.workId != 0 else {
                 completion?()
                 return
             }
@@ -142,7 +139,7 @@ class YXAlertCheckManager {
             alertView.shouldOnlyShowOneButton        = true
             alertView.shouldDismissWhenTapBackground = false
             alertView.rightOrCenterButton.setTitle("查看作业", for: .normal)
-            alertView.tag = YXAlertWeightType.newHomework
+            alertView.priority = .D
             alertView.doneClosure = { _ in
                 let vc = YXMyClassViewController()
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
@@ -152,20 +149,10 @@ class YXAlertCheckManager {
             YXAlertQueueManager.default.addAlert(alertView: alertView)
             completion?()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?()
         }
     }
-    
-    
-    func checkLatestBadgeWhenBackTabPage() {
-        if YXAlertQueueManager.default.queueCount == 0 && YXAlertQueueManager.default.processStatus {
-            self.checkLatestBadge {
-                YXAlertQueueManager.default.showAlert()
-            }
-        }
-    }
-    
     
     @objc private func processServiceStop(notification: Notification) {
         
@@ -175,12 +162,11 @@ class YXAlertCheckManager {
         
         alertView.titleLabel.text = "念念有词正在进行维护"
         alertView.descriptionLabel.text = (notification.object as? String) ?? "为了给您更好的体验，念念有词正在系统维护中，请稍后再试！"
-        
-        alertView.leftButton.isHidden = true
-        alertView.rightOrCenterButton.isHidden = true
+        alertView.priority                       = .A
+        alertView.leftButton.isHidden            = true
+        alertView.rightOrCenterButton.isHidden   = true
         alertView.shouldDismissWhenTapBackground = false
-        alertView.tag = YXAlertWeightType.stopService
-        
+
         YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 }

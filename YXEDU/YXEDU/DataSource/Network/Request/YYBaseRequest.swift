@@ -76,7 +76,9 @@ extension YYBaseRequest {
     func handleHeader(parameters: [String : Any]?, headers: [String : String]? = nil) -> [String : String] {
         
         var _header: [String : String] = self.header
-        if headers != nil { _header = headers!}
+        if let tmpHeaders = headers {
+            _header = tmpHeaders
+        }
         
         var kv: [String] = []
         let sortKeys: [String] = parameters?.keys.sorted() ?? []

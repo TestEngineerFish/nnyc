@@ -35,8 +35,8 @@ class YXWebViewSelectAddress: YRWebViewJSAction, YXSelectLocalPickerViewProtocol
         }
         let resultDic: [String : Any] = ["address" : name, "address_id" : model.id]
         let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
-        DispatchQueue.main.async {
-            self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.jsBridge?.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
         }
     }
 }

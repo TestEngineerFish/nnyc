@@ -20,13 +20,23 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     var localName: String {
         get {
+            var name = ""
             let cityIndex  = self.pickerView.selectedRow(inComponent: 0)
-            let cityModel  = self.citiesArray[cityIndex]
+            if cityIndex < self.citiesArray.count {
+                let cityModel  = self.citiesArray[cityIndex]
+                name += cityModel.name
+            }
             let areaIndex  = self.pickerView.selectedRow(inComponent: 1)
-            let areaModel  = self.areasArray[areaIndex]
+            if areaIndex < self.areasArray.count {
+                let areaModel  = self.areasArray[areaIndex]
+                name += areaModel.name
+            }
             let localIndex = self.pickerView.selectedRow(inComponent: 2)
-            let localModel = self.localsArray[localIndex]
-            return String(format: "%@%@%@", cityModel.name, areaModel.name, localModel.name)
+            if localIndex < self.localsArray.count {
+                let localModel = self.localsArray[localIndex]
+                name += localModel.name
+            }
+            return name
         }
     }
 
@@ -146,22 +156,46 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
 
     // MARK: ==== Event ====
     func show() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 1.0
             self.transform = CGAffineTransform(translationX: 0, y: -self.height)
         }
     }
 
     @objc func hide() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.backgroundView.layer.opacity = 0.0
             self.transform = .identity
         }
     }
 
     @objc private func downSelectLocal() {
+        let cityIndex  = self.pickerView.selectedRow(inComponent: 0)
+        let areaIndex  = self.pickerView.selectedRow(inComponent: 1)
         let localIndex = self.pickerView.selectedRow(inComponent: 2)
-        let localModel = self.localsArray[localIndex]
+        var localModel = YXLocalModel()
+        if self.localsArray.isEmpty {
+            if self.areasArray.isEmpty {
+                if cityIndex < self.citiesArray.count {
+                    let cityModel   = self.citiesArray[cityIndex]
+                    localModel.name = cityModel.name
+                    localModel.id   = cityModel.id
+                }
+            } else {
+                if areaIndex < self.areasArray.count {
+                    let areaModel   = self.areasArray[areaIndex]
+                    localModel.name = areaModel.name
+                    localModel.id   = areaModel.id
+                }
+            }
+        } else {
+            if localIndex < self.localsArray.count {
+                localModel = self.localsArray[localIndex]
+            }
+        }
+
         self.delegate?.selectedLocal(local: localModel, name: self.localName)
         self.hide()
     }
@@ -216,14 +250,20 @@ class YXSelectLocalPickView: YXView, UIPickerViewDelegate, UIPickerViewDataSourc
             if row < self.citiesArray.count {
                 self.areasArray = self.citiesArray[row].areaList
                 pickerView.reloadComponent(1)
-                let areaIndex = pickerView.selectedRow(inComponent: 1)
-                if areaIndex < self.areasArray.count {
-                    self.localsArray = self.areasArray[areaIndex].localList
+                if self.areasArray.isEmpty {
+                    self.localsArray = []
                     pickerView.reloadComponent(2)
+                } else {
+                    var areaIndex = pickerView.selectedRow(inComponent: 1)
+                    areaIndex = areaIndex >= self.areasArray.count ? self.areasArray.count - 1 : areaIndex
+                    if areaIndex >= 0 {
+                        self.localsArray = self.areasArray[areaIndex].localList
+                        pickerView.reloadComponent(2)
+                    }
                 }
             }
         } else if component == 1 {
-            if row < self.areasArray.count {
+            if row < self.areasArray.count && !self.areasArray.isEmpty {
                 self.localsArray = self.areasArray[row].localList
                 pickerView.reloadComponent(2)
             }

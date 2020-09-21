@@ -8,11 +8,11 @@
 
 import UIKit
 
-class YXSearchViewController: YXTableViewController {
+class YXSearchViewController: YXTableViewController, YXSearchHeaderViewProtocol {
     
     var tableHeaderView = YXSearchTableHeaderView()
-    var searchView = YXSearchHeaderView()
-    var emptyDataView = YXSearchEmptyDataView()
+    var searchView      = YXSearchHeaderView()
+    var emptyDataView   = YXSearchEmptyDataView()
     
     private var dao: YXSearchHistoryDao = YXSearchHistoryDaoImpl()
     
@@ -20,11 +20,6 @@ class YXSearchViewController: YXTableViewController {
         return .lightContent
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createSubviews()
@@ -33,40 +28,28 @@ class YXSearchViewController: YXTableViewController {
     }
     
     func createSubviews() {
-        
-        
         self.view.addSubview(searchView)
         searchView.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
             make.height.equalTo(AS(86 + kSafeBottomMargin))
         }
-//        tableView.snp.makeConstraints { (make) in
-//            make.top.equalTo(searchView.snp.bottom)
-//            make.left.right.bottom.equalToSuperview()
-//        }
-        
         tableHeaderView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: AS(41))
-        tableView.frame = CGRect(x: 0, y: AS(86 + kSafeBottomMargin), width: screenWidth, height: screenHeight - AS(86 + kSafeBottomMargin))
+        tableView.frame       = CGRect(x: 0, y: AS(86 + kSafeBottomMargin), width: screenWidth, height: screenHeight - AS(86 + kSafeBottomMargin))
     }
     
     func bingProperty() {
+        self.isHideRefresh                 = true
+        self.searchView.delegate           = self
         self.customNavigationBar?.isHidden = true
-        self.isHideRefresh = true
-        
-        
-        searchView.searchEvent = { [weak self] (text) in
-            self?.fetchData(text: text)
-        }
-        
         tableHeaderView.removeEvent = { [weak self] in
             self?.searchView.searchTextFeild.resignFirstResponder()
             
             let alertView = YXHistorySearchRemoveAlertView()
-            alertView.removeEvent = {
+            alertView.removeEvent = { [weak self] in
                 let _ = self?.dao.deleteAllWord()
                 self?.loadHistoryData()
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
         
         self.tableView.register(YXSearchTableViewCell.classForCoder(), forCellReuseIdentifier: "YXSearchTableViewCell")
@@ -79,7 +62,6 @@ class YXSearchViewController: YXTableViewController {
             loadHistoryData()
             return
         }
-        
         YXSearchDataManager().searchData(keyword: text)  { [weak self] (model, errorMsg) in
             guard let self = self else { return }
             self.finishLoading()
@@ -125,13 +107,18 @@ class YXSearchViewController: YXTableViewController {
         }
         return result
     }
+
+    // MARK: ===== YXSearchHeaderViewProtocol ====
+    func searchWord(_ text: String) {
+        self.fetchData(text: text)
+    }
 }
-
-
 
 extension YXSearchViewController {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = dataSource[indexPath.row] as! YXSearchWordModel
+        guard let model = dataSource[indexPath.row] as? YXSearchWordModel else {
+            return .zero
+        }
         return YXSearchTableViewCell.viewHeight(model: model)
     }
 
@@ -148,24 +135,22 @@ extension YXSearchViewController {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         guard let model = dataSource[indexPath.row] as? YXSearchWordModel else { return }
         let result = dao.insertWord(word: model)
         YXLog(result)
         
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-        wordDetialViewController.wordId = model.wordId ?? 0
-        wordDetialViewController.isComplexWord = model.isComplexWord ?? 0
-        self.navigationController?.pushViewController(wordDetialViewController, animated: true)
-        
+        if let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew {
+            wordDetialViewController.wordId        = model.wordId ?? 0
+            wordDetialViewController.isComplexWord = model.isComplexWord ?? 0
+            self.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchView.searchTextFeild.resignFirstResponder()
     }
 }
-
 
 extension YXSearchViewController {
     func customView(forEmptyDataSet scrollView: UIScrollView!) -> UIView! {

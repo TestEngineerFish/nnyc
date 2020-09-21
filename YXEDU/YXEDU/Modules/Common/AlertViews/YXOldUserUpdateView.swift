@@ -38,19 +38,20 @@ class YXOldUserUpdateView: YXTopWindowView {
         containerView.alpha = 0
         backgroundView.alpha = 0
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+            guard let self = self else { return }
             self.containerView.transform = .identity
             self.containerView.alpha = 1
             self.backgroundView.alpha = 0.7
-            
         }, completion: nil)
     }
     
     @IBAction func close(_ sender: Any) {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            guard let self = self else { return }
             self.contentView.alpha = 0
-            
-        }, completion: { completed in
+        }, completion: { [weak self] completed in
+            guard let self = self else { return }
             self.removeFromSuperview()
             self.closure?()
         })

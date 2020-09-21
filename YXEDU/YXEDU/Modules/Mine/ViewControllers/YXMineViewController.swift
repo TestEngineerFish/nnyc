@@ -14,7 +14,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     private var earnedBadgeCount = 0
     private var badgeModelList   = [YXBadgeModel]()
     private var bindInfo         = ["", "", ""]
-    
+
+    let badgeView = YXRedDotView()
     @IBOutlet weak var avatarImageView: YXDesignableImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var myIntegralLabel: UILabel!
@@ -24,12 +25,11 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var badgeNumberView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
-    let badgeView = YXRedDotView()
-    
     @IBOutlet weak var myIntegralViewHeight: NSLayoutConstraint!
     @IBOutlet weak var myIntegralViewTopOffset: NSLayoutConstraint!
     @IBOutlet weak var collectionLeftConsraint: NSLayoutConstraint!
     @IBOutlet weak var collectionRightConsraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
 
     @IBAction func tapCoin(_ sender: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: "Coin", sender: self)
@@ -50,7 +50,6 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.bindProperty()
-        
         if isPad() {
             myIntegralViewHeight.constant = 112
             myIntegralViewTopOffset.constant = 44
@@ -58,11 +57,14 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func bindProperty() {
-        self.collectionLeftConsraint.constant  = AdaptSize(22)
-        self.customNavigationBar?.isHidden     = true
-        let tapAction = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
-          self.badgeNumberView.addGestureRecognizer(tapAction)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.collectionLeftConsraint.constant    = AdaptSize(22)
+        self.collectionHeightConstraint.constant = AdaptSize(73)
+        self.customNavigationBar?.isHidden       = true
+        let tapBadge  = UITapGestureRecognizer(target: self, action: #selector(pushBadgeListVC))
+        let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(pushUserInfoVC))
+        self.badgeNumberView.addGestureRecognizer(tapBadge)
+        self.avatarImageView.addGestureRecognizer(tapAvatar)
+        self.avatarImageView.layer.masksToBounds = false
     }
 
     override func addNotification() {
@@ -73,18 +75,13 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        navigationController?.navigationBar.tintColor = UIColor.black
-        
         // 个人信息
         self.loadData()
         // 徽章
         self.loadBadgeData()
         // 积分
         self.loadIntegralData()
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
     }
     
     deinit {
@@ -92,22 +89,10 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Edit" {
-            let destinationViewController = segue.destination as! YXPersonalInformationVC
-            let userModel = YXUserModel_Old()
-            userModel.avatar = temporaryUserModel?.avatar
-            userModel.nick = temporaryUserModel?.nick
-            userModel.sex = "\(temporaryUserModel?.sex ?? 0)"
-            userModel.area = temporaryUserModel?.area
-            userModel.mobile = temporaryUserModel?.mobile
-            userModel.birthday = temporaryUserModel?.birthday
-            userModel.speech = temporaryUserModel?.speech
-            userModel.grade = temporaryUserModel?.grade
-
-            destinationViewController.userModel = userModel
-            
-        } else if segue.identifier == "Coin" {
-            let squirrelCoinViewController = segue.destination as! YXSquirrelCoinViewController
+        if segue.identifier == "Coin" {
+            guard let squirrelCoinViewController = segue.destination as? YXSquirrelCoinViewController else {
+                return
+            }
             squirrelCoinViewController.coinAmount = self.myIntegralLabel.text
         }
     }
@@ -117,8 +102,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     /// 请求个人信息
     private func loadData() {
         let request = YXMineRequest.getUserInfo
-        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { (response) in
-            guard let loginModel = response.data else { return }
+        YYNetworkService.default.request(YYStructResponse<YXNewLoginModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let loginModel = response.data else { return }
             self.updateUserInfo(loginModel: loginModel)
         }, fail: nil)
     }
@@ -130,15 +115,15 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             guard let self = self, let modelList = response.dataArray else { return }
             self.updateBadgeData(modelList: modelList)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     /// 请求积分信息
     private func loadIntegralData() {
         let request = YXMineRequest.getCreditsInfo
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            guard let credits = response.data?.credits else { return }
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let credits = response.data?.credits else { return }
             let dict = ["userCredits": credits]
             self.updateIntegralData(dict: dict)
         }, fail: nil)
@@ -151,8 +136,17 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         self.temporaryUserModel            = loginModel.user
         YXUserModel.default.userAvatarPath = loginModel.user?.avatar
         YXUserModel.default.userName       = loginModel.user?.nick
-        self.avatarImageView.sd_setImage(with: URL(string: YXUserModel.default.userAvatarPath ?? ""), placeholderImage: #imageLiteral(resourceName: "challengeAvatar"), completed: nil)
-        self.nameLabel.text     = YXUserModel.default.userName
+
+
+        if let avatarStr = YXUserModel.default.userAvatarPath, avatarStr.isNotEmpty {
+            YXKVOImageView().showImage(with: avatarStr, placeholder: #imageLiteral(resourceName: "challengeAvatar"), progress: nil) { [weak self] (image: UIImage?, error: NSError?, url: NSURL?) in
+                guard let self = self else { return }
+                self.avatarImageView.image = image?.corner(radius: AdaptIconSize(25), with: self.avatarImageView.size)
+            }
+        } else {
+            self.avatarImageView.image = #imageLiteral(resourceName: "challengeAvatar")
+        }
+        self.nameLabel.text = YXUserModel.default.userName
         if let garde = loginModel.user?.grade, !garde.isEmpty {
             let gradeStr: String = {
                 guard let gardeInt = Int(garde), gardeInt > 9 else {
@@ -170,8 +164,13 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
         self.calendarLabel.text = "\(loginModel.user?.punchDays ?? 0)"
 
+        // 学校信息
+        if let schoolDescriptionLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel {
+            schoolDescriptionLabel.text = (loginModel.user?.schoolInfo?.cityId != .some(0)) ? "去修改" : "去填写"
+        }
+
         // 账户信息
-        let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))?.viewWithTag(2) as? UILabel
+        let bindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
         self.bindInfo = [loginModel.user?.mobile ?? "", "", ""]
 
         if loginModel.user?.userBind?.contains(",1") ?? false || loginModel.user?.userBind?.contains("1")  ?? false {
@@ -190,7 +189,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
 
         // 发音
-        let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.viewWithTag(2) as? UILabel
+        let speechLabel = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0))?.viewWithTag(2) as? UILabel
         if YXUserModel.default.didUseAmericanPronunciation {
             speechLabel?.text = "美式"
         } else {
@@ -198,7 +197,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         }
 
         // 每日提醒
-        let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0))?.viewWithTag(2) as? UILabel
+        let remindLabel = self.tableView.cellForRow(at: IndexPath(row: 4, section: 0))?.viewWithTag(2) as? UILabel
         if let date = YYCache.object(forKey: .reminder) as? Date {
             let dateFormatter = DateFormatter()
             dateFormatter.timeStyle = .short
@@ -257,27 +256,91 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         vc.earnedBadgeCount = self.earnedBadgeCount
         self.navigationController?.pushViewController(vc, animated: true)
     }
+
+    @objc private func pushUserInfoVC() {
+        let vc = YXUserInfoViewController()
+        vc.nick = {
+            guard let _nick = temporaryUserModel?.nick, _nick.isNotEmpty else {
+                return "未设置"
+            }
+            return _nick
+        }()
+        vc.birthday = {
+            guard let _birthday = temporaryUserModel?.birthday, _birthday.isNotEmpty else {
+                return "未设置"
+            }
+            return _birthday
+        }()
+        vc.area = {
+            guard let _area = temporaryUserModel?.area, _area.isNotEmpty else {
+                return "未设置"
+            }
+            return _area
+        }()
+        vc.grade = {
+            var gradeStr = "未设置"
+            switch temporaryUserModel?.grade {
+            case .some("1"):
+                gradeStr = "一年级"
+            case .some("2"):
+                gradeStr = "二年级"
+            case .some("3"):
+                gradeStr = "三年级"
+            case .some("4"):
+                gradeStr = "四年级"
+            case .some("5"):
+                gradeStr = "五年级"
+            case .some("6"):
+                gradeStr = "六年级"
+            case .some("7"):
+                gradeStr = "七年级"
+            case .some("8"):
+                gradeStr = "八年级"
+            case .some("9"):
+                gradeStr = "九年级"
+            case .some("10"), .some("11"), .some("12"):
+                gradeStr = "高中"
+            default:
+                break
+            }
+            return gradeStr
+        }()
+        vc.sex = {
+            if temporaryUserModel?.sex == .some(1) {
+                return "男"
+            } else if temporaryUserModel?.sex == .some(2) {
+                return "女"
+            } else {
+                return "未设置"
+            }
+        }()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
+            return tableView.dequeueReusableCell(withIdentifier: "schoolCell") ?? UITableViewCell()
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
+            return tableView.dequeueReusableCell(withIdentifier: "lineCell") ?? UITableViewCell()
         case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellOne") ?? UITableViewCell()
         case 3:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
         case 4:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
+        case 5:
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
+        case 6:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
             let badgeNum = YXRedDotManager.share.getFeedbackReplyBadgeNum()
             cell.addSubview(badgeView)
-            badgeView.snp.makeConstraints { (make) in
+            badgeView.snp.remakeConstraints { (make) in
                 make.centerY.equalToSuperview()
                 make.right.equalToSuperview().offset(-AdaptSize(30))
                 make.size.equalTo(badgeView.size)
@@ -285,7 +348,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             badgeView.isHidden = badgeNum <= 0
             return cell
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix") ?? UITableViewCell()
         }
     }
     
@@ -294,53 +357,51 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         
         switch indexPath.row {
         case 0:
+            let vc = YXEditSchoolViewController()
+            vc.schoolInfoModel = self.temporaryUserModel?.schoolInfo
+            self.navigationController?.pushViewController(vc, animated: true)
+        case 1:
+            break
+        case 2:
             let accountInfoView = YXAccountInfoView()
             accountInfoView.bindInfo = bindInfo
-            accountInfoView.bindQQClosure = {
+            accountInfoView.bindQQClosure = { [weak self] in
+                guard let self = self else { return }
                 if self.bindInfo[1] == "1" {
-                    let alert = UIAlertController(title: "解绑后将无法使用QQ进行登录", message: "", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                    let alertView = YXAlertView()
+                    alertView.titleLabel.text = "提示"
+                    alertView.descriptionLabel.text = "解绑后将无法使用QQ进行登录"
+                    alertView.doneClosure = { [weak self] (text: String?) in
+                        guard let self = self else { return }
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "qq")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self, let data = response.data else { return }
-                            self.loadData()
-
+                            self?.loadData()
                         }) { error in
-                            YXUtils.showHUD(kWindow, title: error.message)
+                            YXUtils.showHUD(nil, title: error.message)
                         }
                     }
-                    alert.addAction(action1)
-
-                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                    alert.addAction(action2)
-                    
-                    self.present(alert, animated: true)
-                    
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                 } else {
                     QQApiManager.shared().qqLogin()
                 }
             }
             
-            accountInfoView.bindWechatClosure = {
+            accountInfoView.bindWechatClosure = { [weak self] in
+                guard let self = self else { return }
                 if self.bindInfo[2] == "2" {
-                    let alert = UIAlertController(title: "解绑后将无法使用微信进行登录", message: "", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "确定", style: .default) { action in
+                    let alertView = YXAlertView()
+                    alertView.titleLabel.text = "提示"
+                    alertView.descriptionLabel.text = "解绑后将无法使用微信进行登录"
+                    alertView.doneClosure = { [weak self] (text: String?) in
+                        guard let self = self else { return }
                         let request = YXRegisterAndLoginRequest.unbind(platfrom: "wechat")
                         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-                            guard let self = self, let data = response.data else { return }
-                            self.loadData()
-
+                            self?.loadData()
                         }) { error in
-                            YXUtils.showHUD(kWindow, title: error.message)
+                            YXUtils.showHUD(nil, title: error.message)
                         }
                     }
-                    alert.addAction(action1)
-
-                    let action2 = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                    alert.addAction(action2)
-                    
-                    self.present(alert, animated: true)
-                    
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                 } else {
                     WXApiManager.shared().wxLogin()
                 }
@@ -349,7 +410,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             accountInfoView.show()
             break
 
-        case 1:
+        case 3:
             let alertController = UIAlertController(title: "选择音标和发音", message: nil, preferredStyle: .actionSheet)
             let englishAction = UIAlertAction(title: "英式音标和发音", style: .default) { (action) in
                 YXUserModel.default.didUseAmericanPronunciation = false
@@ -376,18 +437,18 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
             self.present(alertController, animated: true, completion: nil)
             break
 
-        case 2:
+        case 4:
             self.performSegue(withIdentifier: "SetReminder", sender: self)
             break
 
-        case 3:
+        case 5:
             break
 
-        case 4:
+        case 6:
             self.performSegue(withIdentifier: "FeedBack", sender: self)
             break
 
-        case 5:
+        case 7:
             self.performSegue(withIdentifier: "Settings", sender: self)
             break
             
@@ -397,7 +458,7 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 3 {
+        if indexPath.row == 1 || indexPath.row == 5 {
             return 6
         } else {
             return 44
@@ -413,15 +474,14 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BadgeCell", for: indexPath)
         let badge = badgeModelList[indexPath.row]
         
-        let imageView = cell.viewWithTag(1) as! UIImageView
-        
-        if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
-            imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
-            
-        } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {
-            imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+        if let imageView = cell.viewWithTag(1) as? UIImageView {
+            if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0, let imageOfCompletedStatus = badge.imageOfCompletedStatus {
+                imageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
+
+            } else if let imageOfIncompletedStatus = badge.imageOfIncompletedStatus {
+                imageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
+            }
         }
-        
         return cell
     }
     
@@ -459,9 +519,8 @@ class YXMineViewController: YXViewController, UITableViewDelegate, UITableViewDa
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self else { return }
             self.loadData()
-
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

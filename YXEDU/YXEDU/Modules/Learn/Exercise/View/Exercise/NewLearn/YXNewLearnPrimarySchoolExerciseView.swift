@@ -31,9 +31,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
         self.addSubview(contentView)
         self.contentView.addSubview(leftContentView)
         questionView = YXNewLearnPrimarySchoolQuestionView(exerciseModel: exerciseModel)
-        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && exerciseModel.word?.imageUrl != nil {
-            (questionView as! YXNewLearnPrimarySchoolQuestionView).showImageView()
-            (questionView as! YXNewLearnPrimarySchoolQuestionView).showExample()
+        if !(exerciseModel.word?.examples?.first?.english?.isEmpty ?? true) && (exerciseModel.word?.imageUrl != nil), let _questionView = questionView as? YXNewLearnPrimarySchoolQuestionView {
+            _questionView.showImageView()
+            _questionView.showExample()
         }
         self.leftContentView.addSubview(questionView!)
         
@@ -60,12 +60,14 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.left.top.bottom.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.5)
         }
-        questionView?.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-44))
-            make.bottom.equalTo(answerView!.snp.top)
-        })
+        if answerView != nil {
+            questionView?.snp.makeConstraints({ (make) in
+                make.top.equalToSuperview()
+                make.centerX.equalToSuperview()
+                make.width.equalToSuperview().offset(AdaptSize(-44))
+                make.bottom.equalTo(answerView!.snp.top)
+            })
+        }
         answerView?.snp.makeConstraints({ (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(AdaptSize(-65))
@@ -73,7 +75,8 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             make.width.equalToSuperview().offset(AdaptSize(isPad() ? -150 : 0))
         })
         detailView?.snp.makeConstraints({ (make) in
-            make.left.bottom.right.equalToSuperview()
+            make.bottom.equalToSuperview().priorityLow()
+            make.left.right.equalToSuperview()
             make.top.equalToSuperview().offset(5)
         })
         if rightContentView.superview != nil {
@@ -124,10 +127,11 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
             _answerView.learnResultView.isHidden = true
         }
         self.isLearned = true
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else { return }
             self.contentView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
-        }) { (finished) in
-            if finished, let _answerView = self.answerView as? YXNewLearnAnswerView {
+        }) { [weak self] (finished) in
+            if finished, let _answerView = self?.answerView as? YXNewLearnAnswerView {
                 _answerView.status = .alreadLearn
             }
         }
@@ -142,7 +146,9 @@ class YXNewLearnPrimarySchoolExerciseView: YXBaseExerciseView, YXNewLearnProtoco
     // MARK: ==== YXExerciseViewControllerProtocol ====
     override func backHomeEvent() {
         super.backHomeEvent()
-        (answerView as! YXNewLearnAnswerView).pauseView()
+        if let _answerView = answerView as? YXNewLearnAnswerView {
+            _answerView.pauseView()
+        }
     }
 
     override func showAlertEvnet() {

@@ -60,7 +60,7 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     @objc private func clickSchool() {
         guard let model = self.selectLocalModel else {
-            YXUtils.showHUD(kWindow, title: "请先选择学校地址")
+            YXUtils.showHUD(nil, title: "请先选择学校地址")
             return
         }
         self.searchView.show(selectLocal: model)
@@ -70,7 +70,7 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
         guard let localModel = self.selectLocalModel, let schoolModel = self.selectSchoolModel else {
             return
         }
-        self.submit(schoolId: schoolModel.id, areaId: localModel.id)
+        self.submit(schoolId: schoolModel.id, areaId: localModel.id, schoolName: schoolModel.name)
     }
 
     func toNextView() {
@@ -86,12 +86,13 @@ class YXSelectSchoolViewController: YXViewController, YXSelectLocalPickerViewPro
 
     // MARK: ==== Request ====
 
-    @objc private func submit(schoolId: Int, areaId: Int) {
-        let request = YXSelectSchoolRequestManager.submit(schoolId: schoolId, areaId: areaId)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+    @objc private func submit(schoolId: Int, areaId: Int, schoolName: String) {
+        let request = YXSelectSchoolRequestManager.submit(schoolId: schoolId, areaId: areaId, schoolName: schoolName)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.toNextView()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

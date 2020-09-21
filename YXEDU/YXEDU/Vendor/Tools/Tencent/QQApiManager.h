@@ -28,6 +28,8 @@ typedef void (^qqFinishBlock) (id obj1, id obj2, BOOL result);
 
 - (void)qqLogin;
 
+- (BOOL)qqIsInstalled;
+
 - (BOOL)handleOpenURL:(NSURL *)url;
 
 - (void)qqShare:(QQShareType)shareType;

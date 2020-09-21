@@ -28,7 +28,6 @@
 #import "WXApiManager.h"
 #import "YXStatusCode.h"
 #import "UIImageView+WebCache.h"
-#import "YXPersonalInformationVC.h"
 #import "YXCalendarViewController.h"
 #import "YXReportErrorView.h"
 #import "FSCalendar.h"
@@ -66,5 +65,6 @@
 #import "FMResultSet.h"
 #import "SGQRCode.h"
 #import <AuthenticationServices/AuthenticationServices.h>
-
+#import "YXBasePickverView.h"
+#import "LEEAlert.h"
 

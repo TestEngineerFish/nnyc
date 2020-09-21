@@ -9,35 +9,25 @@
 import UIKit
 import MBProgressHUD
 
-class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
 
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     @IBAction func logout(_ sender: Any) {
         let alertView = YXAlertView()
         alertView.descriptionLabel.text = "您确定要退出登录吗？"
         alertView.doneClosure = { _ in
             YXUserModel.default.logout()
         }
-        
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.customNavigationBar?.title = "设置"
+        self.viewTopConstraint.constant = kNavBarHeight
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
 
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,26 +36,23 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
-//        case 0:
-//            return tableView.dequeueReusableCell(withIdentifier: "CellOne")!
-            
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: "CellTwo")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellTwo") ?? UITableViewCell()
             
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "CellThree")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellThree") ?? UITableViewCell()
             
         case 2:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFour")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellFour") ?? UITableViewCell()
             
         case 3:
-            return tableView.dequeueReusableCell(withIdentifier: "CellFive")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellFive") ?? UITableViewCell()
           
         case 4:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSix")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSix") ?? UITableViewCell()
             
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "CellSeven")!
+            return tableView.dequeueReusableCell(withIdentifier: "CellSeven") ?? UITableViewCell()
         }
     }
     
@@ -73,22 +60,16 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.deselectRow(at: indexPath, animated: false)
     
         switch indexPath.row {
-//        case 0:
-//            self.performSegue(withIdentifier: "ManageMaterial", sender: self)
-//            break
-            
         case 0:
             performSegue(withIdentifier: "AboutUs", sender: self)
             break
             
         case 1:
             YXSettingDataManager().checkVersion { (version, error) in
-                if version?.state == .recommend || version?.state == .force {
-                    UIApplication.shared.open(URL(string: "https://apps.apple.com/cn/app/id1379948642")!, options: [:]) { (isSuccess) in
-                        
-                    }
+                if version?.state == .recommend || version?.state == .force, let url = URL(string: "https://apps.apple.com/cn/app/id1379948642") {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 } else {
-                    YXUtils.showHUD(self.view, title: "当前已经是最新版本")
+                    YXUtils.showHUD(nil, title: "当前已经是最新版本")
                 }
             }
             break
@@ -113,6 +94,8 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             break
         }
     }
+
+    // MARK: ==== Event ====
     
     private func resetCache() {
         let alertView = YXAlertView()
@@ -122,6 +105,6 @@ class YXSettingsViewController: UIViewController, UITableViewDelegate, UITableVi
             service.cleanAllStudyRecord()
             self.view.makeToast("清除成功")
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 }

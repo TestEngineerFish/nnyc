@@ -14,6 +14,7 @@ struct YXExerciseReportModel: Mappable {
     var wordId: Int = -1
     var bookId: Int?
     var unitId: Int?
+    var grade: Int?
     var score: Int = 0
     var errorCount: Int = 0
     var result: [String:Int] = [:]
@@ -32,6 +33,7 @@ struct YXExerciseReportModel: Mappable {
         score      <- map["score"]
         errorCount <- map["error_count"]
         result     <- map["result"]
+        grade      <- map["grade"]
     }
 }
 

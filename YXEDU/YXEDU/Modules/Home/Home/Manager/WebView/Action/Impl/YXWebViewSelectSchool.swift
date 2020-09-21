@@ -37,8 +37,8 @@ class YXWebViewSelectSchool: YRWebViewJSAction, YXSearchSchoolDelegate {
         guard let _model = model, let callBackStr = self.callback else { return }
         let resultDic: [String : Any] = ["school" : _model.name, "school_id" : _model.id]
         let funcStr = String(format: "%@('%@')", callBackStr, resultDic.toJson())
-        DispatchQueue.main.async {
-            self.jsBridge.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.jsBridge?.webView?.evaluateJavaScript(funcStr, completionHandler: nil)
         }
     }
 }

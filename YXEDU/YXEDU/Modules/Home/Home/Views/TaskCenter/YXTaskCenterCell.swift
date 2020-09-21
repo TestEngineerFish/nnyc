@@ -38,14 +38,16 @@ class YXTaskCenterCell: UITableViewCell, UICollectionViewDelegate, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterCardCell", for: indexPath) as! YXTaskCenterCardCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterCardCell", for: indexPath) as? YXTaskCenterCardCell else {
+            return UICollectionViewCell()
+        }
         let task = taskListModel?.list?[indexPath.row]
 
         cell.titleLabel.text = task?.name
         cell.rewardLabel.text = "+\(task?.integral ?? 0)"
         cell.taskType = YXTaskCardType(rawValue: task?.taskType  ?? 0) ?? .smartReview
         cell.cardStatus = YXTaskCardStatus(rawValue: task?.state ?? 0) ?? .incomplete
-        cell.didRepeat = taskListModel?.typeName == .some("每日任务") ? true : false
+        cell.didRepeat = taskListModel?.typeName == .some("每日任务")
         cell.adjustCell()
         cell.setData(task: task, indexPath: IndexPath(row: indexPath.row, section: self.cellIndexPath?.row ?? 0))
         return cell

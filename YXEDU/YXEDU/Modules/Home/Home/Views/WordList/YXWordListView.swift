@@ -120,7 +120,7 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
             }
             
             wordCountLabel.text = "\(wordsCount)"
-            tableView.reloadData()
+            self.tableView.reloadData()
         }
     }
     var wrongWordSectionDataBackup: [[String: [YXWordModel]]]?
@@ -241,11 +241,12 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         Bundle.main.loadNibNamed("YXWordListView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
+        orderButton.layer.masksToBounds = false
         
         tableView.register(UINib(nibName: "YXWordListCell", bundle: nil), forCellReuseIdentifier: "YXWordListCell")
         tableView.register(UINib(nibName: "YXWordListEmptyCell", bundle: nil), forCellReuseIdentifier: "YXWordListEmptyCell")
 
-        tableView.delegate = self
+        tableView.delegate   = self
         tableView.dataSource = self
     }
 
@@ -268,10 +269,11 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         // 错词本不在此请求
         if requestType < 0 { return }
-        
+        YXUtils.showLoadingInfo("加载中…", to: self)
         if requestType == 0 {
             let request = YXWordListRequest.collectionWordList(type: requestType, page: page)
             YYNetworkService.default.request(YYStructResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                YXUtils.hideHUD(self)
                 guard let self = self, let model = response.data else { return }
                 self.currentPage         = model.page
                 self.haveMore            = model.haveMore
@@ -283,13 +285,14 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
                 
             }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.hideHUD(self)
+                YXUtils.showHUD(nil, title: error.message)
             }
-            
         } else {
             let request = YXWordListRequest.wordList(type: requestType)
-            YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { (response) in
-                guard let wordLists = response.dataArray else { return }
+            YYNetworkService.default.request(YYStructDataArrayResponse<YXWordListModel>.self, request: request, success: { [weak self] (response) in
+                YXUtils.hideHUD(self)
+                guard let self = self, let wordLists = response.dataArray else { return }
                 
                 var wordSectionData: [[String: [YXWordModel]]] = []
                 wordLists.forEach { wordList in
@@ -297,9 +300,9 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
                 }
                  
                 self.wrongWordSectionData = wordSectionData
-                
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.hideHUD(self)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }
@@ -309,7 +312,6 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
             return wrongWordSectionCount
-            
         } else {
             return 1
         }
@@ -325,19 +327,20 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         if title?.contains("熟识的单词") ?? false {
             wordListHeaderView.deleteButton.isHidden = false
-            wordListHeaderView.deleteAllWordsClosure = {
-                guard let wrongWords = wrongWordSection?.values.first else { return }
-                
+            wordListHeaderView.deleteAllWordsClosure = { [weak self] in
+                guard let self = self, let wrongWords = wrongWordSection?.values.first else { return }
+
                 let alertView = YXAlertView()
                 alertView.titleLabel.text = "提示"
                 alertView.descriptionLabel.text = "\(wrongWords.count)个单词会被移出错词本，下次不要再错了哦~"
                 alertView.rightOrCenterButton.setTitle("清除", for: .normal)
-                
-                alertView.doneClosure = { _ in
+
+                alertView.doneClosure = { [weak self] (text: String?) in
+                    guard let self = self else { return }
                     self.deleteAllWrongWords(wrongWords: wrongWords)
                 }
-                
-                alertView.show()
+
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             }
             
             wordListHeaderView.expandButton.isHidden = false
@@ -413,36 +416,43 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         }
         
         if (wrongWordSectionData?.count ?? 0) > 0 || words.count > 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as! YXWordListCell
-            var word: YXWordModel!
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXWordListCell", for: indexPath) as? YXWordListCell else {
+                return UITableViewCell()
+            }
+            var word: YXWordModel?
 
             if let wrongWordSectionCount = wrongWordSectionData?.count, wrongWordSectionCount > 0 {
                 if var wrongWords = wrongWordSectionData?[indexPath.section].values.first, wrongWords.count > 0 {
                     word = wrongWords[indexPath.row]
                     
-                    cell.removeMaskClosure = {
-                        wrongWords[indexPath.row].hidePartOfSpeechAndMeanings = !word.hidePartOfSpeechAndMeanings
-                        
+                    cell.removeMaskClosure = { [weak self] in
+                        guard let self = self else { return }
+                        wrongWords[indexPath.row].hidePartOfSpeechAndMeanings = !(word?.hidePartOfSpeechAndMeanings ?? false)
+
                         if let key = self.wrongWordSectionData?[indexPath.section].keys.first {
                             self.wrongWordSectionData?[indexPath.section] = [key: wrongWords]
                         }
-                        
-                        tableView.reloadRows(at: [indexPath], with: .none)
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
             } else if words.count > 0 {
                 word = words[indexPath.row]
                 
-                cell.removeMaskClosure = {
+                cell.removeMaskClosure = { [weak self] in
+                    guard let self = self else { return }
                     self.words[indexPath.row].hidePartOfSpeechAndMeanings = !self.words[indexPath.row].hidePartOfSpeechAndMeanings
-                    tableView.reloadRows(at: [indexPath], with: .none)
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
                 }
             }
-            cell.setData(word)
+            if let _word = word {
+                cell.setData(_word)
+            }
             return cell
             
         } else {
-            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
+            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as? YXWordListEmptyCell else {
+                return UITableViewCell()
+            }
             return emptyCell
         }
     }
@@ -493,12 +503,13 @@ class YXWordListView: UIView, UITableViewDelegate, UITableViewDataSource {
         guard wrongWordIds.count > 0, let wrongWordIdsData = try? JSONSerialization.data(withJSONObject: wrongWordIds, options: .prettyPrinted), let string = String(data: wrongWordIdsData, encoding: .utf8) else { return }
         
         let request = YXWordListRequest.deleteWrongWord(wordIds: string)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            self.wrongWordSectionData?.remove(at: 0)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
+            self.wrongWordSectionData?.removeFirst()
             self.tableView.reloadData()
             UIView().toast("已清除")
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

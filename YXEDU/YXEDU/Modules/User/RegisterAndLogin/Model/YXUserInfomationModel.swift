@@ -23,16 +23,13 @@ struct YXUserInfomationModel: Mappable {
         }
     }
 
-    enum ExerciseFillType: Int {
-        case keyboard = 0 // 选择填空
-        case choose   = 1 // 软键盘输入
-    }
-    var didBindPhone: Int?
-    var didSelectBook: Int?
     var oldUserUpdateMessage: String?
     var coinExplainUrl: String?  // 松果币H5文件
     var gameExplainUrl: String? // 游戏挑战H5文件
-    var isJoinSchool: Bool = true // 是否已加入学校
+    var didBindPhone: Bool  = true // 是否已绑定手机号
+    var didSelectBook: Bool = true // 是否已选择词书
+    var isJoinSchool: Bool  = true // 是否已加入学校
+    var isNewUser:Bool      = false// 是否是新用户
     var reminder: YXReminderModel?
 
     init?(map: Map) {
@@ -47,5 +44,6 @@ struct YXUserInfomationModel: Mappable {
         coinExplainUrl       <- map["coin_explain_url"]
         gameExplainUrl       <- map["game_explain_url"]
         reminder             <- map["learn_remind"]
+        isNewUser            <- map["is_new_study"]
     }
 }

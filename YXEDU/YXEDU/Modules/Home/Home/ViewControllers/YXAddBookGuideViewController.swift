@@ -8,27 +8,36 @@
 
 import UIKit
 
-class YXAddBookGuideViewController: UIViewController {
+class YXAddBookGuideViewController: YXViewController {
     private var dataSource: [YXGradeWordBookListModel] = []
     private var selectBook: YXWordBookModel?
     private var selectGrade: YXGradeWordBookListModel?
-    private var grades: [String] = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"]
-    private var versions: [String] = ["人教版", "沪教版", "冀教版", "北师大", "译林版", "粤教版"]
+    private var grades: [String]    = ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"]
+    private var versions: [String]  = ["人教版", "沪教版", "冀教版", "北师大", "译林版", "粤教版"]
     private var bookNames: [String] = ["人教版七年级上册", "人教版七年级下册"]
     
     private let defaultHeight: CGFloat = 126
     private var gradeHeight: CGFloat {
-        return 70 + (self.selectGradeView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        guard let flowLayout = self.selectGradeView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return 70
+        }
+        return 70 + flowLayout.contentHeight
     }
     
     private var versionHeight: CGFloat {
         let descriptionHeight = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~".textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 88)
-        
-        return 50 + descriptionHeight + 26 + (self.selectVersionView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        let h = 50 + descriptionHeight + 26
+        guard let flowLayout = self.selectVersionView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return h
+        }
+        return h + flowLayout.contentHeight
     }
     
     private var bookNameHeight: CGFloat {
-        return 70 + (self.selectBookNameView.collectionView.collectionViewLayout as! YXCollectionViewLeftFlowLayout).contentHeight
+        guard let flowLayout = self.selectBookNameView.collectionView.collectionViewLayout as? YXCollectionViewLeftFlowLayout else {
+            return 70
+        }
+        return 70 + flowLayout.contentHeight
     }
     
     @IBOutlet weak var selectGradeView: YXAddBookGuideView!
@@ -57,23 +66,24 @@ class YXAddBookGuideViewController: UIViewController {
             YXWordBookResourceManager.shared.addTask(model: taskModel)
             
             let request = YXHomeRequest.getBaseInfo(userId: uuid)
-            YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { (response) in
-                guard let userInfomation = response.data else { return }
+            YYNetworkService.default.request(YYStructResponse<YXHomeModel>.self, request: request, success: { [weak self] (response) in
+                guard let self = self, let userInfomation = response.data else { return }
 
                 YXUserModel.default.currentGrade   = userInfomation.bookGrade
                 YXUserModel.default.lastStoredDate = Date()
                 YXLog("====新注册 - 开始主流程的学习====")
                 YXLog(String(format: "开始学习书(%ld),第(%ld)单元", bookId, unitId))
                 let vc = YXExerciseViewController()
-                vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
+                vc.isFocusStudy = !YXUserModel.default.isFinishedNewUserStudy
+                vc.learnConfig  = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
                 self.navigationController?.pushViewController(vc, animated: true)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
             self.updateGIO()
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -90,7 +100,7 @@ class YXAddBookGuideViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
             NotificationCenter.default.post(name: YXNotification.kSquirrelAnimation, object: nil)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
         self.updateGIO()
     }
@@ -105,16 +115,16 @@ class YXAddBookGuideViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         selectGradeView.isHidden    = true
         selectVersionView.isHidden  = true
         selectBookNameView.isHidden = true
-
+        self.customNavigationBar?.isHidden = true
         YXStepConfigManager.share.contrastStepConfig()
         
         let request = YXHomeRequest.getBookList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { (response) in
-            guard let grades = response.dataArray else { return }
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXGradeWordBookListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let grades = response.dataArray else { return }
             self.dataSource = grades
             
             for grade in grades {
@@ -125,8 +135,8 @@ class YXAddBookGuideViewController: UIViewController {
             
             self.initSelectViews()
             
-            self.selectGradeView.isHidden = false
-            self.selectVersionView.isHidden = false
+            self.selectGradeView.isHidden    = false
+            self.selectVersionView.isHidden  = false
             self.selectBookNameView.isHidden = false
             
             self.chengeCenter(withoutAnimation: true)
@@ -142,7 +152,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectGradeView.select(grades)
         selectGradeView.collectionView.collectionViewLayout.prepare()
         selectGradeViewHeight.constant = gradeHeight
-        selectGradeView.selectedClosure = {
+        selectGradeView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             self.versions = []
 
             if let selectedIndex = self.selectGradeView.selectedIndex {
@@ -163,7 +174,8 @@ class YXAddBookGuideViewController: UIViewController {
             self.selectVersionViewTopOffSet.constant = 88
             self.selectVersionViewHeight.constant = self.versionHeight
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectGradeViewHeight.constant = self.defaultHeight
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionView.alpha = 1
@@ -173,15 +185,18 @@ class YXAddBookGuideViewController: UIViewController {
             self.chengeCenter()
         }
         
-        selectGradeView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectGradeView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectGradeViewHeight.constant = self.gradeHeight
                 self.selectVersionViewTopOffSet.constant = 88
                 self.selectVersionView.alpha = 0
                 self.selectBookNameView.alpha = 0
                 self.view.layoutIfNeeded()
             }
-                            
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
         
@@ -191,7 +206,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectVersionView.descriptionLabel.isHidden = false
         selectVersionView.descriptionLabel.text = "教材不断添加中,如果没有看到您的教材,可以 选择通用版学习哦~"
         selectVersionView.select(versions)
-        selectVersionView.selectedClosure = {
+        selectVersionView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             self.bookNames = []
 
             if let gradeIndex = self.selectGradeView.selectedIndex, let versionIndex = self.selectVersionView.selectedIndex {
@@ -210,7 +226,8 @@ class YXAddBookGuideViewController: UIViewController {
             self.selectBookNameView.collectionView.collectionViewLayout.prepare()
             self.selectBookNameViewHeight.constant = self.bookNameHeight
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectVersionViewHeight.constant = self.defaultHeight
                 self.selectBookNameViewTopOffSet.constant = 0
                 self.selectBookNameView.alpha = 1
@@ -220,15 +237,18 @@ class YXAddBookGuideViewController: UIViewController {
             self.chengeCenter()
         }
         
-        selectVersionView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectVersionView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectVersionViewTopOffSet.constant = 0
                 self.selectVersionViewHeight.constant = self.versionHeight
                 self.selectBookNameViewTopOffSet.constant = 88
                 self.selectBookNameView.alpha = 0
                 self.view.layoutIfNeeded()
             }
-            
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
         
@@ -236,7 +256,8 @@ class YXAddBookGuideViewController: UIViewController {
         selectBookNameView.alpha = 0
         selectBookNameView.titleLabel.text = "词书"
         selectBookNameView.select(bookNames)
-        selectBookNameView.selectedClosure = {
+        selectBookNameView.selectedClosure = { [weak self] in
+            guard let self = self else { return }
             if let gradeIndex = self.selectGradeView.selectedIndex, let bookIndex = self.selectBookNameView.selectedIndex  {
                 let grade = self.dataSource[gradeIndex]
                 
@@ -249,27 +270,31 @@ class YXAddBookGuideViewController: UIViewController {
                 }
             }
             
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectBookNameViewHeight.constant = self.defaultHeight
                 self.view.layoutIfNeeded()
             }
             
             if self.selectBook != nil, self.selectGradeViewHeight.constant == self.defaultHeight, self.selectVersionViewHeight.constant == self.defaultHeight, self.selectBookNameViewHeight.constant == self.defaultHeight {
                 self.startButton.isHidden = false
-                self.homeButton.isHidden = false
-                
+                self.homeButton.isHidden  = !YXUserModel.default.isFinishedNewUserStudy
+
             } else {
                 self.startButton.isHidden = true
-                self.homeButton.isHidden = true
+                self.homeButton.isHidden  = true
             }
         }
         
-        selectBookNameView.editClosure = {
-            UIView.animate(withDuration: 0.4) {
+        selectBookNameView.editClosure = { [weak self] in
+            guard let self = self else { return }
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.selectBookNameViewHeight.constant = self.bookNameHeight
                 self.view.layoutIfNeeded()
             }
-
+            self.startButton.isHidden = true
+            self.homeButton.isHidden  = true
             self.chengeCenter()
         }
     }
@@ -293,9 +318,9 @@ class YXAddBookGuideViewController: UIViewController {
         
         if withoutAnimation {
             self.view.layoutIfNeeded()
-
         } else {
-            UIView.animate(withDuration: 0.4) {
+            UIView.animate(withDuration: 0.4) { [weak self] in
+                guard let self = self else { return }
                 self.view.layoutIfNeeded()
             }
         }

@@ -76,11 +76,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         self.addSubview(tableView)
         self.tableView.delegate   = self
         self.tableView.dataSource = self
-        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: screenWidth, bottom: 0, right: 0)
         self.tableView.register(YXReviewWordViewCell.classForCoder(), forCellReuseIdentifier: kYXReviewUnitListCell)
         self.tableView.register(YXReviewUnitListHeaderView.classForCoder(), forHeaderFooterViewReuseIdentifier: kYXReviewUnitListHeaderView)
         pan = UIPanGestureRecognizer(target: self, action: #selector(pan(_:)))
-        pan!.delegate = self
+        pan?.delegate = self
         self.tableView.addGestureRecognizer(pan!)
         self.tableView.panGestureRecognizer.require(toFail: pan!)
         self.tableView.snp.makeConstraints { (make) in
@@ -91,7 +91,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
     // MARK: ==== Event ====
     
     private func selectCell(with indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let headerCell = tableView.headerView(forSection: indexPath.section) else {
+        guard let cell = tableView.cellForRow(at: indexPath) as? YXReviewWordViewCell, let headerCell = tableView.headerView(forSection: indexPath.section) as? YXReviewUnitListHeaderView else {
             return
         }
         var unitModelId = 0
@@ -111,7 +111,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
         } else {
             self.delegate?.unselectWord(wordModel)
         }
-        headerCell.layoutSubviews()
+        headerCell.bindData()
     }
     // MARK: ---- Request ----
 
@@ -137,7 +137,7 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             self.model.modelDict.updateValue(unitModelList, forKey: "\(bookId)")
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -211,7 +211,8 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return
         }
         let unitModel = self.unitModelList[section]
-        unitModel.list.forEach { (_wordModel) in
+        unitModel.list.forEach { [weak self] (_wordModel) in
+            guard let self = self else { return }
             if self.delegate?.isSelectedWordModel(wordModel: _wordModel) ?? false {
                 _wordModel.isSelected = true
             } else {
@@ -275,10 +276,11 @@ class YXReviewUnitListView: UIView, UITableViewDelegate, UITableViewDataSource, 
             return self.unitModelList[indexPath.section].list[indexPath.row]
         }()
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let wordDetialViewController           = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as! YXWordDetailViewControllerNew
-        wordDetialViewController.wordId        = wordModel.id
-        wordDetialViewController.isComplexWord = 0
-        self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        if let wordDetialViewController = home.instantiateViewController(withIdentifier: "YXWordDetailViewControllerNew") as? YXWordDetailViewControllerNew {
+            wordDetialViewController.wordId        = wordModel.id
+            wordDetialViewController.isComplexWord = 0
+            self.currentViewController?.navigationController?.pushViewController(wordDetialViewController, animated: true)
+        }
     }
     
     // MARK: ==== YXReviewUnitListHeaderProtocol ====

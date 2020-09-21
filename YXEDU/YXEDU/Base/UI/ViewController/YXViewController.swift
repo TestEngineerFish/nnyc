@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GTMRefresh
 
 class YXViewController: UIViewController {
     

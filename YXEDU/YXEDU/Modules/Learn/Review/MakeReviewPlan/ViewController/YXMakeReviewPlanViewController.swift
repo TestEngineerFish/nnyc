@@ -56,7 +56,8 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         self.searchView.layer.opacity = 0
         self.customNavigationBar?.title = "选择单词"
         self.customNavigationBar?.rightButton.setImage(UIImage(named: "review_search"), for: .normal)
-        self.customNavigationBar?.rightButtonAction = {
+        self.customNavigationBar?.rightButtonAction = { [weak self] in
+            guard let self = self else { return }
             self.showSearchView()
         }
         self.view.addSubview(segmentControllerView)
@@ -101,11 +102,13 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
     /// 请求书列表
     private func requestBooksList() {
+        YXUtils.showLoadingInfo("加载中…", to: self.view)
         let request = YXReviewRequest.reviewBookList
         YYNetworkService.default.request(YYStructResponse<YXReviewBookModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let _model = response.data else {
                 return
             }
+            YXUtils.hideHUD(self.view)
             for (index, bookModel) in _model.list.enumerated() {
                 if bookModel.isLearning {
                     _model.modelDict.updateValue(_model.currentModel, forKey: "\(bookModel.id)")
@@ -114,8 +117,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
             }
             self.model = _model
             self.segmentControllerView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+        }) { [weak self] (error) in
+            YXUtils.hideHUD(self?.view)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -128,9 +132,10 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         guard let jsonData = try? JSONSerialization.data(withJSONObject: idsList, options: []) else {
             return
         }
-        let idsStr = String(data: jsonData, encoding: String.Encoding.utf8)!
+        let idsStr = String(data: jsonData, encoding: String.Encoding.utf8) ?? ""
         let request = YXReviewRequest.makeReviewPlan(name: name, code: nil, idsList: idsStr)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXReviewUnitModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.delegate?.makeReivewPlanFinised()
             self.navigationController?.popViewController(animated: true)
         }) { (error) in
@@ -138,9 +143,9 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                 let alertView = YXAlertView(type: .normal)
                 alertView.descriptionLabel.text   = error.message
                 alertView.shouldOnlyShowOneButton = true
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             } else {
-                YXUtils.showHUD(self.view, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
     }
@@ -148,7 +153,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     // MARK: ==== Event ====
     @objc private func makeReivewPlan() {
         if self.selectedWordsListView.wordsModelList.count < 4 {
-            YXUtils.showHUD(self.view, title: "请至少选择4个单词")
+            YXUtils.showHUD(nil, title: "请至少选择4个单词")
         } else {
             // 显示弹框
             let name = YXReviewDataManager.makePlanName(defailt: self.getPlanName())
@@ -160,12 +165,12 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
                     let alertView = YXAlertView(type: .normal)
                     alertView.descriptionLabel.text   = "词单名称不能为空"
                     alertView.shouldOnlyShowOneButton = true
-                    alertView.show()
+                    YXAlertQueueManager.default.addAlert(alertView: alertView)
                     return
                 }
                 self.requestMakeReviewPlan(_text)
             }
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         }
     }
 
@@ -191,11 +196,12 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
 
         if result {
             self.searchView.updateInfo()
-            UIView.animate(withDuration: 0.25) {
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                guard let self = self else { return }
                 self.searchView.layer.opacity = 1.0
             }
         } else {
-            YXUtils.showHUD(self.view, title: "当前书未加载完成，请稍后再试～")
+            YXUtils.showHUD(nil, title: "当前书未加载完成，请稍后再试～")
         }
 
     }
@@ -290,7 +296,7 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
         self.selectedIndex = indexPath.row
         model.list[preIndexPath.row].isSelected = false
         model.list[indexPath.row].isSelected    = true
-        self.segmentControllerView.headerScrollView.reloadData()
+        self.segmentControllerView.headerScrollView?.reloadData()
     }
 
     // MARK: ==== YXReviewSelectedArrowProtocol ====
@@ -311,20 +317,6 @@ class YXMakeReviewPlanViewController: YXViewController, BPSegmentDataSource, YXR
     }
     
     func selected(_ word: YXReviewWordModel) {
-//        guard let model = self.model else {
-//            return
-//        }
-//        if let unitModelList = model.modelDict["\(word.bookId)"] {
-//            unitModelList.forEach { (unitModel) in
-//                if unitModel.id == word.unitId {
-//                    unitModel.list.forEach { (wordModel) in
-//                        if wordModel.id == word.id {
-//                            wordModel.isSelected = true
-//                        }
-//                    }
-//                }
-//            }
-//        }
         self.reviewDelegate?.updateSelectStatus(word)
     }
 }

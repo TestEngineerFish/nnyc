@@ -10,7 +10,7 @@ import UIKit
 
 class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    var planId: Int!
+    var planId: Int?
     private var page = 1
     private var hasMore = true
 
@@ -59,11 +59,11 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
 
     // MARK: ---- Request ----
     private func requestStudentList() {
-        guard hasMore else { return }
+        guard hasMore, let _planId = self.planId else { return }
 
-        let request = YXReviewRequest.studentStudyList(planId: planId, page: self.page)
-        YYNetworkService.default.request(YYStructResponse<YXStudentListModel>.self, request: request, success: { (response) in
-            guard let data = response.data, let modelList = data.list else { return }
+        let request = YXReviewRequest.studentStudyList(planId: _planId, page: self.page)
+        YYNetworkService.default.request(YYStructResponse<YXStudentListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let data = response.data, let modelList = data.list else { return }
             self.hasMore = data.hasMore
             self.page = self.page + 1
             
@@ -77,7 +77,7 @@ class YXReviePlanStudentsListViewController: YXViewController, UICollectionViewD
             self.collectionView.reloadData()
             
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

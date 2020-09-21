@@ -14,7 +14,7 @@ extension YXExerciseServiceImpl {
     /// 处理从网络请求的数据
     /// - Parameter result: 网络数据
     func _processData(completion: (() -> Void)?) {
-        if _resultModel?.wordList.isEmpty == .some(true) {
+        if _resultModel?.ruleList.isEmpty == .some(true) {
             YXLog("⚠️获取数据为空，无法生成题型，当前学习类型:\(learnConfig.learnType)")
             progress = .empty
             completion?()
@@ -23,11 +23,14 @@ extension YXExerciseServiceImpl {
             }
             return
         }
+        // 更新本地单词数据
+        self._processWordModel()
         
         // 插入学习记录
         let studyId = self._processStudyRecord()
         if studyId == 0 {
             YXLog("插入学习记录失败")
+            completion?()
             return
         }
 
@@ -42,20 +45,27 @@ extension YXExerciseServiceImpl {
 
         completion?()
     }
+
+    private func _processWordModel() {
+        guard let wordModelList = _resultModel?.wordModelList else {
+            return
+        }
+        YXWordBookResourceManager.shared.updateWordModel(with: wordModelList)
+    }
     
     /// 处理学习记录
     func _processStudyRecord() -> Int {
         if let model = self.studyDao.selectStudyRecordModel(learn: learnConfig) {
             return model.studyId
         } else {
-            return self.studyDao.insertStudyRecord(learn: learnConfig, newWordCount: self._resultModel?.newWordCount ?? 0, reviewWordCount: self._resultModel?.reviewWordCount ?? 0)
+            return self.studyDao.insertStudyRecord(learn: learnConfig, newWordCount: self._resultModel?.newWordCount ?? 0, reviewWordCount: self._resultModel?.reviewWordCount ?? 0, unique: _resultModel?.unique ?? "")
         }
     }
 
     /// 单词和学习步骤数据
     /// - Parameter result: 网络数据
     private func _processExercise(study id: Int) {
-        guard let exerciseWordModelList = self._resultModel?.wordList else {
+        guard let exerciseWordModelList = self._resultModel?.ruleList else {
             return
         }
         // 处理单词列表

@@ -8,10 +8,10 @@
 
 import UIKit
 
-class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
+class YXTaskCenterViewController: YXViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
     var fromYXSquirrelCoinViewController = false
-    private var taskCenterData: YXTaskCenterDataModel!
+    private var taskCenterData: YXTaskCenterDataModel?
     private var dailyDatas: [YXTaskCenterDailyDataModel] = []
     private var taskLists: [YXTaskListModel] = []
 
@@ -22,24 +22,18 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var weekendPunchLabel: UILabel!
     @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var taskTableViewHeight: NSLayoutConstraint!
-    
-    @IBAction func back(_ sender: UIBarButtonItem) {
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @IBAction func tapQuestionIcon(_ sender: UIBarButtonItem) {
-        YXAlertWebView.share.show(YXUserModel.default.coinExplainUrl ?? "")
-    }
+    @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
     
     @IBAction func punchIn(_ sender: Any) {
         let request = YXTaskCenterRequest.punchIn
-        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskCenterData = response.data
             self.reloadDailyData()
             
-            YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData.today ?? 1) - 1].integral ?? 0)
+            YXToastView().showCoinView(self.dailyDatas[(self.taskCenterData?.today ?? 1) - 1].integral ?? 0)
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -60,22 +54,25 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
 
     private func createSubviews() {
+        self.customNavigationBar?.title = "任务中心"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+        self.customNavigationBar?.rightButton.setImage(#imageLiteral(resourceName: "questionIcon"), for: .normal)
+        self.customNavigationBar?.rightButtonAction = {
+            guard let urlStr = YXUserModel.default.coinExplainUrl, let url = URL(string: urlStr) else {
+                return
+            }
+            let alertView = YXAlertWebView()
+            alertView.url = url
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
+        }
+        self.viewTopConstraint.constant = kNavHeight
         dailyDataCollectionView.register(UINib(nibName: "YXTaskCenterDateCell", bundle: nil), forCellWithReuseIdentifier: "YXTaskCenterDateCell")
         taskTableView.register(UINib(nibName: "YXTaskCenterCell", bundle: nil), forCellReuseIdentifier: "YXTaskCenterCell")
     }
 
     private func bindProperty() {
         NotificationCenter.default.addObserver(self, selector: #selector(completedTask(notification:)), name: YXNotification.kCompletedTask, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
-        self.navigationController?.navigationBar.barTintColor = UIColor.hex(0xFFA83E)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
-        self.navigationController?.navigationBar.tintColor = UIColor.white
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,7 +87,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     private func reloadDailyData() {
-        var dailyDatas = self.taskCenterData.dailyData ?? []
+        var dailyDatas = self.taskCenterData?.dailyData ?? []
         
         var punchCount = 0
         var didFindWitchDayIsToday = false
@@ -133,7 +130,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
                 dailyDatas[index].dailyStatus = .yesterday
             }
             
-            if let today = self.taskCenterData.today, index == today - 1 {
+            if let today = self.taskCenterData?.today, index == today - 1 {
                 didFindWitchDayIsToday = true
                 dailyDatas[index].dailyStatus = .today
                 
@@ -149,7 +146,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         
-        var exIntegral = self.taskCenterData.exIntegral ?? 0
+        var exIntegral = self.taskCenterData?.exIntegral ?? 0
         if dailyDatas[6].dailyStatus == .today, dailyDatas[6].didPunchIn == 1 {
             exIntegral = (punchCount - 1) * exIntegral
 
@@ -159,7 +156,7 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
         dailyDatas[6].integral = 10 + exIntegral
         self.dailyDatas = dailyDatas
         
-        let integral = self.taskCenterData.integral ?? 0
+        let integral = self.taskCenterData?.integral ?? 0
         if self.integralLabel.text == "--" {
             self.integralLabel.count(from: 0, to: Float(integral), duration: 1)
         } else {
@@ -183,43 +180,42 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
 
     private func completed(task id: Int, indexPath: IndexPath, didRepeat: Bool, integral: Int) {
         let request = YXTaskCenterRequest.getIntegral(taskId: id)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            self.requestTaskList()
-            if didRepeat {
-                self.taskLists[indexPath.row].list?[indexPath.row].state = 2
-                self.taskTableView.reloadData()
-            } else {
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
+            self.requestTaskList { [weak self] in
+                guard let self = self else { return }
                 YXRedDotManager.share.updateTaskCenterBadge()
-                self.taskLists[indexPath.section].list?.remove(at: indexPath.row)
-                self.taskTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-            }
-            if let currentIntegral = Int(self.integralLabel.text ?? "0") {
-                self.integralLabel.countFromCurrent(to: Float(currentIntegral + integral), duration: 1)
-                YXToastView().showCoinView(integral)
+                if let currentIntegral = Int(self.integralLabel.text ?? "0") {
+                    self.integralLabel.countFromCurrent(to: Float(currentIntegral + integral), duration: 1)
+                    YXToastView().showCoinView(integral)
+                }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     private func requestPunchData() {
         let punchDataRequest = YXTaskCenterRequest.punchData
-        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXTaskCenterDataModel>.self, request: punchDataRequest, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskCenterData = response.data
             self.reloadDailyData()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
-    private func requestTaskList() {
+    private func requestTaskList(finished block: (()->Void)? = nil) {
         let taskListRequest = YXTaskCenterRequest.taskList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXTaskListModel>.self, request: taskListRequest, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.taskLists = response.dataArray ?? []
             self.taskTableViewHeight.constant = CGFloat(self.taskLists.count * 172)
             self.taskTableView.reloadData()
+            block?()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -251,7 +247,9 @@ class YXTaskCenterViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as! YXTaskCenterDateCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "YXTaskCenterDateCell", for: indexPath) as? YXTaskCenterDateCell else {
+            return UICollectionViewCell()
+        }
         let dailyData = dailyDatas[indexPath.row]
 
         cell.weekLabel.text = dailyData.weekName

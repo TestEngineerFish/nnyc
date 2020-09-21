@@ -20,30 +20,28 @@ extension YXExerciseViewController {
             submitResult()
         }
     }
-    
         
     func processEmptyData() {
         service.cleanStudyRecord(hasNextGroup: false)
-
         if learnConfig.learnType == .aiReview {
             let nrView = YXNotReviewWordView()
             nrView.doneEvent = {
                 YRRouter.popViewController(true)
             }
-            nrView.show()
+            YXAlertQueueManager.default.addAlert(alertView: nrView)
         } else {
             YRRouter.popViewController(true)
         }
     }
     
-    
     //MARK: submit report
     /// 上报数据
     func submitResult() {
-        self.service.reportReport { (resultModel, dict) in
+        self.service.reportReport { (resultModel, dict, unique) in
             guard let model = resultModel else {
                 YXLog("上报关卡失败")
                 UIView.toast("上报关卡失败")
+                YXUtils.showHUD(nil, title: "学习结果提交失败，请稍后再试")
                 self.navigationController?.popViewController(animated: true)
                 return
             }
@@ -62,7 +60,7 @@ extension YXExerciseViewController {
                     let reviewWordCount = dict["reviewWordCount"] ?? 0
                     self.processBaseExerciseResult(newCount: newWordCount, reviewCount: reviewWordCount)
                 } else {
-                    self.processReviewResult()
+                    self.processReviewResult(unique: unique)
                 }
             }
         }
@@ -71,19 +69,19 @@ extension YXExerciseViewController {
     //MARK: process
     // 处理基本练习结果页
     func processBaseExerciseResult(newCount: Int, reviewCount: Int) {
-        let vc = YXLearningResultViewController()
-        vc.learnConfig       = service.learnConfig
+//        let vc = YXLearningResultViewController()
+        let vc = YXNewLearningResultViewController()
         vc.newLearnAmount    = newCount
         vc.reviewLearnAmount = reviewCount
-//        self.navigationController?.popViewController(animated: false)
+        vc.learnConfig       = service.learnConfig
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
     
     /// 处理复习结果页
-    func processReviewResult() {
+    func processReviewResult(unique: String) {
         let vc = YXExerciseResultViewController()
         vc.config = learnConfig
-//        self.navigationController?.popViewController(animated: false)
+        vc.unique = unique
         YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
     }
 }

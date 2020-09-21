@@ -18,11 +18,11 @@ enum YXWordListType: Int {
 
 }
 
-class YXWordListViewController: UIViewController, BPSegmentDataSource {
+class YXWordListViewController: YXViewController, BPSegmentDataSource {
 
     var wordListType: YXWordListType = .learned
 
-    private var wordListControllerView: BPSegmentControllerView!
+    private var wordListControllerView: BPSegmentControllerView?
     private var wordListHeaderViews: [UIView] = {
         var views: [UIView] = []
         
@@ -73,10 +73,6 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     private var wordListViews: [YXWordListView?] = [nil, nil, nil, nil]
     
-    @IBAction func back(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     override func handleData(withQuery query: [AnyHashable : Any]!) {
         self.wordListType = (query["type"] as? YXWordListType) ?? .learned
     }
@@ -87,30 +83,34 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .orange1
+        self.customNavigationBar?.title = "单词列表"
+        self.customNavigationBar?.titleColor = .white
+        self.customNavigationBar?.leftButton.setTitleColor(.white, for: .normal)
+
         var config = BPSegmentConfig(headerHeight: 44, headerItemSize: CGSize(width: screenWidth / 4, height: 44), headerItemSpacing: 0, contentItemSize: CGSize(width: screenWidth, height: screenHeight - kNavHeight - 44), contentItemSpacing: 0, firstIndexPath: IndexPath(item: wordListType.rawValue, section: 0))
         config.headerBackgroundColor  = UIColor.orange1
         config.contentBackgroundColor = UIColor.orange1
-        wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - kNavHeight))
-        wordListControllerView.delegate = self
-        wordListControllerView.reloadData()
+        wordListControllerView = BPSegmentControllerView(config, frame: CGRect(x: 0, y: kNavHeight, width: screenWidth, height: screenHeight - kNavHeight))
+        wordListControllerView?.delegate = self
+        wordListControllerView?.reloadData()
         
-        self.view.addSubview(wordListControllerView)
+        self.view.addSubview(wordListControllerView!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barStyle = .black
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
         
         self.navigationController?.navigationBar.barTintColor = UIColor.orange1
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]
         self.navigationController?.navigationBar.tintColor = UIColor.white
         
         if wordListType == .collected {
-            wordListControllerView.selectItem(with: IndexPath(item: 2, section: 0))
+            wordListControllerView?.selectItem(with: IndexPath(item: 2, section: 0))
             
         } else if wordListType == .wrongWords {
-            wordListControllerView.selectItem(with: IndexPath(item: 3, section: 0))
+            wordListControllerView?.selectItem(with: IndexPath(item: 3, section: 0))
             YXLog("刷新错词本")
             self.requestWrongWordsList()
         }
@@ -127,7 +127,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditWordList" {
-            let editWordListViewController = segue.destination as! YXEditWordListViewController
+            guard let editWordListViewController = segue.destination as? YXEditWordListViewController else {
+                return
+            }
             var words: [YXWordModel] = []
 
             switch wordListType {
@@ -162,10 +164,11 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
     // MARK: ---- Request ----
     /// 获取错词本单词列表
     private func requestWrongWordsList() {
+        YXUtils.showLoadingInfo("加载中…", to: self.view)
         let request = YXWordListRequest.wrongWordList
-        YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { (response) in
-            guard let wrongWordList = response.data else { return }
-
+        YYNetworkService.default.request(YYStructResponse<YXWrongWordListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let wrongWordList = response.data else { return }
+            YXUtils.hideHUD(self.view)
             var wrongWordSectionData: [[String: [YXWordModel]]]?
             if let familiarList = wrongWordList.familiarList, familiarList.count > 0 {
                 if wrongWordSectionData == nil {
@@ -189,8 +192,9 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
             }
 
             self.wordListViews[YXWordListType.wrongWords.rawValue]?.wrongWordSectionData = wrongWordSectionData
-        }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+        }) { [weak self] error in
+            YXUtils.hideHUD(self?.view)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -231,25 +235,29 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
                 wordListView.requestWordsList(page: 1)
             case 3:
                 wordListView.shouldShowEditButton = false
-                wordListView.shouldShowBottomView = true
+                wordListView.shouldShowBottomView = false
                 wordListView.type                 = .wrongWords
                 self.wordListViews[indexPath.row] = wordListView
-                self.wordListViews[indexPath.row]?.startReviewClosure = {
-                    let taskModel = YXWordBookResourceModel(type: .all) {
-                        YXWordBookResourceManager.shared.contrastBookData()
-                    }
-                    YXWordBookResourceManager.shared.addTask(model: taskModel)
+                self.requestWrongWordsList()
+                self.wordListViews[indexPath.row]?.startReviewClosure = { [weak self] in
+                    guard let self = self else { return }
+//                    let taskModel = YXWordBookResourceModel(type: .all) {
+//                        YXWordBookResourceManager.shared.contrastBookData()
+//                    }
+//                    YXWordBookResourceManager.shared.addTask(model: taskModel)
                     let exerciseViewController = YXExerciseViewController()
                     exerciseViewController.learnConfig = YXWrongLearnConfig()
                     self.navigationController?.pushViewController(exerciseViewController, animated: true)
                 }
-//                self.requestWrongWordsList()
             default:
                 break
             }
         }
-        
-        return wordListViews[indexPath.row]!
+        if wordListViews.count > indexPath.row {
+            return wordListViews[indexPath.row] ?? UIView()
+        } else {
+            return UIView()
+        }
     }
     
     func segment(didSelectRowAt indexPath: IndexPath, previousSelectRowAt preIndexPath: IndexPath) {
@@ -269,16 +277,16 @@ class YXWordListViewController: UIViewController, BPSegmentDataSource {
         }
         
         for index in 0..<wordListHeaderViews.count {
-            let label = wordListHeaderViews[index].viewWithTag(1) as! UILabel
-            let view = wordListHeaderViews[index].viewWithTag(2) as! YXDesignableView
+            let label = wordListHeaderViews[index].viewWithTag(1) as? UILabel
+            let view  = wordListHeaderViews[index].viewWithTag(2) as? YXDesignableView
 
             if index == indexPath.row {
-                label.textColor = .white
-                view.isHidden = false
+                label?.textColor = .white
+                view?.isHidden   = false
                 
             } else {
-                label.textColor = UIColor.hex(0xFFD99E)
-                view.isHidden = true
+                label?.textColor = UIColor.hex(0xFFD99E)
+                view?.isHidden   = true
             }
         }
     }

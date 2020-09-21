@@ -20,8 +20,15 @@ enum YXShareType: Int {
     case url   = 1
 }
 
+enum YXShareDefaultViewType: Int {
+    case normal
+    case white
+}
+
 class YXShareDefaultView: UIView {
-    
+
+    var type: YXShareDefaultViewType
+
     var qqImageView: UIImageView = {
         let imageView   = UIImageView()
         imageView.image = UIImage(named: "gameShareQQ")
@@ -86,8 +93,9 @@ class YXShareDefaultView: UIView {
     var shareDescription = ""
     var finishedBlock: FinishedBlock? // 分享后立刻执行
     var completeBlock: ((YXShareChannel, Bool) -> Void)? // 分享回调后才会执行
-    
-    override init(frame: CGRect) {
+
+    init(type: YXShareDefaultViewType = .normal, frame: CGRect) {
+        self.type = type
         super.init(frame: frame)
         self.bindProperty()
         self.createSubviews()
@@ -105,6 +113,22 @@ class YXShareDefaultView: UIView {
         self.wechatImageView.addGestureRecognizer(tapWechat)
         self.timeLineImageView.addGestureRecognizer(tapTimeLine)
         self.coinImageView.isHidden = true
+        switch self.type {
+        case .white:
+            self.qqImageView.image       = UIImage(named: "shareQQ_white")
+            self.wechatImageView.image   = UIImage(named: "shareWechat_white")
+            self.timeLineImageView.image = UIImage(named: "shareTimeLine_white")
+            self.qqLabel.textColor       = .white
+            self.wechatLabel.textColor   = .white
+            self.timeLineLabel.textColor = .white
+        default:
+            self.qqImageView.image       = UIImage(named: "gameShareQQ")
+            self.wechatImageView.image   = UIImage(named: "gameShareWechat")
+            self.timeLineImageView.image = UIImage(named: "gameShareTimeLine")
+            self.qqLabel.textColor       = .black2
+            self.wechatLabel.textColor   = .black2
+            self.timeLineLabel.textColor = .black2
+        }
     }
     
     private func createSubviews() {
@@ -143,10 +167,18 @@ class YXShareDefaultView: UIView {
             make.left.equalTo(wechatImageView.snp.right).offset(AdaptIconSize(62))
             make.size.equalTo(CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38)))
         }
-        coinImageView.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(25)))
-            make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
-            make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+        if type == .white {
+            coinImageView.snp.makeConstraints { (make) in
+                make.size.equalTo(CGSize(width: AdaptIconSize(20), height: AdaptIconSize(20)))
+                make.right.equalTo(timeLineImageView).offset(AdaptSize(10))
+                make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+            }
+        } else {
+            coinImageView.snp.makeConstraints { (make) in
+                make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(25)))
+                make.right.equalTo(timeLineImageView).offset(AdaptSize(15))
+                make.top.equalTo(timeLineImageView).offset(AdaptSize(-6))
+            }
         }
         timeLineLabel.sizeToFit()
         timeLineLabel.snp.makeConstraints { (make) in
@@ -158,6 +190,10 @@ class YXShareDefaultView: UIView {
     
     // MARK: ==== Share Event ====
     @objc private func shareToQQ() {
+        if QQApiManager.shared()?.qqIsInstalled() != .some(true) {
+            YXUtils.showHUD(nil, title: "你未安装QQ，无法进行分享，请下载安装最新版QQ")
+            return
+        }
         switch self.shareType {
         case .image:
             guard let image = self.shareImage else {
@@ -174,7 +210,7 @@ class YXShareDefaultView: UIView {
     
     @objc private func shareToWechat() {
         if WXApiManager.shared()?.wxIsInstalled() != .some(true) {
-            YXUtils.showHUD(kWindow, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
+            YXUtils.showHUD(nil, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
             return
         }
         switch self.shareType {
@@ -193,7 +229,7 @@ class YXShareDefaultView: UIView {
     
     @objc private func shareToTimeLine() {
         if WXApiManager.shared()?.wxIsInstalled() != .some(true) {
-            YXUtils.showHUD(kWindow, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
+            YXUtils.showHUD(nil, title: "你未安装微信，无法进行分享，请下载安装最新版微信")
             return
         }
         switch self.shareType {
@@ -216,25 +252,29 @@ class YXShareDefaultView: UIView {
         switch channel {
         case .qq:
             QQApiManager.shared()?.share(image, toPaltform: .QQ, title: "", describution: "", shareBusiness: "")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qq, result)
             }
             finishedBlock?(.qq)
         case .qzone:
             QQApiManager.shared()?.share(image, toPaltform: .qzone, title: "", describution: "", shareBusiness: "")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qzone, result)
             }
             finishedBlock?(.qzone)
         case .wechat:
             WXApiManager.shared()?.share(image, toPaltform: .wxSession, title: "", describution: "", shareBusiness: "")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.wechat, result)
             }
             finishedBlock?(.wechat)
         case .timeLine:
             WXApiManager.shared()?.share(image, toPaltform: .wxTimeLine, title: "", describution: "", shareBusiness: "")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.timeLine, result)
             }
             finishedBlock?(.timeLine)
@@ -245,7 +285,8 @@ class YXShareDefaultView: UIView {
         switch channel {
         case .qq:
             QQApiManager.shared()?.shareUrl(urlStr, previewImage: previewImage, title: title, describution: description, shareBusiness: "shareBusiness")
-            QQApiManager.shared()?.finishBlock = { (obj1: Any, obj2: Any, result: Bool) in
+            QQApiManager.shared()?.finishBlock = { [weak self] (obj1: Any, obj2: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.qq, result)
             }
             finishedBlock?(.qq)
@@ -253,13 +294,15 @@ class YXShareDefaultView: UIView {
             break
         case .wechat:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxSession, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.wechat, result)
             }
             finishedBlock?(.wechat)
         case .timeLine:
             WXApiManager.shared()?.shareUrl(urlStr, toPaltform: .wxTimeLine, previewImage: previewImage, title: title, description: description, shareBusiness: "shareBusiness")
-            WXApiManager.shared()?.finishBlock = { (obj: Any, result: Bool) in
+            WXApiManager.shared()?.finishBlock = { [weak self] (obj: Any, result: Bool) in
+                guard let self = self else { return }
                 self.completeBlock?(.timeLine, result)
             }
             finishedBlock?(.timeLine)

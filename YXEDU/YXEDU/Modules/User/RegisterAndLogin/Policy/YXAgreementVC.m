@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:NO animated:false];
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeTop;
     
@@ -44,7 +45,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self reloadNoSignalView];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)reloadNoSignalView {

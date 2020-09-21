@@ -105,12 +105,7 @@ class YXSearchEmptyDataView: YXView {
             make.height.equalTo(AS(17))
         }
     }
-    
-    
 }
-
-
-
 
 class YXHistorySearchRemoveAlertView: YXTopWindowView {
     

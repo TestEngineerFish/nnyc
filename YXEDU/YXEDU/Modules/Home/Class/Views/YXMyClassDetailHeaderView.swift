@@ -84,11 +84,9 @@ class YXMyClassDetailHeaderView: YXView {
         self.addSubview(copyButton)
         self.addSubview(lineView)
         self.addSubview(subtitleLabel)
-        let nameLabelHeight = nameLabel.text?.textHeight(font: nameLabel.font, width: screenWidth - AdaptSize(40)) ?? 0
         self.nameLabel.snp.remakeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(20))
             make.right.equalToSuperview().offset(AdaptSize(-20))
-            make.height.equalTo(nameLabelHeight)
             make.top.equalToSuperview().offset(AdaptSize(17))
         }
         self.numberTitleLabel.sizeToFit()
@@ -146,8 +144,8 @@ class YXMyClassDetailHeaderView: YXView {
         let subtitleLabelAttriText = NSMutableAttributedString(string: "班级成员 （\(_model.studentCount)人）", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black3, NSAttributedString.Key.font : UIFont.regularFont(ofSize: AdaptFontSize(14))])
         subtitleLabelAttriText.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.mediumFont(ofSize: AdaptFontSize(15))], range: NSRange(location: 0, length: 4))
         self.subtitleLabel.attributedText = subtitleLabelAttriText
-        self.nameLabel.text     = _model.className
-        self.campusLabel.text   = _model.schoolName
+        self.nameLabel.text   = _model.className
+        self.campusLabel.text = _model.schoolName
         self.createSubviews()
     }
 

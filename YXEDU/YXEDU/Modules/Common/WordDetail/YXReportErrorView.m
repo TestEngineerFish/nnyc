@@ -102,7 +102,6 @@ static const NSInteger MAX_NAME_LENGTH = 50;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-//        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textViewEditChanged:) name:UITextViewTextDidChangeNotification object:self.feedBackTextView];
         self.markTitles = @[@"单词发音",@"图片问题",@"单词释义",@"答案有误",@"例句",@"单词拼写"];
         UIView *maskView = [[UIView alloc] init];
         [self addSubview:maskView];
@@ -138,7 +137,6 @@ static const NSInteger MAX_NAME_LENGTH = 50;
             UIButton *btn = [[UIButton alloc] init];
             btn.tag = i + 1;
             btn.layer.cornerRadius = 15;
-            btn.layer.masksToBounds = YES;
             btn.layer.borderColor = UIColorOfHex(0xC0C0C0).CGColor;
             btn.layer.borderWidth = 1;
             btn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -156,13 +154,12 @@ static const NSInteger MAX_NAME_LENGTH = 50;
         }
         
         self.feedBackTextView = [[UITextView alloc] initWithFrame:CGRectMake(contentlrMargin, 160, contentSize.width - 2 * contentlrMargin, 90)];
-        self.feedBackTextView.backgroundColor = UIColorOfHex(0xF2F2F2);//[UIColor whiteColor ];
-        //    self.feedBackTextView.delegate = self;
+        self.feedBackTextView.backgroundColor = UIColorOfHex(0xF2F2F2);
         
         self.feedBackTextView.font = [UIFont systemFontOfSize:14];
         self.feedBackTextView.layer.cornerRadius = 8;
         self.feedBackTextView.delegate = self;
-        self.feedBackTextView.layer.masksToBounds = YES;
+        self.feedBackTextView.layer.masksToBounds = NO;
         self.feedBackTextView.layer.borderWidth = 1;
         self.feedBackTextView.layer.borderColor = UIColorOfHex(0xF2F2F2).CGColor;
         self.feedBackTextView.contentInset = UIEdgeInsetsMake(0, 8, 0, 8);

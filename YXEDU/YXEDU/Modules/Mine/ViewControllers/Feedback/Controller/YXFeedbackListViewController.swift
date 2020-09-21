@@ -26,7 +26,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
         self.tableView.delegate   = self
         self.tableView.dataSource = self
         self.customNavigationBar?.title = "我的消息"
-        self.tableView.separatorInset   = UIEdgeInsets(top: 0, left: 1000, bottom: 0, right: 0)
+        self.tableView.separatorInset   = UIEdgeInsets(top: 0, left: screenWidth, bottom: 0, right: 0)
         self.tableView.register(YXFeedbackCell.classForCoder(), forCellReuseIdentifier: "kYXFeedbackCell")
     }
     
@@ -54,7 +54,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
             self.tableView.reloadData()
             self.reportReply()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -76,7 +76,7 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
                 YXRedDotManager.share.updateFeedbackReplyBadge()
             }
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -90,7 +90,9 @@ class YXFeedbackListViewController: YXViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if self.feedbackList.isEmpty {
-            let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as! YXWordListEmptyCell
+            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: "YXWordListEmptyCell") as? YXWordListEmptyCell else {
+                return UITableViewCell()
+            }
             emptyCell.descLabel.text = "您还没有收到回复消息"
             return emptyCell
         } else {

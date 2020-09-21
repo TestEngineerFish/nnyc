@@ -87,10 +87,14 @@ class YXChallengeRankCell: UITableViewCell {
         self.nameLabel.text           = userModel.name
         self.descriptionLabel.text    = String(format: "答题：%d  耗时：%0.2f秒", userModel.questionCount, userModel.time/1000)
         self.bonusLabel.text          = "+\(userModel.bonus)"
+        let defaultImage = UIImage(named: "challengeAvatar")
         if userModel.avatarStr.isEmpty {
-            self.avatarImageView.image = UIImage(named: "challengeAvatar")
+            self.avatarImageView.image = defaultImage
         } else {
-            self.avatarImageView.showImage(with: userModel.avatarStr)
+            YXKVOImageView().showImage(with: userModel.avatarStr, placeholder: defaultImage, progress: nil) { [weak self] (image: UIImage?, error: NSError?, url: NSURL?) in
+                guard let self = self else { return }
+                self.avatarImageView.image = image?.corner(radius: AdaptIconSize(19), with: self.avatarImageView.size)
+            }
         }
         if userModel.ranking <= 3 {
             self.levelLabel.isHidden     = true
@@ -114,6 +118,7 @@ class YXChallengeRankCell: UITableViewCell {
         self.bonusLabel.snp.updateConstraints { (make) in
             make.width.equalTo(self.bonusLabel.width)
         }
+
     }
 
     private func createSubviews() {
@@ -144,14 +149,13 @@ class YXChallengeRankCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptIconSize(25), height: AdaptIconSize(22)))
         }
+        avatarImageView.size = CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38))
         avatarImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.width.equalTo(AdaptIconSize(38))
             make.height.equalTo(AdaptIconSize(38))
             make.left.equalToSuperview().offset(AdaptIconSize(47))
         }
-        avatarImageView.layer.cornerRadius  = AdaptIconSize(19)
-        avatarImageView.layer.masksToBounds = true
 
         nameLabel.sizeToFit()
         nameLabel.snp.makeConstraints { (make) in

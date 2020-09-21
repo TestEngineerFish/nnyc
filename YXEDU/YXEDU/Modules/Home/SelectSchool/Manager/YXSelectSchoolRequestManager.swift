@@ -10,7 +10,7 @@ import Foundation
 
 public enum YXSelectSchoolRequestManager: YYBaseRequest {
     case searchSchool(name: String, areaId: Int)
-    case submit(schoolId: Int, areaId: Int)
+    case submit(schoolId: Int, areaId: Int, schoolName: String)
 }
 
 extension YXSelectSchoolRequestManager {
@@ -39,9 +39,9 @@ extension YXSelectSchoolRequestManager {
     var parameters: [String : Any?]? {
         switch self {
         case .searchSchool(let name, let areaId):
-            return ["school_name": name, "area_id": areaId]
-        case .submit(let schoolId, let areaId):
-            return ["school_student_id": schoolId, "area_id": areaId]
+            return ["school_name": name, "yx_city_id": areaId]
+        case .submit(let schoolId, let areaId, let schoolName):
+            return ["yx_school_id": schoolId, "yx_city_id": areaId, "yx_school_name": schoolName]
         }
     }
 }

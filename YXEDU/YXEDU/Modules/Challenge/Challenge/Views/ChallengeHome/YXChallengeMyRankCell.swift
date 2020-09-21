@@ -45,7 +45,6 @@ class YXChallengeMyRankCell: UIView {
         imageView.layer.cornerRadius  = AdaptIconSize(19)
         imageView.layer.borderColor   = UIColor.white.cgColor
         imageView.layer.borderWidth   = AdaptSize(2)
-        imageView.layer.masksToBounds = true
         imageView.image               = UIImage(named: "challengeAvatar")
         return imageView
     }()
@@ -166,7 +165,10 @@ class YXChallengeMyRankCell: UIView {
                 make.width.equalTo(AdaptSize(levelHighlightLabel.width + AdaptSize(13)))
             }
         }
-        self.avatarImageView.showImage(with: userModel.avatarStr)
+        YXKVOImageView().showImage(with: userModel.avatarStr, placeholder: nil, progress: nil) { [weak self] (image: UIImage?, error: NSError?, url: NSURL?) in
+            guard let self = self else { return }
+            self.avatarImageView.image = image?.corner(radius: AdaptIconSize(25), with: self.avatarImageView.size)
+        }
         
         self.nameLabel.sizeToFit()
         self.nameLabel.snp.updateConstraints { (make) in
@@ -213,7 +215,7 @@ class YXChallengeMyRankCell: UIView {
             make.left.equalToSuperview().offset(AdaptSize(5))
             make.right.equalToSuperview().offset(AdaptSize(-8))
         }
-
+        avatarImageView.size = CGSize(width: AdaptIconSize(38), height: AdaptIconSize(38))
         avatarImageView.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.width.equalTo(AdaptIconSize(38))

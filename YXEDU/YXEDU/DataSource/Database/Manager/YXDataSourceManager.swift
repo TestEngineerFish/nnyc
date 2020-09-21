@@ -70,7 +70,8 @@ extension YYDataSourceManager {
     
     private func wordRunner() throws -> FMDatabase {
         let filePath: String = YYDataSourceManager.dbFilePath(fileName: YYDataSourceType.word.rawValue)
-        return try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateWordTables)
+        let db = try createRunner(type: .word, filePath: filePath, sqls: YYSQLManager.CreateTables)
+        return db
     }
     
     /**
@@ -83,24 +84,37 @@ extension YYDataSourceManager {
         }
         let runner = FMDatabase(path: filePath)
         guard runner.open() else {
-            DDLogError(String(format:"error open database failed %@", filePath))
+            YXLog(String(format:"error open database failed %@", filePath))
             throw YYSQLError.CreateDatabaseError
         }
         
         for sql in sqls {
             let execute = runner.executeStatements(sql)
             if !execute {
-                DDLogError(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
+                YXLog(String(format: "error: execute sql %@ failed error %@", sql, runner.lastErrorMessage()))
             }
         }
-        
+        self.addField(db: runner)
         // 添加到缓存中，不用重复创建
         runners[type] = runner
         
         return runner
     }
-    
 
+    /// 增加字段，兼容老版本
+    /// - Parameter db: 数据库对象
+    private func addField(db: FMDatabase) {
+        // V: 2.7.9 grade
+        if !db.columnExists("grade", inTableWithName: "all_exercise_v1") {
+            let addGradeSQL = YYSQLManager.ExerciseSQL.addGradeField.rawValue
+            db.executeUpdate(addGradeSQL, withArgumentsIn: [])
+            let addUniqueSQL = YYSQLManager.StudyRecordSQL.addUniqueField.rawValue
+            db.executeUpdate(addUniqueSQL, withArgumentsIn: [])
+            // 清除所有学习记录
+            YXExerciseServiceImpl().cleanAllStudyRecord()
+            YXLog("版本升级到2.7.9及以上，清除之前缓存")
+        }
+    }
 
 }
 

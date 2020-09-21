@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y1G-4r-ZDj">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--添加词书-->
+        <!--Add Book View Controller-->
         <scene sceneID="Dii-4T-NLR">
             <objects>
                 <viewController storyboardIdentifier="YXAddBookViewController" hidesBottomBarWhenPushed="YES" id="KRx-zx-laN" customClass="YXAddBookViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -87,17 +87,12 @@
                         <viewLayoutGuide key="safeArea" id="GUA-GI-m9Q"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="添加词书" id="sSb-fv-dhd">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="3vm-bB-RUn">
-                            <connections>
-                                <action selector="back:" destination="KRx-zx-laN" id="sQ1-Nf-Occ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="filterButton" destination="xuM-da-ekt" id="5Qk-Dw-388"/>
                         <outlet property="seleteGradeViewStateImageView" destination="7a7-r9-LZL" id="G6R-2E-93L"/>
                         <outlet property="tableView" destination="uVU-qD-ytE" id="IoR-Oj-sRw"/>
+                        <outlet property="tableViewTopConstraint" destination="VVO-tc-nJS" id="BPL-YR-qng"/>
+                        <outlet property="viewTopConstraint" destination="tW8-rW-shT" id="W2j-Z2-oOs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoQ-9B-QBW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -134,7 +129,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo0-y4-QGD">
-                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1203.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1053.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAx-HE-Hhk">
                                                 <rect key="frame" x="726" y="10" width="22" height="22"/>
@@ -389,7 +384,7 @@
                                                 </variation>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="q7v-mq-Dhk">
-                                                <rect key="frame" x="20" y="1056.5" width="728" height="132"/>
+                                                <rect key="frame" x="20" y="906.5" width="728" height="132"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="132" id="8rc-ny-2CG"/>
@@ -414,10 +409,10 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l3E-rO-YKD">
-                                                <rect key="frame" x="20" y="906.5" width="728" height="125"/>
+                                                <rect key="frame" x="20" y="906.5" width="728" height="0.0"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="125" id="swq-4R-zN6"/>
+                                                    <constraint firstAttribute="height" id="swq-4R-zN6"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -432,7 +427,7 @@
                                             <constraint firstAttribute="trailing" secondItem="dAx-HE-Hhk" secondAttribute="trailing" constant="20" id="Wgk-er-NlO"/>
                                             <constraint firstItem="l3E-rO-YKD" firstAttribute="trailing" secondItem="Udq-Hf-n6w" secondAttribute="trailing" id="Y6R-9a-FxZ"/>
                                             <constraint firstItem="9T2-Xj-D06" firstAttribute="leading" secondItem="Fo0-y4-QGD" secondAttribute="leading" constant="20" id="ZCr-1v-39Z"/>
-                                            <constraint firstItem="q7v-mq-Dhk" firstAttribute="top" secondItem="l3E-rO-YKD" secondAttribute="bottom" constant="25" id="aNS-O0-g0S"/>
+                                            <constraint firstItem="q7v-mq-Dhk" firstAttribute="top" secondItem="l3E-rO-YKD" secondAttribute="bottom" id="aNS-O0-g0S"/>
                                             <constraint firstAttribute="bottom" secondItem="q7v-mq-Dhk" secondAttribute="bottom" constant="15" id="k8t-Yb-uPT"/>
                                             <constraint firstAttribute="trailing" secondItem="Udq-Hf-n6w" secondAttribute="trailing" constant="20" id="tWS-Ld-lQH"/>
                                             <constraint firstItem="9T2-Xj-D06" firstAttribute="top" secondItem="Fo0-y4-QGD" secondAttribute="top" constant="10" id="uO4-Zi-GuL"/>
@@ -487,7 +482,6 @@
                         <segue destination="LEE-do-1y0" kind="show" identifier="TaskCenter" id="7f4-4r-z67"/>
                         <segue destination="tQ4-Ah-3Gu" kind="show" identifier="Calendar" id="fSi-bJ-cQk"/>
                         <segue destination="N4y-4U-KXc" kind="show" identifier="YXStudyReportViewController" id="f6j-pj-jMh"/>
-                        <segue destination="xWi-kI-jZm" kind="show" identifier="YXWordTestViewController" id="Ah7-hX-NCL"/>
                         <segue destination="I2c-Ah-MPk" kind="show" identifier="WordList" id="29y-bx-HQj"/>
                         <segue destination="JnP-zA-VAP" kind="show" identifier="AddBookGuide" animates="NO" id="u2y-xU-85A"/>
                         <segue destination="KRx-zx-laN" kind="show" identifier="AddBookFromHome" id="ISO-bD-fBo"/>
@@ -497,7 +491,7 @@
             </objects>
             <point key="canvasLocation" x="-2133.59375" y="139.453125"/>
         </scene>
-        <!--单词列表-->
+        <!--Word List View Controller-->
         <scene sceneID="WnR-X0-yQ5">
             <objects>
                 <viewController storyboardIdentifier="YXWordListViewController" hidesBottomBarWhenPushed="YES" id="I2c-Ah-MPk" customClass="YXWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -507,13 +501,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="otH-NK-pmI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="单词列表" id="snY-ih-MCg">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="SrR-bp-N0i">
-                            <connections>
-                                <action selector="back:" destination="I2c-Ah-MPk" id="nHX-tK-uBD"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <segue destination="qql-3G-E8i" kind="show" identifier="EditWordList" id="VmI-1Q-DHB"/>
                         <segue destination="DDF-Ya-OXu" kind="show" identifier="WordDetail" id="dp4-Yn-e9M"/>
@@ -523,7 +510,7 @@
             </objects>
             <point key="canvasLocation" x="-1307" y="906"/>
         </scene>
-        <!-- - -->
+        <!--Edit Word List View Controller-->
         <scene sceneID="Gzi-3n-2en">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="qql-3G-E8i" customClass="YXEditWordListViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -631,19 +618,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dUi-4q-OPp"/>
                     </view>
-                    <navigationItem key="navigationItem" title="--" id="uWl-Hc-CiU">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="JGQ-FV-IL7">
-                            <connections>
-                                <action selector="back:" destination="qql-3G-E8i" id="eb4-Mj-djL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="bottomView" destination="Xem-R2-0tJ" id="tGb-hq-Etp"/>
                         <outlet property="bottonViewHeight" destination="dzw-AK-Xc4" id="3c1-E3-tlq"/>
                         <outlet property="headerLabel" destination="bWe-xp-pKr" id="wCP-mH-X21"/>
                         <outlet property="redButton" destination="FvO-ki-r1j" id="acO-db-wbf"/>
                         <outlet property="tableView" destination="0lM-4x-gHK" id="3Da-7N-jXK"/>
+                        <outlet property="viewTopConstraint" destination="VhR-3l-1Pa" id="wFi-nF-2HM"/>
                         <outlet property="wordCountLabel" destination="dj4-OR-aCX" id="2Vh-VN-vTE"/>
                     </connections>
                 </viewController>
@@ -662,23 +643,7 @@
             </objects>
             <point key="canvasLocation" x="345" y="905"/>
         </scene>
-        <!--Word Test View Controller-->
-        <scene sceneID="mtK-Au-Hw8">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="xWi-kI-jZm" customClass="YXWordTestViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WRG-hW-siD">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="mfh-Zp-1Sj"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="8I8-72-fCe"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="79f-Yn-87C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1181" y="1643"/>
-        </scene>
-        <!--任务中心-->
+        <!--Task Center View Controller-->
         <scene sceneID="6pL-bl-kzi">
             <objects>
                 <viewController storyboardIdentifier="YXTaskCenterViewController" hidesBottomBarWhenPushed="YES" id="LEE-do-1y0" customClass="YXTaskCenterViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -893,18 +858,6 @@
                         <viewLayoutGuide key="safeArea" id="Fjr-c0-p0B"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="任务中心" id="RCA-7z-YQm">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="JQ1-OS-mHD">
-                            <connections>
-                                <action selector="back:" destination="LEE-do-1y0" id="e2R-W6-1jb"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="questionIcon" id="v6d-yp-0Mv">
-                            <connections>
-                                <action selector="tapQuestionIcon:" destination="LEE-do-1y0" id="rhr-ms-b8d"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dailyDataCollectionView" destination="ehO-sS-3Q7" id="rNh-AK-sV0"/>
@@ -913,6 +866,7 @@
                         <outlet property="taskTableView" destination="QCw-nq-3Yn" id="iuV-Dh-nft"/>
                         <outlet property="taskTableViewHeight" destination="rhs-4d-YZT" id="Zff-wG-PMQ"/>
                         <outlet property="totalPunchLabel" destination="Qjr-mO-jkS" id="ohx-VW-C33"/>
+                        <outlet property="viewTopConstraint" destination="hf7-Ru-q3G" id="g4y-gP-eDi"/>
                         <outlet property="weekendPunchLabel" destination="WV7-wa-UtC" id="JC6-KN-d0a"/>
                     </connections>
                 </viewController>
@@ -936,7 +890,7 @@
             </objects>
             <point key="canvasLocation" x="-481" y="1643"/>
         </scene>
-        <!--学习报告-->
+        <!--Study Report View Controller-->
         <scene sceneID="xuf-Ul-yqQ">
             <objects>
                 <viewController storyboardIdentifier="YXStudyReportViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N4y-4U-KXc" customClass="YXStudyReportViewController" customModule="YXEDU" customModuleProvider="target" sceneMemberID="viewController">
@@ -1492,18 +1446,10 @@
                             <constraint firstItem="QgR-Hf-YNx" firstAttribute="leading" secondItem="DkU-qf-7AE" secondAttribute="leading" id="B1F-eX-CFe"/>
                             <constraint firstItem="DkU-qf-7AE" firstAttribute="trailing" secondItem="iob-Xj-Pe9" secondAttribute="trailing" id="C1A-g1-4lH"/>
                             <constraint firstItem="DkU-qf-7AE" firstAttribute="trailing" secondItem="QgR-Hf-YNx" secondAttribute="trailing" id="eDM-yL-NpT"/>
-                            <constraint firstItem="iob-Xj-Pe9" firstAttribute="top" secondItem="DkU-qf-7AE" secondAttribute="top" id="iB2-km-fWb"/>
+                            <constraint firstItem="iob-Xj-Pe9" firstAttribute="top" secondItem="QgR-Hf-YNx" secondAttribute="top" id="iB2-km-fWb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DkU-qf-7AE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="学习报告" id="gB2-Rd-ERc">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="EOR-dX-9QP">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="back:" destination="N4y-4U-KXc" id="iue-pg-Gad"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="9cl-Ya-2Aj" id="fiH-wC-lqm"/>
                         <outlet property="betterWordsCountButton" destination="jeA-kR-uN3" id="oFT-kJ-ObW"/>
@@ -1528,6 +1474,7 @@
                         <outlet property="studyWordsCountPercentLabel" destination="jsy-wE-cmd" id="qJL-JK-sib"/>
                         <outlet property="switchDateButton" destination="llo-x9-Hch" id="ZSe-kx-bCk"/>
                         <outlet property="switchDateButtonImage" destination="pvx-kG-kZs" id="eI0-My-Qda"/>
+                        <outlet property="viewTopConstraint" destination="9uH-Ke-KXe" id="xyL-h2-0Qi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A50-CF-bF8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1896,6 +1843,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bookCollectionView" destination="uLc-Pb-8Fk" id="DMH-Q3-qVK"/>
+                        <outlet property="bookListTopConstraint" destination="xda-C5-4P3" id="KiF-El-F6a"/>
                         <outlet property="bookNameLabel" destination="HDr-t4-dya" id="xRE-b5-ZwE"/>
                         <outlet property="countOfDaysForStudyLabel" destination="cGX-xW-xgL" id="XHB-mS-GXd"/>
                         <outlet property="countOfWordsForStudyLabel" destination="LBE-z2-CqE" id="pBU-dp-bmA"/>
@@ -1928,7 +1876,6 @@
         <image name="homeProgressBarTrack" width="259" height="8"/>
         <image name="homeSearch" width="22" height="22"/>
         <image name="linkBar" width="16" height="41"/>
-        <image name="questionIcon" width="22" height="22"/>
         <image name="reportBackground" width="376" height="422"/>
         <image name="tabLearn" width="27" height="27"/>
         <image name="tabLearnSelected" width="27" height="27"/>

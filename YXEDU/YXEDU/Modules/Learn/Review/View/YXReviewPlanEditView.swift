@@ -157,7 +157,7 @@ class YXReviewPlanEditView: YXTopWindowView {
             }
             
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
         
         self.removeFromSuperview()
     }
@@ -197,19 +197,19 @@ class YXReviewPlanEditView: YXTopWindowView {
                     self.removeFromSuperview()
                 } else {
                     YXLog("重置词单\(planId)，失败")
-                    YXUtils.showHUD(kWindow, title: "重置失败，请重试")
+                    YXUtils.showHUD(nil, title: "重置失败，请重试")
                 }
             }
         }
         alertView.leftButton.setTitle("取消", for: .normal)
         alertView.rightOrCenterButton.setTitle("重置", for: .normal)
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
     
     @objc private func clickRemoveButton() {
         let removeView = YXReviewPlanRemoveView()
         removeView.planId = self.reviewPlanModel?.planId ?? 0
-        removeView.show()
+        YXAlertQueueManager.default.addAlert(alertView: removeView)
         
         self.removeFromSuperview()
     }

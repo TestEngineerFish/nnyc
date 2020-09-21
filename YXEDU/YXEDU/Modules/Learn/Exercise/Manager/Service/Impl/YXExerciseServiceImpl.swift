@@ -49,11 +49,12 @@ class YXExerciseServiceImpl: YXExerciseService {
     /// 获取今天要学习的练习数据
     /// - Parameter completion: 数据加载成功后的回调
     func fetchExerciseResultModels(completion: ((_ result: Bool, _ msg: String?, _ isGenerate: Bool) -> Void)?) {
-        let reviewId = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
+        let reviewId   = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
         let isGenerate = self.studyDao.selectStudyRecordModel(learn: learnConfig) == nil ? true : false
-        let request = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, reviewId: reviewId)
+        let request    = YXExerciseRequest.exercise(isGenerate: isGenerate, type: learnConfig.learnType.rawValue, reviewId: reviewId)
         request.execute(YXExerciseResultModel.self, success: { [weak self] (model) in
             guard let self = self else {
+                completion?(false, nil, isGenerate)
                 return
             }
             self._resultModel = model
@@ -63,31 +64,38 @@ class YXExerciseServiceImpl: YXExerciseService {
                 completion?(true, nil, isGenerate)
             }
         }) { (msg) in
-            YXUtils.showHUD(kWindow, title: msg)
             completion?(false, msg, isGenerate)
         }
     }
     
     /// 获取一个练习数据
     func fetchExerciseModel() -> YXExerciseModel? {
-        
         // 更新当前轮数据（如果做完）
         self.updateCurrentTurn()
+        // 是否全部做完
+        guard var exerciseModel = turnDao.selectExercise(study: _studyId) else {
+            YXLog("全部做完")
+            return nil
+        }
         
         // 查找练习
-        let model = self._findExercise()
-        
-        // 打印
-        self._printCurrentTurn()
-        // 兼容后台返回错误题型
-        if model?.type == .some(.none) {
-            if var exerciseModel = model {
-                exerciseModel.status = .right
-                self.answerAction(exercise: exerciseModel)
-                return self._findExercise()
+        if var model = self._findExercise(exercise: &exerciseModel) {
+            // 打印
+            self._printCurrentTurn()
+            // 兼容后台返回错误题型
+            if model.type == .some(.none) {
+                model.status = .right
+                self.answerAction(exercise: model)
+                return self._findExercise(exercise: &model)
             }
+            return model
+        } else {
+            // 更新当前轮中为已完成
+            turnDao.updateExerciseFinishStatus(step: exerciseModel.stepId)
+            // 更新exercise中nextStep为END
+            exerciseDao.updateNextStep(exercise: exerciseModel.eid, next: "END")
+            return self.fetchExerciseModel()
         }
-        return model
     }
 
     func addStudyCount() {
@@ -163,19 +171,23 @@ class YXExerciseServiceImpl: YXExerciseService {
     }
     
     /// 上报关卡
-    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int]) -> Void)?) {
+    func reportReport(completion: ((_ result: YXResultModel?, _ dict: [String:Int], _ unique: String) -> Void)?) {
         let reportContent = self.getReportJson()
         let duration      = self.getLearnDuration()
         YXLog("====上报数据====")
         YXLog("new上报内容：" + reportContent)
         YXLog("new学习时长：\(duration)")
+        let unique   = self.getLearnUnique()
         let reviewId = learnConfig.learnType.isHomework() ? learnConfig.homeworkId : learnConfig.planId
-        let request = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId)
+        let request  = YXExerciseRequest.report(type: learnConfig.learnType.rawValue, reviewId: reviewId, time: duration, result: reportContent, bookId: learnConfig.bookId, unique: unique)
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self else { return }
+            guard let self = self else {
+                completion?(nil, [:], unique)
+                return
+            }
             // 获取学习数据
-            let duration    = self.studyDao.getDurationTime(learn: self.learnConfig)
-            let studyCount  = self.studyDao.selectStudyCount(learn: self.learnConfig)
+            let duration        = self.studyDao.getDurationTime(learn: self.learnConfig)
+            let studyCount      = self.studyDao.selectStudyCount(learn: self.learnConfig)
             let newWordCount    = self.studyDao.getNewWordCount(study: self._studyId)
             let reviewWordCount = self.studyDao.getReviewWordCount(study: self._studyId)
             // 上报Growing
@@ -188,15 +200,14 @@ class YXExerciseServiceImpl: YXExerciseService {
             // 清除数据库对应数据
             self.cleanStudyRecord(hasNextGroup: response.data?.hasNextGroup ?? false)
             self._loadStudyRecord()
-            completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount])
+            completion?(response.data, ["newWordCount":newWordCount, "reviewWordCount":reviewWordCount], unique)
         }) { (error) in
             // 容错处理
             if reportContent == "[]" {
                 self.cleanStudyRecord()
             }
             self.studyDao.updateProgress(study: self._studyId, progress: .unreport)
-            YXUtils.showHUD(kWindow, title: error.message)
-            completion?(nil, [:])
+            completion?(nil, [:], unique)
         }
     }
     

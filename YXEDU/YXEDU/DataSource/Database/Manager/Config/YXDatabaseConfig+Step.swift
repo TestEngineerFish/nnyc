@@ -13,7 +13,7 @@ extension YYSQLManager {
 
         case insertWordStep =
         """
-        insert into
+        INSERT INTO
         all_word_step_v1(
         study_id,
         exercise_id,
@@ -27,8 +27,7 @@ extension YYSQLManager {
         step,
         rule
         )
-        values(?, ?, ?, ?, ?,
-        ?, ?, ?, ?, ?, ?)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
         case updateWordStep =

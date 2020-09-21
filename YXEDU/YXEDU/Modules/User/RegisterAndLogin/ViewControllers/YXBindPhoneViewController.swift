@@ -12,7 +12,7 @@ import GrowingAutoTrackKit
 
 class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
 
-    var platform: String!
+    var platform: String?
     
     private var timer: Timer?
     private var countingDown = 60
@@ -50,20 +50,20 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        let request = YXRegisterAndLoginRequest.bind(platfrom: platform, phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
-        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
+        let request = YXRegisterAndLoginRequest.bind(platfrom: platform ?? "", phoneNumber: phoneNumberTextField.text ?? "", code: authCodeTextField.text ?? "")
+        YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] response in
             guard let data = response.data else { return }
 
             YXUserModel.default.uuid           = data.info?.uuid
             YXUserModel.default.userName       = data.info?.username
             YXUserModel.default.userAvatarPath = data.info?.avatar
-            
+            YXUserModel.default.mobile         = self?.phoneNumberTextField.text
             YXUserModel.default.didLogin = true
             Growing.setUserId(YXUserModel.default.uuid ?? "")
             YXUserModel.default.login()
             
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -77,12 +77,11 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
     
     @objc
     private func changePhoneNumberTextField() {
-        if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
+        if let phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
             clearPhoneNumberTextFieldButton.isHidden = false
 
             if phoneNumber.count >= 11 {
                 phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
-                phoneNumber = phoneNumberTextField.text!
                 
                 sendSMSButton.isUserInteractionEnabled = true
                 sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
@@ -90,7 +89,7 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
                 if let authCode = authCodeTextField.text, authCode.count == 6 {
                     loginButton.isUserInteractionEnabled = true
                 }
-                
+
             } else {
                 sendSMSButton.isUserInteractionEnabled = false
                 sendSMSButton.setTitleColor(UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1), for: .normal)
@@ -105,9 +104,8 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
     
     @objc
     private func changeAuthCodeTextField() {
-        if var authCode = authCodeTextField.text, authCode.count >= 6 {
+        if let authCode = authCodeTextField.text, authCode.count >= 6 {
             authCodeTextField.text = authCode.substring(maxIndex: 6)
-            authCode = authCodeTextField.text!
             
             if let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 {
                 loginButton.isUserInteractionEnabled = true
@@ -171,7 +169,7 @@ class YXBindPhoneViewController: YXViewController, UITextFieldDelegate {
                 }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

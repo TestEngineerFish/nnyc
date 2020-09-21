@@ -11,7 +11,6 @@
 
 @interface YRDevice : NSObject
 
-+ (NSString *)openUDID;
 + (NSString *)OSVersion;
 + (NSString *)appVersion;
 + (NSString *)appBuild;

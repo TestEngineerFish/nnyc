@@ -14,10 +14,10 @@ public let heightOfStateBar = UIApplication.shared.statusBarFrame.height
 public let heightOfNavigationBar = heightOfStateBar + 44
 public let heightOfSafeBotom: CGFloat = heightOfStateBar == 44 ? 34 : 0
 
-class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
+class YXRegisterAndLoginViewController: YXViewController, UITextFieldDelegate {
     
     var shouldShowShanYan = true
-    var platform: String!
+    var platform: String?
     var appleModel: YXAppleModel?
     
     private var timer: Timer?
@@ -73,7 +73,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXLog("当前用户Token=====", YXUserModel.default.token ?? "")
             self.checkUserInfomation()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -99,7 +99,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         if shouldShowShanYan {
             initShanYan()
         }
-        
+        self.customNavigationBar?.isHidden = true
         phoneNumberTextField.delegate = self
         phoneNumberTextField.addTarget(self, action: #selector(changePhoneNumberTextField), for: UIControl.Event.editingChanged)
         authCodeTextField.addTarget(self, action: #selector(changeAuthCodeTextField), for: UIControl.Event.editingChanged)
@@ -115,14 +115,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(thirdPartLogin), name: NSNotification.Name(rawValue: "CompletedBind"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
         
         NotificationCenter.default.removeObserver(self)
     }
@@ -134,19 +132,20 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Bind" {
-            let controller = segue.destination as! YXBindPhoneViewController
+            guard let controller = segue.destination as? YXBindPhoneViewController else {
+                return
+            }
             controller.platform = platform
         }
     }
     
     @objc
     private func changePhoneNumberTextField() {
-        if var phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
+        if let phoneNumber = phoneNumberTextField.text, phoneNumber.isEmpty == false {
             clearPhoneNumberTextFieldButton.isHidden = false
             
             if phoneNumber.count >= 11 {
                 phoneNumberTextField.text = phoneNumber.substring(maxIndex: 11)
-                phoneNumber = phoneNumberTextField.text!
                 
                 sendSMSButton.isUserInteractionEnabled = true
                 sendSMSButton.setTitleColor(UIColor(red: 251/255, green: 162/255, blue: 23/255, alpha: 1), for: .normal)
@@ -169,14 +168,11 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
     
     @objc
     private func changeAuthCodeTextField() {
-        if var authCode = authCodeTextField.text, authCode.count >= 6 {
+        if let authCode = authCodeTextField.text, authCode.count >= 6 {
             authCodeTextField.text = authCode.substring(maxIndex: 6)
-            authCode = authCodeTextField.text!
-            
             if let phoneNumber = phoneNumberTextField.text, phoneNumber.count == 11 {
                 loginButton.isUserInteractionEnabled = true
             }
-            
         } else {
             loginButton.isUserInteractionEnabled = false
         }
@@ -237,7 +233,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 }
             }
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -247,12 +243,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             guard let _userInfomation = userInfomation else {
                 return
             }
-            guard _userInfomation.didBindPhone == 1 else {
+            guard _userInfomation.didBindPhone else {
                 weakSelf.performSegue(withIdentifier: "Bind", sender: weakSelf)
                 return
             }
             YXUserModel.default.mobile = weakSelf.phoneNumberTextField.text
-            YXAlertQueueManager.default.restart()
+            YXAlertQueueManager.default.processQueue()
             YXUserModel.default.login()
         }
     }
@@ -298,7 +294,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         guard let userInfo = notification.userInfo else { return }
         self.platform = userInfo["platfrom"] as? String
         
-        let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform, openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
+        let request = YXRegisterAndLoginRequest.thirdLogin(platfrom: self.platform ?? "", openId: (userInfo["openID"] as? String) ?? "", code: (userInfo["token"] as? String) ?? "")
         YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] (response) in
             guard let self = self, let data = response.data else { return }
 
@@ -308,14 +304,14 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             YXUserModel.default.userAvatarPath = data.info?.avatar
             self.checkUserInfomation()
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     private func appleLogin() {
         guard let model = self.appleModel, let token = model.identityToken, let tokenStr = String(data: token, encoding: .utf8) else {
             YXLog("苹果登录失败，请重试")
-            YXUtils.showHUD(kWindow, title: "Apple登录失败，请重试")
+            YXUtils.showHUD(nil, title: "Apple登录失败，请重试")
             return
         }
         let request = YXRegisterAndLoginRequest.appleLogin(userId: model.user, token: tokenStr, fullName: model.name)
@@ -328,7 +324,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
             self.platform = "apple"
             self.checkUserInfomation()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -374,8 +370,8 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                         do {
                             let responseObject = try JSONDecoder().decode(PhoneNumber.self, from: data)
                             let request = YXRegisterAndLoginRequest.SYLogin(phoneNumber: responseObject.data?[0] ?? "")
-                            YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { response in
-                                guard let data = response.data else {
+                            YYNetworkService.default.request(YYStructResponse<YXAccountModel>.self, request: request, success: { [weak self] response in
+                                guard let self = self, let data = response.data else {
                                     CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                                     return
                                 }
@@ -387,7 +383,7 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                                 Growing.setUserId(YXUserModel.default.uuid ?? "")
                                 self.checkUserInfomation()
                             }) { error in
-                                YXUtils.showHUD(kWindow, title: error.message)
+                                YXUtils.showHUD(nil, title: error.message)
                                 CLShanYanSDKManager.finishAuthControllerCompletion(nil)
                             }
                             
@@ -420,17 +416,17 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
         configure.clAppPrivacySecond = ["《隐私政策》", URL(string: "\(YXEvnOC.baseUrl())/privacy.html")!]
         
         let layoutConfigure = CLOrientationLayOut()
-        layoutConfigure.clLayoutPhoneCenterX = NSNumber(0)
-        layoutConfigure.clLayoutPhoneCenterY = NSNumber(-84)
-        layoutConfigure.clLayoutSloganCenterX = NSNumber(0)
-        layoutConfigure.clLayoutSloganCenterY = NSNumber(-52)
-        layoutConfigure.clLayoutLoginBtnCenterX = NSNumber(0)
-        layoutConfigure.clLayoutLoginBtnCenterY = NSNumber(16)
+        layoutConfigure.clLayoutPhoneCenterX      = NSNumber(0)
+        layoutConfigure.clLayoutPhoneCenterY      = NSNumber(-84)
+        layoutConfigure.clLayoutSloganCenterX     = NSNumber(0)
+        layoutConfigure.clLayoutSloganCenterY     = NSNumber(-52)
+        layoutConfigure.clLayoutLoginBtnCenterX   = NSNumber(0)
+        layoutConfigure.clLayoutLoginBtnCenterY   = NSNumber(16)
         layoutConfigure.clLayoutAppPrivacyCenterX = NSNumber(0)
         layoutConfigure.clLayoutAppPrivacyCenterY = NSNumber(64)
-        layoutConfigure.clLayoutAppPrivacyWidth = NSNumber(value: Float(screenWidth - 80))
-        layoutConfigure.clLayoutAppPrivacyHeight = NSNumber(40)
-        configure.clOrientationLayOutPortrait = layoutConfigure
+        layoutConfigure.clLayoutAppPrivacyWidth   = NSNumber(value: Float(screenWidth - 80))
+        layoutConfigure.clLayoutAppPrivacyHeight  = NSNumber(40)
+        configure.clOrientationLayOutPortrait     = layoutConfigure
         
         configure.customAreaView = { view in
             let iconBackgroundImageView = UIImageView()
@@ -496,13 +492,12 @@ class YXRegisterAndLoginViewController: BSRootVC, UITextFieldDelegate {
                 make.height.equalToSuperview().multipliedBy(0.5)
                 make.width.equalTo(iconBackgroundImageView.snp.height).multipliedBy(0.5)
             }
-            
             containerView.addSubview(otherLoginButton)
             otherLoginButton.snp.makeConstraints { (make) in
                 make.bottom.equalToSuperview()
                 make.centerX.equalToSuperview()
             }
-            
+            return
             view.addSubview(quickLoginLabel)
             quickLoginLabel.snp.makeConstraints { (make) in
                 make.bottom.greaterThanOrEqualToSuperview().offset(-100).priorityRequired()
@@ -616,10 +611,10 @@ extension YXRegisterAndLoginViewController: ASAuthorizationControllerDelegate, A
                     self.appleLogin()
                     break
                 case .revoked:
-                    YXUtils.showHUD(kWindow, title: "Apple账户失效，请重试，或更换其他登录方式")
+                    YXUtils.showHUD(nil, title: "Apple账户失效，请重试，或更换其他登录方式")
                     break
                 case .notFound:
-                    YXUtils.showHUD(kWindow, title: "Apple账户尚未绑定，请重试，或更换其他登录方式")
+                    YXUtils.showHUD(nil, title: "Apple账户尚未绑定，请重试，或更换其他登录方式")
                     break
                 default:
                     break

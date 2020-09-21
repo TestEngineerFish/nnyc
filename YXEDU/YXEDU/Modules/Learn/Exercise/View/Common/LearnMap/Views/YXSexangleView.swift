@@ -120,7 +120,7 @@ class YXSexangleView: UIView {
                 make.width.equalToSuperview()
                 make.height.equalTo(AdaptIconSize(17))
             }
-            progressLabel!.snp.makeConstraints { (make) in
+            progressLabel?.snp.makeConstraints { (make) in
                 make.centerX.equalToSuperview()
                 make.top.equalTo(unitLabel.snp.bottom)
                 make.width.equalToSuperview()

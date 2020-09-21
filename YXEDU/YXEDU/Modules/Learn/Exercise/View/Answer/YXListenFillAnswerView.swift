@@ -195,7 +195,12 @@ class YXListenFillAnswerLineView: YXView {
     func createLineView() {
         var lastView: UIView?
         for (_, v) in self.allText.enumerated() {
-            let lineX = lastView == nil ? 0 : lastView!.origin.x + lastView!.size.width
+            let lineX: CGFloat = {
+                guard let _lastView = lastView else {
+                    return .zero
+                }
+                return _lastView.origin.x + _lastView.size.width
+            }()
         
             let letter = String(v)
             if YXListenFillAnswerHelp.isLetter(text: letter) {
@@ -215,8 +220,8 @@ class YXListenFillAnswerLineView: YXView {
             }
 
         }
-        if lastView != nil {
-            viewWidth = lastView!.origin.x + lastView!.size.width
+        if let _lastView = lastView {
+            viewWidth = _lastView.origin.x + _lastView.size.width
         }
     }
 

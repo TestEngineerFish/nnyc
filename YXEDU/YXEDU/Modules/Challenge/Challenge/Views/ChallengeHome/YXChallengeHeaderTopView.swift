@@ -93,7 +93,7 @@ class YXChallengeHeaderTopView: UIView {
 
         propertyView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(AdaptSize(25))
+            make.top.equalToSuperview().offset(AdaptSize(15))
             make.size.equalTo(CGSize(width: AdaptIconSize(44), height: AdaptIconSize(23)))
         }
         squirrelImageView.snp.makeConstraints { (make) in
@@ -102,7 +102,7 @@ class YXChallengeHeaderTopView: UIView {
             } else {
                 make.left.equalToSuperview().offset(AdaptSize(4))
             }
-            make.top.equalTo(propertyView.snp.bottom).offset(AdaptSize(11))
+            make.top.equalTo(propertyView.snp.bottom).offset(AdaptSize(21))
             make.size.equalTo(CGSize(width: AdaptIconSize(323), height: AdaptIconSize(115)))
         }
         gameTitleLabel.snp.makeConstraints { (make) in
@@ -151,10 +151,12 @@ class YXChallengeHeaderTopView: UIView {
 
     // MARK: ==== Event ====
     @objc private func showRuleView() {
-        guard let url = YXUserModel.default.gameExplainUrl else {
+        guard let urlStr = YXUserModel.default.gameExplainUrl else {
             return
         }
-        YXAlertWebView.share.show(url)
+        let alertView = YXAlertWebView()
+        alertView.url = URL(string: urlStr)
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: ==== Animation ====

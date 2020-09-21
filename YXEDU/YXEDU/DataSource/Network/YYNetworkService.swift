@@ -23,7 +23,7 @@ enum YXMiMeType: String {
     public let networkManager = NetworkReachabilityManager()
     
     private let maxOperationCount: Int = 3
-    private let timeout: TimeInterval = 15
+    private let timeout: TimeInterval  = 15
 
     
     private var sessionManager: SessionManager!
@@ -82,10 +82,10 @@ enum YXMiMeType: String {
             request = YXOCRequest.changeName(name: params["name"] as? String ?? "")
             
         case .changeAvatar:
-            request = YXOCRequest.changeAvatar(file: params["file"] as! Data)
+            request = YXOCRequest.changeAvatar(file: (params["file"] as? Data) ?? Data())
             
         case .changeUserInfo:
-            request = YXOCRequest.changeUserInfo(params: params as? [String : Any?] ?? ["": nil])
+            request = YXOCRequest.changeUserInfo(params: params as [String : Any?])
         }
         
         if isUpload {
@@ -209,13 +209,13 @@ enum YXMiMeType: String {
             
             // 文件数据 （先放前面）
             if fileData is String {
-                multipartFormData.append(URL(fileURLWithPath:(fileData as! String)), withName: name, fileName: fileName, mimeType: mimeType)
+                multipartFormData.append(URL(fileURLWithPath:(fileData as? String ?? "")), withName: name, fileName: fileName, mimeType: mimeType)
                 
             } else if fileData is Data {
-                multipartFormData.append(fileData as! Data, withName: name, fileName: fileName, mimeType: mimeType)
+                multipartFormData.append(fileData as? Data ?? Data(), withName: name, fileName: fileName, mimeType: mimeType)
                 
             } else if fileData is [Data] {
-                for data in fileData as! [Data] {
+                for data in (fileData as? [Data] ?? []) {
                     multipartFormData.append(data, withName: name, fileName: fileName, mimeType: mimeType)
                 }
             }
@@ -261,14 +261,15 @@ enum YXMiMeType: String {
                 if let data = response.data, let dataStr = String(data: data, encoding: String.Encoding.utf8) {
                     YXRequestLog(String(format: "【Success】 request url: %@, respnseObject: %@", requestStr, dataStr))
                 }
-                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                if (x as YYBaseResopnse).statusCode == .some(YXNetworkStatusCode.tokenExpired.rawValue) {
                     if self.addCountAction(requestStr) {
                         self.tokenRenewal {
                             self.postBody(type, request: request, success: success, fail: fail)
                         }
                     } else {
                         YXLog("连续10002，退出登录吧")
-//                        YXUserModel.default.logout(force: false)
+                        let errorMsg = (x as YYBaseResopnse).statusMessage
+                        YXMediator.shared().userKickedOut(errorMsg)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
@@ -298,7 +299,8 @@ enum YXMiMeType: String {
         YXRequestLog(String(format: "%@ = request url:%@ params:%@", method.rawValue, requestStr, params?.toJson() ?? ""))
         let task = sessionManager.request(request.url, method: method, parameters: params, encoding: encoding, headers: header)
 
-        task.responseObject { (response: DataResponse <T>) in
+        task.responseObject { [weak self] (response: DataResponse <T>) in
+            guard let self = self else { return }
             let requestStr = request.url.absoluteString
             YXRequestLog("unique_id:", response.response?.allHeaderFields["unique_id"] as? String ?? "")
             switch response.result {
@@ -308,11 +310,15 @@ enum YXMiMeType: String {
                 }
                 x.response = response.response
                 x.request  = response.request
-                if (x as YYBaseResopnse).statusCode == .some(10002) {
+                if (x as YYBaseResopnse).statusCode == .some(YXNetworkStatusCode.tokenExpired.rawValue) {
                     if self.addCountAction(requestStr) {
                         self.tokenRenewal {
                             _ = self.httpRequest(type, request: request, success: success, fail: fail)
                         }
+                    } else {
+                        YXLog("连续10002，退出登录吧")
+                        let errorMsg = (x as YYBaseResopnse).statusMessage
+                        YXMediator.shared().userKickedOut(errorMsg)
                     }
                 } else {
                     success(x, (response.response?.statusCode) ?? 0)
@@ -320,15 +326,110 @@ enum YXMiMeType: String {
                 }
 
             case .failure(let error):
-                let msg = (error as NSError).message
-                YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
-                fail(error as NSError)
                 self.clearCountAction(requestStr)
+                let _error = error as NSError
+                var msg    = _error.message
+                YXRequestLog(String(format: "【❌Fail❌】 %@ = request url:%@ parames:%@, error:%@", method.rawValue, requestStr, params?.toJson() ?? "", msg))
+                // 自定义错误提示
+                if let urlError = error as? URLError {
+                    msg = self.processErrorCode(error: urlError.code)
+                    _error.customErrorMsg = msg
+                }
+                fail(_error)
             }
         }
         
         let taskRequest: YYTaskRequest = YYTaskRequestModel(request: task)
         return taskRequest
+    }
+
+    // MARK: ==== Tools ====
+    /// 处理非正常错误请求
+    /// - Parameter error: 错误对象
+    /// - Returns: 是否处理
+    private func processErrorCode(error code: URLError.Code) -> String {
+        let serviceErrorList: [URLError.Code] = [.badURL,
+                                                 .unsupportedURL,
+                                                 .cannotFindHost,
+                                                 .cannotConnectToHost,
+                                                 .dnsLookupFailed,
+                                                 .redirectToNonExistentLocation,
+                                                 .badServerResponse]
+        if serviceErrorList.contains(code) {
+            YXUtils.showHUD(nil, title: "连接服务器失败，请稍后重试")
+        }
+        //数据错误
+        var errorMsg: String = "网络错误，请稍后重试"
+        switch code {
+            // 超时
+        case .timedOut:
+            errorMsg = "网络连接超时，请稍后重试"
+            // 弱网
+        case .networkConnectionLost:
+            errorMsg = "当前网络信号较弱，请稍后重试"
+            // 无网络
+        case .notConnectedToInternet,
+             .dataNotAllowed,
+             .callIsActive:
+            errorMsg = "无法连接到网络，请连接后重试"
+            // 数据解析失败
+        case .dataLengthExceedsMaximum,
+             .badServerResponse,
+             .zeroByteResource,
+             .cannotDecodeRawData,
+             .cannotDecodeContentData,
+             .cannotParseResponse,
+             .cannotLoadFromNetwork,
+             .downloadDecodingFailedMidStream,
+             .downloadDecodingFailedToComplete:
+            errorMsg = "数据无法解析，请稍后重试"
+            // 连接地址错误
+        case .badURL, .unsupportedURL:
+            errorMsg = "连接地址错误，请稍后重试"
+            // 连接服务器失败
+        case .cannotFindHost,
+             .cannotConnectToHost,
+             .networkConnectionLost,
+             .dnsLookupFailed,
+             .httpTooManyRedirects,
+             .resourceUnavailable,
+             .notConnectedToInternet,
+             .redirectToNonExistentLocation,
+             .appTransportSecurityRequiresSecureConnection,
+             .secureConnectionFailed,
+             .serverCertificateHasBadDate,
+             .serverCertificateUntrusted,
+             .serverCertificateHasUnknownRoot,
+             .serverCertificateNotYetValid,
+             .clientCertificateRejected,
+             .clientCertificateRequired,
+             .requestBodyStreamExhausted,
+             .backgroundSessionRequiresSharedContainer,
+             .backgroundSessionInUseByAnotherProcess,
+             .backgroundSessionWasDisconnected:
+            errorMsg = "连接服务器失败，请稍后重试"
+        case .userCancelledAuthentication,
+             .userAuthenticationRequired:
+            errorMsg = "身份认证失败，请稍后重试"
+            // FTP
+        case .fileDoesNotExist,
+             .fileIsDirectory:
+            errorMsg = "文件路径错误，请稍后重试"
+        case .noPermissionsToReadFile:
+            errorMsg = "权限不足，无法获取资源"
+        case .cannotCreateFile,
+             .cannotOpenFile,
+             .cannotCloseFile,
+             .cannotWriteToFile,
+             .cannotRemoveFile,
+             .cannotMoveFile:
+            errorMsg = "磁盘忙，请释放后重试"
+        case .internationalRoamingOff:
+            errorMsg = "当前请求需要开启数据漫游，请开启后重试"
+        default:
+            break
+        }
+        return errorMsg
     }
 
 
@@ -377,25 +478,25 @@ enum YXMiMeType: String {
 
         if responseStatusCode == 0 {
             success?(response)
-            
         } else {
-            if responseStatusCode == 10002 {
-                // 上层已处理
-                YXLog("Token过期 10002")
-            } else if responseStatusCode == 6666 {
-                // 停服
-                let serviceStop = YXNotification.kServiceStop
-                NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
-
-            } else if responseStatusCode == 10003 {
-                YXMediator.shared().userKickedOut()
+            if let status = YXNetworkStatusCode(rawValue: responseStatusCode) {
+                switch status {
+                case .tokenExpired:
+                    // 上层已处理
+                    YXLog("Token过期 10002")
+                case .stopServing:
+                    let serviceStop = YXNotification.kServiceStop
+                    NotificationCenter.default.post(name: serviceStop, object: baseResponse.statusMessage)
+                case .accountKictOut:
+                    YXMediator.shared()?.userKickedOut(nil)
+                case .accountResign:
+                    YXMediator.shared()?.userKickedOut(baseResponse.statusMessage)
+                }
             }
-            
             // 把错误抛会上层
             if let errorMsg = baseResponse.statusMessage {
                 fail?(NSError(domain: "com.youyou.httpError", code: responseStatusCode, userInfo: [NSLocalizedDescriptionKey : errorMsg]))
             }
-            
         }
     }
 
@@ -414,4 +515,15 @@ enum YXMiMeType: String {
         }
         return params.count > 0 ? params : nil
     }
+}
+
+enum YXNetworkStatusCode: Int {
+    /// 停服
+    case stopServing    = 6666
+    /// Token过期
+    case tokenExpired   = 10002
+    /// 账户被踢
+    case accountKictOut = 10003
+    /// 账户注销
+    case accountResign  = 10004
 }

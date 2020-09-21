@@ -41,12 +41,15 @@ class YXReviewPlanHeaderView: UIView {
     var reportClosure: (() -> Void)?
     var shareClosure: (() -> Void)?
     
-    var detailModel: YXReviewPlanDetailModel! {
+    var detailModel: YXReviewPlanDetailModel? {
         didSet {
-            if let text = detailModel.fromUser, text.isEmpty == false {
+            guard let _detailModel = detailModel else {
+                return
+            }
+            if let text = _detailModel.fromUser, text.isEmpty == false {
                 descriptionLabel.text = text
                 
-            } else if let time = detailModel.createTime {
+            } else if let time = _detailModel.createTime {
                 let date = Date(timeIntervalSince1970: time)
                 
                 let dateFormatter = DateFormatter()
@@ -55,11 +58,11 @@ class YXReviewPlanHeaderView: UIView {
                 descriptionLabel.text = "\(dateFormatter.string(from: date))由我创建"
             }
             
-            if let totalCount = detailModel.status?.totalCount, totalCount > 0 {
+            if let totalCount = _detailModel.status?.totalCount, totalCount > 0 {
                 statusViewHeight.constant = 36
-                statusLabel.text = "\(totalCount)位用户保存了该词单，\(detailModel.status?.finishCount ?? 0)人完成了学习"
+                statusLabel.text = "\(totalCount)位用户保存了该词单，\(_detailModel.status?.finishCount ?? 0)人完成了学习"
                 
-                if detailModel.status?.shouldShowNewIcon == 1 {
+                if _detailModel.status?.shouldShowNewIcon == 1 {
                     newIconButton.isHidden = false
                     
                 } else {
@@ -70,7 +73,7 @@ class YXReviewPlanHeaderView: UIView {
                 statusViewHeight.constant = 0
             }
             
-            switch detailModel.listenState {
+            switch _detailModel.listenState {
             case .normal:
                 noListenLabel.isHidden = false
                 listenStarsView.isHidden = true
@@ -84,8 +87,8 @@ class YXReviewPlanHeaderView: UIView {
                 listenProgressView.isHidden = false
                 listenProgressLabel.isHidden = false
                 
-                listenProgressView.progress = Float(detailModel.listen) / 100
-                listenProgressLabel.text = "\(detailModel.listen)%"
+                listenProgressView.progress = Float(_detailModel.listen) / 100
+                listenProgressLabel.text = "\(_detailModel.listen)%"
                 break
                 
             case .finish:
@@ -95,13 +98,13 @@ class YXReviewPlanHeaderView: UIView {
                 listenProgressView.isHidden = true
                 listenProgressLabel.isHidden = true
                 
-                if detailModel.listen == 1 {
+                if _detailModel.listen == 1 {
                     listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
-                } else if detailModel.listen == 2 {
+                } else if _detailModel.listen == 2 {
                     listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
                     listenStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     
-                } else if detailModel.listen == 3 {
+                } else if _detailModel.listen == 3 {
                     listenStart1.image = #imageLiteral(resourceName: "star_new_enable")
                     listenStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     listenStart3.image = #imageLiteral(resourceName: "star_new_enable")
@@ -114,7 +117,7 @@ class YXReviewPlanHeaderView: UIView {
                 break
             }
             
-            switch detailModel.reviewState {
+            switch _detailModel.reviewState {
             case .normal:
                 noReviewLabel.isHidden = false
                 reviewStarsView.isHidden = true
@@ -128,8 +131,8 @@ class YXReviewPlanHeaderView: UIView {
                 reviewProgressView.isHidden = false
                 reviewProgressLabel.isHidden = false
                 
-                reviewProgressView.progress = Float(detailModel.review) / 100
-                reviewProgressLabel.text = "\(detailModel.review)%"
+                reviewProgressView.progress = Float(_detailModel.review) / 100
+                reviewProgressLabel.text = "\(_detailModel.review)%"
                 break
                 
             case .finish:
@@ -139,13 +142,13 @@ class YXReviewPlanHeaderView: UIView {
                 reviewProgressView.isHidden = true
                 reviewProgressLabel.isHidden = true
                 
-                if detailModel.review == 1 {
+                if _detailModel.review == 1 {
                     reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
-                } else if detailModel.review == 2 {
+                } else if _detailModel.review == 2 {
                     reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
                     reviewStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     
-                } else if detailModel.review == 3 {
+                } else if _detailModel.review == 3 {
                     reviewStart1.image = #imageLiteral(resourceName: "star_new_enable")
                     reviewStart2.image = #imageLiteral(resourceName: "star_new_enable")
                     reviewStart3.image = #imageLiteral(resourceName: "star_new_enable")
@@ -173,7 +176,9 @@ class YXReviewPlanHeaderView: UIView {
     private func initializationFromNib() {
         Bundle.main.loadNibNamed("YXReviewPlanHeaderView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.bounds
+        contentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         
         listenProgressView.progressImage = listenProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))
         reviewProgressView.progressImage = reviewProgressView.progressImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4))

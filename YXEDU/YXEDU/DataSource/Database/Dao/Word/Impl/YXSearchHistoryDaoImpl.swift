@@ -13,7 +13,7 @@ class YXSearchHistoryDaoImpl: YYDatabase, YXSearchHistoryDao {
     func insertWord(word: YXSearchWordModel) -> Bool {
         let sql = YYSQLManager.SearchHistory.insertWord.rawValue
         
-        let partOfSpeechAndMeaningsDataString: String! = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
+        let partOfSpeechAndMeaningsDataString: String = word.partOfSpeechAndMeanings?.toJSONString() ?? "[]"
         let params: [Any] = [word.wordId ?? 0,
                               word.word ?? "",
                               partOfSpeechAndMeaningsDataString,
@@ -36,16 +36,16 @@ class YXSearchHistoryDaoImpl: YYDatabase, YXSearchHistoryDao {
         while result.next() {
             var word = YXSearchWordModel()
             
-            let partOfSpeechAndMeaningsDataString: String! = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
+            let partOfSpeechAndMeaningsDataString: String = (result.string(forColumn: "partOfSpeechAndMeanings") ?? "[]")
             
-            word.wordId = Int(result.int(forColumn: "wordId"))
-            word.word = result.string(forColumn: "word")
+            word.wordId                  = Int(result.int(forColumn: "wordId"))
+            word.word                    = result.string(forColumn: "word")
             word.partOfSpeechAndMeanings = [YXWordPartOfSpeechAndMeaningModel](JSONString: partOfSpeechAndMeaningsDataString)
-            word.americanPhoneticSymbol = result.string(forColumn: "americanPhoneticSymbol")
-            word.englishPhoneticSymbol = result.string(forColumn: "englishPhoneticSymbol")
-            word.americanPronunciation = result.string(forColumn: "americanPronunciation")
-            word.englishPronunciation = result.string(forColumn: "englishPronunciation")
-            word.isComplexWord = Int(result.int(forColumn: "isComplexWord"))
+            word.americanPhoneticSymbol  = result.string(forColumn: "americanPhoneticSymbol")
+            word.englishPhoneticSymbol   = result.string(forColumn: "englishPhoneticSymbol")
+            word.americanPronunciation   = result.string(forColumn: "americanPronunciation")
+            word.englishPronunciation    = result.string(forColumn: "englishPronunciation")
+            word.isComplexWord           = Int(result.int(forColumn: "isComplexWord"))
             
             words.append(word)
         }

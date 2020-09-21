@@ -10,64 +10,11 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <sys/utsname.h>
 #import <objc/runtime.h>
-#import <SSKeychain/SSKeychain.h>
 
 NSString * const SSKeychainService = @"service";
 NSString * const SSKeychainOpenUDIDKey = @"udid";
 
-@interface SSKeychain (Utils)
-+ (NSString *)openUDID;
-+ (void)setOpenUDID:(NSString *)openUDID;
-@end
-
-@implementation SSKeychain (Utils)
-
-+ (NSString *)bundleName {
-    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-}
-
-+ (NSString *)openUDIDGenernalKey {
-    return [NSString stringWithFormat:@"%@ - %@", [self bundleName], SSKeychainOpenUDIDKey];
-}
-
-+ (NSString *)openUDID {
-    NSError *error = nil;
-    NSString *opendUDID = [self passwordForService:SSKeychainService account:[self openUDIDGenernalKey] error:&error];
-    if (error) {
-        
-    }
-    return opendUDID;
-}
-
-
-+ (void)setOpenUDID:(NSString *)openUDID {
-    [self setPassword:openUDID forService:SSKeychainService account:[self openUDIDGenernalKey]];
-}
-
-@end
-
-
 @implementation YRDevice
-
-+ (NSString *)openUDID {
-    NSString *localOpenUDID = [SSKeychain openUDID];
-    if ([localOpenUDID length]) {
-        return localOpenUDID;
-    }
-    unsigned char result[16];
-    const char *cStr = [[[NSProcessInfo processInfo] globallyUniqueString] UTF8String];
-    CC_MD5( cStr, (CC_LONG)strlen(cStr), result );
-    NSString *udid = [NSString stringWithFormat:
-                      @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%08lx",
-                      result[0], result[1], result[2], result[3],
-                      result[4], result[5], result[6], result[7],
-                      result[8], result[9], result[10], result[11],
-                      result[12], result[13], result[14], result[15],
-                      arc4random() % 4294967295];
-    
-    SSKeychain.openUDID = udid;
-    return udid;
-}
 
 + (NSString *)OSVersion
 {

@@ -480,21 +480,23 @@ class RegisterSliderView: UIView {
             self.resultView.isHidden = false
             switch currentType {
             case .puzzle:
-                UIView.animate(withDuration: 0.15) {
+                UIView.animate(withDuration: 0.15) { [weak self] in
+                    guard let self = self else { return }
                     self.thumbImgView.transform   = .identity
                     self.puzzleMoveView.transform = .identity
                     self.progressView.layer.frame = CGRect(x: 0, y: 0, width: self.thumbImgView.frame.midX, height: self.sliderHeight)
                 }
             case .slider:
-                UIView.animate(withDuration: 0.15) {
+                UIView.animate(withDuration: 0.15) { [weak self] in
+                    guard let self = self else { return }
                     self.thumbImgView.transform   = .identity
                     self.progressView.layer.frame = CGRect(x: 0, y: 0, width: self.thumbImgView.frame.midX, height: self.sliderHeight*2)
                 }
             default:
                 refresh(refreshBtn)
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                self.resultView.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+                self?.resultView.isHidden = true
             }
         }
     }
@@ -610,11 +612,12 @@ class RegisterSliderView: UIView {
     func cycingHintView(_ isSlide: Bool) {
         if timer == nil {
             timer = Timer(timeInterval: 0.8, repeats: true, block: { (timer) in
-                UIView.animate(withDuration: 0.8, animations: {
+                UIView.animate(withDuration: 0.8, animations: { [weak self] in
+                    guard let self = self else { return }
                     self.hintView.transform = CGAffineTransform(translationX: self.sliderView.bounds.width - self.hintViewWidht, y: 0)
-                }, completion: { (finish) in
+                }, completion: { [weak self] (finish) in
                     if finish {
-                        self.hintView.transform = .identity
+                        self?.hintView.transform = .identity
                     }
                 })
             })
@@ -755,35 +758,6 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         image = image?.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
-        return image!
+        return image ?? UIImage()
     }
 }
-
-//extension CALayer {
-//    /// 设置渐变色
-//    /// - parameter colors: 渐变颜色数组
-//    /// - parameter locations: 逐个对应渐变色的数组,设置颜色的渐变占比,nil则默认平均分配
-//    /// - parameter startPoint: 开始渐变的坐标(控制渐变的方向),取值(0 ~ 1)
-//    /// - parameter endPoint: 结束渐变的坐标(控制渐变的方向),取值(0 ~ 1)
-//    public func setGradient(colors: [UIColor], locations: [NSNumber]? = nil, startPoint: CGPoint, endPoint: CGPoint) {
-//        /// 设置渐变色
-//        func _setGradient(_ layer: CAGradientLayer) {
-//            var colorArr = [CGColor]()
-//            for color in colors {
-//                colorArr.append(color.cgColor)
-//            }
-//            CATransaction.begin()
-//            CATransaction.setDisableActions(true)
-//            layer.frame = self.bounds
-//            CATransaction.commit()
-//            layer.colors     = colorArr
-//            layer.locations  = locations
-//            layer.startPoint = startPoint
-//            layer.endPoint   = endPoint
-//        }
-//        let gradientLayer = CAGradientLayer()
-//        self.insertSublayer(gradientLayer , at: 0)
-//        _setGradient(gradientLayer)
-//        return
-//    }
-//}

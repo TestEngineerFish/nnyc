@@ -8,129 +8,74 @@
 
 import UIKit
 
-
-
 /// 弹窗队列管理
 class YXAlertQueueManager: NSObject {
         
     static var `default` = YXAlertQueueManager()
-
-    public var processStatus = false
-    public var queueCount: Int {
-        return self.alertArray.count
-    }
         
     private var alertArray: [YXTopWindowView] = []
-    private var isStart: Bool = false
+    private var isShowing: Bool = false
     private override init() {}
-    
-    // 在未知登陆状态下调用
-    public func start() {
-        if self.isStart {
-            return
-        }
-        self.isStart = true
-        self.processQueue()
-    }
-    
-    // 登录后再调用一次
-    public func restart() {
-        self.processQueue()
-    }
-    
+
+    /// 添加一个alertView
+    /// - Parameter alertView: alert对象
     public func addAlert(alertView: YXTopWindowView) {
         self.alertArray.append(alertView)
+        if !isShowing {
+            self.showAlert()
+        }
+    }
+    /// 添加一组alertView
+    /// - Parameter alertViewList: alert对象组
+    public func addAlertList(alertViewList: [YXTopWindowView]) {
+        self.alertArray += alertViewList
+        if !isShowing {
+            self.showAlert()
+        }
     }
     
     public func showAlert() {
-        
-        var index = -1
-        var alertView: YXTopWindowView?
-        for (i, alert) in alertArray.enumerated() {
-            if alertView == nil || alert.tag < alertView!.tag {
-                alertView = alert
-                index = i
-            }
+        // 队列可能随时有新的对象插入，所以每次弹框需过滤和排序
+        self.isShowing = true
+        // 过滤已显示过的弹框
+        self.alertArray = self.alertArray.filter { (alertView) -> Bool in
+            return !alertView.isShowed
         }
-        
-        alertView?.closeEvent = { [weak self] in
+        // 如果都展示结束，则弹框队列结束
+        if self.alertArray.isEmpty {
+            self.isShowing = false
+            self.alertArray.removeAll()
+            return
+        }
+        // 按优先级排序
+        let alertView = self.alertArray.sorted { return $0.priority.rawValue < $1.priority.rawValue }.first
+
+        alertView?.closeEvent = { [weak self] alert in
             guard let self = self else { return }
-            if self.alertArray.count > index {
-                self.alertArray.remove(at: index)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.showAlert()
+            alertView?.isShowed = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                self?.showAlert()
             }
         }
-//        // 如果当前页面是班级列表，则不显示新作业弹框
-//        if alertView?.tag == .some(YXAlertWeightType.newHomework) && YRRouter.sharedInstance().currentViewController()?.isKind(of: YXMyClassViewController.classForCoder()) == .some(true) {
-//            if self.alertArray.count > index {
-//                self.alertArray.remove(at: index)
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                self.showAlert()
-//            }
-//        }
         alertView?.show()
         
     }
     
     
-    private func processQueue() {
-        // 创建队列组
-        let group = DispatchGroup()
-        
-        // 创建并发队列
-        let queue = DispatchQueue.global()
-        
+    public func processQueue() {
+        YXAlertCheckManager.default.checkVersion {
+            YXLog("====================== 检查版本结束")
+        }
         // 如果登录过
         if YXUserModel.default.didLogin {
-            group.enter()
-            queue.async(group: group) {
-                YXAlertCheckManager.default.checkOldUser {
-                    YXLog("====================== 检查老用户结束")
-                    group.leave()
-                }
+            YXAlertCheckManager.default.checkOldUser {
+                YXLog("====================== 检查老用户结束")
             }
-            
-            group.enter()
-            queue.async(group: group) {
-                YXAlertCheckManager.default.checkCommand(isStartup: true) {
-                    YXLog("====================== 检查口令结束")
-                    group.leave()
-                }
+            YXAlertCheckManager.default.checkCommand(isStartup: true) {
+                YXLog("====================== 检查口令结束")
             }
-            
-            group.enter()
-            queue.async(group: group) {
-                YXAlertCheckManager.default.checkLatestBadge {
-                    YXLog("====================== 检查最新徽章结束")
-                    group.leave()
-                }
-            }
-            group.enter()
-            queue.async(group: group) {
-                YXAlertCheckManager.default.checkHomework {
-                    YXLog("====================== 检查作业提醒结束")
-                    group.leave()
-                }
-            }
-        }
-        
-        group.enter()
-        queue.async(group: group) {
-            YXAlertCheckManager.default.checkVersion {
-                YXLog("====================== 检查版本结束")
-                group.leave()
-            }
-        }
-        
-        // 数据都处理完，才开始弹窗
-        group.notify(queue: queue) { [weak self] in
-            YXLog("====================== 队列结束")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self?.processStatus = true
-                self?.showAlert()
+            YXAlertCheckManager.default.checkHomework {
+                YXLog("====================== 检查作业提醒结束")
             }
         }
     }

@@ -72,7 +72,7 @@ class YXWorkWithMyClassCell: UITableViewCell {
     }
 
     private func createSubviews() {
-        self.addSubview(wrapView)
+        self.contentView.addSubview(wrapView)
         wrapView.addSubview(statusImage)
         wrapView.addSubview(nameLabel)
         wrapView.addSubview(desciptionLabel)
@@ -89,11 +89,9 @@ class YXWorkWithMyClassCell: UITableViewCell {
             make.top.right.equalToSuperview()
             make.size.equalTo(CGSize(width: AdaptSize(46), height: AdaptSize(46)))
         }
-        let nameLabelHeight = self.nameLabel.text?.textHeight(font: nameLabel.font, width: screenWidth - AdaptSize(70)) ?? 0
         nameLabel.snp.remakeConstraints { (make) in
             make.left.top.equalToSuperview().offset(AdaptSize(15))
-            make.right.equalToSuperview().offset(AdaptSize(-15))
-            make.height.equalTo(nameLabelHeight)
+            make.right.equalTo(statusImage.snp.left).offset(AdaptSize(-10))
         }
         desciptionLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(nameLabel)
@@ -147,8 +145,8 @@ class YXWorkWithMyClassCell: UITableViewCell {
         }
         self.desciptionLabel.text  = String(format: "%@ l %@", model.className, model.timeStr)
         progress = progress > 1 ? 1 : progress
-        DispatchQueue.main.async {
-            self.progressView.progress = progress
+        DispatchQueue.main.async { [weak self] in
+            self?.progressView.progress = progress
         }
         self.createSubviews()
 
@@ -224,7 +222,6 @@ class YXWorkWithMyClassCell: UITableViewCell {
 
     // MARK: ==== Event ====
     @objc private func actionEvent() {
-        YXLog("查看详情")
         guard let _model = self.model else {
             return
         }
@@ -262,8 +259,10 @@ class YXWorkWithMyClassCell: UITableViewCell {
             return
         }
         YXLog(String(format: "==== 开始做%@，作业ID：%ld ====", type.desc, workId))
-        let dataList = self.getBookHashDic()
-        YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+        if type == .homeworkPunch {
+            let dataList = self.getBookHashDic()
+            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+        }
 
         // 跳转学习
         let vc = YXExerciseViewController()

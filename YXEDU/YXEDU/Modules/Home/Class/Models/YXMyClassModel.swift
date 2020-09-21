@@ -26,6 +26,16 @@ enum YXHomeworkType: Int {
             return .homeworkWord
         }
     }
+    func description() -> String {
+        switch self {
+        case .punch:
+            return "每日打卡"
+        case .listen:
+            return "听力练习"
+        case .word:
+            return "单词练习"
+        }
+    }
 }
 
 enum YXWorkCompletionStatus: Int {
@@ -73,13 +83,15 @@ struct YXMyClassModel: Mappable {
 }
 
 struct YXMyWorkListModel: Mappable {
+    var hadNewNotification: Bool = false
     var bookHash: [String:String]      = [:]
     var workModelList: [YXMyWorkModel] = []
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        bookHash      <- map["hashkey"]
-        workModelList <- map["list"]
+        hadNewNotification <- map["notice_num"]
+        bookHash           <- map["hashkey"]
+        workModelList      <- map["list"]
     }
 }
 
@@ -103,6 +115,9 @@ struct YXMyWorkModel: Mappable {
     var studyWordCount    = 0
     var studyDayCount     = 0
     var bookHash          = [String:String]()
+    // 作业码提取
+    var teacherName: String?
+    var isFirstJoin: Bool = true
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
@@ -122,6 +137,8 @@ struct YXMyWorkModel: Mappable {
         studyWordCount <- map["study_words"]
         studyDayCount  <- map["study_days"]
         bookHash       <- map["hashkey"]
+        teacherName    <- map["teacher_name"]
+        isFirstJoin    <- map["first_add_class"]
         if type == .punch {
             shareWorkStatus    <- (map["no_status"], EnumTransform<YXShareWorkStatusType>())
         } else {
@@ -226,5 +243,23 @@ struct YXMyClassRemindModel: Mappable {
         teacherName <- map["nick"]
         workName    <- map["work_name"]
         workId      <- map["work_id"]
+    }
+}
+
+struct YXMyClassSummaryModel: Mappable {
+
+    var classId: Int        = 0
+    var className: String   = ""
+    var teacherName: String = ""
+    var isFirstJoin: Bool   = false
+
+    init() {}
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        classId     <- map["class_id"]
+        className   <- map["class_name"]
+        teacherName <- map["teacher_name"]
+        isFirstJoin <- map["first_add_class"]
     }
 }

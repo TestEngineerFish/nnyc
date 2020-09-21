@@ -81,18 +81,13 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
         
         self.taskButton.addTarget(self, action: #selector(goToEarnCoin), for: .touchUpInside)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
 
     private func bindProperty() {
         self.coinAmountlabel.text              = coinAmount
         self.contentWebView.navigationDelegate = self
         guard let urlStr = YXUserModel.default.coinExplainUrl, let url = URL(string: urlStr) else {
             self.indicatorView.stopAnimating()
-            YXUtils.showHUD(self.view, title: "加载失败，请稍后再试")
+            YXUtils.showHUD(nil, title: "加载失败，请稍后再试")
             return
         }
         self.contentWebView.load(URLRequest(url: url))
@@ -161,10 +156,10 @@ class YXSquirrelCoinViewController: YXViewController, WKNavigationDelegate {
     @objc
     private func goToEarnCoin() {
         let home = UIStoryboard(name: "Home", bundle: nil)
-        let taskCenterViewController = home.instantiateViewController(withIdentifier: "YXTaskCenterViewController") as! YXTaskCenterViewController
-        taskCenterViewController.fromYXSquirrelCoinViewController = true
-        
-        self.navigationController?.pushViewController(taskCenterViewController, animated: true)
+        if let taskCenterViewController = home.instantiateViewController(withIdentifier: "YXTaskCenterViewController") as? YXTaskCenterViewController {
+            taskCenterViewController.fromYXSquirrelCoinViewController = true
+            self.navigationController?.pushViewController(taskCenterViewController, animated: true)
+        }
     }
 
     // MARK: ==== WKNavigationDelegate ====

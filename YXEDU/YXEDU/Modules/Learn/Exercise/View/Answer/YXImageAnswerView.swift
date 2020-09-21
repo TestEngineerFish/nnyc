@@ -19,8 +19,8 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
     
 
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    private var collectionView: UICollectionView!
-    private var collectionViewCell: UICollectionViewCell!
+    private var collectionView: UICollectionView?
+    private var collectionViewCell: UICollectionViewCell?
     
     func itemSize() -> CGSize {
         return CGSize(width: Config.itemWidth, height: Config.itemHeight)
@@ -40,19 +40,19 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         flowLayout.minimumInteritemSpacing = 0
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor                = UIColor.white
-        collectionView.decelerationRate               = UIScrollView.DecelerationRate.fast
-        collectionView.showsVerticalScrollIndicator   = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceVertical           = true
-        collectionView.delegate                       = self
-        collectionView.dataSource                     = self
-        collectionView.isScrollEnabled                = false
-        collectionView.clipsToBounds                  = false
-        self.addSubview(collectionView)
+        collectionView?.backgroundColor                = UIColor.white
+        collectionView?.decelerationRate               = UIScrollView.DecelerationRate.fast
+        collectionView?.showsVerticalScrollIndicator   = false
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.alwaysBounceVertical           = true
+        collectionView?.delegate                       = self
+        collectionView?.dataSource                     = self
+        collectionView?.isScrollEnabled                = false
+        collectionView?.clipsToBounds                  = false
+        self.addSubview(collectionView!)
 
-        collectionView.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
-        self.collectionView.reloadData()
+        collectionView?.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "UICollectionViewCell")
+        self.collectionView?.reloadData()
     }
     
     override func layoutSubviews() {
@@ -60,7 +60,7 @@ class YXImageAnswerView: YXBaseAnswerView, UICollectionViewDelegate, UICollectio
         let itemHNum = ((self.exerciseModel.option?.firstItems?.count ?? 0) + 1)/2
         let h = (Config.itemHeight + Config.itemInterval) * CGFloat(itemHNum) - Config.itemInterval
         let w = Config.itemWidth * 2 + Config.itemInterval
-        collectionView.snp.makeConstraints { (make) in
+        collectionView?.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
             make.width.equalTo(w)
             make.height.equalTo(h)

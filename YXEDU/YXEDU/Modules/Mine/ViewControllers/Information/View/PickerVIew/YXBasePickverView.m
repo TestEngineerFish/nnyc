@@ -252,8 +252,12 @@
                         
                     case GradeType:
                     {
-                        NSInteger index = [self.gradeArray indexOfObject:string];
-                        [self.customPicker selectRow:index inComponent:0 animated:YES];
+                        if ([self.gradeArray containsObject:string]) {
+                            NSInteger index = [self.gradeArray indexOfObject:string];
+                            [self.customPicker selectRow:index inComponent:0 animated:YES];
+                        } else {
+                            [self.customPicker selectRow:0 inComponent:0 animated:YES];
+                        }
                     }
                         break;
                         
@@ -326,6 +330,9 @@
         NSString *minDateStr = @"1949-1-1";
         _datePicker.minimumDate = [dateFormatter dateFromString:minDateStr];
         _datePicker.maximumDate = [NSDate date];
+        if (@available(iOS 13.4, *)) {
+            _datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+        }
         [self.containerView addSubview:_datePicker];
     }
 
@@ -673,8 +680,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     else if (self.type == ClassType) {
@@ -699,8 +708,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     else if (self.type == BookEditionType) {
@@ -725,8 +736,10 @@
             [self setUpKey:@"grade" withValue:@"8"];
         } else if ([result isEqualToString:@"九年级"]) {
             [self setUpKey:@"grade" withValue:@"9"];
-        } else {
+        } else if ([result isEqualToString:@"高中"]) {
             [self setUpKey:@"grade" withValue:@"10"];
+        } else {
+            [self setUpKey:@"grade" withValue:@"11"];
         }
     }
     
@@ -759,7 +772,7 @@
         }
         
     } fail:^(NSError* error) {
-     
+        YXLog(@"更改年级失败");
     }];
 }
 

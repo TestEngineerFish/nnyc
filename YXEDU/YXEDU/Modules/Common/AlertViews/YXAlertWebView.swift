@@ -9,9 +9,9 @@
 import UIKit
 import WebKit
 
-class YXAlertWebView: UIView, WKNavigationDelegate {
+class YXAlertWebView: YXTopWindowView, WKNavigationDelegate {
 
-    static let share = YXAlertWebView()
+    var url: URL?
 
     var backgroundView: UIView = {
         let view = UIView()
@@ -24,6 +24,8 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
         webView.backgroundColor     = UIColor.white
         webView.layer.cornerRadius  = AdaptIconSize(14)
         webView.layer.masksToBounds = true
+        webView.scrollView.showsVerticalScrollIndicator   = false
+        webView.scrollView.showsHorizontalScrollIndicator = false
         return webView
     }()
 
@@ -37,6 +39,7 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
     var indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
         indicatorView.hidesWhenStopped = true
+        indicatorView.style            = .gray
         indicatorView.startAnimating()
         return indicatorView
     }()
@@ -51,7 +54,8 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func createSubviews() {
+    override func createSubviews() {
+        super.createSubviews()
         self.addSubview(backgroundView)
         self.addSubview(webView)
         self.addSubview(closeImageView)
@@ -79,12 +83,12 @@ class YXAlertWebView: UIView, WKNavigationDelegate {
         self.closeImageView.addGestureRecognizer(tap)
     }
 
-    func show(_ urlStr: String) {
+    override func show() {
         kWindow.addSubview(self)
         self.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        guard let url = URL(string: urlStr) else {
+        guard let url = self.url else {
             return
         }
         self.webView.load(URLRequest(url: url))

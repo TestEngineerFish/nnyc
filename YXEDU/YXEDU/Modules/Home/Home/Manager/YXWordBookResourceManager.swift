@@ -14,6 +14,7 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     var group                     = DispatchGroup()
     static var totalDownloadCount = 0
+    static var wordDownloading    = false
     static let shared             = YXWordBookResourceManager()
     static var stop               = false {
         willSet {
@@ -23,8 +24,10 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
             }
         }
     }
-    static var downloadDataList = [(Int, String)]()
-
+    /// 下载队列
+    static var downloadDataList  = [(Int, String)]()
+    /// 失败的任务
+    static var errorDownloadDict = [String:Int]()
     /// 下载对象列表，存储所以需要下载的任务式对象
     static var taskList = [YXWordBookResourceModel]()
 
@@ -34,7 +37,6 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
 
     /// 检测词书是否需要下载（可指定词书ID，未指定则检测当前用户所有词书）
     func contrastBookData(by bookId: Int? = nil) {
-//        if bookId == .some(0) { return }
         let request = YXWordBookRequest.downloadWordBook(bookId: bookId)
         YYNetworkService.default.request(YYStructDataArrayResponse<YXWordBookDownloadModel>.self, request: request, success: {  [weak self] (response) in
             guard let self = self else { return }
@@ -44,9 +46,9 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                     if wordBookDownloadModels.isEmpty {
                         self.downloadFinished()
                     } else {
-                        wordBookDownloadModels.forEach { (wordBookDownloadModel) in
+                        wordBookDownloadModels.forEach { [weak self] (wordBookDownloadModel) in
                             if wordBookDownloadModel.id == bookId {
-                                self.checkLocalBooksStatus(with: [wordBookDownloadModel])
+                                self?.checkLocalBooksStatus(with: [wordBookDownloadModel])
                                 return
                             }
                         }
@@ -56,14 +58,15 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
                 }
             } else {
                 YXLog("后台返回词书列表数据错误")
+                self.sendFailNotification()
                 self.downloadFinished()
-                self.popRootVC()
             }
-        }) { error in
+        }) { [weak self] error in
+            guard let self = self else { return }
             YXLog("检测词书接口请求失败:\(error.message)")
             self.downloadFinished()
-            YXUtils.showHUD(kWindow, title: error.message)
-            self.popRootVC()
+            self.sendFailNotification()
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -160,13 +163,14 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     func processorTask() {
         guard let taskModel = YXWordBookResourceManager.taskList.first else {
             YXLog("✅所有下载词书队列任务处理完成✅")
+            YXWordBookResourceManager.errorDownloadDict.removeAll()
             return
         }
         taskModel.status = .downloading
         taskModel.eventBlock()
     }
 
-    /// 单词任务完成事件
+    /// 单次任务完成事件
     private func downloadFinished() {
         YXLog("==== 当前任务处理完成✅ ====")
         //用于发送完成通知
@@ -183,16 +187,18 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         YYNetworkService.default.request(YYStructResponse<YXWordBookModel>.self, request: request, success: { [weakself = self] (response) in
             guard var bookModel = response.data else {
                 weakself.downloadError(with: bookId, newHash: newHash, error: "下载词书数据解析错误")
+                self.sendFailNotification()
                 return
             }
             YXLog("下载\(bookId)完成...")
             bookModel.bookHash = newHash
             DispatchQueue.global().async {
-                weakself.updateWords(with: bookModel)
+                weakself.updateBookModel(with: bookModel)
             }
-        }) { (error) in
+        }) { [weak self] (error) in
+            guard let self = self else { return }
             self.downloadError(with: bookId, newHash: newHash, error: error.message)
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -202,13 +208,27 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
     ///   - newHash: 新词书的哈希值
     ///   - msg: 错误原因
     func downloadError(with bookId: Int?, newHash: String?, error msg: String?) {
-        let _bookId  = bookId ?? 0
-        let _newHash = newHash ?? ""
+
+        YXWordBookResourceManager.shared.group.leave()
         if let _msg = msg {
             YXLog(_msg)
-            YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
+            let _bookId  = bookId ?? 0
+            let _newHash = newHash ?? ""
+            let downloadCount: Int = YXWordBookResourceManager.errorDownloadDict[_newHash] ?? 0
+            if downloadCount < 1 {
+                YXWordBookResourceManager.downloadDataList.append((_bookId, _newHash))
+                YXWordBookResourceManager.errorDownloadDict[_newHash] = downloadCount + 1
+            } else {
+                self.sendFailNotification()
+                YXWordBookResourceManager.downloadDataList.removeAll()
+                YXWordBookResourceManager.errorDownloadDict.removeAll()
+            }
         }
-        YXWordBookResourceManager.shared.group.leave()
+    }
+
+    /// 发送下载失败通知
+    private func sendFailNotification() {
+        NotificationCenter.default.post(name: YXNotification.kDownloadWordError, object: nil)
     }
 
     // TODO: ---- Tools ----
@@ -237,19 +257,21 @@ class YXWordBookResourceManager: NSObject, URLSessionTaskDelegate {
         return resultList
     }
 
-    private func popRootVC() {
-        YRRouter.sharedInstance().currentNavigationController()?.popToRootViewController(animated: true)
-    }
-
     // TODO: ---- 本地词书数据库操作 ----
 
-    /// 保存、更新单词
-    private func updateWords(with bookModel: YXWordBookModel) {
+    /// 保存、更新词书
+    private func updateBookModel(with bookModel: YXWordBookModel) {
         if YXWordBookResourceManager.stop {
             YXWordBookResourceManager.shared.downloadError(with: bookModel.bookId, newHash: bookModel.bookHash, error: "当前正在学习中，不再下载其他词书")
             return
         }
-        YXWordBookDaoImpl().updateWords(bookModel: bookModel)
+        YXWordBookDaoImpl().updateBookModel(bookModel: bookModel)
+    }
+
+    /// 保存、更新单词
+    /// - Parameter wordModelList: 单词列表
+    func updateWordModel(with wordModelList: [YXWordModel]) {
+        YXWordBookDaoImpl().updateWordModelList(with: wordModelList)
     }
 }
 

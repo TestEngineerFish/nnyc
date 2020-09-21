@@ -66,9 +66,10 @@ class YXLearningResultViewController: YXViewController {
         self.view.addSubview(self.contentScrollView)
         
         // 结果视图
-        var newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: model!)
+        guard let _model = model else { return }
+        var newModel = YXExerciseResultDisplayModel.displayModel(newStudyWordCount: newLearnAmount, reviewWordCount: reviewLearnAmount, model: _model)
         newModel.type = learnConfig?.learnType ?? .base
-        headerView = YXExerciseResultView(model: newModel)
+        headerView    = YXExerciseResultView(model: newModel)
         self.contentScrollView.addSubview(headerView!)
         
         // 返回按钮
@@ -92,7 +93,7 @@ class YXLearningResultViewController: YXViewController {
         self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: self.currentUnitIndex, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         //        self.unitMapView = YXUnitMapView(unitModelList: model.unitList ?? [], currentUnitIndex: 6, moveNext: model.status, frame: CGRect(origin: .zero, size: mapSize))
         self.contentScrollView.addSubview(unitMapView!)
-        unitMapView!.snp.makeConstraints { (make) in
+        unitMapView?.snp.makeConstraints { (make) in
             make.size.equalTo(mapSize)
             make.centerX.equalToSuperview()
             make.top.equalTo(resultView.snp.bottom).offset(AdaptIconSize(10))
@@ -112,7 +113,8 @@ class YXLearningResultViewController: YXViewController {
             make.size.equalTo(CGSize(width: AdaptIconSize(16), height: AdaptIconSize(41)))
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.contentScrollView.contentSize = CGSize(width:self.view.width, height:self.unitMapView!.frame.maxY + AdaptSize(15) + kSafeBottomMargin)
+            let mapMaxY = self.unitMapView?.frame.maxY ?? 0
+            self.contentScrollView.contentSize = CGSize(width:self.view.width, height: mapMaxY + AdaptSize(15) + kSafeBottomMargin)
         }
     }
     
@@ -164,7 +166,7 @@ class YXLearningResultViewController: YXViewController {
             if response.data?.countStatus == .some(.ing) {
                 // 如果请求次数超过五次,则退出
                 if self.requestCount >= 5 {
-                    YXUtils.showHUD(self.view, title: "后台繁忙,请稍后重试")
+                    YXUtils.showHUD(nil, title: "后台繁忙,请稍后重试")
                 } else {
                     self.requestCount += 1
                     self.bindData()
@@ -183,7 +185,7 @@ class YXLearningResultViewController: YXViewController {
                 self.loadSubViews()
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -196,7 +198,7 @@ class YXLearningResultViewController: YXViewController {
         YYNetworkService.default.request(YYStructResponse<YXLearnResultModel>.self, request: request, success: { (response) in
             YXLog("学习新单元成功")
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -213,7 +215,7 @@ class YXLearningResultViewController: YXViewController {
     
     @objc private func punchEvent() {
         guard let model = self.model, let config = learnConfig else {
-            YXUtils.showHUD(kWindow, title: "数据请求失败，请稍后再试～")
+            YXUtils.showHUD(nil, title: "数据请求失败，请稍后再试～")
             return
         }
         let shareVC = YXShareViewController()

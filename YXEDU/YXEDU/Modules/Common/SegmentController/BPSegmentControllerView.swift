@@ -58,10 +58,10 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     var config: BPSegmentConfig
     var lastSelectedIndex: IndexPath
     // ---- 子视图
-    var headerScrollView: BPSegmentView!
-    var contentScrollView: BPSegmentView!
-    var headerFlowLayout: UICollectionViewFlowLayout!
-    var contentFlowLayout: UICollectionViewFlowLayout!
+    var headerScrollView: BPSegmentView?
+    var contentScrollView: BPSegmentView?
+    var headerFlowLayout: UICollectionViewFlowLayout?
+    var contentFlowLayout: UICollectionViewFlowLayout?
 
     weak var delegate: BPSegmentDataSource?
 
@@ -73,12 +73,12 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
     }
 
     deinit {
-        headerScrollView.delegate    = nil
-        contentScrollView.delegate   = nil
-        headerScrollView.dataSource  = nil
-        contentScrollView.dataSource = nil
-        headerScrollView  = nil
-        contentScrollView = nil
+        headerScrollView?.delegate    = nil
+        contentScrollView?.delegate   = nil
+        headerScrollView?.dataSource  = nil
+        contentScrollView?.dataSource = nil
+        headerScrollView              = nil
+        contentScrollView             = nil
     }
 
     required init?(coder: NSCoder) {
@@ -89,45 +89,45 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.selectItem(with: self.lastSelectedIndex, animation: false)
         }
-        self.headerScrollView.reloadData()
-        self.contentScrollView.reloadData()
+        self.headerScrollView?.reloadData()
+        self.contentScrollView?.reloadData()
     }
 
     private func createSubviews() {
         headerFlowLayout = UICollectionViewFlowLayout()
-        headerFlowLayout.scrollDirection         = .horizontal
-        headerFlowLayout.itemSize                = self.config.headerItemSize
-        headerFlowLayout.minimumLineSpacing      = self.config.headerItemSpacing
-        headerFlowLayout.sectionInset            = UIEdgeInsets.zero
+        headerFlowLayout?.scrollDirection         = .horizontal
+        headerFlowLayout?.itemSize                = self.config.headerItemSize
+        headerFlowLayout?.minimumLineSpacing      = self.config.headerItemSpacing
+        headerFlowLayout?.sectionInset            = UIEdgeInsets.zero
 
         contentFlowLayout = UICollectionViewFlowLayout()
-        contentFlowLayout.scrollDirection         = .horizontal
-        contentFlowLayout.itemSize                = self.config.contentItemSize
-        contentFlowLayout.minimumLineSpacing      = self.config.contentItemSpacing
-        contentFlowLayout.sectionInset            = UIEdgeInsets.zero
+        contentFlowLayout?.scrollDirection         = .horizontal
+        contentFlowLayout?.itemSize                = self.config.contentItemSize
+        contentFlowLayout?.minimumLineSpacing      = self.config.contentItemSpacing
+        contentFlowLayout?.sectionInset            = UIEdgeInsets.zero
         
         let headerFrame  = CGRect(x: 0, y: 0, width: self.frame.width, height: self.config.headerHeight)
-        headerScrollView = BPSegmentView(frame: headerFrame, collectionViewLayout: headerFlowLayout)
-        headerScrollView.backgroundColor = self.config.headerBackgroundColor
-        let contentFrame = CGRect(x: 0, y: headerScrollView.frame.maxY, width: self.frame.width, height: self.frame.height - headerScrollView.frame.height)
-        contentScrollView = BPSegmentView(frame: contentFrame, collectionViewLayout: contentFlowLayout)
-        contentScrollView.backgroundColor = self.config.contentBackgroundColor
-        self.addSubview(headerScrollView)
-        self.addSubview(contentScrollView)
+        headerScrollView = BPSegmentView(frame: headerFrame, collectionViewLayout: headerFlowLayout!)
+        headerScrollView?.backgroundColor = self.config.headerBackgroundColor
+        let contentFrame = CGRect(x: 0, y: headerScrollView!.frame.maxY, width: self.frame.width, height: self.frame.height - headerScrollView!.frame.height)
+        contentScrollView = BPSegmentView(frame: contentFrame, collectionViewLayout: contentFlowLayout!)
+        contentScrollView?.backgroundColor = self.config.contentBackgroundColor
+        self.addSubview(headerScrollView!)
+        self.addSubview(contentScrollView!)
 
-        headerScrollView.register(BPItemHeaderView.classForCoder(), forCellWithReuseIdentifier: headerItemIdf)
-        contentScrollView.register(BPItemContentView.classForCoder(), forCellWithReuseIdentifier: contentItemIdf)
+        headerScrollView?.register(BPItemHeaderView.classForCoder(), forCellWithReuseIdentifier: headerItemIdf)
+        contentScrollView?.register(BPItemContentView.classForCoder(), forCellWithReuseIdentifier: contentItemIdf)
 
-        headerScrollView.delegate      = self
-        headerScrollView.dataSource    = self
-        contentScrollView.delegate     = self
-        contentScrollView.dataSource   = self
+        headerScrollView?.delegate      = self
+        headerScrollView?.dataSource    = self
+        contentScrollView?.delegate     = self
+        contentScrollView?.dataSource   = self
 
-        headerScrollView.isHeaderView  = true
-        contentScrollView.isHeaderView = false
+        headerScrollView?.isHeaderView  = true
+        contentScrollView?.isHeaderView = false
 
-        headerScrollView.isPagingEnabled  = false
-        contentScrollView.isPagingEnabled = true
+        headerScrollView?.isPagingEnabled  = false
+        contentScrollView?.isPagingEnabled = true
     }
 
     // TODO: ==== UICollectionViewDataSource ====
@@ -234,9 +234,9 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     // MARK: ==== UIScrollViewDelegate ====
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == self.contentScrollView {
+        if scrollView == self.contentScrollView && self.contentScrollView != nil {
             // 计算偏移
-            let indexPath = self.shouldIndexPath(offset: scrollView.contentOffset.x, in: self.contentScrollView)
+            let indexPath = self.shouldIndexPath(offset: scrollView.contentOffset.x, in: self.contentScrollView!)
             if indexPath != self.lastSelectedIndex {
                 self.selectItem(with: indexPath)
             }
@@ -265,8 +265,8 @@ class BPSegmentControllerView: UIView, UICollectionViewDataSource, UICollectionV
 
     /// 滑动到对应位置
     private func scrollView(to indexPath: IndexPath, animation: Bool) {
-        self.headerScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
-        self.contentScrollView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
+        self.headerScrollView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
+        self.contentScrollView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animation)
     }
 
     // TODO: ==== Tools ===

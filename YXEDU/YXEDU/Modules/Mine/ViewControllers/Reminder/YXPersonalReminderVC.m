@@ -15,7 +15,8 @@
 @property (nonatomic, strong) UISwitch *isReminderSwitch;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIDatePicker *datePicker;
-@property (nonatomic, weak)UIView *bottomView;
+@property (nonatomic, weak)   UIView *bottomView;
+@property (nonatomic, strong) UIView *bgView;
 @end
 
 @implementation YXPersonalReminderVC
@@ -24,73 +25,75 @@
 }
 
 - (void)viewDidLoad {
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
+    [self createSubviews];
+    [self bindProperty];
+    [self switchTaped];
+}
 
+- (void) createSubviews {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [button setTitle:@"保存" forState:UIControlStateNormal];
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [button addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    UIView *bgView = [[UIView alloc] init];
-    bgView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bgView];
-    
+
+    self.bgView = [[UIView alloc] init];
+    self.bgView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.bgView];
+
     UIView *sepLine = [[UIView alloc] init];
     sepLine.backgroundColor = UIColorOfHex(0xedf2f6);
-    [bgView addSubview:sepLine];
-    
+    [self.bgView addSubview:sepLine];
+
     UILabel *switchLabel = [[UILabel alloc] init];
     switchLabel.text = @"每日提醒";
     switchLabel.textColor = UIColorOfHex(0x485461);
     switchLabel.backgroundColor = [UIColor whiteColor];
-    
+
     self.isReminderSwitch = [[UISwitch alloc] init];
     [self.isReminderSwitch addTarget:self action:@selector(switchTaped) forControlEvents:UIControlEventValueChanged];
     self.isReminderSwitch.tintColor = UIColorOfHex(0xE5E5E5);
     self.isReminderSwitch.onTintColor = UIColorOfHex(0xFBA217);
-    
+
     UIView *intervalView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, SCREEN_WIDTH, 44)];
     intervalView.backgroundColor = UIColorOfHex(0xF5F5F5);
     UILabel *intervalLabel = [[UILabel alloc] init];
     intervalLabel.text = @"开启每日提醒，不错过每天的背单词计划";
     [intervalLabel setFont:[UIFont systemFontOfSize:14]];
     intervalLabel.textColor = UIColorOfHex(0x888888);
-    
     [self.view addSubview:switchLabel];
     [self.view addSubview:self.isReminderSwitch];
     [self.view addSubview:intervalView];
     [intervalView addSubview:intervalLabel];
 
-    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.view).offset(8);
         make.height.mas_equalTo(70);
     }];
-    
+
     [sepLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(bgView);
+        make.left.right.bottom.equalTo(self.bgView);
         make.height.mas_equalTo(1.0);
     }];
-    
+
     [switchLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(16);
-        make.centerY.equalTo(bgView);//.offset(25);
-        
+        make.centerY.equalTo(self.bgView);//.offset(25);
+
     }];
-    
+
     [self.isReminderSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-16);
-        make.centerY.equalTo(bgView).offset(-2);//.offset(25);
-//        make.size.mas_equalTo(CGSizeMake(46, 21));
+        make.centerY.equalTo(self.bgView).offset(-2);
     }];
-    
+
     [intervalLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(16);
         make.centerY.equalTo(intervalView);
     }];
-    self.view.backgroundColor = UIColorOfHex(0xF5F5F5);
-    
     UIView *bottomView = [[UIView alloc] init];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
@@ -99,23 +102,27 @@
         make.top.equalTo(intervalView.mas_bottom);
     }];
     _bottomView = bottomView;
+}
+
+- (void) bindProperty {
+    self.view.backgroundColor = UIColorOfHex(0xF5F5F5);
 
     if ([YXSetReminderView getReminderDate] == nil) {
         self.remindDate = nil;
         [self.isReminderSwitch setOn:NO];
-        
     } else {
         self.remindDate = [YXSetReminderView getReminderDate];
         [self.isReminderSwitch setOn:YES];
     }
-    
-    [self switchTaped];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.bgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset(8);
+        make.height.mas_equalTo(70);
+    }];
 }
 
 - (void) switchTaped {
@@ -200,7 +207,7 @@
         [YXSetReminderView didSetReminderWithDidOpen:0 time:0];
         [YXSetReminderView setReminderTimeWithDate: nil];
     }
-        
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

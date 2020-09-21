@@ -54,7 +54,7 @@ class YXAudioPlayerView: UIView {
     func play() {
         guard let _urlStr = self.urlStr, let url = URL(string: _urlStr) else {
             YXLog("无效的音频地址: \(String(describing: self.urlStr))")
-            YXUtils.showHUD(kWindow, title: "无效音频")
+            YXUtils.showHUD(nil, title: "无效音频")
             return
         }
         self.audioButton.layer.addFlickerAnimation()
@@ -62,7 +62,8 @@ class YXAudioPlayerView: UIView {
             YXAVPlayerManager.share.pauseAudio()
         }
         self.delegate?.playAudioStart()
-        YXAVPlayerManager.share.playAudio(url) {
+        YXAVPlayerManager.share.playAudio(url) { [weak self] in
+            guard let self = self else { return }
             self.delegate?.playAudioFinished()
             self.audioButton.layer.removeFlickerAnimation()
         }
@@ -73,7 +74,8 @@ class YXAudioPlayerView: UIView {
         if !YXAVPlayerManager.share.isPlaying {
             self.audioButton.layer.addFlickerAnimation()
         }
-        YXAVPlayerManager.share.playListAudio(self.urlStrList) {
+        YXAVPlayerManager.share.playListAudio(self.urlStrList) { [weak self] in
+            guard let self = self else { return }
             self.audioButton.layer.removeFlickerAnimation()
         }
     }

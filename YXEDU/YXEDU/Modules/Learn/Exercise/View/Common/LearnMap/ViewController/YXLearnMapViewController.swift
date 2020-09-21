@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YXLearnMapViewController: UIViewController {
+class YXLearnMapViewController: YXViewController {
 
     var mapModelList: [YXLearnMapUnitModel]?
 
@@ -19,13 +19,9 @@ class YXLearnMapViewController: UIViewController {
     var bookId: Int?
     var unitId: Int?
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customNavigationBar?.isHidden = true
         self.view.backgroundColor = UIColor.white
         self.bindData()
         self.createSubviews()
@@ -115,7 +111,7 @@ class YXLearnMapViewController: UIViewController {
             alertView.descriptionLabel.text = "你太厉害了，暂时没有需要新学或复习的单词，你可以……"
             alertView.rightOrCenterButton.setTitle("换单元", for: .normal)
             alertView.shouldOnlyShowOneButton = true
-            alertView.show()
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
         } else {
             if let currentModel = self.learningPath?.currentUnitView?.model, currentModel.status != .uniteIng {
                 let currentUnitName = currentModel.unitName ?? ""
@@ -129,7 +125,7 @@ class YXLearnMapViewController: UIViewController {
                     button.isEnabled = false
                     YXLog("切换到" + currentUnitName + "单元学习")
                 }
-                alertView.show()
+                YXAlertQueueManager.default.addAlert(alertView: alertView)
             } else {
                 self.learnUnit(button.tag)
                 button.isEnabled = false
@@ -144,11 +140,12 @@ class YXLearnMapViewController: UIViewController {
             return
         }
         let request = YXExerciseRequest.learnMap(bookId: _bookId)
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXLearnMapUnitModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.mapModelList = response.dataArray
             self.createMapView()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -166,7 +163,7 @@ class YXLearnMapViewController: UIViewController {
             YXLog("==== 从地图页选择单元学习 ====")
             YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: false)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

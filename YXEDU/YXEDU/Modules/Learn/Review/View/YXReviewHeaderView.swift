@@ -9,7 +9,7 @@
 import UIKit
 
 class YXReviewHeaderView: YXView {
-    var reviewModel: YXReviewPageModel! { didSet {bindData()} }
+    var reviewModel = YXReviewPageModel() { didSet {bindData()} }
     var startReviewEvent: (() -> Void)?
     var createReviewPlanEvent: (() -> Void)?
     
@@ -189,7 +189,6 @@ class YXReviewHeaderView: YXView {
         reviewPlanLabel.textColor = UIColor.black1
         reviewPlanLabel.text      = "词单"
         
-        createReviewPlanButton.layer.masksToBounds = true
         createReviewPlanButton.layer.cornerRadius = AS(isPad() ? 35 : 25)/2
         createReviewPlanButton.setImage(UIImage(named: "review_add_icon"), for: .normal)
         createReviewPlanButton.setTitle("新建词单", for: .normal)
@@ -428,22 +427,22 @@ class YXReviewHeaderView: YXView {
     override func bindData() {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.familiarProgressView.progress = self.progressValue(num: self.reviewModel?.familiarNum)
-            self.iKnowProgressView.progress    = self.progressValue(num: self.reviewModel?.knowNum)
-            self.fuzzyProgressView.progress    = self.progressValue(num: self.reviewModel?.fuzzyNum)
-            self.forgetProgressView.progress   = self.progressValue(num: self.reviewModel?.forgetNum)
+            self.familiarProgressView.progress = self.progressValue(num: self.reviewModel.familiarNum)
+            self.iKnowProgressView.progress    = self.progressValue(num: self.reviewModel.knowNum)
+            self.fuzzyProgressView.progress    = self.progressValue(num: self.reviewModel.fuzzyNum)
+            self.forgetProgressView.progress   = self.progressValue(num: self.reviewModel.forgetNum)
         }
         
-        countLabel.text    = "\(reviewModel?.learnNum ?? 0)"
-        familiarLabel.text = "熟悉的单词  \(reviewModel?.familiarNum ?? 0)个"
-        iKnowLabel.text    = "认识的单词  \(reviewModel?.knowNum ?? 0)个"
-        fuzzyLabel.text    = "模糊的单词  \(reviewModel?.fuzzyNum ?? 0)个"
-        forgetLabel.text   = "忘记的单词  \(reviewModel?.forgetNum ?? 0)个"
+        countLabel.text    = "\(reviewModel.learnNum)"
+        familiarLabel.text = "熟悉的单词  \(reviewModel.familiarNum)个"
+        iKnowLabel.text    = "认识的单词  \(reviewModel.knowNum)个"
+        fuzzyLabel.text    = "模糊的单词  \(reviewModel.fuzzyNum)个"
+        forgetLabel.text   = "忘记的单词  \(reviewModel.forgetNum)个"
         
-        familiarProgressLabel.text = progressStringValue(num: reviewModel?.familiarNum)
-        iKnowProgressLabel.text    = progressStringValue(num: reviewModel?.knowNum)
-        fuzzyProgressLabel.text    = progressStringValue(num: reviewModel?.fuzzyNum)
-        forgetProgressLabel.text   = progressStringValue(num: reviewModel?.forgetNum)
+        familiarProgressLabel.text = progressStringValue(num: reviewModel.familiarNum)
+        iKnowProgressLabel.text    = progressStringValue(num: reviewModel.knowNum)
+        fuzzyProgressLabel.text    = progressStringValue(num: reviewModel.fuzzyNum)
+        forgetProgressLabel.text   = progressStringValue(num: reviewModel.forgetNum)
     }
     
     private func progressStringValue(num: Int?) -> String {
@@ -451,10 +450,10 @@ class YXReviewHeaderView: YXView {
     }
     
     private func progressValue(num: Int?) -> CGFloat {
-        guard let n = num, let model = self.reviewModel, model.learnNum > 0 else {
+        guard let n = num, self.reviewModel.learnNum > 0 else {
             return 0
         }
-        return CGFloat(n) / CGFloat(model.learnNum)
+        return CGFloat(n) / CGFloat(self.reviewModel.learnNum)
     }
     
     private class func pointLabel() -> UILabel {
@@ -518,11 +517,6 @@ class YXReviewProgressView: YXView {
         self.progressView.layer.masksToBounds = true
         self.progressView.layer.cornerRadius  = cornerRadius
         self.progressView.backgroundColor     = self.color()
-    }
-    
-    override func layoutSubviews() {
-        
-        
     }
     
     override func bindData() {

@@ -10,7 +10,7 @@ import UIKit
 
 class YXReviewViewController: YXTableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         
-    private var headerView: YXReviewHeaderView!
+    private var headerView: YXReviewHeaderView?
     private var footerView = YXReviewPlanEmptyView()
     private var reviewPageModel: YXReviewPageModel?
     private var collectionView: UICollectionView = {
@@ -43,16 +43,9 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        YXAlertCheckManager.default.checkLatestBadgeWhenBackTabPage()
+        YXAlertCheckManager.default.checkLatestBadge()
         self.fetchData()
 //        YXTest.default.test()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewWillLayoutSubviews() {
@@ -94,18 +87,21 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
     }
     
     func configHeaderView() {
-        self.headerView.startReviewEvent = { [weak self] in
-            self?.startReviewEvent()
+        self.headerView?.startReviewEvent = { [weak self] in
+            guard let self = self else { return }
+            self.startReviewEvent()
         }
-        self.headerView.createReviewPlanEvent = { [weak self] in
-            self?.createReviewEvent()
+        self.headerView?.createReviewPlanEvent = { [weak self] in
+            guard let self = self else { return }
+            self.createReviewEvent()
         }
     }
     
     func configFooterView() {
         self.footerView.size = CGSize(width: screenWidth, height: AdaptIconSize(72))
         self.footerView.createReviewPlanEvent = { [weak self] in
-            self?.createReviewEvent()
+            guard let self = self else { return }
+            self.createReviewEvent()
         }
     }
     
@@ -141,7 +137,7 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         let otherHeight  = kStatusBarHeight + AdaptSize(isPad() ? 101 : 68)
         let headerHeight = (isPad() ? AdaptSize(550) : AdaptFontSize(360)) + otherHeight
         self.headerView  = YXReviewHeaderView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: headerHeight), reviewModel: reviewPageModel)
-        self.headerView.reviewModel = reviewPageModel
+        self.headerView?.reviewModel = reviewPageModel
         if self.dataSource.count == 0 {
             self.tableView.tableFooterView = self.footerView
         } else {
@@ -168,10 +164,12 @@ class YXReviewViewController: YXTableViewController, UICollectionViewDataSource,
         let model = modelList[indexPath.row]
         cell.setData(model)
         cell.startListenPlanEvent = { [weak self] in
-            self?.startListenPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startListenPlanEvent(planId: model.planId)
         }
         cell.startReviewPlanEvent = { [weak self] in
-            self?.startReviewPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startReviewPlanEvent(planId: model.planId)
         }
         return cell
     }
@@ -198,7 +196,9 @@ extension YXReviewViewController {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if isPad() { return AdaptSize(270) }
-        let model = dataSource[indexPath.row] as! YXReviewPlanModel
+        guard let model = dataSource[indexPath.row] as? YXReviewPlanModel else {
+            return .zero
+        }
         return YXReviewPlanTableViewCell.viewHeight(model: model)
     }
     
@@ -227,20 +227,22 @@ extension YXReviewViewController {
         
         _cell.reviewPlanModel = model
         _cell.startListenPlanEvent = { [weak self] in
-            self?.startListenPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startListenPlanEvent(planId: model.planId)
         }
         _cell.startReviewPlanEvent = { [weak self] in
-            self?.startReviewPlanEvent(planId: model.planId)
+            guard let self = self else { return }
+            self.startReviewPlanEvent(planId: model.planId)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isPad() { return }
-        let model = dataSource[indexPath.row] as! YXReviewPlanModel
-        
-        let vc = YXReviewPlanDetailViewController()
-        vc.planId = model.planId
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let model = dataSource[indexPath.row] as? YXReviewPlanModel {
+            let vc = YXReviewPlanDetailViewController()
+            vc.planId = model.planId
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
@@ -249,29 +251,27 @@ extension YXReviewViewController {
 extension YXReviewViewController {
     /// 智能复习
     func startReviewEvent() {
-//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.aiReview.rawValue], animated: true)
-        if headerView.reviewModel.canMakeReviewPlans > 0 {
-            let taskModel = YXWordBookResourceModel(type: .all) {
-                YXWordBookResourceManager.shared.contrastBookData()
-            }
-            YXWordBookResourceManager.shared.addTask(model: taskModel)
+        if (headerView?.reviewModel.canMakeReviewPlans ?? 0) > 0 {
+//            let taskModel = YXWordBookResourceModel(type: .all) {
+//                YXWordBookResourceManager.shared.contrastBookData()
+//            }
+//            YXWordBookResourceManager.shared.addTask(model: taskModel)
             let vc = YXExerciseViewController()
             vc.learnConfig = YXAIReviewLearnConfig()
             self.navigationController?.pushViewController(vc, animated: true)
             YXLog("==== 开始智能复习 ====")
         } else {
             let nrView = YXNotReviewWordView()
-            nrView.show()
+            YXAlertQueueManager.default.addAlert(alertView: nrView)
         }
     }
     
     /// 开始复习 —— 复习计划
     func startReviewPlanEvent(planId: Int) {
-//        YRRouter.openURL("exercise/study", query: ["type" : YXExerciseDataType.normalReview.rawValue], animated: true)
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXReviewPlanLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)
@@ -280,10 +280,10 @@ extension YXReviewViewController {
     
     /// 开始听力 —— 复习计划
     func startListenPlanEvent(planId: Int) {
-        let taskModel = YXWordBookResourceModel(type: .all) {
-            YXWordBookResourceManager.shared.contrastBookData()
-        }
-        YXWordBookResourceManager.shared.addTask(model: taskModel)
+//        let taskModel = YXWordBookResourceModel(type: .all) {
+//            YXWordBookResourceManager.shared.contrastBookData()
+//        }
+//        YXWordBookResourceManager.shared.addTask(model: taskModel)
         let vc = YXExerciseViewController()
         vc.learnConfig = YXListenReviewLearnConfig(planId: planId)
         self.navigationController?.pushViewController(vc, animated: true)

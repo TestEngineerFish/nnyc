@@ -133,8 +133,8 @@ class YXTaskCenterCardCell: UICollectionViewCell {
         
         todoButton.contentEdgeInsets.left  = 16
         todoButton.contentEdgeInsets.right = 16
-        todoButton.titleEdgeInsets.left    = -todoButton.imageView!.bounds.width - 10
-        todoButton.imageEdgeInsets.left    = todoButton.titleLabel!.bounds.width + 4
+        todoButton.titleEdgeInsets.left    = -(todoButton.imageView?.bounds.width ?? 0) - 10
+        todoButton.imageEdgeInsets.left    = (todoButton.titleLabel?.bounds.width ?? 0) + 4
         todoButton.imageEdgeInsets.right   = -4
     }
     var indexPath: IndexPath?

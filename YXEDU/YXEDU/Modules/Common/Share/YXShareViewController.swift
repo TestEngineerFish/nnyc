@@ -113,8 +113,8 @@ class YXShareViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
-        self.setQRCodeImage {
-            self.getBackgroundImageList()
+        self.setQRCodeImage { [weak self] in
+            self?.getBackgroundImageList()
         }
         self.bindProperty()
         self.createSubviews()
@@ -128,11 +128,12 @@ class YXShareViewController: YXViewController {
         self.shareChannelView.shareType              = .image
         self.shareChannelView.coinImageView.isHidden = hideCoin
         self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
-            guard let self = self else { return }
-            // 挑战分享不算打卡
-            if self.shareType != .challengeResult {
-                self.punch(channel)
-            }
+            guard let self = self, let learnType = self.learnType else { return }
+            self.requestShare(shareType: channel, learnType: learnType)
+//            // 挑战分享不算打卡
+//            if self.shareType != .challengeResult {
+//                self.punch(channel)
+//            }
         }
     }
     
@@ -230,8 +231,10 @@ class YXShareViewController: YXViewController {
             self.backgroundImageUrls         = imageUrls
             self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
             self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
-            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { backgroundImage in
-                DispatchQueue.main.async() {
+            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { [weak self] backgroundImage in
+                guard let self = self else { return }
+                DispatchQueue.main.async() { [weak self] in
+                    guard let self = self else { return }
                     self.loadingView.stopAnimating()
                     switch self.shareType {
                     case .learnResult:
@@ -248,9 +251,23 @@ class YXShareViewController: YXViewController {
                     self.shareChannelView.shareImage = self.shareImageView.image
                 }
             }
-
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
+        }
+    }
+
+    private func requestShare(shareType: YXShareChannel, learnType: YXLearnType) {
+        let request = YXExerciseRequest.learnShare(shareType: shareType.rawValue, learnType: learnType.rawValue)
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
+            var isFinished = false
+            if shareType == .timeLine {
+                self.shareChannelView.coinImageView.isHidden = true
+                isFinished = true
+            }
+            NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
+            NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
+        }) { (error) in
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -283,7 +300,7 @@ class YXShareViewController: YXViewController {
             NotificationCenter.default.post(name: YXNotification.kShareResult, object: nil, userInfo: ["isFinished":isFinished])
             
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -341,18 +358,19 @@ class YXShareViewController: YXViewController {
     private func setQRCodeImage(complete block:(()->Void)?) {
         self.loadingView.startAnimating()
         let request = YXShareRequest.getQRCode
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-            guard let model = response.data else {
+        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let model = response.data else {
                 return
             }
-            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
+            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { [weak self] (image, data, error, result) in
+                guard let self = self else { return }
                 if let _image = image {
                     self.qrCodeImage = _image
                 }
                 block?()
             })
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
     
@@ -458,7 +476,10 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        lableContainer.layer.render(in: currentContext)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
@@ -546,7 +567,10 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        lableContainer.layer.render(in: currentContext)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
@@ -634,7 +658,10 @@ class YXShareViewController: YXViewController {
         UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
         shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
         logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        lableContainer.layer.render(in: UIGraphicsGetCurrentContext()!)
+        guard let currentContext = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        lableContainer.layer.render(in: currentContext)
         contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
         bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
         qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))

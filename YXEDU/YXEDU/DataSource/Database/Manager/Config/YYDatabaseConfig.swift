@@ -10,16 +10,20 @@ import Foundation
 
 //MARK: 建表语句 =========================
 struct YYSQLManager {
+
+    static var CreateTables: [String] {
+        get {
+            return CreateWordTables + CreateExerciseTables + CreateOtherTables
+        }
+    }
     
     // 创建词书数据表
-    static let CreateWordTables: [String] = {
-        var sqlArray = [CreateWordTableSQLs.bookTable.rawValue,
-                        CreateWordTableSQLs.wordTable.rawValue,
-                        CreateWordTableSQLs.searchHistoryTable.rawValue,
-                        CreateWordTableSQLs.stepConfigTable.rawValue
-        ]
-        return sqlArray + CreateExerciseTables
-    }()
+    static let CreateWordTables: [String] = [
+        CreateWordTableSQLs.bookTable.rawValue,
+        CreateWordTableSQLs.wordTable.rawValue,
+        CreateWordTableSQLs.searchHistoryTable.rawValue,
+        CreateWordTableSQLs.stepConfigTable.rawValue
+    ]
 
     // 创建学习训练数据表
     static let CreateExerciseTables: [String] = [
@@ -27,6 +31,11 @@ struct YYSQLManager {
         CreateExerciseTableSQLs.allExercise.rawValue,
         CreateExerciseTableSQLs.allWordStep.rawValue,
         CreateExerciseTableSQLs.currentTurn.rawValue,
+    ]
+
+    // 创建其他表
+    static let CreateOtherTables: [String] = [
+        CreateOtherTableSQLs.appInfoTable.rawValue
     ]
 }
 
@@ -121,6 +130,7 @@ extension YYSQLManager {
         unlearned_review_word_count integer(1) NOT NULL DEFAULT(0),
         study_duration integer(4) NOT NULL DEFAULT(0),
         start_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
+        unique_code char(128),
         create_ts text(32) NOT NULL DEFAULT(datetime('now', 'localtime'))
         );
         """
@@ -134,6 +144,7 @@ extension YYSQLManager {
         learn_type integer(1) NOT NULL,
         word_id integer NOT NULL,
         word char(128),
+        grade integer(4) NOT NULL DEFAULT(0),
         book_id integer(4) NOT NULL DEFAULT(0),
         unit_id integer(8) NOT NULL DEFAULT(0),
         word_type integer(1) NOT NULL DEFAULT(0),
@@ -178,4 +189,19 @@ extension YYSQLManager {
         """
     }
 
+    enum CreateOtherTableSQLs: String {
+
+        case appInfoTable =
+        """
+        CREATE TABLE IF NOT EXISTS app_info (
+        id integer primary key,
+        app_version text,
+        app_build text,
+        sys_version text,
+        create_time integer(32) NOT NULL DEFAULT(datetime('now', 'localtime')),
+        remark text
+        );
+        """
+    }
 }
+

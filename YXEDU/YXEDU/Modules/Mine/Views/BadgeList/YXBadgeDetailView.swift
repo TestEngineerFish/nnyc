@@ -11,7 +11,7 @@ import UIKit
 class YXBadgeDetailView: YXTopWindowView {
 
     public var isReport: Bool = false
-    private var badge: YXBadgeModel!
+    private var badge: YXBadgeModel?
     private var didCompleted = false
 
     @IBOutlet var contentView: UIView!
@@ -46,12 +46,11 @@ class YXBadgeDetailView: YXTopWindowView {
     func initializationFromNib() {
         Bundle.main.loadNibNamed("YXBadgeDetailView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = self.bounds
+        contentView.frame     = self.bounds
+        titleLabel.text       = badge?.name
+        descriptionLabel.text = badge?.description
         
-        titleLabel.text = badge.name
-        descriptionLabel.text = badge.description
-        
-        let textHeight = badge.description?.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 120)
+        let textHeight = badge?.description?.textHeight(font: UIFont.systemFont(ofSize: 14), width: screenWidth - 120)
         viewHeight.constant = viewHeight.constant - 20 + (textHeight ?? 0)
         self.imageTopConstraint.constant = AdaptSize(46)
         if didCompleted {
@@ -59,15 +58,14 @@ class YXBadgeDetailView: YXTopWindowView {
                 badgeImageView.sd_setImage(with: URL(string: imageOfCompletedStatus), completed: nil)
             }
             
-            if let time = badge.finishDateTimeInterval {
+            if let time = badge?.finishDateTimeInterval {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .long
                 let dateString = NSDate(timeIntervalSince1970: time).formatYMD() ?? ""
                 descriptionLabel.text = "已获得 " + dateString
             }
             
-            completedDescriptionLabel.text = badge.description
-
+            completedDescriptionLabel.text      = badge?.description
             backgroundImageView.image           = #imageLiteral(resourceName: "badgeCompletedBackground")
             completedImageView.isHidden         = false
             completedDescriptionLabel.isHidden  = false
@@ -81,8 +79,7 @@ class YXBadgeDetailView: YXTopWindowView {
                 badgeImageView.sd_setImage(with: URL(string: imageOfIncompletedStatus), completed: nil)
             }
             
-            descriptionLabel.text = badge.description
-
+            descriptionLabel.text               = badge?.description
             backgroundImageView.image           = #imageLiteral(resourceName: "badgeIncompleteBackground")
             completedImageView.isHidden         = true
             completedDescriptionLabel.isHidden  = true
@@ -92,7 +89,7 @@ class YXBadgeDetailView: YXTopWindowView {
             currentProgressLabel.isHidden       = false
             totalProgressLabel.isHidden         = false
             
-            if let currentProgress = badge.currentProgress, let totalProgress = badge.totalProgress {
+            if let currentProgress = badge?.currentProgress, let totalProgress = badge?.totalProgress {
                 progressBar.setProgress(Float(currentProgress) / Float(totalProgress), animated: true)
                 currentProgressLabel.text = "\(currentProgress)"
                 totalProgressLabel.text = "/\(totalProgress)"
@@ -102,34 +99,35 @@ class YXBadgeDetailView: YXTopWindowView {
 
     @IBAction func close(_ sender: Any) {
         if isReport {
-            let request = YXMineRequest.badgeDisplayReport(badgeId: badge.badgeId ?? 0)
+            let request = YXMineRequest.badgeDisplayReport(badgeId: badge?.badgeId ?? 0)
             YYNetworkService.default.request(YYStructResponse<YXBadgeReportModel>.self, request: request, success: { [weak self] (response) in
                 guard let self = self, let model = response.data else { return }
-                YXLog("徽章显示\(self.badge.badgeId ?? 0)，上报状态: ", model.state == 1)
+                YXLog("徽章显示\(self.badge?.badgeId ?? 0)，上报状态: ", model.state == 1)
             }) { error in
-                YXUtils.showHUD(kWindow, title: error.message)
+                YXUtils.showHUD(nil, title: error.message)
             }
         }
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {  [weak self] in
+            guard let self = self else { return }
             self.contentView.alpha = 0
-            
-        }, completion: { completed in
-            self.removeFromSuperview()
+        }, completion: { [weak self] completed in
+            self?.removeFromSuperview()
         })
     }
     
     override func show() {
+        YXLog("开始弹框！！")
         kWindow.addSubview(self)
         containerView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        containerView.alpha     = 0
-        backgroundView.alpha    = 0
+        containerView.alpha  = 0
+        backgroundView.alpha = 0
         
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+            guard let self = self else { return }
             self.containerView.transform = .identity
             self.containerView.alpha     = 1
             self.backgroundView.alpha    = 0.7
-            
         }, completion: nil)
     }
 }

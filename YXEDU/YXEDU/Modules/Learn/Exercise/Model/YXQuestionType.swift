@@ -51,35 +51,40 @@ enum YXQuestionType: String {
 }
 
 @objc enum YXLearnType: Int {
-    case base             = 1 // 基础学习
-    case wrong            = 2 // 抽查
-    case planListenReview = 3 // 计划——听力复习
-    case planReview       = 4 // 计划——复习
-    case aiReview         = 5 // 智能复习
-    case homeworkWord     = 8 // 课外作业,单词练习
-    case homeworkListen   = 9 // 课外作业,听写练习
+    case base             = 1  // 基础学习
+    case wrong            = 2  // 抽查
+    case planListenReview = 3  // 计划——听力复习
+    case planReview       = 4  // 计划——复习
+    case aiReview         = 5  // 智能复习
+    case homeworkWord     = 8  // 课外作业,单词练习
+    case homeworkListen   = 9  // 课外作业,听写练习
     case homeworkPunch    = 10 // 课外作业,打卡练习
+    case challengeGame    = 11 // 挑战游戏
     var desc: String {
+        var value = ""
         switch self {
         case .base:
-            return "基础学习1"
+            value = "主流程学习"
         case .wrong:
-            return "错题本抽查2"
+            value = "错题本抽查"
         case .planListenReview:
-            return "听力复习3"
+            value = "词单听力"
         case .planReview:
-            return "复习计划4"
+            value = "词单复习"
         case .aiReview:
-            return "智能复习5"
+            value = "智能复习"
         case .homeworkPunch:
-            return "打卡作业6"
+            value = "打卡作业"
         case .homeworkListen:
-            return "听写作业9"
+            value = "听写作业"
         case .homeworkWord:
-            return "单词作业8"
+            value = "单词作业"
+        case .challengeGame:
+            value = "挑战游戏"
         default:
-            return "基础学习1"
+            value = "默认主流程学习"
         }
+        return value + "\(self.rawValue)"
     }
     
     func isHomework() -> Bool {

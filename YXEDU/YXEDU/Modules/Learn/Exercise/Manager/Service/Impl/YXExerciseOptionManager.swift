@@ -239,7 +239,6 @@ class YXExerciseOptionManager: NSObject {
         
         var items: [YXOptionItemModel] = []
         
-//        let max = self.reviewWordArray.count
         let num = self.random(max: 2)
         if num % 2 == 1 {// 对
             exerciseModel.answers = [wordId]

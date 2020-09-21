@@ -16,7 +16,7 @@ class YXExerciseResultView: YXView {
     var showWordListEvent: (() -> ())?
     
 
-    var model: YXExerciseResultDisplayModel!
+    var model = YXExerciseResultDisplayModel()
     
     var contentView   = UIView()
     var imageView     = UIImageView()
@@ -270,17 +270,17 @@ class YXExerciseResultView: YXView {
     private func setTitleValue() {
         if model.state {
             switch model.type {
-            case .base:
+            case .base, .homeworkPunch:
                 if model.score <= 1 {
-                    titleLabel.text = "恭喜完成\(model.title ?? "")学习"
-                } else {
                     titleLabel.text = "\(model.title ?? "")学习完成"
+                } else {
+                    titleLabel.text = "恭喜完成\(model.title ?? "")的学习"
                 }
             case .aiReview:
                 titleLabel.text = "恭喜完成智能复习"
             case .planListenReview:
                 titleLabel.text = "恭喜完成\(model.title ?? "")的听力"
-            case .planReview, .homeworkWord, .homeworkListen, .homeworkPunch:
+            case .planReview, .homeworkWord, .homeworkListen:
                 titleLabel.text = "恭喜完成\(model.title ?? "")的学习"
             case .wrong:
                 titleLabel.text = "恭喜完成抽查复习"
@@ -297,9 +297,9 @@ class YXExerciseResultView: YXView {
         if model.state {// 学完
             if model.type == .base || model.type == .homeworkPunch {
                 if model.score <= 1 {
-                    subTitleLabel.text = " 有些单词还掌握的不太好呢\n再练习一下吧~"
+                    subTitleLabel.text = " 有些单词还掌握得不太好呢，再练习一下吧~"
                 } else if model.score == 2 {
-                    subTitleLabel.text = " 学得不错，有时间可以再回头巩固一下哦！"
+                    subTitleLabel.text = " 厉害，再巩固一下就冲向三星了哦！"
                 } else if model.score == 3 {
                     subTitleLabel.text = " 您可以进入下一个单元进行学习哦！"
                 }

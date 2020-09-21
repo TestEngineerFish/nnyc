@@ -103,20 +103,22 @@ class YXReviewWordModel: Mappable, Equatable {
     var voiceUs: String?
     var voiceUk: String?
     var paraphrase: [YXReviewParaphrase] = []
-    var isLearn: Bool      = false
-    var isSelected         = false
+    var isLearn: Bool = false
+    var isSelected    = false
+    var originBookId  = 0
     var unitId = 0
     var bookId = 0
 
     required init?(map: Map) {}
 
     func mapping(map: Map) {
-        id         <- map["word_id"]
-        word       <- map["word"]
-        voiceUs    <- map["voice_us"]
-        voiceUk    <- map["voice_uk"]
-        paraphrase <- map["paraphrase"]
-        isLearn    <- map["is_learn"]
+        id           <- map["word_id"]
+        word         <- map["word"]
+        voiceUs      <- map["voice_us"]
+        voiceUk      <- map["voice_uk"]
+        paraphrase   <- map["paraphrase"]
+        isLearn      <- map["is_learn"]
+        originBookId <- map["book_id"]
     }
 
     static func == (lhs: YXReviewWordModel, rhs: YXReviewWordModel) -> Bool {

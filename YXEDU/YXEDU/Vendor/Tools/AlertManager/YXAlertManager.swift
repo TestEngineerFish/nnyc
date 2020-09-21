@@ -19,8 +19,43 @@ struct YXAlertManager {
             self.skipPunchLearn(book: model.bookId ?? 0)
         }
         alertView.adjustAlertHeight()
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
+
+    /// 提取作业或加入班级
+    /// - Parameters:
+    ///   - onlyClass: 是否仅加入班级
+    ///   - onlyHomework: 是否仅提取作业
+    ///   - block: 回调函数
+    func showAddClassOrHomeworkAlert(onlyClass:Bool = false, onlyHomework: Bool = false, _ block:((String?)->Void)?) {
+        var titleText    = "请输入班级号或作业提取码"
+        var placeholder  = "输入班级号或作业提取码"
+        var keyboardType = UIKeyboardType.asciiCapable
+        if onlyClass {
+            titleText    = "请输入班级号"
+            placeholder  = "输入班级号"
+            keyboardType = .phonePad
+        }
+        if onlyHomework {
+            titleText   = "请输入作业提取码"
+            placeholder = "输入作业提取码"
+        }
+        let alertView = YXAlertView(type: .inputable, placeholder: placeholder)
+        alertView.titleLabel.text = titleText
+        alertView.shouldOnlyShowOneButton = false
+        alertView.shouldClose             = false
+        alertView.clearButton.isHidden    = true
+        alertView.textCountLabel.isHidden = true
+        alertView.textMaxLabel.isHidden   = true
+        alertView.alertHeight.constant    = 222
+        alertView.textField.keyboardType  = keyboardType
+        alertView.doneClosure             = { (text: String?) in
+            block?(text)
+            alertView.removeFromSuperview()
+        }
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
+    }
+
 
     // MARK: ==== Tools ====
     private func skipPunchLearn(book id: Int) {
@@ -40,7 +75,7 @@ struct YXAlertManager {
                 YXLog("打卡分享失败")
             }
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

@@ -10,8 +10,8 @@ import UIKit
 
 class YXAccountInfoView: UIView {
     
-    var bindQQClosure: (() -> Void)!
-    var bindWechatClosure: (() -> Void)!
+    var bindQQClosure: (() -> Void)?
+    var bindWechatClosure: (() -> Void)?
     var bindInfo: [String] = [] {
         didSet {
             updateData()
@@ -40,12 +40,12 @@ class YXAccountInfoView: UIView {
     }
 
     @IBAction func bindQQ(_ sender: UIButton) {
-        bindQQClosure()
+        bindQQClosure?()
         self.removeFromSuperview()
     }
     
     @IBAction func bindWechat(_ sender: UIButton) {
-        bindWechatClosure()
+        bindWechatClosure?()
         self.removeFromSuperview()
     }
     

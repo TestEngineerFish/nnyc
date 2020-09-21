@@ -28,12 +28,13 @@ class YXNewLearnJuniorHighSchoolExerciseView: YXBaseExerciseView {
             make.height.equalTo(YXExerciseConfig.exerciseViewBottom)
             make.bottom.equalToSuperview()
         })
-
-        questionView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(32)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalTo(answerView!.snp.top).offset(-AdaptSize(15))
-        })
+        if answerView != nil {
+            questionView?.snp.makeConstraints({ (make) in
+                make.top.equalTo(32)
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+                make.bottom.equalTo(answerView!.snp.top).offset(-AdaptSize(15))
+            })
+        }
     }
 }

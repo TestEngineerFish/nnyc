@@ -47,24 +47,26 @@ typealias YYEVC = YYEnvChangeViewController
         UIGraphicsEndImageContext()
         
         image = image?.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
-        return image!
+        return image ?? UIImage()
     }
 
 
     private enum EnvType: Int {
         case dev = 0
         case test = 1
-        case pre = 2
-        case release = 3
+        case test2 = 2
+        case pre = 3
+        case release = 4
     }
 
     private static let envKey = "YYEnvChangeView_Key";
 
-    private var currentSelected: Int = 3
+    private var currentSelected: Int = 4
 
     private static let envData = [
         EnvType.dev  : ["title" : "开发环境", "api" : "http://common.api.xstudyedu.com",  "h5" : "http://common.api.xstudyedu.com"],
         EnvType.test : ["title" : "测试环境", "api" : "http://nnyc-api-test.xstudyedu.com", "h5" : "http://nnyc-api-test.xstudyedu.com"],
+        EnvType.test2 : ["title" : "测试环境2", "api" : "http://nnyc-api-test-2.xstudyedu.com", "h5" : "http://nnyc-api-test-2.xstudyedu.com"],
         EnvType.pre  : ["title" : "预发环境", "api" : "http://nnyc-api-pre.xstudyedu.com",  "h5" : "https://pre.helloyouyou.com"],
         EnvType.release : ["title" : "正式环境", "api" : "http://nnyc-api.xstudyedu.com",   "h5" : "http://nnyc-api.xstudyedu.com"]
     ]
@@ -130,10 +132,8 @@ typealias YYEVC = YYEnvChangeViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        self.navigationController?.navigationBar.isHidden = false
-//        self.navigationController?.title = "选择环境"
         self.customNavigationBar?.title = "选择环境"
+        self.customNavigationBar?.leftButton.isHidden = true
 
         self.view.addSubview(self.tableView)
         self.view.backgroundColor = white1
@@ -202,7 +202,7 @@ extension YYEnvChangeViewController: UITableViewDataSource {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
 
-        return cell!
+        return cell ?? UITableViewCell()
     }
 
 }
@@ -230,19 +230,15 @@ extension YYEnvChangeViewController {
     @objc private func buttonDidClick() {
 
         YYCache.set(currentSelected, forKey: YYEVC.envKey)
-
-        let exitBlock = {
-            YXUtils.showHUD(self.view, title: "正在关闭App")
+        YXUserModel.default.logout {
+            YXUtils.showHUD(nil, title: "正在关闭App")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 exit(0)
             }
         }
-        YXUserModel.default.logout {
-            exitBlock()
-        }
     }
     
     @objc private func backButtonDidClick() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -10,13 +10,13 @@ import UIKit
 
 class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableViewDataSource {
 
-    private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)!
+    private var tapStartLearnClosure: ((_ exerciseModel: YXExerciseModel) -> Void)?
 
     @IBOutlet weak var startButton: YXDesignableButton!
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!
-
+    @IBOutlet weak var bottomShadowView: UIView!
     @IBOutlet weak var bottomView: YXDesignableView!
     @IBOutlet weak var startCenterY: NSLayoutConstraint!
 
@@ -40,7 +40,7 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
         contentView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        
+        self.bottomShadowView.layer.setGradient(colors: [.clear, UIColor.hex(0xc7c7c7).withAlphaComponent(0.5)], direction: .vertical)
         tableView.register(UINib(nibName: "YXPickWordsBySelfViewCell", bundle: nil), forCellReuseIdentifier: "YXPickWordsBySelfViewCell")
         tableView.delegate   = self
         tableView.dataSource = self
@@ -56,7 +56,9 @@ class YXPickWordsBySelfView: YXBaseQuestionView, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "YXPickWordsBySelfViewCell", for: indexPath) as! YXPickWordsBySelfViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "YXPickWordsBySelfViewCell", for: indexPath) as? YXPickWordsBySelfViewCell else {
+            return UITableViewCell()
+        }
         let exerciseModel = self.exerciseModel.n3List[indexPath.row]
         cell.wordLabel.text = exerciseModel.word?.word
         cell.isPicked = exerciseModel.word?.isSelected == .some(true)

@@ -33,7 +33,6 @@ class YXRecordView: YXView {
         button.setTitleColor(UIColor.orange1, for: .normal)
         button.titleLabel?.font    = UIFont.regularFont(ofSize: AdaptSize(14))
         button.layer.cornerRadius  = AdaptSize(13.5)
-        button.layer.masksToBounds = true
         button.backgroundColor     = UIColor.hex(0xFFF4E9)
         button.isEnabled           = false
         return button
@@ -64,9 +63,9 @@ class YXRecordView: YXView {
 
         lineView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(AdaptSize(-40))
             make.height.equalTo(AdaptSize(1))
+            make.left.equalToSuperview().offset(AdaptSize(20))
+            make.right.equalToSuperview().offset(AdaptSize(-20)).priorityLow()
         }
         recordImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(AdaptSize(18))

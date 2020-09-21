@@ -150,7 +150,9 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kYXBadgeCell", for: indexPath) as! YXBadgeCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "kYXBadgeCell", for: indexPath) as? YXBadgeCell else {
+            return UICollectionViewCell()
+        }
         let badgeModel = self.badgeModelList[indexPath.row]
         cell.setData(badgeModel)
         return cell
@@ -159,7 +161,7 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let badge = self.badgeModelList[indexPath.row]
         
-        var badgeDetailView: YXBadgeDetailView!
+        var badgeDetailView: YXBadgeDetailView?
         if let finishDateTimeInterval = badge.finishDateTimeInterval, finishDateTimeInterval != 0 {
             badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: true)
 
@@ -167,6 +169,8 @@ class YXBadgeListViewController: YXViewController, UICollectionViewDelegate, UIC
             badgeDetailView = YXBadgeDetailView(badge: badge, didCompleted: false)
         }
         
-        badgeDetailView.show()
+        if let alertView = badgeDetailView {
+            YXAlertQueueManager.default.addAlert(alertView: alertView)
+        }
     }
 }

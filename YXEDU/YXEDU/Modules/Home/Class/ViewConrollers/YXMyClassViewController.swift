@@ -17,17 +17,27 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         view.backgroundColor = UIColor.orange1
         return view
     }()
+
+    let redDotView = YXRedDotView()
+    var noticeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "class_notice"), for: .normal)
+        return button
+    }()
     
     var workTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
-        tableView.estimatedRowHeight = AdaptSize(125)
         return tableView
     }()
 
     var classModelList = [YXMyClassModel]()
-    var workListModel: YXMyWorkListModel?
+    var workListModel: YXMyWorkListModel? {
+        didSet {
+            self.redDotView.isHidden = workListModel?.hadNewNotification != .some(true)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,28 +74,14 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             }
             
             editView.addClassDetailclosure = {
-                let alertView = YXAlertView(type: .inputable, placeholder: "输入班级号或作业提取码")
-                alertView.titleLabel.text = "请输入班级号或作业提取码"
-                alertView.shouldOnlyShowOneButton = false
-                alertView.shouldClose = false
-                alertView.doneClosure = {(classNumber: String?) in
-                    YXUserDataManager.share.joinClass(code: classNumber) { (result) in
-                        alertView.removeFromSuperview()
-                    }
-                    YXLog("班级号：\(classNumber ?? "")")
+                YXAlertManager().showAddClassOrHomeworkAlert { (classNumber: String?) in
+                    YXUserDataManager.share.joinClass(code: classNumber, complate: nil)
                 }
-                alertView.clearButton.isHidden    = true
-                alertView.textCountLabel.isHidden = true
-                alertView.textMaxLabel.isHidden   = true
-                alertView.alertHeight.constant    = 222
-                alertView.show()
             }
-            
-            editView.show()
-            
+            YXAlertQueueManager.default.addAlert(alertView: editView)
         } else {
             let classListViewController = YXMyClassListViewController()
-            classListViewController.classList = self.classModelList
+            classListViewController.classModelList = self.classModelList
             
             navigationController?.pushViewController(classListViewController, animated: true)
         }
@@ -103,13 +99,32 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
         self.workTableView.delegate        = self
         self.workTableView.dataSource      = self
         self.workTableView.register(YXWorkWithMyClassCell.classForCoder(), forCellReuseIdentifier: "kYXWorkWithMyClassCell")
-        self.workTableView.backgroundColor = .clear
+        self.workTableView.backgroundColor    = .clear
+        self.workTableView.estimatedRowHeight = AdaptSize(50)
+        self.redDotView.isHidden              = true
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: YXNotification.kReloadClassList, object: nil)
+        self.noticeButton.addTarget(self, action: #selector(showNoticeList), for: .touchUpInside)
+        self.customNavigationBar?.leftButtonAction = { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: true)
+        }
     }
 
     private func createSubviews() {
         self.view.addSubview(backgroundView)
         self.view.addSubview(workTableView)
+        self.customNavigationBar?.addSubview(noticeButton)
+        noticeButton.addSubview(redDotView)
+        if self.customNavigationBar != nil {
+            self.noticeButton.snp.makeConstraints { (make) in
+                make.centerY.equalToSuperview()
+                make.right.equalTo(self.customNavigationBar!.rightButton.snp.left).offset(AdaptSize(-10))
+                make.size.equalTo(CGSize(width: AdaptSize(22), height: AdaptSize(22)))
+            }
+        }
+        self.redDotView.snp.makeConstraints { (make) in
+            make.size.equalTo(redDotView.size)
+            make.top.right.equalToSuperview()
+        }
         backgroundView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
             make.top.equalToSuperview()
@@ -119,53 +134,65 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
             make.top.equalToSuperview().offset(kNavHeight)
             make.left.right.bottom.equalToSuperview()
         }
-        if self.customNavigationBar != nil {
-            self.view.bringSubviewToFront(self.customNavigationBar!)
+
+        if let navBar = self.customNavigationBar {
+            self.view.bringSubviewToFront(navBar)
         }
     }
 
     // MARK: ==== Request ====
     private func requestClassList() {
         let request = YXMyClassRequestManager.classList
-        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { (response) in
-            guard let modelList = response.dataArray else { return }
+        YYNetworkService.default.request(YYStructDataArrayResponse<YXMyClassModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let modelList = response.dataArray else { return }
             
             if modelList.count == 1 {
                 self.customNavigationBar?.title = modelList[0].name
-
             } else if modelList.count > 1 {
                 self.customNavigationBar?.title = "\(modelList.count)个班级"
-
             }
             
             self.classModelList = modelList
-
-//            if self.classModelList.isEmpty {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-            
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     private func requestWorkList() {
         let request = YXMyClassRequestManager.workList
-        YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { (response) in
-            guard let listModel = response.data else {
+        YXUtils.showProgress(self.view)
+        YYNetworkService.default.request(YYStructResponse<YXMyWorkListModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self, let listModel = response.data else {
                 return
             }
+            YXUtils.hideHUD(self.view)
             self.workListModel = listModel
             self.workTableView.reloadData()
-        }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+        }) { [weak self] (error) in
+            YXUtils.hideHUD(self?.view)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
     // MARK: ==== Event ====
-    @objc private func reloadData() {
+    @objc
+    private func reloadData() {
         self.requestClassList()
         self.requestWorkList()
+    }
+
+    @objc
+    private func showNoticeList() {
+        self.redDotView.isHidden = true
+        let vc = YXMyClassNoticeViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func pushDetailView(work model: YXMyWorkModel, hashDic: [String:String]) {
+        let vc = YXHomeworkDetailViewController()
+        vc.workModel = model
+        vc.hashDic   = hashDic
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     // MARK: ==== UITableViewDateSource && UITableViewDelegate ====
@@ -175,17 +202,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = YXMyWorkTableViewHeaderView()
-//        headerView.setDate(class: self.classModelList)
         return headerView
-//
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 44))
-//
-//        let label = UILabel(frame: CGRect(x: 20, y: 0, width: screenWidth - 40, height: 44))
-//        label.text = "班级作业"
-//
-//        view.addSubview(label)
-//
-//        return view
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -198,11 +215,7 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        let count  = self.classModelList.count > 3 ? 3 : self.classModelList.count
-//        let amount = CGFloat(96 + count * 50)
-//        return AdaptSize(amount)
-        
-        return 44
+        return AdaptSize(44)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -215,5 +228,13 @@ class YXMyClassViewController: YXViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = YXMyClassTableViewFooterView()
         return footerView
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let model = self.workListModel?.workModelList[indexPath.row], let hashDic = self.workListModel?.bookHash else {
+            return
+        }
+        YXLog("查看作业\(model.workName)详情")
+        self.pushDetailView(work: model, hashDic: hashDic)
     }
 }

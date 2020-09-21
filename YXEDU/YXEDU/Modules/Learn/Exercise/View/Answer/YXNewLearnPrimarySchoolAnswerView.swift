@@ -61,7 +61,7 @@ enum AnswerStatus: Int {
 
     mutating func forward() {
         if self.rawValue < 13 {
-            self = AnswerStatus(rawValue: self.rawValue + 1)!
+            self = AnswerStatus(rawValue: self.rawValue + 1) ?? .alreadLearn
         } else {
             self = .alreadLearn
         }
@@ -302,7 +302,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.playWord()
             YXLog("新学：第一阶段 - 播放单词中")
         case .playedWordInFristStage:
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+                guard let self = self else { return }
                 self.status.forward()
                 self.playExample()
             }
@@ -312,7 +313,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             YXLog("新学：第一阶段 - 播放例句中")
         case .playedExampleInFristStage:
             self.newLearnDelegate?.playWordAndExampleFinished()
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+                guard let self = self else { return }
                 self.status.forward()
                 self.playWord()
             }
@@ -421,7 +423,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.playAudioButton.layer.add(animation, forKey: "flickerAnimation")
 
         timer?.invalidate()
-        timer = Timer(timeInterval: 0.4, repeats: true, block: { (timer) in
+        timer = Timer(timeInterval: 0.4, repeats: true, block: { [weak self] (timer) in
+            guard let self = self else { return }
             self.playAudioLabel.textAlignment = .left
             if self.status == .playingExampleInFristStage {
                 self.playAudioLabel.textColor = UIColor.orange1
@@ -576,8 +579,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.maxScore = model.listenScore // 返回最高分，跟新本地得分
             self.hideReportAnimation()
             self.showResultAnimation()
-        }) { (error) in
-            self.showNetworkErrorAnimation()
+        }) { [weak self] (error) in
+            self?.showNetworkErrorAnimation()
             YXLog("上报跟读结果失败")
         }
     }
@@ -619,7 +622,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
                 return
             }
             #if DEBUG
-            YXUtils.showHUD(self, title: "当前得分: \(score)")
+            YXUtils.showHUD(nil, title: "当前得分: \(score)")
             #endif
             YXLog("============录音得分: \(score)")
             self.lastScore = Int(score)

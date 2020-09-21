@@ -48,7 +48,7 @@ class YXExerciseResultLoadingView: YXView, CAAnimationDelegate {
             make.centerX.equalToSuperview()
             make.size.equalTo(titleLabel.size)
         }
-        
+
         resultView.play()
     }
     

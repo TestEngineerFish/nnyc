@@ -46,8 +46,8 @@ class YXSetReminderView: YXTopWindowView {
         alertView.descriptionLabel.text = "您随时可以在 “我的”->“每日提醒设置” 中设置提醒"
         alertView.shouldOnlyShowOneButton = true
         alertView.rightOrCenterButton.setTitle("好的", for: .normal)
-        alertView.show()
 
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
         YYCache.set(timePicker.date, forKey: .didShowSetupReminderAlert)
         YXSetReminderView.didSetReminder(didOpen: 0)
         self.removeFromSuperview()
@@ -95,7 +95,7 @@ class YXSetReminderView: YXTopWindowView {
         YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { response in
 
         }) { error in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 }

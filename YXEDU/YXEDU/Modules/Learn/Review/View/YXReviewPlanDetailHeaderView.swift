@@ -307,14 +307,6 @@ class YXReviewPlanDetailHeaderView: YXView {
         self.setNeedsLayout()
     }
     
-    
-//    override class func viewHeight(model: YXReviewPlanModel) -> CGFloat {
-//        let vHeight: CGFloat = model.listenState != .normal || model.reviewState != .normal ? 120 : 103
-//        return AS(vHeight)
-//    }
-
-
-    
     @objc func clickEditButton() {
         var p = self.convert(editButton.origin, to: editButton.superview?.superview?.superview)
         p.x -= AS(14)

@@ -15,7 +15,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -25,7 +25,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(true, nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -35,7 +35,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPageModel>.self, request: request, success: { (response) in
             completion?(true, nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -46,7 +46,7 @@ struct YXReviewDataManager {
         YYNetworkService.default.request(YYStructResponse<YXReviewPlanDetailModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, error.message)
         }
     }
@@ -59,7 +59,7 @@ struct YXReviewDataManager {
             }
             completion?(resetReviewPlanModel.isSuccess == 1)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
              completion?(false)
         }
     }
@@ -70,12 +70,12 @@ struct YXReviewDataManager {
     ///   - type:
     ///   - planId:
     ///   - completion:
-    func fetchReviewResult(type: YXLearnType, reviewId: Int, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
-        let request = YXReviewRequest.reviewResult(type: type.rawValue, reviewId: reviewId)
+    func fetchReviewResult(type: YXLearnType, reviewId: Int, unique: String, completion: ((_ model: YXReviewResultModel?, _ errorMsg: String?) -> Void)?) {
+        let request = YXReviewRequest.reviewResult(type: type.rawValue, reviewId: reviewId, unique: unique)
         YYNetworkService.default.request(YYStructResponse<YXReviewResultModel>.self, request: request, success: { (response) in
             completion?(response.data, nil)
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
             completion?(nil, error.message)
         }
     }

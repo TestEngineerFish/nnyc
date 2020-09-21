@@ -39,53 +39,42 @@ class YXWebActionManager: NSObject {
             }()
             self.showAlert(title: "加入班级", description: descriptionStr, downTitle: "加入") {
                 // 加入班级
-                YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
-                    self.toVC(scheme: model.scheme)
+                YXUserDataManager.share.joinClass(code: classNumber) { [weak self] (workModel) in
+                    self?.toVC(scheme: model.scheme)
                 }
             }
             break
         case "add_work":
-            let classNumber = model.params
-            
-            let request = YXHomeRequest.workCodeDidExpired(workCode: classNumber)
-            YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { (response) in
-                if let didExpired = response.data?.didExpired, didExpired == 0 {
-                    let descriptionStr: String = {
-                        if model.teacherName.isEmpty {
-                            return "是否确认提取作业"
-                        } else {
-                            return "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧"
-                        }
-                    }()
-                    self.showAlert(title: "提取作业", description: descriptionStr, downTitle: "去做作业") {
-                        // 添加作业
-                        YXUserDataManager.share.joinClass(code: classNumber) { (workModel) in
-                            if let _workModel = workModel {
-                                self.toVC(scheme: model.scheme)
-                                YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
-                                let dataList = self.getBookHashDic(_workModel)
-                                YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
-                                // 跳转学习
-                                let vc         = YXExerciseViewController()
-                                let bookId     = (_workModel.type == .punch) ? (_workModel.bookIdList.first ?? 0) : 0
-                                let unitId     = _workModel.type == .punch ? _workModel.unitId : 0
-                                let learnType  = _workModel.type.learnType()
-                                vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType, homeworkId: _workModel.workId ?? 0)
-                                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                            }
-                        }
-                    }
-                    
+            let descriptionStr: String = {
+                if model.teacherName.isEmpty {
+                    return "是否确认提取作业"
                 } else {
-                    YXUtils.showHUD(kWindow, title: "作业码已过期")
+                    return "\(model.teacherName)老师布置了作业：\(model.name)，赶紧去完成吧"
                 }
-
-            }) { (error) in
-                YXUtils.showHUD(kWindow, title: error.message)
+            }()
+            self.showAlert(title: "提取作业", description: descriptionStr, downTitle: "去做作业") { [weak self] in
+                guard let self = self else { return }
+                let workCode = model.params
+                let request = YXHomeRequest.pickUpWork(code: workCode)
+                // 添加作业
+                YYNetworkService.default.request(YYStructResponse<YXMyWorkModel>.self, request: request, success: { [weak self] (response) in
+                    guard let self = self, let _workModel = response.data else { return }
+                    YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
+                    if _workModel.isFirstJoin {
+                        let vc = YXMyClassEditNameViewController()
+                        vc.submitBlock = { [weak self] result in
+                            self?.toExerciseVC(model: _workModel)
+                        }
+                        vc.classModel  = self.transformToSummaryModel(model: _workModel)
+                        YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
+                        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+                    } else {
+                        self.toExerciseVC(model: _workModel)
+                    }
+                }) { (error) in
+                    YXUtils.showHUD(nil, title: error.message)
+                }
             }
-            
-            break
-            
         case "make_team":
             self.addFriend(user: model.params, channel: model.channel, complete: nil)
             break
@@ -95,7 +84,7 @@ class YXWebActionManager: NSObject {
         }
     }
 
-    // MARK: ==== Tools ====
+    // MARK: ==== Event ====
     private func toVC(scheme: String) {
         switch scheme {
         case "/class/list":
@@ -113,6 +102,20 @@ class YXWebActionManager: NSObject {
         }
     }
 
+    private func toExerciseVC(model: YXMyWorkModel) {
+        if model.type == .punch {
+            let dataList = self.getBookHashDic(model)
+            YXWordBookResourceManager.shared.saveReviewPlan(dataList: dataList, type: .homework)
+        }
+        // 跳转学习
+        let vc         = YXExerciseViewController()
+        let bookId     = (model.type == .punch) ? (model.bookIdList.first ?? 0) : 0
+        let unitId     = model.type == .punch ? model.unitId : 0
+        let learnType  = model.type.learnType()
+        vc.learnConfig = YXLearnConfigImpl(bookId: bookId, unitId: unitId, planId: 0, learnType: learnType, homeworkId: model.workId ?? 0)
+        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+    }
+
     private func addFriend(user id: String, channel: Int, complete block: (()->Void)?) {
         guard let userId = Int(id) else {
             return
@@ -122,7 +125,7 @@ class YXWebActionManager: NSObject {
             YXLog("添加好友成功")
             block?()
         }) { (error) in
-            YXUtils.showHUD(kWindow, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -134,7 +137,7 @@ class YXWebActionManager: NSObject {
         alertView.doneClosure = { _ in
             finished?()
         }
-        alertView.show()
+        YXAlertQueueManager.default.addAlert(alertView: alertView)
     }
 
     // MARK: ==== Tools ====
@@ -146,5 +149,14 @@ class YXWebActionManager: NSObject {
             }
         }
         return bookHash
+    }
+
+    private func transformToSummaryModel(model: YXMyWorkModel) -> YXMyClassSummaryModel {
+        var summaryModel = YXMyClassSummaryModel()
+        summaryModel.classId     = model.classId ?? 0
+        summaryModel.className   = model.className
+        summaryModel.teacherName = model.teacherName ?? ""
+        summaryModel.isFirstJoin = model.isFirstJoin
+        return summaryModel
     }
 }

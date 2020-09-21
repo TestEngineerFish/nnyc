@@ -103,7 +103,8 @@ extension YXViewController {
         #if DEBUG
         if event?.subtype == .motionShake
             && YRRouter.sharedInstance().currentViewController()?.classForCoder != YYEnvChangeViewController.classForCoder() {
-            self.navigationController?.pushViewController(YYEnvChangeViewController(), animated: true)
+            self.navigationController?.present(YYEnvChangeViewController(), animated: true, completion: nil)
+
             YXLog("用户UUID:", YXUserModel.default.uuid ?? "")
             YXLog("用户目录：", DDFileLogger().logFileManager.logsDirectory)
         }

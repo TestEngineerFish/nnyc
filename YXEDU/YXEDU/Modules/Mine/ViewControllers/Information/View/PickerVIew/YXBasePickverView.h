@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, YXBasePickverViewType) {
 @interface YXBasePickverView : UIView
 @property (nonatomic, assign) YXBasePickverViewType type;
 @property (nonatomic) UIPickerView *customPicker;
-@property (nonatomic, strong) id<YXBasePickverViewDelegate> delegate;
+@property (nonatomic, weak) id<YXBasePickverViewDelegate> delegate;
 @property (nonatomic, strong) NSArray *classArray;
 @property (nonatomic, strong) NSArray *bookEditionArray;
 

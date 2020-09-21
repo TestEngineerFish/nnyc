@@ -26,7 +26,7 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
         answerView?.answerDelegate = self
         (answerView as! YXAnswerSelectLettersView).textField.showRemindButton { [weak self] (button) in
             self?.answerView?.answerCompletion(right: false)
-            self?.remindView?.show()
+//            self?.remindView?.show()
         }
         super.createSubview()
     }
@@ -41,7 +41,8 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     }
     
     override func showAlertEvnet() {
-        (self.answerView as! YXAnswerSelectLettersView).textField.resignFirstResponder()
+        guard let _answerView = self.answerView as? YXAnswerSelectLettersView else { return }
+        _answerView.textField.resignFirstResponder()
     }
     
     override func hideAlertEvent() {
@@ -50,6 +51,9 @@ class YXFillWordAccordingToChineseExerciseView: YXBaseExerciseView {
     
     // MAKR: --- Event ----
     @objc private func showKeyBoard() {
-        (self.answerView as! YXAnswerSelectLettersView).textField.becomeFirstResponder()
+        guard let _answerView = self.answerView as? YXAnswerSelectLettersView else {
+            return
+        }
+        _answerView.textField.becomeFirstResponder()
     }
 }

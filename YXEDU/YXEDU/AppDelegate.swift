@@ -11,7 +11,7 @@ import UserNotifications
 import Bugly
 import GrowingCoreKit
 import GrowingAutoTrackKit
-//import AdSupport
+import AdSupport
 
 //#if DEBUG
 //import EchoSDK
@@ -22,6 +22,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     public static let `default` = UIApplication.shared.delegate as! AppDelegate
     
     var window: UIWindow?
+
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // 检测是否首次安装或者升级安装
+        if YXUserModel.default.lastVersion == nil {
+            print("首次安装")
+        } else if YXUserModel.default.lastVersion != UIDevice().appVersion() {
+            print("刚升级")
+        } else {
+            print("未升级")
+        }
+        YXUserModel.default.lastVersion = UIDevice().appVersion()
+
+        if let lastRecord = YXAppInfoDaoImpl().lastRecord() {
+            // 设备信息表瘦身
+            let maxRecord = 3000
+            if YXAppInfoDaoImpl().recordAmount() > maxRecord {
+                let firstId = lastRecord.id - maxRecord + 1
+                YXAppInfoDaoImpl().deleteOrder(first: firstId)
+            }
+        }
+        // 添加App信息
+        YXAppInfoDaoImpl().insertRecord(appVersion: UIDevice().appVersion(), appBuild: YRDevice.appBuild(), sysVersion: UIDevice().sysVersion(), remark: "取消下载词书,仅主流程和打卡作业保留下载")
+
+        return true
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -41,8 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WXApiManager.shared().registerWX(wechatId)
         Bugly.start(withAppId: kBuglyAppId)
         YXOCLog.shared()?.launch()
+
 //        #if DEBUG
-//        ECOClient.shared()?.start()
+//        ECOClient.shared()?.stop()
 //        #endif
         
         #if !DEBUG  // 正式环境才开启统计
@@ -66,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = navigationController
             window?.makeKeyAndVisible()
         }
+        YXLogManager.share.addInfo()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -88,13 +115,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    /** 每次启动时，都执行，但这个方法太过灵敏，App显示通知栏、双击home等情况，App没有完全退到后台时，也会调用，因此只是App每次启动时调用一次 */
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // 仅刚启动时调用一次
-        YXLogManager.share.addInfo()
-        YXAlertQueueManager.default.start()
-    }
-
     /// 通用链接跳转
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         YXMediator.shared()?.handleOpenUnivrsalLinkURL(userActivity)
@@ -112,7 +132,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 启动时，删除学习中状态
         YYCache.remove(forKey: .learningState)
-        YXWordBookResourceManager.stop = false
+        // 检测各种弹框
+        YXAlertQueueManager.default.processQueue()
     }
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -124,6 +145,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         return true
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        YXLog("Kill：手动关掉App")
     }
 }
 

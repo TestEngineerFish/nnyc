@@ -225,7 +225,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 weakself.stopAnimation()
                 DispatchQueue.main.async {
                     UIView().currentViewController?.navigationController?.popToRootViewController(animated: true)
-                    YXUtils.showHUD(kWindow, title: "当前网速较慢，建议稍后重试")
+                    YXUtils.showHUD(nil, title: "当前网速较慢，建议稍后重试")
                 }
             }
             weakself.updateValue()
@@ -245,7 +245,7 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
         if isLoading { return }
         // 更新状态
         let originStatus = self.status
-        if exercisType == .base {
+        if exercisType == .base || exercisType == .homeworkPunch {
             // 防止进度回滚
             if self.status.rawValue < YXExerciseLoadingEnum.downloadBook.rawValue {
                 self.status = .downloadBook
@@ -258,22 +258,21 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 }
             }
             if singleDownloadFinished {
-                YXLog("当前词书下载完成，开始主流程的学习")
                 self.downloadCompleteDelegate?.downloadComplete()
                 self.downloadCompleteDelegate = nil
                 self.speed  = .highSpeed
                 // 请求之前需要先下载完词书
                 if YXExerciseViewController.requesting != nil {
-                    if YXExerciseViewController.requesting == .some(true) {
-                        self.status = .requestIng
-                        self.speed  = .normal
-                    } else {
+                    if YXExerciseViewController.requesting == .some(false) && YXWordBookResourceManager.wordDownloading == false {
                         self.status = .requestEnd
                         self.speed  = .highSpeed
+                    } else {
+                        self.status = .requestIng
+                        self.speed  = .normal
                     }
                 }
             } else {
-                self.speed  = .normal
+                self.speed  = .highSpeed
             }
         } else {
             // 防止进度回滚
@@ -288,13 +287,12 @@ class YXExerciseLoadingView: YXView, CAAnimationDelegate {
                 self.speed  = .highSpeed
                 // 是否已请求到数据
                 if YXExerciseViewController.requesting != nil {
-                    YXLog("开始加载学习数据")
-                    if YXExerciseViewController.requesting == .some(true) {
-                        self.status = .requestIng
-                        self.speed  = .normal
-                    } else {
+                    if YXExerciseViewController.requesting == .some(false) && YXWordBookResourceManager.wordDownloading == false {
                         self.status = .requestEnd
                         self.speed  = .highSpeed
+                    } else {
+                        self.status = .requestIng
+                        self.speed  = .normal
                     }
                 }
             } else {

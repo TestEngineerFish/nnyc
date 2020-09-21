@@ -10,7 +10,7 @@ import Foundation
 
 class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
     
-    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int) -> Int {
+    func insertStudyRecord(learn config: YXLearnConfig, newWordCount: Int, reviewWordCount: Int, unique: String) -> Int {
         let sql = YYSQLManager.StudyRecordSQL.insertStudyRecord.rawValue
         var params: [Any] = config.params
         params.append(YXExerciseProgress.learning.rawValue)
@@ -18,6 +18,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         params.append(newWordCount)
         params.append(reviewWordCount)
         params.append(reviewWordCount)
+        params.append(unique)
         let result = self.wordRunner.executeUpdate(sql, withArgumentsIn: params)
         return result ? Int(wordRunner.lastInsertRowId) : 0
     }
@@ -109,6 +110,18 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         return self.selectStudyRecordModel(learn: config)?.startTime ?? ""
     }
 
+    func getUnique(study id: Int) -> String {
+        var unique = ""
+        let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
+        guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
+            return unique
+        }
+        if result.next() {
+            unique = result.string(forColumn: "unique_code") ?? ""
+        }
+        return unique
+    }
+
     func getDurationTime(learn config: YXLearnConfig) -> Int {
         return self.selectStudyRecordModel(learn: config)?.studyDuration ?? 0
     }
@@ -129,7 +142,7 @@ class YXStudyRecordDaoImpl: YYDatabase, YXStudyRecordDao {
         var count = 0
         let sql = YYSQLManager.StudyRecordSQL.selectStudyWithID.rawValue
         guard let result = self.wordRunner.executeQuery(sql, withArgumentsIn: [id]) else {
-            return 0
+            return count
         }
         if result.next() {
             count = Int(result.int(forColumn: "unlearned_new_word_count"))

@@ -38,12 +38,13 @@ class YXPreviousRankViewController: YXViewController, UITableViewDelegate, UITab
     // MARK: ==== Request ====
     private func requestChallengeData() {
         let request = YXChallengeRequest.rankedList
-        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { (response) in
+        YYNetworkService.default.request(YYStructResponse<YXChallengeModel>.self, request: request, success: { [weak self] (response) in
+            guard let self = self else { return }
             self.challengeModel = response.data
             self.customNavigationBar?.title = "上期排行"
             self.tableView.reloadData()
         }) { (error) in
-            YXUtils.showHUD(self.view, title: error.message)
+            YXUtils.showHUD(nil, title: error.message)
         }
     }
 

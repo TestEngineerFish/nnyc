@@ -51,5 +51,8 @@ struct YXNotification {
     static let kReloadClassList            = NSNotification.Name("kReloadClassList")
     /// 显示web页右上方的按钮
     static let kShowRightButton            = NSNotification.Name("kShowRightButton")
-    
+    /// 下载词书失败
+    static let kDownloadWordError          = NSNotification.Name("kDownloadWordError")
+    /// 单词动画播放完成
+    static let kWordAnimationPlayFinished  = NSNotification.Name("kWordAnimationPlayFinished")
 }
