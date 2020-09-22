@@ -140,12 +140,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var coin         = 0 // 跟读获得金币数
     var maxScore     = 0 // 最高得分
     var lastScore    = 0 // 最新得分
+    var enableRecode = false
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
     var retryPath    = {
         // 缓存录音本地地址
-        return NSTemporaryDirectory() + "tmpData.opus"
+        return NSTemporaryDirectory() + "tmpData.mp3"
     }()
 
     weak var newLearnDelegate: YXNewLearnProtocol?
@@ -165,6 +166,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.enginer?.vadControl = true
         self.enginer?.setIdentifier(YXUserModel.default.uuid)
         self.enginer?.setVadFrontTimeout(5000, backTimeout: 700)
+        self.enginer?.audioType = .MP3
         
         self.recordAudioButton.isEnabled    = false
         self.recordAudioLabel.layer.opacity = 0.3
@@ -610,23 +612,29 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.setCatchRecordOpus(opus: self.tempOpusData)
         self.hideRecordAnimation()
         self.enablePlayButton()
-        self.showReportAnimation()
+        self.enableRecode = false
     }
 
     func onResult(_ result: String!, isLast: Bool) {
         if isLast {
-            // 录音结束,清除临时录音缓存
-            self.resetOpusTempData()
-            let resultDict = result.convertToDictionary()
-            guard let score = resultDict["score"] as? Double else {
-                return
+            // 播放用户读音
+            let url = URL(fileURLWithPath: self.retryPath)
+            YXAVPlayerManager.share.playAudio(url) { [weak self] in
+                guard let self = self else { return }
+                self.showReportAnimation()
+                // 录音结束,清除临时录音缓存
+                self.resetOpusTempData()
+                let resultDict = result.convertToDictionary()
+                guard let score = resultDict["score"] as? Double else {
+                    return
+                }
+                #if DEBUG
+                YXUtils.showHUD(nil, title: "当前得分: \(score)")
+                #endif
+                YXLog("============录音得分: \(score)")
+                self.lastScore = Int(score)
+                self.requestReportListenScore()
             }
-            #if DEBUG
-            YXUtils.showHUD(nil, title: "当前得分: \(score)")
-            #endif
-            YXLog("============录音得分: \(score)")
-            self.lastScore = Int(score)
-            self.requestReportListenScore()
         }
     }
 
@@ -648,17 +656,25 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     }
 
     func onUpdateVolume(_ volume: Int32) {
+        YXLog("声音：", volume)
+        if volume >= 18 {
+            self.enableRecode = true
+        } else {
+            self.enableRecode = false
+        }
 //        YXRecordAudioView.share.updateVolume(volume)
         return
     }
 
     func onRecordingBuffer(_ recordingData: Data!) {
+        // 存当前音频数据
+        if self.enableRecode {
+            self.tempOpusData.append(recordingData)
+        }
         return
     }
 
     func onRecordingOpusBuffer(_ opusData: Data!) {
-        // 存当前音频数据
-        tempOpusData.append(opusData)
         return
     }
 

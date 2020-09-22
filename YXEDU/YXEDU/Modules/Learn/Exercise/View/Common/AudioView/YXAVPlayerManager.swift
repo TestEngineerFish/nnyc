@@ -81,7 +81,7 @@ class YXAVPlayerManager: NSObject {
             }
             self.player.replaceCurrentItem(with: playerItem)
             self.player.seek(to: .zero)
-            self.player.play()
+            self.player.playImmediately(atRate: 1.0)
             self.isPlaying = true
         } else {
             YXLog("无效音频,地址：" + url.absoluteString)
