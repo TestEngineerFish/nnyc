@@ -97,6 +97,7 @@
 
 - (void)viewDidLoad {
     self.backType = BackWhite;
+    [[YXLogManager share] report];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
@@ -267,7 +268,7 @@
     sendModel.feed = self.feedBackTextView.text;
     sendModel.files = imageArr;
     sendModel.env = [NSString stringWithFormat:@"%@;%@;%@;%@;%@;%@;%@", [YXUtils machineName], [YXUtils systemVersion],[YXUtils appVersion],[YXUtils carrierName],[YXUtils networkType],[YXUtils screenInch],[YXUtils screenResolution]];
-    
+
     [self.feedViewModel submitFeedBack:sendModel finish:^(id obj, BOOL result) {
         [YXUtils hideHUD:self.view];
         if (result) {

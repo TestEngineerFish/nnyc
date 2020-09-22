@@ -140,7 +140,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     var coin         = 0 // 跟读获得金币数
     var maxScore     = 0 // 最高得分
     var lastScore    = 0 // 最新得分
-    var enableRecode = false
+    var enableRecord = false
     // TODO: ---- 缓存重传机制
     var tempOpusData = Data() // 缓存当前录音
     var retryCount   = 0
@@ -612,7 +612,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.setCatchRecordOpus(opus: self.tempOpusData)
         self.hideRecordAnimation()
         self.enablePlayButton()
-        self.enableRecode = false
+        self.enableRecord = false
     }
 
     func onResult(_ result: String!, isLast: Bool) {
@@ -658,16 +658,16 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
     func onUpdateVolume(_ volume: Int32) {
         YXLog("声音：", volume)
         if volume >= 18 {
-            self.enableRecode = true
+            self.enableRecord = true
         } else {
-            self.enableRecode = false
+            self.enableRecord = false
         }
         return
     }
 
     func onRecordingBuffer(_ recordingData: Data!) {
         // 存当前音频数据
-        if self.enableRecode {
+        if self.enableRecord {
             self.tempOpusData.append(recordingData)
         }
         return

@@ -53,7 +53,7 @@ public enum YXOCRequest: YYBaseRequest {
         switch self {
         case .feedback(let feed, let env, let file):
             if let file = file {
-                return ["feed": feed, "env": env, "files[]": file]
+                return ["feed": feed, "env": env, "files": file]
 
             } else {
                 return ["feed": feed, "env": env]

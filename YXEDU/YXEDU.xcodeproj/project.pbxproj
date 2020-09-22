@@ -72,6 +72,7 @@
 		223D5EFC24527D6900482127 /* YXCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFB24527D6900482127 /* YXCalendarView.swift */; };
 		223D5EFE2452D00300482127 /* YXCalendarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFD2452D00300482127 /* YXCalendarRequest.swift */; };
 		223D5F002452D18200482127 /* YXCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D5EFF2452D18200482127 /* YXCalendarModel.swift */; };
+		223F26C62519D04F004AACB5 /* YXFeedbackTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F26C52519D04F004AACB5 /* YXFeedbackTipsView.swift */; };
 		223F955D24EBE29C007D050A /* YXHomeworkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F955C24EBE29C007D050A /* YXHomeworkDetailViewController.swift */; };
 		223F956124EBEA03007D050A /* YXHomeworkDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F956024EBEA03007D050A /* YXHomeworkDetailModel.swift */; };
 		223F956324ECBBCE007D050A /* YXHomeworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223F956224ECBBCE007D050A /* YXHomeworkDetailView.swift */; };
@@ -715,6 +716,7 @@
 		223D5EFB24527D6900482127 /* YXCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarView.swift; sourceTree = "<group>"; };
 		223D5EFD2452D00300482127 /* YXCalendarRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarRequest.swift; sourceTree = "<group>"; };
 		223D5EFF2452D18200482127 /* YXCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXCalendarModel.swift; sourceTree = "<group>"; };
+		223F26C52519D04F004AACB5 /* YXFeedbackTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXFeedbackTipsView.swift; sourceTree = "<group>"; };
 		223F955C24EBE29C007D050A /* YXHomeworkDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailViewController.swift; sourceTree = "<group>"; };
 		223F956024EBEA03007D050A /* YXHomeworkDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailModel.swift; sourceTree = "<group>"; };
 		223F956224ECBBCE007D050A /* YXHomeworkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YXHomeworkDetailView.swift; sourceTree = "<group>"; };
@@ -3498,6 +3500,7 @@
 				EE5EFCAE23274E5500655654 /* YXTipsBaseView.h */,
 				EE5EFCC323274E5500655654 /* YXCustomButton.m */,
 				EE5EFCC523274E5500655654 /* YXTipsBaseView.m */,
+				223F26C52519D04F004AACB5 /* YXFeedbackTipsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4436,6 +4439,7 @@
 				2202D27923AB71DF00882E5D /* YXCacheKey.swift in Sources */,
 				22C3A5FD2477C51D0020694E /* YXStepConfigManager.swift in Sources */,
 				EE7E1D0A236367A000600A88 /* YXExerciseHeaderView.swift in Sources */,
+				223F26C62519D04F004AACB5 /* YXFeedbackTipsView.swift in Sources */,
 				22164C0B23A1190D00E9252D /* YXCountDownView.swift in Sources */,
 				EE5EFCE723274E5500655654 /* YXCustomButton.m in Sources */,
 				2252EFE4239BC1D900A98BFB /* YXReviewUnitListHeaderView.swift in Sources */,

@@ -11,6 +11,7 @@ import CocoaLumberjack
 import ZipArchive
 import MBProgressHUD
 
+@objc
 class YXLogManager: NSObject {
 
     @objc static let share = YXLogManager()
