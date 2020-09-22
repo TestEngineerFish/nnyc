@@ -662,7 +662,6 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         } else {
             self.enableRecode = false
         }
-//        YXRecordAudioView.share.updateVolume(volume)
         return
     }
 

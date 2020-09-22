@@ -47,6 +47,10 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
         YRRouter.sharedInstance().currentNavigationController()?.present(vc, animated: true, completion: nil)
     }
 
+    private func showFeedbackTipsView() {
+        
+    }
+
     // MARK: ==== Tools ====
     private func getScreenshotImage() -> UIImage? {
         guard let layer = UIApplication.shared.keyWindow?.layer else {

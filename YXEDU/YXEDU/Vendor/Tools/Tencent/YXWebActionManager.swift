@@ -60,17 +60,17 @@ class YXWebActionManager: NSObject {
                 YYNetworkService.default.request(YYStructResponse<YXMyWorkModel>.self, request: request, success: { [weak self] (response) in
                     guard let self = self, let _workModel = response.data else { return }
                     YXLog(String(format: "==== 提取作业 开始做%@，作业ID：%ld ====", _workModel.type.learnType().desc, _workModel.workId ?? 0))
-                    if _workModel.isFirstJoin {
-                        let vc = YXMyClassEditNameViewController()
-                        vc.submitBlock = { [weak self] result in
-                            self?.toExerciseVC(model: _workModel)
-                        }
-                        vc.classModel  = self.transformToSummaryModel(model: _workModel)
-                        YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
-                        YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-                    } else {
-                        self.toExerciseVC(model: _workModel)
+//                    if _workModel.isFirstJoin {
+                    let vc = YXMyClassEditNameViewController()
+                    vc.submitBlock = { [weak self] result in
+                        self?.toExerciseVC(model: _workModel)
                     }
+                    vc.classModel  = self.transformToSummaryModel(model: _workModel)
+                    YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
+                    YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+//                    } else {
+//                        self.toExerciseVC(model: _workModel)
+//                    }
                 }) { (error) in
                     YXUtils.showHUD(nil, title: error.message)
                 }

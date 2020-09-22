@@ -44,15 +44,15 @@ struct YXUserDataManager {
         let workCode  = _code.isPureNumbers() ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
         YYNetworkService.default.request(YYStructResponse<YXMyClassSummaryModel>.self, request: request, success: { (response) in
-            if response.data?.isFirstJoin == .some(true) {
-                let vc = YXMyClassEditNameViewController()
-                vc.submitBlock = complate
-                vc.classModel  = response.data
-                YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
-                YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
-            } else {
-                complate?(true)
-            }
+//            if response.data?.isFirstJoin == .some(true) {
+            let vc = YXMyClassEditNameViewController()
+            vc.submitBlock = complate
+            vc.classModel  = response.data
+            YRRouter.sharedInstance().currentNavigationController()?.popViewController(animated: false)
+            YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)
+//            } else {
+//                complate?(true)
+//            }
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
             complate?(false)
