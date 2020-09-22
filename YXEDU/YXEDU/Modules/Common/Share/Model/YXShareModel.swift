@@ -32,14 +32,14 @@ struct YXShareImageListModel: Mappable {
 }
 
 struct YXShareImageModel: Mappable {
-    var name: Int            = 0
+    var name: String         = ""
     var bgUrlStr: String     = ""
     var qrCodeUrlStr: String = ""
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
-        name         <- (map["name"], IntTransform())
+        name         <- (map["name"], StringTransform())
         bgUrlStr     <- (map["bg_url"], StringTransform())
         qrCodeUrlStr <- (map["qr_code_url"], StringTransform())
     }

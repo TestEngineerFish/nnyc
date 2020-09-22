@@ -13,6 +13,18 @@ enum YXShareChannel: Int {
     case wechat   = 2
     case timeLine = 3
     case qzone    = 4
+    func getName() -> String {
+        switch self {
+        case .qq:
+            return "QQ"
+        case .wechat:
+            return "微信"
+        case .timeLine:
+            return "朋友圈"
+        case .qzone:
+            return "QQ空间"
+        }
+    }
 }
 
 enum YXShareType: Int {

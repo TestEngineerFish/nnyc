@@ -50,6 +50,12 @@ struct YXGrowingManager {
     func uploadExerciseType(_ type: String) {
         Growing.setPeopleVariableWithKey("main_study_procedure", andStringValue: type)
     }
+
+    /// 上传分享渠道
+    func shareType(imageName: String, channel: YXShareChannel) {
+        Growing.track("share", withVariable: ["share_pic_name" : imageName, "share_channel" : channel.getName()])
+
+    }
     // TODO: ---- 用户变量 ----
 
     /// 换书时上传书信息

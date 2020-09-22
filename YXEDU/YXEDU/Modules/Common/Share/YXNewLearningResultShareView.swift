@@ -56,13 +56,6 @@ class YXNewLearningResultShareView: YXView {
         return shareView
     }()
     var loadingView = UIActivityIndicatorView(style: .gray)
-    var qrCodeImage = UIImage(named: "shareQRCode")
-
-    var learnType: YXLearnType?
-    let shareType: YXShareImageType = .learnResult
-    private var backgroundImageUrls: [String]?
-    private var currentBackgroundImageUrl: String?
-    private var currentBackgroundImageIndex = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)

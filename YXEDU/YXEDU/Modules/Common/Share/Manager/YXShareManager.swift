@@ -19,7 +19,7 @@ class YXShareManager: NSObject {
     private var shareType: YXShareImageType = .learnResult
     private var backgroundImageModelUrls: [YXShareImageModel]?
     private var currentBackgroundImageIndex = 0
-    private var currentBackgroundImageModel: YXShareImageModel? {
+    var currentBackgroundImageModel: YXShareImageModel? {
         get {
             guard let urlList = self.backgroundImageModelUrls, self.currentBackgroundImageIndex < urlList.count else {
                 return nil

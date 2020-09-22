@@ -177,6 +177,8 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
     }
 
     func shareFinished(type: YXShareChannel) {
+        let imageName = self.shareManager.currentBackgroundImageModel?.name ?? ""
+        YXGrowingManager.share.shareType(imageName: imageName, channel: type)
         let learnType = learnConfig?.learnType ?? .base
         self.requestShare(shareType: type, learnType: learnType)
     }
