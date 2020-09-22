@@ -136,7 +136,9 @@
         self.datePicker = [[UIDatePicker alloc] init];
         [self.datePicker setDatePickerMode:UIDatePickerModeTime];
         [self.datePicker setValue:UIColorOfHex(0x485461) forKey:@"textColor"];
-        
+        if (@available(iOS 13.4, *)) {
+            self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;
+        }
         if (self.remindDate == nil) {
             NSString *remindDateString = @"20:00";
             
