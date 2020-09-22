@@ -21,3 +21,26 @@ struct YXShareModel: Mappable {
         coin  <- map["credits"]
     }
 }
+
+struct YXShareImageListModel: Mappable {
+    var imageUrlList = [YXShareImageModel]()
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        imageUrlList <- map["img_urls"]
+    }
+}
+
+struct YXShareImageModel: Mappable {
+    var name: Int            = 0
+    var bgUrlStr: String     = ""
+    var qrCodeUrlStr: String = ""
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        name         <- (map["name"], IntTransform())
+        bgUrlStr     <- (map["bg_url"], StringTransform())
+        qrCodeUrlStr <- (map["qr_code_url"], StringTransform())
+    }
+}

@@ -11,14 +11,22 @@ import Foundation
 class YXShareManager: NSObject {
 
     var qrCodeImage = UIImage(named: "shareQRCode")
+    var backgroundImage: UIImage?
 
     private var wordsAmount: Int = 0
     private var daysAmount: Int = 0
     private var gameModel: YXGameResultModel?
     private var shareType: YXShareImageType = .learnResult
-    private var backgroundImageUrls: [String]?
-    private var currentBackgroundImageUrl: String?
+    private var backgroundImageModelUrls: [YXShareImageModel]?
     private var currentBackgroundImageIndex = 0
+    private var currentBackgroundImageModel: YXShareImageModel? {
+        get {
+            guard let urlList = self.backgroundImageModelUrls, self.currentBackgroundImageIndex < urlList.count else {
+                return nil
+            }
+            return urlList[self.currentBackgroundImageIndex]
+        }
+    }
 
     // MARK: ==== Event ====
 
@@ -31,54 +39,22 @@ class YXShareManager: NSObject {
     /// 设置分享图
     /// - Parameter block: 回调
     func setShareImage(complete block:((UIImage?)->Void)?) {
-        self.setQRCodeImage { [weak self] in
+        // 获得背景图列表
+        self.getShareImageUrlList { [weak self] in
             guard let self = self else { return }
-            self.getShareImageUrlList { [weak self] in
+            // 设置当前二维码
+            self.setQRCodeImage { [weak self] in
                 guard let self = self else { return }
-                self.getBackgroundImage(from: self.currentBackgroundImageUrl) { [weak self] image in
+                // 设置当前背景图
+                self.setBackgroundImage { [weak self] in
                     guard let self = self else { return }
                     DispatchQueue.main.async() { [weak self] in
-                        let shareImage = self?.composeImage(background: image)
+                        guard let self = self else { return }
+                        let shareImage = self.composeImage()
                         block?(shareImage)
                     }
                 }
             }
-        }
-    }
-
-    /// 更换图片
-    func refreshImage(complete block:((UIImage?)->Void)?) {
-        guard let urls = backgroundImageUrls, urls.count > 0 else { return }
-        self.currentBackgroundImageIndex = (self.currentBackgroundImageIndex + 1) % urls.count
-        currentBackgroundImageUrl = urls[self.currentBackgroundImageIndex]
-        getBackgroundImage(from: currentBackgroundImageUrl) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                let shareImage = self.composeImage(background: image)
-                block?(shareImage)
-            }
-        }
-    }
-
-    // MARK: ==== Tools ====
-
-    /// 设置分享二维码
-    /// - Parameter block: 完成回调
-    private func setQRCodeImage(complete block:(()->Void)?) {
-        let request = YXShareRequest.getQRCode
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else {
-                return
-            }
-            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { (image, data, error, result) in
-                if let _image = image {
-                    self.qrCodeImage = _image
-                }
-                block?()
-            })
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
         }
     }
 
@@ -88,48 +64,89 @@ class YXShareManager: NSObject {
     ///   - block: 回调
     private func getShareImageUrlList(complete block:(()->Void)?) {
         let request = YXShareRequest.changeBackgroundImage(type: self.shareType.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
-            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
-            self.backgroundImageUrls         = imageUrls
-            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
-            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
+        YYNetworkService.default.request(YYStructResponse<YXShareImageListModel>.self, request: request, success: { [weak self] response in
+            guard let self = self, let model = response.data, model.imageUrlList.count > 0 else { return }
+            self.backgroundImageModelUrls    = model.imageUrlList
+            // 设置当前图片对象下标
+            self.currentBackgroundImageIndex = Int.random(in: 0..<model.imageUrlList.count)
             block?()
         }) { (error) in
             YXUtils.showHUD(nil, title: error.message)
         }
     }
 
+    /// 更换背景图片
+    func refreshImage(complete block:((UIImage?)->Void)?) {
+        // 更新下标
+        guard let modelList = backgroundImageModelUrls, modelList.count > 0 else { return }
+        self.currentBackgroundImageIndex = (self.currentBackgroundImageIndex + 1) % modelList.count
+        // 更新背景图
+        self.setBackgroundImage { [weak self] in
+            guard let self = self else { return }
+            // 更新二维码
+            self.setQRCodeImage { [weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let shareImage = self.composeImage()
+                    block?(shareImage)
+                }
+            }
+        }
+    }
+
+    // MARK: ==== Tools ====
+
+    /// 设置分享二维码
+    /// - Parameter block: 完成回调
+    private func setQRCodeImage(complete block:(()->Void)?) {
+        guard let qrCodeImageUrl = self.currentBackgroundImageModel?.qrCodeUrlStr, let qrcodeUrl = URL(string: qrCodeImageUrl) else {
+            return
+        }
+        URLSession.shared.dataTask(with: qrcodeUrl, completionHandler: { data, response, error in
+            guard let data = data, error == nil else {
+                block?()
+                return
+            }
+            self.qrCodeImage = UIImage(data: data)
+            block?()
+        }).resume()
+    }
+
+
+
     /// 获得分享背景图
     /// - Parameters:
     ///   - urlString: 图片地址
     ///   - block: 回调
-    private func getBackgroundImage(from urlString: String?, complete block: @escaping ((_ image: UIImage?) -> Void)) {
-        guard let urlString = urlString, let url = URL(string: urlString) else {
-            block(nil)
+    private func setBackgroundImage(complete block: (() -> Void)?) {
+        guard let urlString = self.currentBackgroundImageModel?.bgUrlStr, let url = URL(string: urlString) else {
+            block?()
             return
         }
 
         URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
             guard let data = data, error == nil else {
-                block(nil)
+                block?()
                 return
             }
-
-            block(UIImage(data: data))
+            self.backgroundImage = UIImage(data: data)
+            block?()
         }).resume()
     }
 
-    private func composeImage(background image: UIImage?) -> UIImage? {
+    private func composeImage() -> UIImage? {
+        guard let backgroundImage = self.backgroundImage else { return nil }
         var shareImage: UIImage?
         switch self.shareType {
         case .learnResult:
-            shareImage = self.createLearnResultShareImage(image)
+            shareImage = self.createLearnResultShareImage(backgroundImage)
         case .aiReviewReuslt:
-            shareImage = self.createAIReviewShareImage(image)
+            shareImage = self.createAIReviewShareImage(backgroundImage)
         case .planReviewResult:
-            shareImage = self.createPlanReviewShareImage(image)
+            shareImage = self.createPlanReviewShareImage(backgroundImage)
         case .listenReviewResult:
-            shareImage = self.createListenReviewShareImage(image)
+            shareImage = self.createListenReviewShareImage(backgroundImage)
         case .challengeResult:
             shareImage = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
         }

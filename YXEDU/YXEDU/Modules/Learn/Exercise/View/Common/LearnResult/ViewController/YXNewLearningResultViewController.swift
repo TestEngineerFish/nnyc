@@ -52,11 +52,6 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         self.contentView.isHidden          = true
         self.contentView.delegate          = self
         self.shareView.delegate            = self
-        self.shareManager.setShareImage { [weak self] (image: UIImage?) in
-            guard let self = self else { return }
-            self.shareView.shareImageView.image        = image
-            self.shareView.shareChannelView.shareImage = image
-        }
     }
 
     private func setData() {
@@ -66,6 +61,12 @@ class YXNewLearningResultViewController: YXViewController, YXNewLearningResultVi
         self.shareView.shareChannelView.coinImageView.isHidden = !_model.isShowCoin
         NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         self.setNextUnitData()
+        // 设置分享数据
+        self.shareManager.setShareImage { [weak self] (image: UIImage?) in
+            guard let self = self else { return }
+            self.shareView.shareImageView.image        = image
+            self.shareView.shareChannelView.shareImage = image
+        }
     }
 
     // MARK: ==== Request ====
