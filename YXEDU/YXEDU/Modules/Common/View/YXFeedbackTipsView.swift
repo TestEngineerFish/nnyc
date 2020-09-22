@@ -93,11 +93,11 @@ class YXFeedbackTipsView: YXView {
             make.right.equalToSuperview().offset(self.width)
             make.size.equalTo(self.size)
         }
-        UIView.animate(withDuration: 0.6) {
+        UIView.animate(withDuration: 0.6, animations: {
             [weak self] in
             guard let self = self else { return }
             self.transform = CGAffineTransform(translationX: -self.width - AdaptSize(20), y: 0)
-        } completion: { (finished) in
+        }) { (finished) in
             if finished {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
                     self?.hide()
@@ -107,10 +107,10 @@ class YXFeedbackTipsView: YXView {
     }
 
     func hide() {
-        UIView.animate(withDuration: 0.6) { [weak self] in
+        UIView.animate(withDuration: 0.6, animations: { [weak self] in
             guard let self = self else { return }
             self.transform = .identity
-        } completion: { (finished) in
+        }) { (finished) in
             if finished {
                 self.timer?.invalidate()
                 self.timer = nil
