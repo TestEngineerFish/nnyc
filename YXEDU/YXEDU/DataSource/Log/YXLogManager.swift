@@ -19,7 +19,8 @@ class YXLogManager: NSObject {
     // MARK: ==== Request ====
 
     // 上传
-    @objc func report(_ showToast: Bool = false) {
+    @objc
+    func report(_ showToast: Bool) {
         self.addInfo()
         guard let fileData = self.zipLogFile() else {
             return

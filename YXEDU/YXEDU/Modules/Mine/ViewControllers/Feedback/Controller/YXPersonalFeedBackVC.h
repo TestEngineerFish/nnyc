@@ -12,4 +12,5 @@
 @interface YXPersonalFeedBackVC : BSRootVC
 @property (nonatomic, strong) UIImage *screenShotImage;
 @property (nonatomic, strong) YXFeedBackSelectImageView *selectImageView;
+- (void)addImage:(NSArray<UIImage *> *)imageList;
 @end

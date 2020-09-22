@@ -31,7 +31,14 @@ class YXNavigationController: UINavigationController, UIGestureRecognizerDelegat
     // MARK: ==== Event ====
     @objc private func screenshotAction() {
         YXLog("检测到截屏")
-        YXFeedbackTipsView(image: self.getScreenshotImage()).show()
+        let screenShotImage = self.getScreenshotImage()
+        if let feedbackVC = YRRouter.sharedInstance().currentViewController() as? YXPersonalFeedBackVC {
+            guard let image = screenShotImage else { return }
+            feedbackVC.addImage([image])
+        } else {
+            YXFeedbackTipsView(image: screenShotImage).show()
+        }
+
     }
 
     // MARK: ==== Tools ====

@@ -97,7 +97,6 @@
 
 - (void)viewDidLoad {
     self.backType = BackWhite;
-    [[YXLogManager share] report];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
     self.feedViewModel = [[YXFeedBackViewModel alloc]init];
@@ -484,16 +483,22 @@
     
     __weak typeof(self)weakSelf = self;
     [pickerCtrl setDidFinishPickingPhotosWithInfosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto, NSArray<NSDictionary *> *infos) {
-        
-        NSMutableArray *feedbackImages = [NSMutableArray arrayWithArray:_selectImageView.imageArr];
-        [feedbackImages addObjectsFromArray:photos];
-        
-        NSInteger imageNumber = feedbackImages.count;
-        weakSelf.imageNumberLabel.text = [NSString stringWithFormat:@"上传图片（ %ld / 3 ）", (long)imageNumber];
-        
-        _selectImageView.imageArr = [NSMutableArray arrayWithArray:feedbackImages];
+        [weakSelf addImage:photos];
     }];
     [self presentViewController:pickerCtrl animated:YES completion:nil];
+}
+
+- (void)addImage:(NSArray<UIImage *> *)imageList {
+    if ((_selectImageView.imageArr.count + imageList.count) > 3) {
+        return;
+    }
+    NSMutableArray *feedbackImages = [NSMutableArray arrayWithArray:_selectImageView.imageArr];
+    [feedbackImages addObjectsFromArray:imageList];
+
+    NSInteger imageNumber = feedbackImages.count;
+    self.imageNumberLabel.text = [NSString stringWithFormat:@"上传图片（ %ld / 3 ）", (long)imageNumber];
+
+    _selectImageView.imageArr = [NSMutableArray arrayWithArray:feedbackImages];
 }
 
 - (void)didShowAddedImage:(UIImage *)image {
