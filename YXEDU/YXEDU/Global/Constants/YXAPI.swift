@@ -236,7 +236,7 @@ struct YXAPI {
     struct Share {
         static let punch = "/api/v1/user/punch/clock"
         
-        static let changeBackgroundImage = "/api/v1/learn/changebackground"
+        static let changeBackgroundImage = "/api/v2/learn/changebackground"
         /// 获取二维码
         static let getQRCode = "/api/v1/activity/getqrcode"
         /// 获取活动分享图
