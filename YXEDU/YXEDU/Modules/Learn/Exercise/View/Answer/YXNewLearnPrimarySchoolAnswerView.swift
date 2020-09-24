@@ -617,10 +617,18 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onResult(_ result: String!, isLast: Bool) {
         if isLast {
-            // 播放用户读音
+            // 禁止用户操作
+            let maskView = UIView()
+            maskView.backgroundColor = UIColor.white.withAlphaComponent(0.01)
+            self.addSubview(maskView)
+            maskView.snp.makeConstraints { (make) in
+                make.edges.equalToSuperview()
+            }
             let url = URL(fileURLWithPath: self.retryPath)
+            // 播放用户读音
             YXAVPlayerManager.share.playAudio(url) { [weak self] in
                 guard let self = self else { return }
+                maskView.removeFromSuperview()
                 self.showReportAnimation()
                 // 录音结束,清除临时录音缓存
                 self.resetOpusTempData()
