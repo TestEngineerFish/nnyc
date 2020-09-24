@@ -46,8 +46,8 @@ struct YXUserDataManager {
         let classCode = isClassCode ? _code : ""
         let workCode  = isClassCode ? "" : _code
         let request = YXHomeRequest.joinClass(classCode: classCode, workCode: workCode)
-        YYNetworkService.default.request(YYStructResponse<YXMyClassSummaryModel>.self, request: request, success: { (response) in            
-            if isClassCode {
+        YYNetworkService.default.request(YYStructResponse<YXMyClassSummaryModel>.self, request: request, success: { (response) in
+            if isClassCode || response.data?.isFirstJoin == true {
                 let vc = YXMyClassEditNameViewController()
                 vc.submitBlock = complate
                 vc.classModel  = response.data
