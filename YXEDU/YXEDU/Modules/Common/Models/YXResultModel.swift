@@ -15,7 +15,7 @@ struct YXResultModel: Mappable {
     var token: String?
     
     // 更換分享頁背景圖片地址
-    var imageUrls: [String]?
+    var backgroundImageUrls: [YXShareImageModel]?
     
     var credits: Int?
 
@@ -34,10 +34,18 @@ struct YXResultModel: Mappable {
     mutating func mapping(map: Map) {
         didCollectWord <- map["is_favorite"]
         token          <- map["token"]
-        imageUrls      <- map["img_urls"]
+        backgroundImageUrls      <- map["img_urls"]        
         credits        <- map["userCredits"]
         hasNextGroup   <- map["is_next_group"]
         imageUrlStr    <- map["image_url"]
         didExpired     <- map["work_code_expire"]
+    }
+    
+    var imageUrls: [String]? {
+        var urls: [String] = []
+        for model in self.backgroundImageUrls ?? [] {
+            urls.append(model.bgUrlStr)
+        }
+        return urls
     }
 }
