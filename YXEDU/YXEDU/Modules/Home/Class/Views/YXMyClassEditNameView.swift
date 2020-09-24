@@ -56,7 +56,7 @@ class YXMyClassEditNameView: YXView, UITextFieldDelegate {
     }()
     var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text          = "为了帮助老师认识你，建议在班级里使用自己的姓名作为姓名哦!"
+        label.text          = "为了帮助老师认识你，建议在班级里使用真实姓名哦!"
         label.textColor     = UIColor.hex(0x666666)
         label.font          = UIFont.regularFont(ofSize: AdaptFontSize(13))
         label.textAlignment = .left

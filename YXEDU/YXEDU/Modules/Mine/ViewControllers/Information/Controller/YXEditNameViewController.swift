@@ -110,6 +110,11 @@ class YXEditNameViewController: YXViewController, UITextFieldDelegate {
     // MARK: ==== Request ====
     private func requestEdit() {
         let name = (self.nameTextField.text ?? "").substring(maxIndex: 10)
+        if name.trimed.isEmpty {
+            YXUtils.showHUD(nil, title: "请输入姓名")
+            return
+        }
+        
         DispatchQueue.main.async {
             YXUtils.showProgress(kWindow)
         }
