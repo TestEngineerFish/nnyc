@@ -52,6 +52,8 @@ struct YXUserDataManager {
                 vc.submitBlock = complate
                 vc.classModel  = response.data
                 YRRouter.sharedInstance().currentNavigationController()?.pushViewController(vc, animated: true)                
+            } else {
+                complate?(true)
             }
             NotificationCenter.default.post(name: YXNotification.kReloadClassList, object: nil)
         }) { (error) in
