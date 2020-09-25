@@ -134,6 +134,7 @@ class YXShareViewController: YXViewController {
         self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
             guard let self = self, let learnType = self.learnType else { return }
             self.requestShare(shareType: channel, learnType: learnType)
+            // 上报GIO
             let shareImageName = self.shareManager.currentBackgroundImageModel?.name ?? ""
             YXGrowingManager.share.shareType(imageName: shareImageName, channel: channel)
 //            // 挑战分享不算打卡
