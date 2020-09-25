@@ -516,9 +516,9 @@ class YXShareManager: NSObject {
         rankLabel.drawText(in: CGRect(x: 45, y: 455, width: 47, height: 28))
         questionAmountLabel.drawText(in: CGRect(x: 125, y: 449, width: 66, height: 21))
         consumeTimeLabel.drawText(in: CGRect(x: 125, y: 474, width: 89, height: 21))
-        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
-        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
-        treeBranchImage?.draw(in: CGRect(x: 265, y: 314, width: 110, height: 123))
+        qrCodeImage?.draw(in: CGRect(x: 287, y: 433, width: 65, height: 65))
+        qrcordLabel.drawText(in: CGRect(x: 275, y: 500, width: 90, height: 14))
+        treeBranchImage?.draw(in: CGRect(x: 265, y: 300, width: 110, height: 123))
         guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
             return nil
         }
