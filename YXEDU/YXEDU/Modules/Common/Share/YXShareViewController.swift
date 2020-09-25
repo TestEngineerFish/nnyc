@@ -102,6 +102,7 @@ class YXShareViewController: YXViewController {
     private var backgroundImageUrls: [String]?
     private var currentBackgroundImageUrl: String?
     private var currentBackgroundImageIndex = 0
+    private var shareManager = YXShareManager()
 
     var wordsAmount = 0
     var daysAmount  = 0
@@ -113,14 +114,17 @@ class YXShareViewController: YXViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customNavigationBar?.isHidden = true
-        self.setQRCodeImage { [weak self] in
-            self?.getBackgroundImageList()
-        }
         self.bindProperty()
         self.createSubviews()
     }
     
     private func bindProperty() {
+        self.shareManager.setData(wordsAmount: self.wordsAmount, daysAmount: self.daysAmount, type: self.shareType)
+        self.shareManager.setShareImage { [weak self] (image:UIImage?) in
+            guard let self = self else { return }
+            self.shareImageView.image        = image
+            self.shareChannelView.shareImage = image
+        }
         self.backButton.addTarget(self, action: #selector(clickBackBtn), for: .touchUpInside)
         self.changeBackgroundImageButton.addTarget(self, action: #selector(changeBackgroundImage), for: .touchUpInside)
         self.changeBackgroundImageButton.isHidden    = (shareType == .challengeResult)
@@ -130,6 +134,8 @@ class YXShareViewController: YXViewController {
         self.shareChannelView.finishedBlock = { [weak self] (channel: YXShareChannel) in
             guard let self = self, let learnType = self.learnType else { return }
             self.requestShare(shareType: channel, learnType: learnType)
+            let shareImageName = self.shareManager.currentBackgroundImageModel?.name ?? ""
+            YXGrowingManager.share.shareType(imageName: shareImageName, channel: channel)
 //            // 挑战分享不算打卡
 //            if self.shareType != .challengeResult {
 //                self.punch(channel)
@@ -221,40 +227,6 @@ class YXShareViewController: YXViewController {
         shareImageBorderView.layer.setDefaultShadow(cornerRadius: AdaptSize(13), shadowRadius: AdaptSize(13))
         shareImageView.clipRectCorner(directionList: [.topLeft, .topRight, .bottomLeft, .bottomRight], cornerRadius: AdaptSize(13))
     }
-    
-    // MARK: ==== Request ====
-
-    private func getBackgroundImageList() {
-        let request = YXShareRequest.changeBackgroundImage(type: shareType.rawValue)
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] response in
-            guard let self = self, let result = response.data, let imageUrls = result.imageUrls, imageUrls.count > 0 else { return }
-            self.backgroundImageUrls         = imageUrls
-            self.currentBackgroundImageIndex = Int.random(in: 0..<imageUrls.count)
-            self.currentBackgroundImageUrl   = self.backgroundImageUrls?[self.currentBackgroundImageIndex]
-            self.getBackgroundImage(from: self.currentBackgroundImageUrl) { [weak self] backgroundImage in
-                guard let self = self else { return }
-                DispatchQueue.main.async() { [weak self] in
-                    guard let self = self else { return }
-                    self.loadingView.stopAnimating()
-                    switch self.shareType {
-                    case .learnResult:
-                        self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
-                    case .aiReviewReuslt:
-                        self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
-                    case .planReviewResult:
-                        self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
-                    case .listenReviewResult:
-                        self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
-                    case .challengeResult:
-                        self.shareImageView.image = self.createChallengeReviewShareImage(UIImage(named: "challengeShareBgImage"))
-                    }
-                    self.shareChannelView.shareImage = self.shareImageView.image
-                }
-            }
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
-        }
-    }
 
     private func requestShare(shareType: YXShareChannel, learnType: YXLearnType) {
         let request = YXExerciseRequest.learnShare(shareType: shareType.rawValue, learnType: learnType.rawValue)
@@ -315,432 +287,17 @@ class YXShareViewController: YXViewController {
     }
     
     // MARK: ==== Tools ====
+    /// 更换背景图
     @objc
     private func changeBackgroundImage() {
-        guard let urls = backgroundImageUrls, urls.count > 0 else { return }
-        self.currentBackgroundImageIndex = (self.currentBackgroundImageIndex + 1) % urls.count
-        currentBackgroundImageUrl = urls[self.currentBackgroundImageIndex]
-        getBackgroundImage(from: currentBackgroundImageUrl) { backgroundImage in
-            DispatchQueue.main.async() {
-                switch self.shareType {
-                case .learnResult:
-                    self.shareImageView.image = self.createLearnResultShareImage(backgroundImage)
-                case .aiReviewReuslt:
-                    self.shareImageView.image = self.createAIReviewShareImage(backgroundImage)
-                case .planReviewResult:
-                    self.shareImageView.image = self.createPlanReviewShareImage(backgroundImage)
-                case .listenReviewResult:
-                    self.shareImageView.image = self.createListenReviewShareImage(backgroundImage)
-                case .challengeResult:
-                    self.shareImageView.image = self.createChallengeReviewShareImage(backgroundImage)
-                }
-                self.shareChannelView.shareImage = self.shareImageView.image
-            }
-        }
-    }
-    
-    private func getBackgroundImage(from urlString: String?, completeClosure: @escaping ((_ image: UIImage?) -> Void)) {
-        guard let urlString = urlString, let url = URL(string: urlString) else {
-            completeClosure(nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-            guard let data = data, error == nil else {
-                completeClosure(nil)
-                return
-            }
-            
-            completeClosure(UIImage(data: data))
-        }).resume()
-    }
-
-    private func setQRCodeImage(complete block:(()->Void)?) {
         self.loadingView.startAnimating()
-        let request = YXShareRequest.getQRCode
-        YYNetworkService.default.request(YYStructResponse<YXResultModel>.self, request: request, success: { [weak self] (response) in
-            guard let self = self, let model = response.data else {
-                return
-            }
-            SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: model.imageUrlStr), completed: { [weak self] (image, data, error, result) in
-                guard let self = self else { return }
-                if let _image = image {
-                    self.qrCodeImage = _image
-                }
-                block?()
-            })
-        }) { (error) in
-            YXUtils.showHUD(nil, title: error.message)
+        self.shareManager.refreshImage { [weak self] (image: UIImage?) in
+            guard let self = self else { return }
+            self.loadingView.stopAnimating()
+            self.shareChannelView.shareImage  = image
+            self.shareImageView.image         = image
+            self.shareImageView.layer.opacity = 1.0
         }
-    }
-    
-    /// 创建学习结果打卡页面
-    private func createLearnResultShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-
-        let avatarImage = YXUserModel.default.userAvatarImage == nil ? UIImage(named: "challengeAvatar") : YXUserModel.default.userAvatarImage
-        let shareImageView = YXShareImageView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: 518)))
-        shareImageView.backgroundImageView.image = backgroundImage
-        shareImageView.avatarImageView.image     = avatarImage
-        shareImageView.nameLabel.text            = YXUserModel.default.userName
-        shareImageView.qrCodeImageView.image     = self.qrCodeImage
-        let dateFormatter        = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM d"
-        dateFormatter.locale     = Locale(identifier: "en")
         
-        shareImageView.dateLabel.text      = dateFormatter.string(from: Date())
-        shareImageView.wordCountLabel.text = "\(self.wordsAmount)"
-        shareImageView.dayCountLabel.text  = "\(self.daysAmount)"
-                
-        let renderer = UIGraphicsImageRenderer(size: shareImageView.bounds.size)
-        let image = renderer.image { context in
-            shareImageView.drawHierarchy(in: shareImageView.bounds, afterScreenUpdates: true)
-        }
-                
-        return image
-    }
-    
-    /// 创建听写复习打卡分享页面
-    private func createListenReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
-        lableContainer.backgroundColor = .clear
-
-        let logoImage    = UIImage(named: "gameShareLogo_blue")
-        let shareBgImage = backgroundImage
-        let aboveLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "我在念念有词完成了"
-            label.textColor     = .white
-            label.font          = UIFont.mediumFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        aboveLabel.frame = CGRect(x: 56, y: 147, width: 181, height: 28)
-        aboveLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        aboveLabel.layer.shadowRadius  = 2.0
-        aboveLabel.layer.shadowOpacity = 1.0
-        aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(aboveLabel.layer)
-        
-        let amountLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(wordsAmount)"
-            label.textColor     = .white
-            label.font          = UIFont.DINAlternateBold(ofSize: 40)
-            label.textAlignment = .center
-            label.sizeToFit()
-            return label
-        }()
-        amountLabel.frame = CGRect(x: 116, y: 179, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius  = 2.0
-        amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(amountLabel.layer)
-        
-        let belowLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "个单词的听写练习"
-            label.textColor     = .white
-            label.font          = UIFont.regularFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        belowLabel.frame = CGRect(x: 116 + amountLabel.width, y: 193, width: 161, height: 28)
-        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius  = 2.0
-        belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(belowLabel.layer)
-        
-        let contentImage = UIImage(named: "reviewShareContent")
-        let bottomLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "听写不求人\n自己就能做听写练习"
-            label.textColor     = UIColor.black1
-            label.font          = UIFont.regularFont(ofSize: 15)
-            label.numberOfLines = 2
-            label.textAlignment = .left
-            return label
-        }()
-        let qrcordLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "扫码下载  智能背词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 10)
-            label.textAlignment = .center
-            return label
-        }()
-        
-        // ---- 内容绘制 ----
-        let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
-        shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
-        logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        guard let currentContext = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        lableContainer.layer.render(in: currentContext)
-        contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
-        bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
-        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
-        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        return shareImage
-    }
-    
-    /// 创建智能复习打卡分享页面
-    private func createAIReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
-        lableContainer.backgroundColor = .clear
-        
-        let logoImage    = UIImage(named: "gameShareLogo_orange")
-        let shareBgImage = backgroundImage
-        let aboveLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "智能复习帮我自动巩固单词"
-            label.textColor     = .white
-            label.font          = UIFont.mediumFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        aboveLabel.frame = CGRect(x: 72, y: 148, width: 241, height: 28)
-        aboveLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        aboveLabel.layer.shadowRadius  = 2.0
-        aboveLabel.layer.shadowOpacity = 1.0
-        aboveLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(aboveLabel.layer)
-        
-        let amountLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(wordsAmount)"
-            label.textColor     = .white
-            label.font          = UIFont.DINAlternateBold(ofSize: 40)
-            label.textAlignment = .center
-            label.sizeToFit()
-            return label
-        }()
-        amountLabel.frame = CGRect(x: 161, y: 181, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius  = 2.0
-        amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(amountLabel.layer)
-        
-        let belowLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "个"
-            label.textColor     = .white
-            label.font          = UIFont.regularFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        belowLabel.frame = CGRect(x: 161 + amountLabel.width, y: 196, width: 21, height: 28)
-        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius  = 2.0
-        belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(belowLabel.layer)
-        
-        let contentImage = UIImage(named: "reviewShareContent")
-        let bottomLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "智能计划复习内容\n高效背单词"
-            label.textColor     = UIColor.black1
-            label.font          = UIFont.regularFont(ofSize: 15)
-            label.numberOfLines = 2
-            label.textAlignment = .left
-            return label
-        }()
-        let qrcordLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "扫码下载  智能背词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 10)
-            label.textAlignment = .center
-            return label
-        }()
-        
-        // ---- 内容绘制 ----
-        let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
-        shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
-        logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        guard let currentContext = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        lableContainer.layer.render(in: currentContext)
-        contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
-        bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
-        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
-        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        return shareImage
-    }
-    
-    /// 创建复习计划打卡分享页面
-    private func createPlanReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-        let lableContainer = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 514))
-        lableContainer.backgroundColor = .clear
-        
-        let logoImage    = UIImage(named: "gameShareLogo_purple")
-        let shareBgImage = backgroundImage
-        let aboveLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "我在念念有词完成了"
-            label.textColor     = .white
-            label.font          = UIFont.mediumFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        aboveLabel.frame = CGRect(x: 60, y: 147, width: 181, height: 28)
-        aboveLabel.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
-        aboveLabel.layer.shadowRadius = 2.0
-        aboveLabel.layer.shadowOpacity = 1.0
-        aboveLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(aboveLabel.layer)
-        
-        let amountLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(wordsAmount)"
-            label.textColor     = .white
-            label.font          = UIFont.DINAlternateBold(ofSize: 40)
-            label.textAlignment = .center
-            label.sizeToFit()
-            return label
-        }()
-        amountLabel.frame = CGRect(x: 126, y: 179, width: amountLabel.width, height: 47)
-        amountLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        amountLabel.layer.shadowRadius  = 2.0
-        amountLabel.layer.shadowOpacity = 1.0
-        amountLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(amountLabel.layer)
-        
-        let belowLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "个单词的自动复习"
-            label.textColor     = .white
-            label.font          = UIFont.regularFont(ofSize: 20)
-            label.textAlignment = .center
-            return label
-        }()
-        belowLabel.frame = CGRect(x: 126 + amountLabel.width, y: 193, width: 161, height: 28)
-        belowLabel.layer.shadowColor   = UIColor.black.withAlphaComponent(0.5).cgColor
-        belowLabel.layer.shadowRadius  = 2.0
-        belowLabel.layer.shadowOpacity = 1.0
-        belowLabel.layer.shadowOffset  = CGSize(width: 2, height: 2)
-        lableContainer.layer.addSublayer(belowLabel.layer)
-        
-        let contentImage = UIImage(named: "reviewShareContent")
-        let bottomLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "智能计划复习内容\n高效背单词"
-            label.textColor     = UIColor.black1
-            label.font          = UIFont.regularFont(ofSize: 15)
-            label.numberOfLines = 2
-            label.textAlignment = .left
-            return label
-        }()
-        let qrcordLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "扫码下载  智能背词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 10)
-            label.textAlignment = .center
-            return label
-        }()
-        
-        // ---- 内容绘制 ----
-        let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
-        shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 414))
-        logoImage?.draw(in: CGRect(x: 18, y: 18, width: 131, height: 44))
-        guard let currentContext = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        lableContainer.layer.render(in: currentContext)
-        contentImage?.draw(in: CGRect(x: 0, y: 413, width: 375, height: 101))
-        bottomLabel.drawText(in: CGRect(x: 29, y: 443, width: 147, height: 42))
-        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
-        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
-        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        return shareImage
-    }
-    
-    /// 创建挑战打卡分享页面
-    private func createChallengeReviewShareImage(_ backgroundImage: UIImage?) -> UIImage? {
-        guard let model = self.gameModel else {
-            return nil
-        }
-        let shareBgImage = backgroundImage
-        let contentImage = UIImage(named: "reviewShareContent")
-        let flagImage    = UIImage(named: "flagImage")
-        let rankTitleLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "排名"
-            label.textColor     = UIColor.hex(0xFFD9D9)
-            label.font          = UIFont.regularFont(ofSize: 14)
-            label.textAlignment = .center
-            return label
-        }()
-        let rankLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "\(model.ranking)"
-            label.textColor     = UIColor.white
-            label.font          = UIFont.DINAlternateBold(ofSize: 24)
-            label.textAlignment = .center
-            return label
-        }()
-        let questionAmountLabel: UILabel = {
-            let label = UILabel()
-            let mAttr =
-                NSMutableAttributedString(string: "答对\(model.questionNumber)题", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
-            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, "\(model.questionNumber)".count))
-            label.attributedText = mAttr
-            label.textAlignment  = .left
-            return label
-        }()
-        let consumeTimeLabel: UILabel = {
-            let label   = UILabel()
-            let timeStr = String(format: "%0.2f", Float(model.consumeTime)/1000)
-            let mAttr   =
-                NSMutableAttributedString(string: "用时" + timeStr + "秒", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.regularFont(ofSize: 14)])
-            mAttr.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.black1, NSAttributedString.Key.font : UIFont.DINAlternateBold(ofSize: 18)], range: NSMakeRange(2, timeStr.count))
-            label.attributedText = mAttr
-            label.textAlignment  = .left
-            return label
-        }()
-        let qrcordLabel: UILabel = {
-            let label = UILabel()
-            label.text          = "扫码下载  智能背词"
-            label.textColor     = UIColor.black2
-            label.font          = UIFont.regularFont(ofSize: 10)
-            label.textAlignment = .center
-            return label
-        }()
-        let treeBranchImage = UIImage(named: "treeBranchImage")
-        
-        // ---- 内容绘制 ----
-        let imageSize = CGSize(width: 375, height: 514)
-        UIGraphicsBeginImageContextWithOptions(imageSize, true, UIScreen.main.scale)
-        shareBgImage?.draw(in: CGRect(x: 0, y: 0, width: 375, height: 513))
-        contentImage?.draw(in: CGRect(x: 0, y: 430, width: 375, height: 84))
-        flagImage?.draw(in: CGRect(x: 28, y: 427, width: 75, height: 77))
-        rankTitleLabel.drawText(in: CGRect(x: 54, y: 436, width: 29, height: 20))
-        rankLabel.drawText(in: CGRect(x: 45, y: 455, width: 47, height: 28))
-        questionAmountLabel.drawText(in: CGRect(x: 125, y: 449, width: 66, height: 21))
-        consumeTimeLabel.drawText(in: CGRect(x: 125, y: 474, width: 89, height: 21))
-        qrCodeImage?.draw(in: CGRect(x: 287, y: 423, width: 65, height: 65))
-        qrcordLabel.drawText(in: CGRect(x: 275, y: 490, width: 90, height: 14))
-        treeBranchImage?.draw(in: CGRect(x: 265, y: 314, width: 110, height: 123))
-        guard let shareImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        return shareImage
     }
 }

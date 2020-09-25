@@ -346,6 +346,10 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
 //        vc.learnConfig = YXBaseLearnConfig(bookId: bookId, unitId: unitId)
 //        vc.newLearnAmount    = 5
 //        vc.reviewLearnAmount = 11
+        // 分享页
+//        let vc = YXShareViewController()
+//        vc.shareType = .challengeResult
+//        
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return
         if YXUserModel.default.isJoinClass {
