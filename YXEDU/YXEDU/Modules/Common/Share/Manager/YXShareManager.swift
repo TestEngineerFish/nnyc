@@ -15,7 +15,7 @@ class YXShareManager: NSObject {
 
     private var wordsAmount: Int = 0
     private var daysAmount: Int = 0
-    private var gameModel: YXGameResultModel?
+    var gameModel: YXGameResultModel?
     private var shareType: YXShareImageType = .learnResult
     private var backgroundImageModelUrls: [YXShareImageModel]?
     private var currentBackgroundImageIndex = 0

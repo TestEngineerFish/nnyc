@@ -349,7 +349,14 @@ class YXHomeViewController: YXViewController, UICollectionViewDelegate, UICollec
         // 分享页
 //        let vc = YXShareViewController()
 //        vc.shareType = .challengeResult
-//        
+//
+//        var m = YXGameResultModel()
+//        m.state = 1
+//        m.ranking = 5
+//        m.questionNumber = 6
+//        m.consumeTime = 52070
+//        vc.gameModel = m
+//
 //        self.navigationController?.pushViewController(vc, animated: true)
 //        return
         if YXUserModel.default.isJoinClass {

@@ -119,6 +119,7 @@ class YXShareViewController: YXViewController {
     }
     
     private func bindProperty() {
+        self.shareManager.gameModel = self.gameModel
         self.shareManager.setData(wordsAmount: self.wordsAmount, daysAmount: self.daysAmount, type: self.shareType)
         self.shareManager.setShareImage { [weak self] (image:UIImage?) in
             guard let self = self else { return }
