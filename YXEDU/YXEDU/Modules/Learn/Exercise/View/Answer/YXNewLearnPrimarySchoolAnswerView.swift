@@ -128,6 +128,13 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         return label
     }()
     
+    var customMaskView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.01)
+        view.isHidden        = true
+        return view
+    }()
+    
     lazy var learnResultView = YXNewLearnResultView()
 
     var timer: Timer?
@@ -220,6 +227,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         self.addSubview(recordAudioButton)
         self.addSubview(recordAudioLabel)
         self.addSubview(recordAnimationView)
+        self.addSubview(customMaskView)
         self.playAudioButton.snp.makeConstraints { (make) in
             make.top.equalTo(recordAudioButton)
             make.left.equalToSuperview().offset(AdaptSize(80))
@@ -249,6 +257,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         self.recordAnimationView.snp.makeConstraints { (make) in
             make.left.top.right.bottom.equalTo(self.recordAudioButton)
+        }
+        self.customMaskView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
 
         self.playAudioButton.addTarget(self, action: #selector(playButtonAction(_:)), for: .touchUpInside)
@@ -574,6 +585,7 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         }
         let request = YXExerciseRequest.reportListenScore(wordId: wordId, score: self.lastScore)
         YYNetworkService.default.request(YYStructResponse<YXListenScoreModel>.self, request: request, success: { [weak self] (response) in
+            self?.customMaskView.isHidden = true
             guard let self = self, let model = response.data else {
                 return
             }
@@ -582,7 +594,9 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
             self.hideReportAnimation()
             self.showResultAnimation()
         }) { [weak self] (error) in
-            self?.showNetworkErrorAnimation()
+            guard let self = self else { return }
+            self.showNetworkErrorAnimation()
+            self.customMaskView.isHidden = true
             YXLog("上报跟读结果失败")
         }
     }
@@ -600,6 +614,8 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
         // 显示录音动画
         YXLog("开始录音")
         self.status = .recording
+        // 禁止用户操作
+        self.customMaskView.isHidden = false
         self.showRecordAnimation()
         YXAVPlayerManager.share.pauseAudio()
         self.resetOpusTempData()
@@ -617,18 +633,10 @@ class YXNewLearnAnswerView: YXBaseAnswerView, USCRecognizerDelegate {
 
     func onResult(_ result: String!, isLast: Bool) {
         if isLast {
-            // 禁止用户操作
-            let maskView = UIView()
-            maskView.backgroundColor = UIColor.white.withAlphaComponent(0.01)
-            self.addSubview(maskView)
-            maskView.snp.makeConstraints { (make) in
-                make.edges.equalToSuperview()
-            }
             let url = URL(fileURLWithPath: self.retryPath)
             // 播放用户读音
             YXAVPlayerManager.share.playAudio(url) { [weak self] in
                 guard let self = self else { return }
-                maskView.removeFromSuperview()
                 self.showReportAnimation()
                 // 录音结束,清除临时录音缓存
                 self.resetOpusTempData()
