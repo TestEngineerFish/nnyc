@@ -83,6 +83,7 @@ class YXSettingsViewController: YXViewController, UITableViewDelegate, UITableVi
             break
             
         case 4:
+            YXLogManager.share.report(true)
             break
             
         case 5:
